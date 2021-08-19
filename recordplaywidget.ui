@@ -32,7 +32,7 @@
    <property name="geometry">
     <rect>
      <x>947</x>
-     <y>608</y>
+     <y>580</y>
      <width>21</width>
      <height>20</height>
     </rect>
@@ -50,7 +50,7 @@
    <property name="geometry">
     <rect>
      <x>922</x>
-     <y>608</y>
+     <y>580</y>
      <width>21</width>
      <height>20</height>
     </rect>
@@ -108,56 +108,17 @@ background-color: rgb(33, 131, 229); </string>
     <string> 位置选择</string>
    </property>
   </widget>
-  <widget class="QProgressBar" name="fileDownloadProgressBar">
-   <property name="geometry">
-    <rect>
-     <x>5</x>
-     <y>640</y>
-     <width>306</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QProgressBar {
-	background-color: rgb(0, 193, 37);
-   border: 1px solid grey;
-   border-radius: 2px;
-   background-color: #FFFFFF;
-}
- 
-QProgressBar::chunk {
-   background-color: #4FEE9C;
-   width: 20px;
-}
- 
-QProgressBar {
-   border: 1px solid grey;
-   border-radius: 2px;
-   text-align: center;
-}</string>
-   </property>
-   <property name="value">
-    <number>0</number>
-   </property>
-  </widget>
   <widget class="QPushButton" name="playNextOnePushButton">
    <property name="geometry">
     <rect>
-     <x>500</x>
-     <y>620</y>
-     <width>41</width>
-     <height>41</height>
+     <x>730</x>
+     <y>610</y>
+     <width>49</width>
+     <height>49</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QPushButton
-{border-image: url(:/res/next_nor.png);background-color: rgb(255, 255, 255);}
-
-QPushButton:hover
-{border-image: url(:/res/next_hover.png);background-color: rgb(255, 255, 255);}
-
-QPushButton:pressed
-{border-image: url(:/res/next_down.png);background-color: rgb(255, 255, 255);}</string>
+    <string notr="true">border-image: url(:/monres/next.bmp);</string>
    </property>
    <property name="text">
     <string/>
@@ -176,7 +137,7 @@ QPushButton:pressed
    <property name="geometry">
     <rect>
      <x>942</x>
-     <y>608</y>
+     <y>580</y>
      <width>5</width>
      <height>17</height>
     </rect>
@@ -222,10 +183,10 @@ background-color: rgb(33, 131, 229); </string>
   <widget class="QLabel" name="label_13">
    <property name="geometry">
     <rect>
-     <x>320</x>
-     <y>614</y>
-     <width>702</width>
-     <height>54</height>
+     <x>311</x>
+     <y>607</y>
+     <width>711</width>
+     <height>61</height>
     </rect>
    </property>
    <property name="font">
@@ -248,21 +209,14 @@ background-color: rgb(33, 131, 229); </string>
   <widget class="QPushButton" name="stopPushButton">
    <property name="geometry">
     <rect>
-     <x>550</x>
-     <y>620</y>
-     <width>41</width>
-     <height>41</height>
+     <x>590</x>
+     <y>610</y>
+     <width>49</width>
+     <height>49</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QPushButton
-{border-image: url(:/res/stop_nor.png);background-color: rgb(255, 255, 255);}
-
-QPushButton:hover
-{border-image: url(:/res/stop_hover.png);background-color: rgb(255, 255, 255);}
-
-QPushButton:pressed
-{border-image: url(:/res/stop_down.png);background-color: rgb(255, 255, 255);}</string>
+    <string notr="true">border-image: url(:/monres/stop.bmp);</string>
    </property>
    <property name="text">
     <string/>
@@ -281,7 +235,7 @@ QPushButton:pressed
    <property name="geometry">
     <rect>
      <x>975</x>
-     <y>608</y>
+     <y>580</y>
      <width>21</width>
      <height>20</height>
     </rect>
@@ -325,10 +279,10 @@ QPushButton:pressed
   <widget class="QPushButton" name="alarmPushButton">
    <property name="geometry">
     <rect>
-     <x>860</x>
-     <y>630</y>
-     <width>51</width>
-     <height>31</height>
+     <x>780</x>
+     <y>620</y>
+     <width>80</width>
+     <height>34</height>
     </rect>
    </property>
    <property name="font">
@@ -337,18 +291,10 @@ QPushButton:pressed
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">QPushButton
-{background-color: rgb(255, 255, 255);color: rgb(86, 164, 246);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}
-
-QPushButton:hover{background-color: rgb(246, 246, 246);color: rgb(86, 164, 246);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}
-
-QPushButton:pressed{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}
-
-QPushButton:checked
-{background-color: rgb(255, 0, 0);color: rgb(86, 164, 246);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}</string>
+    <string notr="true">border-image: url(:/monres/alertoff.bmp);</string>
    </property>
    <property name="text">
-    <string>报警</string>
+    <string/>
    </property>
    <property name="checkable">
     <bool>true</bool>
@@ -358,7 +304,7 @@ QPushButton:checked
    <property name="geometry">
     <rect>
      <x>967</x>
-     <y>608</y>
+     <y>580</y>
      <width>8</width>
      <height>17</height>
     </rect>
@@ -502,21 +448,14 @@ background-color: rgb(255, 255, 255);</string>
   <widget class="QPushButton" name="playLastOnePushButton">
    <property name="geometry">
     <rect>
-     <x>390</x>
-     <y>620</y>
-     <width>41</width>
-     <height>41</height>
+     <x>310</x>
+     <y>610</y>
+     <width>49</width>
+     <height>49</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QPushButton
-{border-image: url(:/res/prev_nor.png);background-color: rgb(255, 255, 255);}
-
-QPushButton:hover
-{border-image: url(:/res/prev_hover.png);background-color: rgb(255, 255, 255);}
-
-QPushButton:pressed
-{border-image: url(:/res/prev_down.png);background-color: rgb(255, 255, 255);}</string>
+    <string notr="true">border-image: url(:/monres/before.bmp);</string>
    </property>
    <property name="text">
     <string/>
@@ -546,14 +485,10 @@ QPushButton:pressed
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: rgb(255, 255, 255);
-background-image: url(:/res/anniubk.png);
-border-color: rgb(33, 131, 229);
-border-width: 1px;
-border-style: solid;</string>
+    <string notr="true">border-image: url(:/monres/search.bmp);</string>
    </property>
    <property name="text">
-    <string>查询</string>
+    <string/>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
@@ -561,7 +496,7 @@ border-style: solid;</string>
     <rect>
      <x>6</x>
      <y>5</y>
-     <width>305</width>
+     <width>301</width>
      <height>46</height>
     </rect>
    </property>
@@ -624,20 +559,16 @@ border-style: solid;</string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: rgb(255, 255, 255);
-background-image: url(:/res/anniubk.png);
-border-color: rgb(33, 131, 229);
-border-width: 1px;
-border-style: solid;</string>
+    <string notr="true">border-image: url(:/monres/replacevideo.bmp);</string>
    </property>
    <property name="text">
-    <string>视频下载</string>
+    <string/>
    </property>
   </widget>
   <widget class="QPushButton" name="minusStepPushButton">
    <property name="geometry">
     <rect>
-     <x>690</x>
+     <x>950</x>
      <y>620</y>
      <width>41</width>
      <height>41</height>
@@ -670,13 +601,13 @@ QPushButton:pressed
    <property name="geometry">
     <rect>
      <x>450</x>
-     <y>620</y>
-     <width>41</width>
-     <height>41</height>
+     <y>610</y>
+     <width>49</width>
+     <height>49</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/res/play_nor.png);</string>
+    <string notr="true">border-image: url(:/monres/start.bmp);</string>
    </property>
    <property name="text">
     <string/>
@@ -722,7 +653,7 @@ QPushButton:pressed
    <property name="geometry">
     <rect>
      <x>995</x>
-     <y>608</y>
+     <y>580</y>
      <width>5</width>
      <height>17</height>
     </rect>
@@ -761,21 +692,14 @@ QPushButton:pressed
   <widget class="QPushButton" name="fastForwardPushButton">
    <property name="geometry">
     <rect>
-     <x>630</x>
-     <y>620</y>
-     <width>41</width>
-     <height>41</height>
+     <x>660</x>
+     <y>610</y>
+     <width>49</width>
+     <height>49</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QPushButton
-{border-image: url(:/res/fast_nor.png);background-color: rgb(255, 255, 255);}
-
-QPushButton:hover
-{border-image: url(:/res/fast_hover.png);background-color: rgb(255, 255, 255);}
-
-QPushButton:pressed
-{border-image: url(:/res/fast_down.png);background-color: rgb(255, 255, 255);}</string>
+    <string notr="true">border-image: url(:/monres/fast.bmp);</string>
    </property>
    <property name="text">
     <string/>
@@ -794,7 +718,7 @@ QPushButton:pressed
    <property name="geometry">
     <rect>
      <x>1000</x>
-     <y>608</y>
+     <y>580</y>
      <width>21</width>
      <height>20</height>
     </rect>
@@ -860,21 +784,14 @@ QPushButton:pressed
   <widget class="QPushButton" name="slowForwardPushButton">
    <property name="geometry">
     <rect>
-     <x>330</x>
-     <y>620</y>
-     <width>41</width>
-     <height>41</height>
+     <x>380</x>
+     <y>610</y>
+     <width>49</width>
+     <height>49</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QPushButton
-{border-image: url(:/res/slow_nor.png);background-color: rgb(255, 255, 255);}
-
-QPushButton:hover
-{border-image: url(:/res/slow_hover.png);background-color: rgb(255, 255, 255);}
-
-QPushButton:pressed
-{border-image: url(:/res/slow_down.png);background-color: rgb(255, 255, 255);}</string>
+    <string notr="true">border-image: url(:/monres/slow.bmp);</string>
    </property>
    <property name="text">
     <string/>
@@ -939,8 +856,8 @@ QPushButton:pressed
   <widget class="QLineEdit" name="playSpeedLineEdit">
    <property name="geometry">
     <rect>
-     <x>800</x>
-     <y>630</y>
+     <x>860</x>
+     <y>570</y>
      <width>51</width>
      <height>31</height>
     </rect>
@@ -963,7 +880,7 @@ QPushButton:pressed
   <widget class="QPushButton" name="plusStepPushButton">
    <property name="geometry">
     <rect>
-     <x>750</x>
+     <x>990</x>
      <y>620</y>
      <width>41</width>
      <height>41</height>
@@ -1093,10 +1010,10 @@ QPushButton:pressed
   <widget class="QPushButton" name="canselPushButton">
    <property name="geometry">
     <rect>
-     <x>930</x>
-     <y>630</y>
-     <width>51</width>
-     <height>31</height>
+     <x>860</x>
+     <y>620</y>
+     <width>80</width>
+     <height>34</height>
     </rect>
    </property>
    <property name="font">
@@ -1105,21 +1022,29 @@ QPushButton:pressed
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">QPushButton
-{background-color: rgb(255, 255, 255);color: rgb(86, 164, 246);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}
-
-QPushButton:hover{background-color: rgb(246, 246, 246);color: rgb(86, 164, 246);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}
-
-QPushButton:pressed{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}
-
-QPushButton:checked
-{background-color: rgb(255, 0, 0);color: rgb(86, 164, 246);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}</string>
+    <string notr="true">border-image: url(:/monres/cancel.bmp);</string>
    </property>
    <property name="text">
-    <string>注销</string>
+    <string/>
    </property>
    <property name="checkable">
     <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>520</x>
+     <y>610</y>
+     <width>49</width>
+     <height>49</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-image: url(:/monres/pause.bmp);</string>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
   <zorder>label_5</zorder>
@@ -1153,7 +1078,6 @@ QPushButton:checked
   <zorder>recordFileTableWidget</zorder>
   <zorder>line_6</zorder>
   <zorder>downLoadPushButton</zorder>
-  <zorder>fileDownloadProgressBar</zorder>
   <zorder>playNextOnePushButton</zorder>
   <zorder>playMinLabel</zorder>
   <zorder>playSecLabel</zorder>
@@ -1166,6 +1090,7 @@ QPushButton:checked
   <zorder>label</zorder>
   <zorder>label_14</zorder>
   <zorder>canselPushButton</zorder>
+  <zorder>pushButton</zorder>
  </widget>
  <resources/>
  <connections/>

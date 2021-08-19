@@ -67,7 +67,7 @@ waitLoginWidget::waitLoginWidget(QWidget *parent) :
     if (strlen(acVersion) != 0)
     {
 //        DebugPrint(DEBUG_UI_NOMAL_PRINT, "ui app version:%s!\n",acVersion);
-        ui->versionLabel->setText(QString(QLatin1String(acVersion)));
+//        ui->versionLabel->setText(QString(QLatin1String(acVersion)));
     }
 }
 

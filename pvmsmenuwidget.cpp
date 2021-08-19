@@ -2,6 +2,7 @@
 #include "ui_pvmsmenuwidget.h"
 #include <QDebug>
 #include <netinet/in.h>
+#include <QIcon>
 
 
 #define PVMSPAGETYPE  2    //此页面类型，2表示受电弓监控页面
@@ -14,6 +15,12 @@ pvmsMenuWidget::pvmsMenuWidget(QWidget *parent) :
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setGeometry(0,0,1024,768);
     this->showFullScreen();
+    QIcon icon;
+//    icon.addFile(QString::fromUtf8(":/res/PantoMonitor.bmp"),QSize(),QIcon::Normal,QIcon::Off);
+//    ui->pvmsMonitorMenuPushButton->setIcon(icon);
+//    ui->pvmsMonitorMenuPushButton->setIconSize(QSize(203,102));
+
+
 
     m_pvmsMonitorPage = new pvmsMonitorWidget(this);   //受电弓监控页面
     m_pvmsMonitorPage->setGeometry(0, 103, m_pvmsMonitorPage->width(), m_pvmsMonitorPage->height());   //设置位置

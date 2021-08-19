@@ -23,13 +23,7 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">#frame{
-color: rgb(255, 255, 255);
-	background-image: url(:/res/background1.png);
-}
-#frame *{
-background-image: url();
-}</string>
+    <string notr="true">border-image: url(:/monres/background.bmp);</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::StyledPanel</enum>
@@ -37,60 +31,6 @@ background-image: url();
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>330</x>
-      <y>310</y>
-      <width>321</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>18</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>监控程序正在启动，请稍后......   </string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_3">
-    <property name="geometry">
-     <rect>
-      <x>700</x>
-      <y>310</y>
-      <width>31</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>18</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>秒</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="coutDownDisplayLabel">
-    <property name="geometry">
-     <rect>
-      <x>660</x>
-      <y>310</y>
-      <width>31</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>18</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>12</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="okPushButton">
     <property name="geometry">
      <rect>
@@ -113,24 +53,60 @@ background-image: url();
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="versionLabel">
-    <property name="geometry">
-     <rect>
-      <x>890</x>
-      <y>650</y>
-      <width>81</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>16</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>V1.0.0</string>
-    </property>
-   </widget>
+  </widget>
+  <widget class="QLabel" name="coutDownDisplayLabel">
+   <property name="geometry">
+    <rect>
+     <x>710</x>
+     <y>290</y>
+     <width>31</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>18</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>12</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>750</x>
+     <y>290</y>
+     <width>31</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>18</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>秒</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>380</x>
+     <y>290</y>
+     <width>321</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>18</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>监控程序正在启动，请稍后......   </string>
+   </property>
   </widget>
  </widget>
  <resources/>

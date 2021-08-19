@@ -558,7 +558,7 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents res.qrc $(DISTDIR)/
+	$(COPY_FILE) --parents res.qrc res.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents MyApplication.h choicelogindevwidget.h loginwidget.h pvmsmenuwidget.h pvmsmonitorwidget.h recordplaywidget.h inteanalywidget.h devmanagewidget.h devupdatewidget.h alarmwidget.h fileConfig.h gb2312_utf8.h log.h pmsgcli.h state.h types.h presetpasswdconfirm.h myslider.h useredit.h useradd.h usermanage.h ftpApi.h rs485serv.h usergroupmanage.h waitloginwidget.h usermanageconfig.h $(DISTDIR)/
 	$(COPY_FILE) --parents main.cpp MyApplication.cpp choicelogindevwidget.cpp loginwidget.cpp pvmsmenuwidget.cpp pvmsmonitorwidget.cpp recordplaywidget.cpp inteanalywidget.cpp devmanagewidget.cpp devupdatewidget.cpp alarmwidget.cpp fileConfig.cpp state.cpp gb2312_utf8.c log.c pmsgcli.c presetpasswdconfirm.cpp myslider.cpp useredit.cpp useradd.cpp usermanage.cpp ftpApi.c rs485serv.c usergroupmanage.cpp waitloginwidget.cpp usermanageconfig.cpp $(DISTDIR)/
@@ -586,76 +586,441 @@ check: first
 
 benchmark: first
 
-compiler_rcc_make_all: qrc_res.cpp
+compiler_rcc_make_all: qrc_res.cpp qrc_res.cpp
 compiler_rcc_clean:
-	-$(DEL_FILE) qrc_res.cpp
+	-$(DEL_FILE) qrc_res.cpp qrc_res.cpp
 qrc_res.cpp: res.qrc \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/rcc \
-		res/playerbk.png \
-		res/fast_hover.png \
-		res/prev_nor.png \
-		res/sure.png \
-		res/title1.png \
-		res/stop_down.png \
-		res/minus_hover.png \
-		res/sdgbt.png \
-		res/nock.png \
-		res/ptz_up.png \
-		res/cansel.png \
-		res/MainDlgHead.png \
-		res/minus_down.png \
-		res/prev_hover.png \
-		res/shiftSmall.png \
-		res/play_hover.png \
-		res/background1.png \
-		res/next_nor.png \
-		res/next_down.png \
-		res/ptz_down.png \
-		res/plus_down.png \
-		res/bk2.png \
-		res/zxanniubk.png \
-		res/playback.bmp \
-		res/stop_hover.png \
-		res/gou.png \
-		res/slow_nor.png \
-		res/keybackground.png \
-		res/fast_nor.png \
-		res/plus_nor.png \
+		monres/4.bmp \
+		monres/carriagemonitor.bmp \
+		monres/right.bmp \
+		monres/before.bmp \
+		monres/Pantoequip1.bmp \
+		monres/C3UnifiedClient.rc2 \
+		monres/return1.bmp \
+		monres/8.bmp \
+		monres/background.bmp \
+		monres/alerton2.bmp \
+		monres/Pantobg.bmp \
+		monres/next.bmp \
+		monres/12.bmp \
+		monres/bitmap19.bmp \
+		monres/savevedio_ing\ -\ 副本.bmp \
+		monres/gj.bmp \
+		monres/faultmapdownload.bmp \
+		monres/left.bmp \
+		monres/apply.bmp \
+		monres/3.bmp \
+		monres/replacevideo.bmp \
+		monres/putout.bmp \
+		monres/browse.bmp \
+		monres/bitmap14.bmp \
+		monres/carriageequip1.bmp \
+		monres/downlog.bmp \
+		monres/16.bmp \
+		monres/timing.bmp \
+		monres/yj1.bmp \
+		monres/gj1.bmp \
+		monres/PantoMantain1.bmp \
+		monres/7.bmp \
+		monres/cameractrl.bmp \
+		monres/back.bmp \
+		monres/PantoPlay1.bmp \
+		monres/alerton1.bmp \
+		monres/erroconfig.bmp \
+		monres/plus.bmp \
+		monres/LoginCancel.bmp \
+		monres/11.bmp \
+		monres/leftup.bmp \
+		monres/return.bmp \
+		monres/bitmap18.bmp \
+		monres/start.bmp \
+		monres/carriageplay.bmp \
+		monres/PantoIntell.bmp \
+		monres/gengxin.bmp \
+		monres/setuse.bmp \
+		monres/2.bmp \
+		monres/carriagemaintain1.bmp \
+		monres/near.bmp \
+		monres/substruct.bmp \
+		monres/cancel.bmp \
+		monres/gzpz.bmp \
+		monres/qxdd.bmp \
+		monres/C3UnifiedClient1.ico \
+		monres/savevedio.bmp \
+		monres/LoginOK.bmp \
+		monres/15.bmp \
+		monres/fast.bmp \
+		monres/bj.bmp \
+		monres/useradd.bmp \
+		monres/alertoff.bmp \
+		monres/ccsz.bmp \
+		monres/PantoMonitor1.bmp \
+		monres/6.bmp \
+		monres/videodownload.bmp \
+		monres/1受电弓监控_63.png \
+		monres/PantoIntell1.bmp \
+		monres/Pantobg\ -\ 副本.bmp \
+		monres/Rights\ management.bmp \
+		monres/alerton.bmp \
+		monres/carriageplay1.bmp \
+		monres/10.bmp \
+		monres/cameractrl\ -\ 副本.bmp \
+		monres/bitmap17.bmp \
+		monres/preview.bmp \
+		monres/saveing.bmp \
+		monres/open.bmp \
+		monres/close.bmp \
+		monres/userdel.bmp \
+		monres/1.bmp \
+		monres/ledon.bmp \
+		monres/ledoff.bmp \
+		monres/stop.bmp \
+		monres/yj.bmp \
+		monres/restat.bmp \
+		monres/fare.bmp \
+		monres/carriagemaintain.bmp \
+		monres/putin.bmp \
+		monres/carriageequip.bmp \
+		monres/PantoPlay.bmp \
+		monres/pause.bmp \
+		monres/14.bmp \
+		monres/cameractrloff\ -\ 副本.bmp \
+		monres/5.bmp \
+		monres/search.bmp \
+		monres/up.bmp \
+		monres/bj1.bmp \
+		monres/carriagemonitor1.bmp \
+		monres/usersave.bmp \
+		monres/pause1.bmp \
+		monres/slow.bmp \
+		monres/videodownload\ -\ 副本.bmp \
+		monres/PantoMonitor.bmp \
+		monres/down.bmp \
+		monres/9.bmp \
+		monres/cameractrloff.bmp \
+		monres/carriageset.bmp \
+		monres/playback.bmp \
+		monres/nextpage.bmp \
+		monres/PantoMantain.bmp \
+		monres/kaishigegnxin.bmp \
+		monres/usepreset.bmp \
+		monres/Pantoequip.bmp \
+		monres/13.bmp \
+		monres/start1.bmp \
+		monres/settingconfig.bmp \
+		res/background.png \
+		res/ptz_right.png \
+		res/4.bmp \
 		res/pause_down.png \
-		res/btck.png \
-		res/pause_hover.png \
-		res/play_nor.png \
-		res/anniubk1.png \
-		res/minus_nor.png \
+		res/right.bmp \
+		res/time_set.png \
+		res/Pantoequip1.bmp \
+		res/111.png \
+		res/fast_hover.png \
 		res/stop_nor.png \
-		res/Pantobg.bmp \
+		res/prev_nor.png \
+		res/sdgbt.png \
 		res/cansel_wait.bmp \
-		res/title.png \
+		res/8.bmp \
+		res/slow_hover.png \
+		res/pause_hover.png \
+		res/Pantobg.bmp \
+		res/plus_hover.png \
+		res/prev_hover.png \
+		res/stop_down.png \
+		res/ptz_up.png \
+		res/stop_hover.png \
+		res/left.bmp \
+		res/777.png \
+		res/ptz_down.png \
+		res/3.bmp \
+		res/MainDlgHead.png \
+		res/shiftSmall.png \
+		res/minus_nor.png \
+		res/next_nor.png \
+		res/myCheckBox.qss \
+		res/slow_down.png \
 		res/ck.png \
+		res/play_nor.png \
+		res/minus_down.png \
+		res/PantoMantain1.bmp \
+		res/7.bmp \
+		res/anniubk1.png \
+		res/clear.png \
+		res/PantoPlay1.bmp \
+		res/Password.png \
+		res/plus.bmp \
+		res/PantoIntell.bmp \
+		res/setuse.bmp \
+		res/2.bmp \
+		res/minus_hover.png \
+		res/near.bmp \
+		res/substruct.bmp \
+		res/savevedio.bmp \
+		res/close.png \
+		res/delete.png \
+		res/background1.png \
+		res/PantoMonitor1.bmp \
+		res/slow_nor.png \
+		res/6.bmp \
+		res/plus_nor.png \
 		res/info.png \
 		res/ptz_left.png \
-		res/background.png \
-		res/login.png \
-		res/user.png \
-		res/prev_down.png \
-		res/play_down.png \
-		res/delete.png \
-		res/myCheckBox.qss \
-		res/ptz_right.png \
-		res/time_set.png \
-		res/preview.bmp \
-		res/fast_down.png \
-		res/next_hover.png \
-		res/clear.png \
-		res/slow_down.png \
-		res/plus_hover.png \
-		res/slow_hover.png \
-		res/close.png \
-		res/111.png \
-		res/Password.png \
-		res/777.png \
 		res/pause_nor.png \
-		res/anniubk.png
+		res/btck.png \
+		res/PantoIntell1.bmp \
+		res/bk2.png \
+		res/plus_down.png \
+		res/fast_nor.png \
+		res/preview.bmp \
+		res/saveing.bmp \
+		res/sure.png \
+		res/playerbk.png \
+		res/1.bmp \
+		res/fast_down.png \
+		res/anniubk.png \
+		res/next_hover.png \
+		res/zxanniubk.png \
+		res/fare.bmp \
+		res/PantoPlay.bmp \
+		res/title.png \
+		res/5.bmp \
+		res/title1.png \
+		res/up.bmp \
+		res/cansel.png \
+		res/play_hover.png \
+		res/gou.png \
+		res/prev_down.png \
+		res/keybackground.png \
+		res/play_down.png \
+		res/user.png \
+		res/PantoMonitor.bmp \
+		res/down.bmp \
+		res/login.png \
+		res/next_down.png \
+		res/playback.bmp \
+		res/PantoMantain.bmp \
+		res/usepreset.bmp \
+		res/nock.png \
+		res/Pantoequip.bmp
+	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/rcc -name res res.qrc -o qrc_res.cpp
+
+qrc_res.cpp: res.qrc \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/rcc \
+		monres/4.bmp \
+		monres/carriagemonitor.bmp \
+		monres/right.bmp \
+		monres/before.bmp \
+		monres/Pantoequip1.bmp \
+		monres/C3UnifiedClient.rc2 \
+		monres/return1.bmp \
+		monres/8.bmp \
+		monres/background.bmp \
+		monres/alerton2.bmp \
+		monres/Pantobg.bmp \
+		monres/next.bmp \
+		monres/12.bmp \
+		monres/bitmap19.bmp \
+		monres/savevedio_ing\ -\ 副本.bmp \
+		monres/gj.bmp \
+		monres/faultmapdownload.bmp \
+		monres/left.bmp \
+		monres/apply.bmp \
+		monres/3.bmp \
+		monres/replacevideo.bmp \
+		monres/putout.bmp \
+		monres/browse.bmp \
+		monres/bitmap14.bmp \
+		monres/carriageequip1.bmp \
+		monres/downlog.bmp \
+		monres/16.bmp \
+		monres/timing.bmp \
+		monres/yj1.bmp \
+		monres/gj1.bmp \
+		monres/PantoMantain1.bmp \
+		monres/7.bmp \
+		monres/cameractrl.bmp \
+		monres/back.bmp \
+		monres/PantoPlay1.bmp \
+		monres/alerton1.bmp \
+		monres/erroconfig.bmp \
+		monres/plus.bmp \
+		monres/LoginCancel.bmp \
+		monres/11.bmp \
+		monres/leftup.bmp \
+		monres/return.bmp \
+		monres/bitmap18.bmp \
+		monres/start.bmp \
+		monres/carriageplay.bmp \
+		monres/PantoIntell.bmp \
+		monres/gengxin.bmp \
+		monres/setuse.bmp \
+		monres/2.bmp \
+		monres/carriagemaintain1.bmp \
+		monres/near.bmp \
+		monres/substruct.bmp \
+		monres/cancel.bmp \
+		monres/gzpz.bmp \
+		monres/qxdd.bmp \
+		monres/C3UnifiedClient1.ico \
+		monres/savevedio.bmp \
+		monres/LoginOK.bmp \
+		monres/15.bmp \
+		monres/fast.bmp \
+		monres/bj.bmp \
+		monres/useradd.bmp \
+		monres/alertoff.bmp \
+		monres/ccsz.bmp \
+		monres/PantoMonitor1.bmp \
+		monres/6.bmp \
+		monres/videodownload.bmp \
+		monres/1受电弓监控_63.png \
+		monres/PantoIntell1.bmp \
+		monres/Pantobg\ -\ 副本.bmp \
+		monres/Rights\ management.bmp \
+		monres/alerton.bmp \
+		monres/carriageplay1.bmp \
+		monres/10.bmp \
+		monres/cameractrl\ -\ 副本.bmp \
+		monres/bitmap17.bmp \
+		monres/preview.bmp \
+		monres/saveing.bmp \
+		monres/open.bmp \
+		monres/close.bmp \
+		monres/userdel.bmp \
+		monres/1.bmp \
+		monres/ledon.bmp \
+		monres/ledoff.bmp \
+		monres/stop.bmp \
+		monres/yj.bmp \
+		monres/restat.bmp \
+		monres/fare.bmp \
+		monres/carriagemaintain.bmp \
+		monres/putin.bmp \
+		monres/carriageequip.bmp \
+		monres/PantoPlay.bmp \
+		monres/pause.bmp \
+		monres/14.bmp \
+		monres/cameractrloff\ -\ 副本.bmp \
+		monres/5.bmp \
+		monres/search.bmp \
+		monres/up.bmp \
+		monres/bj1.bmp \
+		monres/carriagemonitor1.bmp \
+		monres/usersave.bmp \
+		monres/pause1.bmp \
+		monres/slow.bmp \
+		monres/videodownload\ -\ 副本.bmp \
+		monres/PantoMonitor.bmp \
+		monres/down.bmp \
+		monres/9.bmp \
+		monres/cameractrloff.bmp \
+		monres/carriageset.bmp \
+		monres/playback.bmp \
+		monres/nextpage.bmp \
+		monres/PantoMantain.bmp \
+		monres/kaishigegnxin.bmp \
+		monres/usepreset.bmp \
+		monres/Pantoequip.bmp \
+		monres/13.bmp \
+		monres/start1.bmp \
+		monres/settingconfig.bmp \
+		res/background.png \
+		res/ptz_right.png \
+		res/4.bmp \
+		res/pause_down.png \
+		res/right.bmp \
+		res/time_set.png \
+		res/Pantoequip1.bmp \
+		res/111.png \
+		res/fast_hover.png \
+		res/stop_nor.png \
+		res/prev_nor.png \
+		res/sdgbt.png \
+		res/cansel_wait.bmp \
+		res/8.bmp \
+		res/slow_hover.png \
+		res/pause_hover.png \
+		res/Pantobg.bmp \
+		res/plus_hover.png \
+		res/prev_hover.png \
+		res/stop_down.png \
+		res/ptz_up.png \
+		res/stop_hover.png \
+		res/left.bmp \
+		res/777.png \
+		res/ptz_down.png \
+		res/3.bmp \
+		res/MainDlgHead.png \
+		res/shiftSmall.png \
+		res/minus_nor.png \
+		res/next_nor.png \
+		res/myCheckBox.qss \
+		res/slow_down.png \
+		res/ck.png \
+		res/play_nor.png \
+		res/minus_down.png \
+		res/PantoMantain1.bmp \
+		res/7.bmp \
+		res/anniubk1.png \
+		res/clear.png \
+		res/PantoPlay1.bmp \
+		res/Password.png \
+		res/plus.bmp \
+		res/PantoIntell.bmp \
+		res/setuse.bmp \
+		res/2.bmp \
+		res/minus_hover.png \
+		res/near.bmp \
+		res/substruct.bmp \
+		res/savevedio.bmp \
+		res/close.png \
+		res/delete.png \
+		res/background1.png \
+		res/PantoMonitor1.bmp \
+		res/slow_nor.png \
+		res/6.bmp \
+		res/plus_nor.png \
+		res/info.png \
+		res/ptz_left.png \
+		res/pause_nor.png \
+		res/btck.png \
+		res/PantoIntell1.bmp \
+		res/bk2.png \
+		res/plus_down.png \
+		res/fast_nor.png \
+		res/preview.bmp \
+		res/saveing.bmp \
+		res/sure.png \
+		res/playerbk.png \
+		res/1.bmp \
+		res/fast_down.png \
+		res/anniubk.png \
+		res/next_hover.png \
+		res/zxanniubk.png \
+		res/fare.bmp \
+		res/PantoPlay.bmp \
+		res/title.png \
+		res/5.bmp \
+		res/title1.png \
+		res/up.bmp \
+		res/cansel.png \
+		res/play_hover.png \
+		res/gou.png \
+		res/prev_down.png \
+		res/keybackground.png \
+		res/play_down.png \
+		res/user.png \
+		res/PantoMonitor.bmp \
+		res/down.bmp \
+		res/login.png \
+		res/next_down.png \
+		res/playback.bmp \
+		res/PantoMantain.bmp \
+		res/usepreset.bmp \
+		res/nock.png \
+		res/Pantoequip.bmp
 	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/rcc -name res res.qrc -o qrc_res.cpp
 
 compiler_moc_predefs_make_all: moc_predefs.h
@@ -4299,13 +4664,14 @@ pvmsmenuwidget.o: pvmsmenuwidget.cpp pvmsmenuwidget.h \
 		alarmwidget.h \
 		rs485serv.h \
 		ui_pvmsmenuwidget.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QLocale \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QApplication \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qapplication.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qdesktopwidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qguiapplication.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qinputmethod.h \
-		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QHBoxLayout \
-		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QDebug
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QDebug \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/QIcon
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o pvmsmenuwidget.o pvmsmenuwidget.cpp
 
 pvmsmonitorwidget.o: pvmsmonitorwidget.cpp pvmsmonitorwidget.h \
@@ -5298,6 +5664,10 @@ devupdatewidget.o: devupdatewidget.cpp devupdatewidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextoption.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QRadioButton \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qradiobutton.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QTextEdit \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qtextedit.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qabstractscrollarea.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextdocument.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QDebug \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QDateTimeEdit \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qdatetimeedit.h \
@@ -6416,18 +6786,11 @@ usergroupmanage.o: usergroupmanage.cpp usergroupmanage.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qdesktopwidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qguiapplication.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qinputmethod.h \
-		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QGraphicsView \
-		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qgraphicsview.h \
-		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpainter.h \
-		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextoption.h \
-		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpen.h \
-		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qscrollarea.h \
-		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qabstractscrollarea.h \
-		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qframe.h \
-		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qgraphicsscene.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QHeaderView \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qheaderview.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qabstractitemview.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qabstractscrollarea.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qframe.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qabstractitemmodel.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qitemselectionmodel.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qabstractitemdelegate.h \
@@ -6448,6 +6811,8 @@ usergroupmanage.o: usergroupmanage.cpp usergroupmanage.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qlineedit.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextcursor.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextformat.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpen.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextoption.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QPushButton \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qpushbutton.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qabstractbutton.h \

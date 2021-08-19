@@ -55,8 +55,8 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
 
 //    mousePressEvent(e);
 
-    ui->fileDownloadProgressBar->hide();
-    ui->fileDownloadProgressBar->setRange(0,100);
+//    ui->fileDownloadProgressBar->hide();
+//    ui->fileDownloadProgressBar->setRange(0,100);
 
     ui->alarmPushButton->setFocusPolicy(Qt::NoFocus);
 
@@ -323,6 +323,7 @@ void recordPlayWidget::positionchaged(qint64 pos)
 
 void recordPlayWidget::downloadProcessBarDisplaySlot(int iEnableFlag)   //是否显示文件下载进度条，iEnableFlag为1，显示，为0不显示
 {
+#if 0
     if ((0 == iEnableFlag) && (0 == ui->fileDownloadProgressBar->isHidden()))
     {
         ui->fileDownloadProgressBar->hide();
@@ -335,7 +336,9 @@ void recordPlayWidget::downloadProcessBarDisplaySlot(int iEnableFlag)   //是否
         ui->queryPushButton->setEnabled(false);
         ui->downLoadPushButton->setEnabled(false);
     }
+#endif
 }
+
 void recordPlayWidget::setDownloadProcessBarValueSlot(int iValue)   //设置文件下载进度条的值
 {
     if (-1 == iValue) //iValue=-1时,表示被告知U盘已拔出,销毁FTP连接并弹框提示
@@ -383,7 +386,7 @@ void recordPlayWidget::setDownloadProcessBarValueSlot(int iValue)   //设置文�
             return;
         }
 
-        ui->fileDownloadProgressBar->setValue(iValue);
+//        ui->fileDownloadProgressBar->setValue(iValue);
 
         if (100 == iValue)   //iValue=100,下载结束，销毁ftp连接
         {

@@ -25,6 +25,12 @@ usergroupManage::usergroupManage(QWidget *parent) :
     ui->tableWidget->horizontalHeader()->resizeSection(6,111);
 
 
+
+
+
+
+
+
 }
 
 usergroupManage::~usergroupManage()
