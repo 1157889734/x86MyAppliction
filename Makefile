@@ -312,7 +312,7 @@ TARGET        = x86MyApplication
 first: all
 ####### Build rules
 
-x86MyApplication: ui_choicelogindevwidget.h ui_loginwidget.h ui_pvmsmenuwidget.h ui_pvmsmonitorwidget.h ui_recordplaywidget.h ui_inteanalywidget.h ui_devmanagewidget.h ui_devupdatewidget.h ui_alarmwidget.h ui_presetpasswdconfirm.h ui_useredit.h ui_useradd.h ui_usermanage.h ui_usergroupmanage.h ui_waitloginwidget.h ui_usermanageconfig.h $(OBJECTS)  
+x86MyApplication: ui_choicelogindevwidget.h ui_loginwidget.h ui_pvmsmenuwidget.h ui_pvmsmonitorwidget.h ui_recordplaywidget.h ui_inteanalywidget.h ui_devmanagewidget.h ui_devupdatewidget.h ui_alarmwidget.h ui_presetpasswdconfirm.h ui_useredit.h ui_useradd.h ui_usermanage.h ui_usergroupmanage.h ui_waitloginwidget.h ui_usermanageconfig.h ui_devupdatewidget_base.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: MyApplication.pro ../rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++/qmake.conf ../rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/features/spec_pre.prf \
@@ -562,7 +562,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents ../rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents MyApplication.h choicelogindevwidget.h loginwidget.h pvmsmenuwidget.h pvmsmonitorwidget.h recordplaywidget.h inteanalywidget.h devmanagewidget.h devupdatewidget.h alarmwidget.h fileConfig.h gb2312_utf8.h log.h pmsgcli.h state.h types.h presetpasswdconfirm.h myslider.h useredit.h useradd.h usermanage.h ftpApi.h rs485serv.h usergroupmanage.h waitloginwidget.h usermanageconfig.h $(DISTDIR)/
 	$(COPY_FILE) --parents main.cpp MyApplication.cpp choicelogindevwidget.cpp loginwidget.cpp pvmsmenuwidget.cpp pvmsmonitorwidget.cpp recordplaywidget.cpp inteanalywidget.cpp devmanagewidget.cpp devupdatewidget.cpp alarmwidget.cpp fileConfig.cpp state.cpp gb2312_utf8.c log.c pmsgcli.c presetpasswdconfirm.cpp myslider.cpp useredit.cpp useradd.cpp usermanage.cpp ftpApi.c rs485serv.c usergroupmanage.cpp waitloginwidget.cpp usermanageconfig.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents choicelogindevwidget.ui loginwidget.ui pvmsmenuwidget.ui pvmsmonitorwidget.ui recordplaywidget.ui inteanalywidget.ui devmanagewidget.ui devupdatewidget.ui alarmwidget.ui presetpasswdconfirm.ui useredit.ui useradd.ui usermanage.ui usergroupmanage.ui waitloginwidget.ui usermanageconfig.ui $(DISTDIR)/
+	$(COPY_FILE) --parents choicelogindevwidget.ui loginwidget.ui pvmsmenuwidget.ui pvmsmonitorwidget.ui recordplaywidget.ui inteanalywidget.ui devmanagewidget.ui devupdatewidget.ui alarmwidget.ui presetpasswdconfirm.ui useredit.ui useradd.ui usermanage.ui usergroupmanage.ui waitloginwidget.ui usermanageconfig.ui devupdatewidget_base.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -3040,9 +3040,9 @@ compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_choicelogindevwidget.h ui_loginwidget.h ui_pvmsmenuwidget.h ui_pvmsmonitorwidget.h ui_recordplaywidget.h ui_inteanalywidget.h ui_devmanagewidget.h ui_devupdatewidget.h ui_alarmwidget.h ui_presetpasswdconfirm.h ui_useredit.h ui_useradd.h ui_usermanage.h ui_usergroupmanage.h ui_waitloginwidget.h ui_usermanageconfig.h
+compiler_uic_make_all: ui_choicelogindevwidget.h ui_loginwidget.h ui_pvmsmenuwidget.h ui_pvmsmonitorwidget.h ui_recordplaywidget.h ui_inteanalywidget.h ui_devmanagewidget.h ui_devupdatewidget.h ui_alarmwidget.h ui_presetpasswdconfirm.h ui_useredit.h ui_useradd.h ui_usermanage.h ui_usergroupmanage.h ui_waitloginwidget.h ui_usermanageconfig.h ui_devupdatewidget_base.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_choicelogindevwidget.h ui_loginwidget.h ui_pvmsmenuwidget.h ui_pvmsmonitorwidget.h ui_recordplaywidget.h ui_inteanalywidget.h ui_devmanagewidget.h ui_devupdatewidget.h ui_alarmwidget.h ui_presetpasswdconfirm.h ui_useredit.h ui_useradd.h ui_usermanage.h ui_usergroupmanage.h ui_waitloginwidget.h ui_usermanageconfig.h
+	-$(DEL_FILE) ui_choicelogindevwidget.h ui_loginwidget.h ui_pvmsmenuwidget.h ui_pvmsmonitorwidget.h ui_recordplaywidget.h ui_inteanalywidget.h ui_devmanagewidget.h ui_devupdatewidget.h ui_alarmwidget.h ui_presetpasswdconfirm.h ui_useredit.h ui_useradd.h ui_usermanage.h ui_usergroupmanage.h ui_waitloginwidget.h ui_usermanageconfig.h ui_devupdatewidget_base.h
 ui_choicelogindevwidget.h: choicelogindevwidget.ui \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/uic
 	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/uic choicelogindevwidget.ui -o ui_choicelogindevwidget.h
@@ -3106,6 +3106,10 @@ ui_waitloginwidget.h: waitloginwidget.ui \
 ui_usermanageconfig.h: usermanageconfig.ui \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/uic
 	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/uic usermanageconfig.ui -o ui_usermanageconfig.h
+
+ui_devupdatewidget_base.h: devupdatewidget_base.ui \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/uic
+	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/uic devupdatewidget_base.ui -o ui_devupdatewidget_base.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -5286,9 +5290,6 @@ devupdatewidget.o: devupdatewidget.cpp devupdatewidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qtabbar.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qrubberband.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qabstractitemmodel.h \
-		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QDateEdit \
-		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qdatetimeedit.h \
-		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qcalendar.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QLineEdit \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qlineedit.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextcursor.h \
@@ -5297,9 +5298,10 @@ devupdatewidget.o: devupdatewidget.cpp devupdatewidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextoption.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QRadioButton \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qradiobutton.h \
-		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QTimeEdit \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QDebug \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QDateTimeEdit \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qdatetimeedit.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qcalendar.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QMessageBox \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qmessagebox.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qdialog.h \
@@ -6693,7 +6695,47 @@ usermanageconfig.o: usermanageconfig.cpp usermanageconfig.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qfiledevice.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qvector2d.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtouchdevice.h \
-		ui_usermanageconfig.h
+		ui_usermanageconfig.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QVariant \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QApplication \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qapplication.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qcoreapplication.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qeventloop.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qdesktopwidget.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qguiapplication.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qinputmethod.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QComboBox \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qcombobox.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qabstractitemdelegate.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qstyleoption.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qabstractspinbox.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qvalidator.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qregularexpression.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qicon.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qslider.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qabstractslider.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qstyle.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qtabbar.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qtabwidget.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qrubberband.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qframe.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qabstractitemmodel.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QDateEdit \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qdatetimeedit.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qdatetime.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qcalendar.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QLabel \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qlabel.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QLineEdit \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qlineedit.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextcursor.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextformat.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpen.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextoption.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QPushButton \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qpushbutton.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qabstractbutton.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QTimeEdit
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o usermanageconfig.o usermanageconfig.cpp
 
 qrc_res.o: qrc_res.cpp 

@@ -61,12 +61,11 @@ devUpdateWidget::devUpdateWidget(QWidget *parent) :
     gusergroupManage->setGeometry(40, 140, gusergroupManage->width(), gusergroupManage->height());   //设置位置
     gusergroupManage->hide();
 
-    gusermanageconfigpage = new usermanageconfig(this);   //受电弓监控页面
-    gusermanageconfigpage->setGeometry(40, 140, gusermanageconfigpage->width(), gusermanageconfigpage->height());   //设置位置
-    gusermanageconfigpage->show();
+//    gusermanageconfigpage = new usermanageconfig(this);   //受电弓监控页面
+//    gusermanageconfigpage->setGeometry(40, 140, gusermanageconfigpage->width(), gusermanageconfigpage->height());   //设置位置
+//    gusermanageconfigpage->show();
 
-
-//    usermanagePage = new userManage(this);s
+//    usermanagePage = new userManage(this);
 //    usermanagePage->setGeometry(245, 189, usermanagePage->width(), usermanagePage->height());
 //    usermanagePage->hide();
 //    connect(this->usermanagePage, SIGNAL(SendEscape()), this, SLOT(closeUserManageWidget()));
@@ -75,21 +74,19 @@ devUpdateWidget::devUpdateWidget(QWidget *parent) :
 
     connect(ui->permissonManagePushButton, SIGNAL(clicked(bool)), this, SLOT(userManageSlot()));
 
-#if 0 //test
     connect(ui->configFilelookPushButton,   SIGNAL(clicked(bool)),   this, SLOT(configFileSelectionSlot()));
 
-    connect(ui->configFilelookPushButton_2, SIGNAL(clicked(bool)), this, SLOT(configUpdateFileSLOT()));
+//    connect(ui->configFilelookPushButton_2, SIGNAL(clicked(bool)), this, SLOT(configUpdateFileSLOT()));
 
     connect(ui->configFileImportPushButton, SIGNAL(clicked(bool)), this, SLOT(configFileImportSlot()));
 
 
-    connect(ui->configFileIOutPushButton, SIGNAL(clicked(bool)), this, SLOT(configFileImportSlot()));
+//    connect(ui->configFileIOutPushButton, SIGNAL(clicked(bool)), this, SLOT(configFileImportSlot()));
 
 
     connect(ui->updateBeginPushButton, SIGNAL(clicked(bool)), this, SLOT(devUpdateSlot()));
 
     connect(ui->clientRebootPushButton, SIGNAL(clicked(bool)), this, SLOT(devRebootSlot()));
-#endif
 
     g_buttonGroup1 = new QButtonGroup();      //轮询时间设置单选按钮组成一组，以保证改组中的单选框同时只能选一个，同时与以下其他类别的单选框之间互不影响
     g_buttonGroup1->addButton(ui->pollingTimeSetRadioButton,1);
@@ -113,21 +110,17 @@ devUpdateWidget::devUpdateWidget(QWidget *parent) :
 
     connect(ui->pollingTimeSetLineEdit,SIGNAL(textChanged(const QString &)),this,SLOT(lineEditpollingTimeChange(const QString &)));
     connect(ui->presetReturnTimeSetLineEdit,SIGNAL(textChanged(const QString &)),this,SLOT(lineEditpresetReturnTimeChange(const QString &)));
-#if 0 //test
 
-    connect(ui->timeSetPushButton,SIGNAL(clicked()),this,SLOT(monitorSysTime()));
+//    connect(ui->timeSetPushButton,SIGNAL(clicked()),this,SLOT(monitorSysTime()));
     connect(ui->timeAdjustPushButton,SIGNAL(clicked()),this,SLOT(systimeSlot()));
     connect(ui->imageParamSetPushButton, SIGNAL(clicked(bool)), this, SLOT(setCameraImageParamSlot()));     //图像参数设置
-#endif
 
     ui->pollingTimeSetLineEdit->setValidator(new QIntValidator(1,24*3600,this));   //只能输入1-24*3600的整数，不能输入字母或其他数字
     ui->presetReturnTimeSetLineEdit->setValidator(new QIntValidator(1,24*60,this));
 
-#if 0 //test
     ui->brightnessLineEdit->setValidator(new QIntValidator(0,255,this));
     ui->saturationLineEdit->setValidator(new QIntValidator(0,255,this));
     ui->contrastLineEdit->setValidator(new QIntValidator(0,255,this));
-#endif
 
     connect(ui->trainTypeSetPushButton, SIGNAL(clicked(bool)), this, SLOT(setTrainType()));
 
@@ -164,15 +157,13 @@ void devUpdateWidget::registOutButtonClick()
 
 void devUpdateWidget::monitorSysTime()
 {
-    timeTd = QDateTime::currentDateTime();
-#if 0 //test
+//    timeTd = QDateTime::currentDateTime();
 
-    timeTd.setDate(ui->dateEdit->date());
-    timeTd.setTime(ui->timeEdit->time());
-#endif
+//    timeTd.setDate(ui->dateEdit->date());
+//    timeTd.setTime(ui->timeEdit->time());
 
-    time_t tt = (time_t)timeTd.toTime_t();
-    stime(&tt);
+//    time_t tt = (time_t)timeTd.toTime_t();
+//    stime(&tt);
 
 
 }
@@ -182,11 +173,9 @@ void devUpdateWidget::showSysTime()
     timeTd = QDateTime::currentDateTime();
     QString str_data = timeTd.toString("yyyy-MM-dd");
     QString str_time = timeTd.toString("hh:mm:ss");
-#if 0 //test
 
     ui->sysDataAdjustLabel->setText(str_data);
     ui->systimeAdjustLabel->setText(str_time);
-#endif
 
 }
 
@@ -212,9 +201,16 @@ void devUpdateWidget::systimeSlot()
     }
     else
     {
+        QDate date = QDate::currentDate();
+        QTime time_t = QTime::currentTime();
+        year = date.year();
+        month = date.month();
+        day = date.day();
+        hour = time_t.hour();
+        minute = time_t.minute();
+        second = time_t.second();
 
-#if 0 //test
-
+#if 0  //////add
         if (strlen(ui->dateEdit->text().toLatin1().data()) > 0)
         {
             sscanf(ui->dateEdit->text().toLatin1().data(), "%4d-%02d-%02d", &year, &month, &day);
@@ -224,6 +220,7 @@ void devUpdateWidget::systimeSlot()
             sscanf(ui->timeEdit->text().toLatin1().data(), "%2d:%02d:%02d", &hour, &minute, &second);
         }
 #endif
+
 #if 0
 //        snprintf(acTimeStr, sizeof(acTimeStr), "rtc.exe -s \"%4d-%02d-%02d %02d:%02d:%02d\"", year, month, day, hour, minute, second);
 //        system(acTimeStr);
@@ -300,7 +297,6 @@ void devUpdateWidget::setTrainTypeCombox()     //读取系统配置文件，获�
 void devUpdateWidget::getTrainConfig()
 {
 
-#if 0 //test
 
     int i = 0;
     QString item = "";
@@ -332,7 +328,6 @@ void devUpdateWidget::getTrainConfig()
             break;
         }
     }
-#endif
 
 }
 
@@ -455,7 +450,6 @@ void devUpdateWidget::setTrainType()
 
 void devUpdateWidget::setCameraImageParamSlot()
 {
-#if 0 //test
 
     int idex = 0, iRet = 0;
     char acUserType[64] = {0};
@@ -495,7 +489,6 @@ void devUpdateWidget::setCameraImageParamSlot()
 
     }
 
-#endif
 }
 
 void devUpdateWidget::closeUserManageWidget()
@@ -514,53 +507,25 @@ void devUpdateWidget::closeUserManageWidget()
 
 void devUpdateWidget::userManageSlot()  //点击用户管理按钮响应函数，弹出用户管理界面
 {
-//    DebugPrint(DEBUG_UI_OPTION_PRINT, "devUpdateWidget userManage set button pressed!\n");
-#if 1
-
     if( chagepage == 0)
      {
-        qDebug()<<"************-------***********111chagepage--"<<chagepage;
         chagepage = 1;
-
- #if 0
-        if (gusergroupManage == NULL)
-        {
-    //        usermanagePage = new userManage(this);
-    //        usermanagePage->setGeometry(245, 189, usermanagePage->width(), usermanagePage->height());
-    //        usermanagePage->show();
-    //        connect(usermanagePage, SIGNAL(SendEscape()), this, SLOT(closeUserManageWidget()));
-            gusergroupManage = new usergroupManage(this);   //受电弓监控页面
-            gusergroupManage->setGeometry(40, 140, gusergroupManage->width(), gusergroupManage->height());   //设置位置
-            gusergroupManage->show();
-            gusermanageconfigpage->hide();
-
-
-        }
-        else
- #endif
-        {
-            gusergroupManage->show();
-            gusermanageconfigpage->hide();
-
-        }
+        gusergroupManage->show();
+        ui->deviceManagewidget->hide();
     }
     else
     {
-        qDebug()<<"************-------***********2222chagepage--"<<chagepage;
-
         chagepage = 0;
         gusergroupManage->hide();
-        gusermanageconfigpage->show();
+        ui->deviceManagewidget->show();
 
     }
 
-#endif
 }
 
 
 void devUpdateWidget::configFileSelectionSlot()
 {
-#if 0 //test
 
     QString filename = "";
     char acUserType[64] = {0};
@@ -619,15 +584,13 @@ void devUpdateWidget::configFileSelectionSlot()
                 ui->configFileDisplayLineEdit->setText(filename);
             }
         }
-#endif
 
 }
 
-
+#if 0
 void devUpdateWidget::configUpdateFileSLOT()
 {
 
-#if 0 //test
 
     QString filename = "";
     char acUserType[64] = {0};
@@ -686,12 +649,148 @@ void devUpdateWidget::configUpdateFileSLOT()
                 ui->configFileDisplayLineEdit_2->setText(filename);
             }
         }
-#endif
 
 }
+#endif
+
 void devUpdateWidget::devUpdateSlot()
 {
+    int iRet = 0;
+    char acLocalVersion[32] = {0}, acUpdateVersion[32] = {0};
+    FILE *fp = NULL;
+    char acUserType[64] = {0};
+    T_LOG_INFO tLogInfo;
 
+//    DebugPrint(DEBUG_UI_OPTION_PRINT, "devUpdateWidget update device!\n");
+
+    STATE_GetCurrentUserType(acUserType, sizeof(acUserType));
+    if (!strcmp(acUserType, "operator"))	 //操作员无权校时
+    {
+//        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget this user type has no right to update device!\n");
+        QMessageBox box(QMessageBox::Warning,tr("提示"),tr("无权限设置!"));   //新建消息提示框，提示错误信息
+        box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
+        box.setButtonText (QMessageBox::Ok,tr("确 定")); 	//将按钮显示改成"确 定"
+        box.exec();
+    }
+    else
+    {
+        ui->updateStatueTextEdit->clear();
+        ui->clientRebootPushButton->setEnabled(false);    //更新开始，设置重启按钮不可操作
+
+        if (access("/mnt/usb/u/", F_OK) < 0)
+        {
+//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget::%s %d not get USB device!\n",__FUNCTION__,__LINE__);
+            QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
+            msgBox.setStandardButtons(QMessageBox::Yes);
+            msgBox.button(QMessageBox::Yes)->setText("确 定");
+            msgBox.exec();
+            ui->clientRebootPushButton->setEnabled(true);
+            return;
+        }
+        else
+        {
+            if (0 == STATE_FindUsbDev())   //这里处理一个特殊情况:U盘拔掉时umount失败，/mnt/usb/u/路径还存在，但是实际U盘是没有再插上的
+            {
+//                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget::%s %d not get USB device!\n",__FUNCTION__,__LINE__);
+                QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
+                msgBox.setStandardButtons(QMessageBox::Yes);
+                msgBox.button(QMessageBox::Yes)->setText("确 定");
+                msgBox.exec();
+                ui->clientRebootPushButton->setEnabled(true);
+                return;
+            }
+        }
+
+        if (STATE_ParseUsbLicense("/mnt/usb/u/") < 0)
+        {
+//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget update check License error!\n");
+            QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("授权失败!"));
+            box.setStandardButtons (QMessageBox::Ok);
+            box.setButtonText (QMessageBox::Ok,QString::fromUtf8("确 定"));
+            box.exec();
+            return;
+        }
+
+        ui->updateStatueTextEdit->append(tr("发现USB，已准备好"));
+
+        if ((access("/mnt/usb/u/mornitorapp.exe", F_OK) < 0) || (access("/mnt/usb/u/version.ini", F_OK) < 0))
+        {
+//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget not find update file in USB device!\n");
+            QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("U盘中未检测更新文件!")));
+            msgBox.setStandardButtons(QMessageBox::Yes);
+            msgBox.button(QMessageBox::Yes)->setText("确 定");
+            msgBox.exec();
+            ui->clientRebootPushButton->setEnabled(true);
+            return;
+        }
+
+        fp = fopen("/mnt/usb/u/version.ini","rb");
+        if (NULL == fp)
+        {
+//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget open update file fail in USB device!\n");
+            QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("U盘文件读取出错!")));
+            msgBox.setStandardButtons(QMessageBox::Yes);
+            msgBox.button(QMessageBox::Yes)->setText("确 定");
+            msgBox.exec();
+            ui->clientRebootPushButton->setEnabled(true);
+            return;
+        }
+        iRet = fread(acUpdateVersion, 1, sizeof(acUpdateVersion), fp);
+        if (iRet <= 0)
+        {
+//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget read update file fail in USB device!\n");
+            QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("U盘文件读取出错!")));
+            msgBox.setStandardButtons(QMessageBox::Yes);
+            msgBox.button(QMessageBox::Yes)->setText("确 定");
+            msgBox.exec();
+            fclose(fp);
+            ui->clientRebootPushButton->setEnabled(true);
+            return;
+        }
+        fclose(fp);
+
+        STATE_GetSysVersion(acLocalVersion, sizeof(acLocalVersion));
+        if (strlen(acLocalVersion) <= 0)
+        {
+//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget update file fail, can't get app version!\n");
+            QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("升级失败，本地版本号获取失败!")));
+            msgBox.setStandardButtons(QMessageBox::Yes);
+            msgBox.button(QMessageBox::Yes)->setText("确 定");
+            msgBox.exec();
+        }
+
+        if (!strcmp(acLocalVersion, acUpdateVersion))
+        {
+//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget update file fail,update version is the same as the running app version!\n");
+            QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到版本更新!")));
+            msgBox.setStandardButtons(QMessageBox::Yes);
+            msgBox.button(QMessageBox::Yes)->setText("确 定");
+            msgBox.exec();
+            ui->clientRebootPushButton->setEnabled(true);
+            return;
+        }
+
+        memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
+        tLogInfo.iLogType = 0;
+        snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "Update: old version:%s new version:%s", acLocalVersion, acUpdateVersion);
+        LOG_WriteLog(&tLogInfo);
+
+//        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] update device from version:%s to version:%s\n", __FUNCTION__, acLocalVersion, acUpdateVersion);
+
+        ui->updateStatueTextEdit->append(tr("正在复制文件..."));
+
+        if (access("/home/data/backup", F_OK) < 0)
+        {
+            system("mkdir /home/data/backup");
+        }
+
+        system("cp /mnt/usb/u/mornitorapp.exe /home/data/emuVideoMornitorClient/mornitorapp.exe");
+        system("sync");
+
+        ui->updateStatueTextEdit->append(tr("复制文件完成"));
+        ui->updateStatueTextEdit->append(tr("更新完成，请重启!"));
+        ui->clientRebootPushButton->setEnabled(true);    //更新完成，恢复重启按钮可操作
+    }
 
 
 
@@ -725,7 +824,7 @@ void devUpdateWidget::devRebootSlot()
 
 
 }
-
+#if 0
 void devUpdateWidget::configFileOutSLot()
 {
     int iRet = 0;
@@ -757,10 +856,10 @@ void devUpdateWidget::configFileOutSLot()
 
 }
 
+#endif
+
 void devUpdateWidget::configFileImportSlot()
 {
-#if 0 //test
-
 
     int iRet = 0;
     char *pcfileName = NULL;
@@ -824,8 +923,6 @@ void devUpdateWidget::configFileImportSlot()
         msgBox2.exec();
         return;
     }
-
-#endif
 
 
 }

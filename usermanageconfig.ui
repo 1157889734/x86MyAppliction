@@ -129,7 +129,7 @@
     <rect>
      <x>720</x>
      <y>160</y>
-     <width>81</width>
+     <width>111</width>
      <height>27</height>
     </rect>
    </property>
@@ -146,20 +146,7 @@ border-width: 1px;
 border-style: solid;</string>
    </property>
    <property name="text">
-    <string>重启客户端</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_19">
-   <property name="geometry">
-    <rect>
-     <x>280</x>
-     <y>290</y>
-     <width>101</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>选择升级文件:</string>
+    <string>重启</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="configFileDisplayLineEdit">
@@ -167,7 +154,7 @@ border-style: solid;</string>
     <rect>
      <x>20</x>
      <y>320</y>
-     <width>151</width>
+     <width>271</width>
      <height>27</height>
     </rect>
    </property>
@@ -205,7 +192,7 @@ border-style: solid;</string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true"/>
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
     <string>                                         设备配置</string>
@@ -214,9 +201,9 @@ border-style: solid;</string>
   <widget class="QPushButton" name="updateBeginPushButton">
    <property name="geometry">
     <rect>
-     <x>620</x>
+     <x>600</x>
      <y>160</y>
-     <width>81</width>
+     <width>101</width>
      <height>27</height>
     </rect>
    </property>
@@ -234,31 +221,6 @@ border-style: solid;</string>
    </property>
    <property name="text">
     <string>开始更新</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="configFilelookPushButton_2">
-   <property name="geometry">
-    <rect>
-     <x>410</x>
-     <y>320</y>
-     <width>51</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: rgb(255, 255, 255);
-background-image: url(:/res/anniubk.png);
-border-color: rgb(33, 131, 229);
-border-width: 1px;
-border-style: solid;</string>
-   </property>
-   <property name="text">
-    <string>浏览</string>
    </property>
   </widget>
   <widget class="QComboBox" name="carriageSelectionComboBox">
@@ -308,21 +270,6 @@ border-style: solid;</string>
     <string>手动校时</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="configFileDisplayLineEdit_2">
-   <property name="geometry">
-    <rect>
-     <x>250</x>
-     <y>320</y>
-     <width>151</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-    </font>
-   </property>
-  </widget>
   <widget class="QLineEdit" name="saturationLineEdit">
    <property name="geometry">
     <rect>
@@ -365,10 +312,13 @@ border-style: solid;</string>
    <property name="geometry">
     <rect>
      <x>140</x>
-     <y>240</y>
+     <y>250</y>
      <width>67</width>
      <height>17</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
     <string>设备选择:</string>
@@ -382,6 +332,9 @@ border-style: solid;</string>
      <width>67</width>
      <height>17</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
     <string>日期</string>
@@ -511,7 +464,7 @@ border-style: solid;</string>
    <property name="geometry">
     <rect>
      <x>230</x>
-     <y>240</y>
+     <y>250</y>
      <width>86</width>
      <height>25</height>
     </rect>
@@ -525,9 +478,9 @@ border-style: solid;</string>
   <widget class="QPushButton" name="configFilelookPushButton">
    <property name="geometry">
     <rect>
-     <x>180</x>
+     <x>330</x>
      <y>320</y>
-     <width>51</width>
+     <width>101</width>
      <height>27</height>
     </rect>
    </property>
@@ -550,9 +503,9 @@ border-style: solid;</string>
   <widget class="QPushButton" name="configFileImportPushButton">
    <property name="geometry">
     <rect>
-     <x>110</x>
+     <x>90</x>
      <y>360</y>
-     <width>61</width>
+     <width>81</width>
      <height>27</height>
     </rect>
    </property>
@@ -581,33 +534,11 @@ border-style: solid;</string>
      <height>17</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
    <property name="text">
     <string>时间</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="configFileIOutPushButton">
-   <property name="geometry">
-    <rect>
-     <x>280</x>
-     <y>360</y>
-     <width>71</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: rgb(255, 255, 255);
-background-image: url(:/res/anniubk.png);
-border-color: rgb(33, 131, 229);
-border-width: 1px;
-border-style: solid;</string>
-   </property>
-   <property name="text">
-    <string>导出日志</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_13">
@@ -728,6 +659,9 @@ border-style: solid;</string>
      <pointsize>12</pointsize>
     </font>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
    <property name="text">
     <string>系统时间</string>
    </property>
@@ -827,6 +761,31 @@ border-style: solid;</string>
     <string>hh:mm:ss</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="clientRebootPushButton_2">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>360</y>
+     <width>111</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);
+background-image: url(:/res/anniubk.png);
+border-color: rgb(33, 131, 229);
+border-width: 1px;
+border-style: solid;</string>
+   </property>
+   <property name="text">
+    <string>重启</string>
+   </property>
+  </widget>
   <zorder>label_10</zorder>
   <zorder>systimeAdjustLabel</zorder>
   <zorder>label_9</zorder>
@@ -837,7 +796,6 @@ border-style: solid;</string>
   <zorder>configFilelookPushButton</zorder>
   <zorder>configFileImportPushButton</zorder>
   <zorder>label_12</zorder>
-  <zorder>configFileIOutPushButton</zorder>
   <zorder>label_13</zorder>
   <zorder>carriageLabel</zorder>
   <zorder>contrastLabel</zorder>
@@ -854,19 +812,17 @@ border-style: solid;</string>
   <zorder>clientRebootPushButton</zorder>
   <zorder>comboBox</zorder>
   <zorder>configFileDisplayLineEdit</zorder>
-  <zorder>configFileDisplayLineEdit_2</zorder>
   <zorder>configFileSelectionLabel</zorder>
-  <zorder>configFilelookPushButton_2</zorder>
   <zorder>contrastLineEdit</zorder>
   <zorder>dateEdit</zorder>
   <zorder>devConfigLabel</zorder>
   <zorder>label_15</zorder>
   <zorder>label_18</zorder>
-  <zorder>label_19</zorder>
   <zorder>saturationLineEdit</zorder>
   <zorder>sysDataAdjustLabel</zorder>
   <zorder>updateBeginPushButton</zorder>
   <zorder>updateStatusLabel</zorder>
+  <zorder>clientRebootPushButton_2</zorder>
  </widget>
  <resources/>
  <connections/>

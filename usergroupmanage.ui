@@ -13,24 +13,11 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>80</x>
-     <y>20</y>
-     <width>67</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>用户列表</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
      <x>470</x>
-     <y>20</y>
+     <y>25</y>
      <width>67</width>
      <height>17</height>
     </rect>
@@ -47,6 +34,9 @@
      <width>341</width>
      <height>231</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
    </property>
    <row>
     <property name="text">
@@ -73,7 +63,7 @@
    <property name="geometry">
     <rect>
      <x>50</x>
-     <y>324</y>
+     <y>340</y>
      <width>89</width>
      <height>31</height>
     </rect>
@@ -86,23 +76,13 @@
    <property name="geometry">
     <rect>
      <x>180</x>
-     <y>324</y>
+     <y>340</y>
      <width>89</width>
      <height>31</height>
     </rect>
    </property>
    <property name="text">
     <string>删除</string>
-   </property>
-  </widget>
-  <widget class="QGraphicsView" name="graphicsView">
-   <property name="geometry">
-    <rect>
-     <x>470</x>
-     <y>60</y>
-     <width>381</width>
-     <height>311</height>
-    </rect>
    </property>
   </widget>
   <widget class="QRadioButton" name="radioButton">
@@ -217,7 +197,7 @@
    <property name="geometry">
     <rect>
      <x>610</x>
-     <y>330</y>
+     <y>340</y>
      <width>89</width>
      <height>31</height>
     </rect>
@@ -226,10 +206,54 @@
     <string>保存</string>
    </property>
   </widget>
-  <zorder>graphicsView</zorder>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>20</y>
+     <width>411</width>
+     <height>311</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_6">
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>20</y>
+     <width>401</width>
+     <height>311</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_7">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>35</y>
+     <width>67</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>用户列表</string>
+   </property>
+  </widget>
   <zorder>label</zorder>
+  <zorder>label_6</zorder>
   <zorder>label_2</zorder>
-  <zorder>tableWidget</zorder>
   <zorder>addpushButton</zorder>
   <zorder>deletepushButton</zorder>
   <zorder>radioButton</zorder>
@@ -242,6 +266,8 @@
   <zorder>passwdlineEdit</zorder>
   <zorder>surelineEdit</zorder>
   <zorder>savepushButton</zorder>
+  <zorder>label_7</zorder>
+  <zorder>tableWidget</zorder>
  </widget>
  <resources/>
  <connections/>
