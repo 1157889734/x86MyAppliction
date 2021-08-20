@@ -97,6 +97,7 @@ pvmsMenuWidget::pvmsMenuWidget(QWidget *parent) :
     connect(m_recordPlayPage,SIGNAL(registOutSignal(int)),this,SLOT(registOutButtonClick()));
 //    connect(m_inteAnalyPage,SIGNAL(registOutSignal(int)),this,SLOT(registOutButtonClick()));
     connect(m_devUpdatePage,SIGNAL(registOutSignal(int)),this,SLOT(registOutButtonClick()));
+    connect(m_devManagePage,SIGNAL(registOutSignal(int)),this,SLOT(registOutButtonClick()));
 
 
 

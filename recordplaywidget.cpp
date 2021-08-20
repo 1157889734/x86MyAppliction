@@ -154,6 +154,7 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
     connect(ui->queryPushButton, SIGNAL(clicked(bool)), this, SLOT(recordQuerySlot()));    //录像查询按钮按键信号响应
     connect(ui->downLoadPushButton, SIGNAL(clicked(bool)), this, SLOT(recordDownloadSlot()));    //录像下载按钮按键信号响应
     connect(ui->playPushButton, SIGNAL(clicked(bool)), this, SLOT(recordPlayStartSlot()));	   //播放按钮按键信号响应
+    connect(ui->pushButton,SIGNAL(clicked(bool)),this,SLOT(recordPauseSlot()));
     connect(ui->stopPushButton, SIGNAL(clicked(bool)), this, SLOT(recordPlayStopSlot()));		//停止按钮按键信号响应
     connect(ui->fastForwardPushButton, SIGNAL(clicked(bool)), this, SLOT(recordPlayFastForwardSlot()));    //快进按钮按键信号响应
     connect(ui->slowForwardPushButton, SIGNAL(clicked(bool)), this, SLOT(recordPlaySlowForwardSlot()));    //慢放按钮按键信号响应
@@ -820,15 +821,20 @@ void recordPlayWidget::setPlayButtonStyleSheet()
 {
     if (0 == m_iPlayFlag)
     {
-        ui->playPushButton->setStyleSheet("QPushButton{border-image: url(:/res/play_nor.png);background-color: rgb(255, 255, 255);}"
-                                            "QPushButton:hover{border-image: url(:/res/play_hover.png);background-color: rgb(255, 255, 255);}"
-                                            "QPushButton:pressed{border-image: url(:/res/play_down.png);background-color: rgb(255, 255, 255);}");
+//        ui->playPushButton->setStyleSheet("QPushButton{border-image: url(:/res/play_nor.png);background-color: rgb(255, 255, 255);}"
+//                                            "QPushButton:hover{border-image: url(:/res/play_hover.png);background-color: rgb(255, 255, 255);}"
+//                                            "QPushButton:pressed{border-image: url(:/res/play_down.png);background-color: rgb(255, 255, 255);}");
+
+        ui->pushButton->setStyleSheet("QPushButton{border-image: url(:/monres/pause.bmp);background-color: rgb(255, 255, 255);}");
+
     }
     else
     {
-        ui->playPushButton->setStyleSheet("QPushButton{border-image: url(:/res/pause_nor.png);background-color: rgb(255, 255, 255);}"
-                                            "QPushButton:hover{border-image: url(:/res/pause_hover.png);background-color: rgb(255, 255, 255);}"
-                                            "QPushButton:pressed{border-image: url(:/res/pause_down.png);background-color: rgb(255, 255, 255);}");
+//        ui->playPushButton->setStyleSheet("QPushButton{border-image: url(:/res/pause_nor.png);background-color: rgb(255, 255, 255);}"
+//                                            "QPushButton:hover{border-image: url(:/res/pause_hover.png);background-color: rgb(255, 255, 255);}"
+//                                            "QPushButton:pressed{border-image: url(:/res/pause_down.png);background-color: rgb(255, 255, 255);}");
+        ui->pushButton->setStyleSheet("QPushButton{border-image: url(:/monres/pause1.bmp);background-color: rgb(255, 255, 255);}");
+
     }
 }
 
@@ -919,6 +925,14 @@ void recordPlayWidget::recordPlayStartSlot()
 void recordPlayWidget::onTimerOut()
 {
 //    player->setPosition(m_playSlider->value()*player->duration()/maxValue);
+
+}
+
+void recordPlayWidget::recordPauseSlot()
+{
+    m_iPlayFlag = 0;
+    player.pause();
+
 
 }
 

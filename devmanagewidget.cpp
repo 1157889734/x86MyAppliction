@@ -8,6 +8,8 @@
 #include <QDebug>
 
 static int g_iDNum = 0;
+#define PVMSPAGETYPE  2    //此页面类型，2表示受电弓监控页面
+
 
 devManageWidget::devManageWidget(QWidget *parent) :
     QWidget(parent),
@@ -21,7 +23,11 @@ devManageWidget::devManageWidget(QWidget *parent) :
 
 
     ui->devStorageTableWidget->setFocusPolicy(Qt::NoFocus);
-    ui->devStorageTableWidget->horizontalHeader()->setVisible(false);//temp
+    ui->devStorageTableWidget->setColumnCount(7);
+    QStringList header;
+    header<<tr("序号")<<tr("设备名称")<<tr("设备位置")<<tr("设备IP")<<tr("硬盘容量")<<tr("硬盘使用量")<<tr("硬盘状态");
+    ui->devStorageTableWidget->setHorizontalHeaderLabels(header);
+    ui->devStorageTableWidget->horizontalHeader()->setVisible(true);//temp
     ui->devStorageTableWidget->horizontalHeader()->setSectionsClickable(false); //设置表头不可点击
     ui->devStorageTableWidget->horizontalHeader()->setStretchLastSection(true); //设置充满表宽度
     ui->devStorageTableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers); //设置不可编辑
@@ -38,7 +44,12 @@ devManageWidget::devManageWidget(QWidget *parent) :
 
 
     ui->devStatusTableWidget->setFocusPolicy(Qt::NoFocus);
-    ui->devStatusTableWidget->horizontalHeader()->setVisible(false);  //temp
+    ui->devStatusTableWidget->setColumnCount(7);
+    QStringList header_2;
+    header_2<<tr("序号")<<tr("设备名称")<<tr("设备位置")<<tr("设备IP")<<tr("设备版本")<<tr("设备状态")<<tr("设备状态")<<tr("报警");
+    ui->devStatusTableWidget->setHorizontalHeaderLabels(header_2);
+
+    ui->devStatusTableWidget->horizontalHeader()->setVisible(true);  //temp
     ui->devStatusTableWidget->horizontalHeader()->setSectionsClickable(false); //设置表头不可点击
     ui->devStatusTableWidget->horizontalHeader()->setStretchLastSection(true); //设置充满表宽度
     ui->devStatusTableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers); //设置不可编辑
@@ -78,6 +89,8 @@ devManageWidget::devManageWidget(QWidget *parent) :
     connect(ui->TrainNumberSetPushButton, SIGNAL(clicked(bool)), this, SLOT(trainNumberButtonClickSlot()));
 
     connect(ui->TrainNumberLineEdit, SIGNAL(textChanged(QString)), this, SLOT(trainNumberChange(QString)));
+
+    connect(ui->canselPushButton, SIGNAL(clicked()), this, SLOT(registOutButtonClick()));
 
 
     getTrainConfig();
@@ -510,6 +523,15 @@ void devManageWidget::trainNumberButtonClickSlot()
 
     m_TrainNumEditSave = ui->TrainNumberLineEdit->text();
 
+
+}
+
+void devManageWidget::registOutButtonClick()
+{
+
+//    m_pvmsMonitorPage->m_iPresetPasswdOkFlag = 0;
+    this->hide();
+    emit registOutSignal(PVMSPAGETYPE);    //触发注销信号，带上当前设备类型
 
 }
 

@@ -158,6 +158,8 @@ public:
     void triggerGetDevStateSignal();
     void triggerSetTimeSignal();
     void triggerRecordPlayCtrlSignal();
+    void setPlayButtonStyleSheet();
+
 
 signals:
     void alarmPushButoonClickSignal();

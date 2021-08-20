@@ -847,7 +847,7 @@ QPushButton:pressed
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/monres/pause.bmp);</string>
+    <string notr="true">border-image: url(:/monres/pause1.bmp);</string>
    </property>
    <property name="text">
     <string/>

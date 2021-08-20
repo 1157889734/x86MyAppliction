@@ -79,6 +79,7 @@ public slots:
     void registOutButtonClick();
     void recordDownloadSlot();
     void recordPlayStartSlot();
+    void recordPauseSlot();
     void recordPlayStopSlot();
     void recordPlayFastForwardSlot();
     void recordPlaySlowForwardSlot();

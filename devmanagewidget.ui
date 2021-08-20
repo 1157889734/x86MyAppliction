@@ -17,7 +17,7 @@
    <property name="geometry">
     <rect>
      <x>680</x>
-     <y>27</y>
+     <y>10</y>
      <width>113</width>
      <height>27</height>
     </rect>
@@ -32,7 +32,7 @@
    <property name="geometry">
     <rect>
      <x>600</x>
-     <y>30</y>
+     <y>10</y>
      <width>71</width>
      <height>21</height>
     </rect>
@@ -53,7 +53,7 @@
    <property name="geometry">
     <rect>
      <x>270</x>
-     <y>24</y>
+     <y>10</y>
      <width>135</width>
      <height>33</height>
     </rect>
@@ -74,7 +74,7 @@
    <property name="geometry">
     <rect>
      <x>480</x>
-     <y>620</y>
+     <y>590</y>
      <width>80</width>
      <height>34</height>
     </rect>
@@ -94,11 +94,11 @@
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="canselPushButton">
    <property name="geometry">
     <rect>
      <x>720</x>
-     <y>620</y>
+     <y>590</y>
      <width>80</width>
      <height>34</height>
     </rect>
@@ -114,7 +114,7 @@
    <property name="geometry">
     <rect>
      <x>110</x>
-     <y>395</y>
+     <y>370</y>
      <width>797</width>
      <height>201</height>
     </rect>
@@ -134,7 +134,7 @@
     <bool>false</bool>
    </property>
    <property name="columnCount">
-    <number>7</number>
+    <number>0</number>
    </property>
    <attribute name="horizontalHeaderVisible">
     <bool>true</bool>
@@ -163,165 +163,14 @@
    <attribute name="verticalHeaderHighlightSections">
     <bool>false</bool>
    </attribute>
-   <column>
-    <property name="text">
-     <string>序号</string>
-    </property>
-    <property name="font">
-     <font>
-      <weight>50</weight>
-      <italic>false</italic>
-      <bold>false</bold>
-      <underline>false</underline>
-      <strikeout>false</strikeout>
-      <kerning>true</kerning>
-     </font>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-    <property name="background">
-     <color>
-      <red>255</red>
-      <green>255</green>
-      <blue>255</blue>
-     </color>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>设备名称</string>
-    </property>
-    <property name="font">
-     <font>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-    <property name="background">
-     <color>
-      <red>255</red>
-      <green>255</green>
-      <blue>255</blue>
-     </color>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>设备位置</string>
-    </property>
-    <property name="font">
-     <font>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-    <property name="background">
-     <color>
-      <red>255</red>
-      <green>255</green>
-      <blue>255</blue>
-     </color>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>设备IP</string>
-    </property>
-    <property name="font">
-     <font>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-    <property name="background">
-     <color>
-      <red>255</red>
-      <green>255</green>
-      <blue>255</blue>
-     </color>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>硬盘容量</string>
-    </property>
-    <property name="font">
-     <font>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-    <property name="background">
-     <color>
-      <red>255</red>
-      <green>255</green>
-      <blue>255</blue>
-     </color>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>硬盘使用量</string>
-    </property>
-    <property name="font">
-     <font>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-    <property name="background">
-     <color>
-      <red>255</red>
-      <green>255</green>
-      <blue>255</blue>
-     </color>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>硬盘状态</string>
-    </property>
-    <property name="font">
-     <font>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-    <property name="background">
-     <color>
-      <red>255</red>
-      <green>255</green>
-      <blue>255</blue>
-     </color>
-    </property>
-   </column>
   </widget>
   <widget class="QTableWidget" name="devStatusTableWidget">
    <property name="geometry">
     <rect>
      <x>110</x>
-     <y>107</y>
+     <y>90</y>
      <width>801</width>
-     <height>231</height>
+     <height>221</height>
     </rect>
    </property>
    <property name="font">
@@ -342,180 +191,12 @@ background-color: rgb(204, 232, 207);</string>
    <attribute name="verticalHeaderVisible">
     <bool>false</bool>
    </attribute>
-   <column>
-    <property name="text">
-     <string>序号</string>
-    </property>
-    <property name="font">
-     <font>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-    <property name="background">
-     <color>
-      <red>255</red>
-      <green>255</green>
-      <blue>255</blue>
-     </color>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>设备名称</string>
-    </property>
-    <property name="font">
-     <font>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-    <property name="background">
-     <color>
-      <red>255</red>
-      <green>255</green>
-      <blue>255</blue>
-     </color>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>设备位置</string>
-    </property>
-    <property name="font">
-     <font>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-    <property name="background">
-     <color>
-      <red>255</red>
-      <green>255</green>
-      <blue>255</blue>
-     </color>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>设备IP</string>
-    </property>
-    <property name="font">
-     <font>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-    <property name="background">
-     <color>
-      <red>255</red>
-      <green>255</green>
-      <blue>255</blue>
-     </color>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>设备版本</string>
-    </property>
-    <property name="font">
-     <font>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-    <property name="background">
-     <color>
-      <red>255</red>
-      <green>255</green>
-      <blue>255</blue>
-     </color>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>设备状态</string>
-    </property>
-    <property name="font">
-     <font>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-    <property name="background">
-     <color>
-      <red>255</red>
-      <green>255</green>
-      <blue>255</blue>
-     </color>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>设备供应商</string>
-    </property>
-    <property name="font">
-     <font>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-    <property name="background">
-     <color>
-      <red>255</red>
-      <green>255</green>
-      <blue>255</blue>
-     </color>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>报警</string>
-    </property>
-    <property name="font">
-     <font>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-    <property name="background">
-     <color>
-      <red>255</red>
-      <green>255</green>
-      <blue>255</blue>
-     </color>
-    </property>
-   </column>
   </widget>
   <widget class="QLabel" name="devStatusLabel">
    <property name="geometry">
     <rect>
      <x>110</x>
-     <y>80</y>
+     <y>60</y>
      <width>81</width>
      <height>21</height>
     </rect>
@@ -536,7 +217,7 @@ background-color: rgb(204, 232, 207);</string>
    <property name="geometry">
     <rect>
      <x>110</x>
-     <y>365</y>
+     <y>340</y>
      <width>81</width>
      <height>21</height>
     </rect>
@@ -576,9 +257,9 @@ background-color: rgb(204, 232, 207);</string>
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>70</y>
+     <y>50</y>
      <width>951</width>
-     <height>281</height>
+     <height>271</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -592,7 +273,7 @@ background-color: rgb(204, 232, 207);</string>
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>360</y>
+     <y>330</y>
      <width>951</width>
      <height>251</height>
     </rect>
@@ -607,7 +288,7 @@ background-color: rgb(255, 255, 255);</string>
   <zorder>TrainNumberLineEdit</zorder>
   <zorder>TrainNumberlabel</zorder>
   <zorder>TrainNumberSetPushButton</zorder>
-  <zorder>pushButton</zorder>
+  <zorder>canselPushButton</zorder>
   <zorder>lineEdit</zorder>
   <zorder>devStatusTableWidget</zorder>
   <zorder>devStatusLabel</zorder>

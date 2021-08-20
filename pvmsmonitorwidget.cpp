@@ -823,6 +823,8 @@ void pvmsMonitorWidget::startPollingSlot()
     sysinfo(&s_info);
     tPollingOparateTime = s_info.uptime;
 
+    setPlayButtonStyleSheet();
+
 }
 void pvmsMonitorWidget::pausePollingSlot()
 {
@@ -835,6 +837,8 @@ void pvmsMonitorWidget::pausePollingSlot()
     struct sysinfo s_info;
     sysinfo(&s_info);
     tPollingOparateTime = s_info.uptime;
+    setPlayButtonStyleSheet();
+
 }
 void pvmsMonitorWidget::manualSwitchLastCameraSlot()
 {
@@ -1464,6 +1468,30 @@ void pvmsMonitorWidget::triggerRecordPlayCtrlSignal()
 {
     emit recordPlayCtrlSignal();
 }
+
+void pvmsMonitorWidget::setPlayButtonStyleSheet()
+{
+    if(m_iPollingFlag == 1)
+    {
+        ui->startPollingPushButton->setStyleSheet("QPushButton{border-image: url(:/monres/start1.bmp);background-color: rgb(255, 255, 255);}"
+                                                  /*"QPushButton:pressed{border-image: url(:/monres/start.bmp);background-color: rgb(255, 255, 255);}"*/);
+
+        ui->pausePollingPushButton->setStyleSheet("QPushButton{border-image: url(:/monres/pause.bmp);background-color: rgb(255, 255, 255);}"
+                                                  /*"QPushButton:pressed{border-image: url(:/monres/pause1.bmp);background-color: rgb(255, 255, 255);}"*/);
+    }
+    else
+    {
+        ui->startPollingPushButton->setStyleSheet("QPushButton{border-image: url(:/monres/start.bmp);background-color: rgb(255, 255, 255);}"
+                                                  /*"QPushButton:pressed{border-image: url(:/monres/start.bmp);background-color: rgb(255, 255, 255);}"*/);
+
+        ui->pausePollingPushButton->setStyleSheet("QPushButton{border-image: url(:/monres/pause1.bmp);background-color: rgb(255, 255, 255);}"
+                                                  /*"QPushButton:pressed{border-image: url(:/monres/pause1.bmp);background-color: rgb(255, 255, 255);}"*/);
+
+    }
+
+
+}
+
 
 void pvmsMonitorWidget::recordPlayCtrlSlot()
 {

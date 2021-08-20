@@ -125,7 +125,7 @@ QPushButton:pressed
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/monres/start.bmp);</string>
+    <string notr="true">border-image: url(:/monres/start1.bmp);</string>
    </property>
    <property name="text">
     <string/>
@@ -655,7 +655,10 @@ QPushButton:pressed
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/monres/fast.bmp);</string>
+    <string notr="true">QPushButton{
+border-image: url(:/monres/fast.bmp);}
+QPushButton:pressed
+{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -708,7 +711,10 @@ QPushButton:pressed
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/monres/slow.bmp);</string>
+    <string notr="true">QPushButton{
+border-image: url(:/monres/slow.bmp);}
+QPushButton:pressed
+{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
