@@ -13,15 +13,24 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="layoutDirection">
+   <enum>Qt::LeftToRight</enum>
+  </property>
   <property name="styleSheet">
-   <string notr="true">border-image: url(:/monres/Pantobg.bmp);</string>
+   <string notr="true">#pvmsMenuWidget { 
+border-image: url(:/monres/Pantobg.bmp); 
+} 
+#pvmsMenuWidget * { 
+border-image:url(); 
+}
+</string>
   </property>
   <widget class="QPushButton" name="pvmsMonitorMenuPushButton">
    <property name="geometry">
     <rect>
      <x>1</x>
-     <y>41</y>
-     <width>250</width>
+     <y>35</y>
+     <width>254</width>
      <height>102</height>
     </rect>
    </property>
@@ -41,8 +50,7 @@
     <bool>false</bool>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/monres/carriagemonitor.bmp);
-pressed{border-image}: url(:/monres/carriagemonitor1.bmp);
+    <string notr="true">background-color: rgb(5, 135, 167);
 
 
 
@@ -79,8 +87,8 @@ pressed{border-image}: url(:/monres/carriagemonitor1.bmp);
   <widget class="QPushButton" name="recordPlayMenuPushButton">
    <property name="geometry">
     <rect>
-     <x>252</x>
-     <y>41</y>
+     <x>256</x>
+     <y>35</y>
      <width>254</width>
      <height>102</height>
     </rect>
@@ -91,7 +99,7 @@ pressed{border-image}: url(:/monres/carriagemonitor1.bmp);
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/monres/carriageplay.bmp);</string>
+    <string notr="true">background-color: rgb(5, 135, 167);</string>
    </property>
    <property name="text">
     <string/>
@@ -106,8 +114,8 @@ pressed{border-image}: url(:/monres/carriagemonitor1.bmp);
   <widget class="QPushButton" name="devManageMenuPushButton">
    <property name="geometry">
     <rect>
-     <x>508</x>
-     <y>41</y>
+     <x>511</x>
+     <y>35</y>
      <width>254</width>
      <height>102</height>
     </rect>
@@ -118,7 +126,7 @@ pressed{border-image}: url(:/monres/carriagemonitor1.bmp);
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/monres/carriageequip.bmp);</string>
+    <string notr="true">background-color: rgb(5, 135, 167);</string>
    </property>
    <property name="text">
     <string/>
@@ -136,8 +144,8 @@ pressed{border-image}: url(:/monres/carriagemonitor1.bmp);
    </property>
    <property name="geometry">
     <rect>
-     <x>765</x>
-     <y>41</y>
+     <x>766</x>
+     <y>35</y>
      <width>254</width>
      <height>102</height>
     </rect>
@@ -151,7 +159,7 @@ pressed{border-image}: url(:/monres/carriagemonitor1.bmp);
     <cursorShape>ArrowCursor</cursorShape>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/monres/carriagemaintain.bmp);</string>
+    <string notr="true">background-color: rgb(5, 135, 167);</string>
    </property>
    <property name="text">
     <string/>

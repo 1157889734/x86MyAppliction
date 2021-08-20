@@ -21,13 +21,14 @@ devManageWidget::devManageWidget(QWidget *parent) :
 
 
     ui->devStorageTableWidget->setFocusPolicy(Qt::NoFocus);
+    ui->devStorageTableWidget->horizontalHeader()->setVisible(false);//temp
     ui->devStorageTableWidget->horizontalHeader()->setSectionsClickable(false); //设置表头不可点击
     ui->devStorageTableWidget->horizontalHeader()->setStretchLastSection(true); //设置充满表宽度
     ui->devStorageTableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers); //设置不可编辑
     ui->devStorageTableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);  //整行选中的方式
     ui->devStorageTableWidget->setSelectionMode(QAbstractItemView::SingleSelection); //设置只能选择一行，不能多行选中
-    ui->devStorageTableWidget->setAlternatingRowColors(true);                        //设置隔一行变一颜色，即：一灰一白
-    ui->devStorageTableWidget->horizontalHeader()->resizeSection(0,46); //设置表头第一列的宽度为46
+//    ui->devStorageTableWidget->setAlternatingRowColors(true);                        //设置隔一行变一颜色，即：一灰一白
+    ui->devStorageTableWidget->horizontalHeader()->resizeSection(0,50); //设置表头第一列的宽度为46
     ui->devStorageTableWidget->horizontalHeader()->resizeSection(1,136);
     ui->devStorageTableWidget->horizontalHeader()->resizeSection(2,136);
     ui->devStorageTableWidget->horizontalHeader()->resizeSection(3,136);
@@ -37,13 +38,14 @@ devManageWidget::devManageWidget(QWidget *parent) :
 
 
     ui->devStatusTableWidget->setFocusPolicy(Qt::NoFocus);
+    ui->devStatusTableWidget->horizontalHeader()->setVisible(false);  //temp
     ui->devStatusTableWidget->horizontalHeader()->setSectionsClickable(false); //设置表头不可点击
     ui->devStatusTableWidget->horizontalHeader()->setStretchLastSection(true); //设置充满表宽度
     ui->devStatusTableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers); //设置不可编辑
     ui->devStatusTableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);  //整行选中的方式
     ui->devStatusTableWidget->setSelectionMode(QAbstractItemView::SingleSelection); //设置只能选择一行，不能多行选中
-    ui->devStatusTableWidget->setAlternatingRowColors(true);                        //设置隔一行变一颜色，即：一灰一白
-    ui->devStatusTableWidget->horizontalHeader()->resizeSection(0,46); //设置表头第一列的宽度为46px
+//    ui->devStatusTableWidget->setAlternatingRowColors(true);                        //设置隔一行变一颜色，即：一灰一白
+    ui->devStatusTableWidget->horizontalHeader()->resizeSection(0,50); //设置表头第一列的宽度为46px
     ui->devStatusTableWidget->horizontalHeader()->resizeSection(1,150);
     ui->devStatusTableWidget->horizontalHeader()->resizeSection(2,150);
     ui->devStatusTableWidget->horizontalHeader()->resizeSection(3,150);
@@ -685,17 +687,17 @@ void devManageWidget::getTrainConfig()   //获取车型配置信息，填充页�
     memset(&tTrainConfigInfo, 0, sizeof(T_TRAIN_CONFIG));
     STATE_GetCurrentTrainConfigInfo(&tTrainConfigInfo);
 
-    /*获取编组信息，再填充编组设置单选框*/
-    if (1 == tTrainConfigInfo.iFormationType)
-    {
-        ui->groupSetRadioButton->setChecked(true);
-        ui->groupSetRadioButton_2->setChecked(false);
-    }
-    else if (2 == tTrainConfigInfo.iFormationType)
-    {
-        ui->groupSetRadioButton->setChecked(false);
-        ui->groupSetRadioButton_2->setChecked(true);
-    }
+//    /*获取编组信息，再填充编组设置单选框*/
+//    if (1 == tTrainConfigInfo.iFormationType)
+//    {
+//        ui->groupSetRadioButton->setChecked(true);
+//        ui->groupSetRadioButton_2->setChecked(false);
+//    }
+//    else if (2 == tTrainConfigInfo.iFormationType)
+//    {
+//        ui->groupSetRadioButton->setChecked(false);
+//        ui->groupSetRadioButton_2->setChecked(true);
+//    }
 
     /*获取各服务器即摄像机信息，填充相应的列表控件*/
     for (i = 0; i < tTrainConfigInfo.iNvrServerCount; i++)

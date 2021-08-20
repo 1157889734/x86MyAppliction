@@ -50,6 +50,14 @@ waitLoginWidget::waitLoginWidget(QWidget *parent) :
     char acVersion[32] = {0};
 
     ui->setupUi(this);    //加载UI界面
+
+    this->setAutoFillBackground(true);
+    QPalette palette;
+    palette.setBrush(QPalette::Background,QBrush(QPixmap(":/monres/background.bmp")));
+    QIcon icon;
+    this->setPalette(palette);
+
+
     this->setWindowFlags(Qt::FramelessWindowHint);    //隐藏界面标题栏
     ui->okPushButton->setFocusPolicy(Qt::NoFocus); // 得到焦点时，不显示虚线框
 

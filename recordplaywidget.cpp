@@ -63,7 +63,7 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
 
     m_playSlider = new mySlider(this);    //创建播放进度条
     m_playSlider->setOrientation(Qt::Horizontal);    //设置水平方向
-    m_playSlider->setGeometry(320, 584, 702, 29);
+    m_playSlider->setGeometry(320, 554, 702, 29);
     m_playSlider->show();
     /*定义播放进度条样式*/
     m_playSlider->setStyleSheet("QSlider::groove:horizontal{border: 1px solid #4A708B;background: #C0C0C0;height: 5px;border-radius: 1px;padding-left:-1px;padding-right:-1px;}"
@@ -110,7 +110,7 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
     ui->slowForwardPushButton->setFocusPolicy(Qt::NoFocus);
     ui->plusStepPushButton->setFocusPolicy(Qt::NoFocus);
     ui->minusStepPushButton->setFocusPolicy(Qt::NoFocus);
-    ui->playSpeedLineEdit->setFocusPolicy(Qt::NoFocus);
+//    ui->playSpeedLineEdit->setFocusPolicy(Qt::NoFocus);
 
 
     //参数初始化
@@ -140,6 +140,9 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
     ui->EnddateEdit->setDateTime(QDateTime::currentDateTime());
 
     ui->EndtimeEdit->setDateTime(QDateTime::currentDateTime());
+
+
+
 
 
     ui->StartdateEdit->setDateTime(QDateTime::currentDateTime());
@@ -207,7 +210,7 @@ void recordPlayWidget::createMeadia()
 {
     /*新建一个播放窗体*/
     m_playWin = new QVideoWidget(this);
-    m_playWin->setGeometry(320, 7, 698, 580);
+    m_playWin->setGeometry(325, 5, 698, 560);
     m_playWin->show();
     m_playWin->setStyleSheet("QWidget{background-color: rgb(0, 0, 0);}");
 
@@ -253,7 +256,7 @@ void recordPlayWidget::playSliderMoveSlot(int iPosTime)
     m_iPlayFlag = 1;
     m_dPlaySpeed = 1.00;
     playSpeedStr = "1.00x";
-    ui->playSpeedLineEdit->setText(playSpeedStr);
+//    ui->playSpeedLineEdit->setText(playSpeedStr);
 
     pthread_mutex_lock(&g_sliderValueSetMutex);
     //m_iSliderValue = iPosTime;
@@ -295,7 +298,7 @@ void recordPlayWidget::playSliderPressSlot(int iPosTime)
     m_iPlayFlag = 1;
     m_dPlaySpeed = 1.00;
     playSpeedStr = "1.00x";
-    ui->playSpeedLineEdit->setText(playSpeedStr);
+//    ui->playSpeedLineEdit->setText(playSpeedStr);
 
     pthread_mutex_lock(&g_sliderValueSetMutex);
     m_playSlider->setValue(iPosTime);
@@ -480,6 +483,7 @@ void recordPlayWidget::recordTableWidgetFillSlot()
 
 void recordPlayWidget::setRangeLabelSlot()
 {
+#if 0
     char acStr[32] = {0};
     int iMin = 0, iSec = 0;
 
@@ -492,22 +496,25 @@ void recordPlayWidget::setRangeLabelSlot()
     memset(acStr, 0, sizeof(acStr));
     snprintf(acStr, sizeof(acStr), "%02d", iSec);
     ui->rangeSecLabel->setText(QString(QLatin1String(acStr)));
+#endif
 }
 
 void recordPlayWidget::setPlaySliderValueSlot(int iValue)    //实时刷新播放进度条的当前值
 {
+#if 0
+
     char acStr[32] = {0};
     int iMin = 0, iSec = 0;
-
     iMin = iValue / 60;
     iSec = iValue % 60;
 
     snprintf(acStr, sizeof(acStr), "%02d", iMin);
-    ui->playMinLabel->setText(QString(QLatin1String(acStr)));
+//    ui->playMinLabel->setText(QString(QLatin1String(acStr)));
 
     memset(acStr, 0, sizeof(acStr));
     snprintf(acStr, sizeof(acStr), "%02d", iSec);
-    ui->playSecLabel->setText(QString(QLatin1String(acStr)));
+//    ui->playSecLabel->setText(QString(QLatin1String(acStr)));
+#endif
 
     m_playSlider->setValue(iValue);
 
@@ -883,7 +890,7 @@ void recordPlayWidget::recordPlayStartSlot()
             break;
         }
         player.setPlaybackRate(m_dPlaySpeed);
-        ui->playSpeedLineEdit->setText(playSpeedStr);
+//        ui->playSpeedLineEdit->setText(playSpeedStr);
     }
     else
     {
@@ -899,12 +906,12 @@ void recordPlayWidget::recordPlayStartSlot()
     s=totalplaytime-h*3600-m*60;
     char acStr[32] = {0};
 
-    snprintf(acStr, sizeof(acStr), "%02d", m);
-    ui->rangeMinLabel->setText(QString(QLatin1String(acStr)));
+//    snprintf(acStr, sizeof(acStr), "%02d", m);
+//    ui->rangeMinLabel->setText(QString(QLatin1String(acStr)));
 
-    memset(acStr, 0, sizeof(acStr));
-    snprintf(acStr, sizeof(acStr), "%02d", s);
-    ui->rangeSecLabel->setText(QString(QLatin1String(acStr)));
+//    memset(acStr, 0, sizeof(acStr));
+//    snprintf(acStr, sizeof(acStr), "%02d", s);
+//    ui->rangeSecLabel->setText(QString(QLatin1String(acStr)));
 
 
 }
@@ -937,11 +944,11 @@ void recordPlayWidget::closePlayWin()
     player.stop();
     emit setRecordPlayFlagSignal(0);
 
-    ui->playMinLabel->setText("00");
-    ui->playSecLabel->setText("00");
-    ui->rangeMinLabel->setText("00");
-    ui->rangeSecLabel->setText("00");
-    ui->playSpeedLineEdit->setText("1.00x");
+//    ui->playMinLabel->setText("00");
+//    ui->playSecLabel->setText("00");
+//    ui->rangeMinLabel->setText("00");
+//    ui->rangeSecLabel->setText("00");
+//    ui->playSpeedLineEdit->setText("1.00x");
 
     if (m_iRecordIdex >= 0 && ui->recordFileTableWidget->item(m_iRecordIdex, 2) != NULL && 0 == ui->recordFileTableWidget->item(m_iRecordIdex, 2)->text().contains("tmp"))
     {
@@ -1000,7 +1007,7 @@ void recordPlayWidget::recordPlayFastForwardSlot()
     {
         playSpeedStr += "x";
     }
-    ui->playSpeedLineEdit->setText(playSpeedStr);
+//    ui->playSpeedLineEdit->setText(playSpeedStr);
     player.setPlaybackRate(m_dPlaySpeed);
     setPlayButtonStyleSheet();
 
@@ -1029,7 +1036,7 @@ void recordPlayWidget::recordPlaySlowForwardSlot()
     {
         playSpeedStr += "x";
     }
-    ui->playSpeedLineEdit->setText(playSpeedStr);
+//    ui->playSpeedLineEdit->setText(playSpeedStr);
     player.setPlaybackRate(m_dPlaySpeed);
     setPlayButtonStyleSheet();
 }
@@ -1116,7 +1123,7 @@ void recordPlayWidget::playPlusStepSlot()
     m_iPlayFlag = 1;
     m_dPlaySpeed = 1.00;
     playSpeedStr = "1.00x";
-    ui->playSpeedLineEdit->setText(playSpeedStr);
+//    ui->playSpeedLineEdit->setText(playSpeedStr);
     setPlayButtonStyleSheet();
 
     iPosTime = player.position() + 60;
@@ -1151,7 +1158,7 @@ void recordPlayWidget::playMinusStepSlot()
     m_iPlayFlag = 1;
     m_dPlaySpeed = 1.00;
     playSpeedStr = "1.00x";
-    ui->playSpeedLineEdit->setText(playSpeedStr);
+//    ui->playSpeedLineEdit->setText(playSpeedStr);
     setPlayButtonStyleSheet();
 
     iPosTime = player.position() - 60;
@@ -1408,7 +1415,7 @@ void recordPlayWidget::recordPlayCtrl(int iRow, int iDex)
     m_iPlayFlag = 1;
     m_dPlaySpeed = 1.00;
     playSpeedStr = "1.00x";
-    ui->playSpeedLineEdit->setText(playSpeedStr);
+//    ui->playSpeedLineEdit->setText(playSpeedStr);
     setPlayButtonStyleSheet();
 
     snprintf(acRtspAddr, sizeof(acRtspAddr), "rtsp://192.168.%d.81:554/%s",tTrainConfigInfo.tNvrServerInfo[iDex].iCarriageNO+100, m_acFilePath[iRow]);

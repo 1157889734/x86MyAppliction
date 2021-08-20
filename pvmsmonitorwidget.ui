@@ -17,7 +17,7 @@
    <property name="geometry">
     <rect>
      <x>794</x>
-     <y>230</y>
+     <y>220</y>
      <width>226</width>
      <height>41</height>
     </rect>
@@ -44,7 +44,7 @@
    <property name="geometry">
     <rect>
      <x>960</x>
-     <y>390</y>
+     <y>370</y>
      <width>42</width>
      <height>41</height>
     </rect>
@@ -55,7 +55,10 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/res/8.bmp);</string>
+    <string notr="true">QPushButton{
+border-image: url(:/res/8.bmp);}
+QPushButton:pressed
+{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -68,7 +71,7 @@
    <property name="geometry">
     <rect>
      <x>808</x>
-     <y>190</y>
+     <y>170</y>
      <width>71</width>
      <height>35</height>
     </rect>
@@ -79,7 +82,10 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/res/plus.bmp);</string>
+    <string notr="true">QPushButton{
+border-image: url(:/res/plus.bmp);}
+QPushButton:pressed
+{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -89,7 +95,7 @@
    <property name="geometry">
     <rect>
      <x>930</x>
-     <y>230</y>
+     <y>220</y>
      <width>71</width>
      <height>35</height>
     </rect>
@@ -100,7 +106,10 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/res/near.bmp);</string>
+    <string notr="true">QPushButton{
+border-image: url(:/res/near.bmp);}
+QPushButton:pressed
+{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -110,7 +119,7 @@
    <property name="geometry">
     <rect>
      <x>910</x>
-     <y>540</y>
+     <y>510</y>
      <width>30</width>
      <height>31</height>
     </rect>
@@ -141,7 +150,7 @@
    <property name="geometry">
     <rect>
      <x>890</x>
-     <y>200</y>
+     <y>180</y>
      <width>31</width>
      <height>17</height>
     </rect>
@@ -158,7 +167,7 @@ color: rgb(0, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>810</x>
-     <y>500</y>
+     <y>470</y>
      <width>81</width>
      <height>32</height>
     </rect>
@@ -187,7 +196,7 @@ QPushButton:checked
    <property name="geometry">
     <rect>
      <x>890</x>
-     <y>110</y>
+     <y>100</y>
      <width>31</width>
      <height>17</height>
     </rect>
@@ -204,7 +213,7 @@ color: rgb(0, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>808</x>
-     <y>230</y>
+     <y>220</y>
      <width>71</width>
      <height>35</height>
     </rect>
@@ -215,7 +224,10 @@ color: rgb(0, 0, 0);</string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/res/fare.bmp);</string>
+    <string notr="true">QPushButton{
+border-image: url(:/res/fare.bmp);}
+QPushButton:pressed
+{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -225,7 +237,7 @@ color: rgb(0, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>906</x>
-     <y>330</y>
+     <y>310</y>
      <width>42</width>
      <height>41</height>
     </rect>
@@ -236,7 +248,10 @@ color: rgb(0, 0, 0);</string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/res/3.bmp);</string>
+    <string notr="true">QPushButton{
+border-image: url(:/res/3.bmp);}
+QPushButton:pressed
+{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -249,7 +264,7 @@ color: rgb(0, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>860</x>
-     <y>540</y>
+     <y>510</y>
      <width>30</width>
      <height>31</height>
     </rect>
@@ -277,7 +292,7 @@ color: rgb(0, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>930</x>
-     <y>190</y>
+     <y>170</y>
      <width>71</width>
      <height>35</height>
     </rect>
@@ -288,7 +303,10 @@ color: rgb(0, 0, 0);</string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/res/substruct.bmp);</string>
+    <string notr="true">QPushButton{
+border-image: url(:/res/substruct.bmp);}
+QPushButton:pressed
+{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -298,7 +316,7 @@ color: rgb(0, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>856</x>
-     <y>330</y>
+     <y>310</y>
      <width>42</width>
      <height>41</height>
     </rect>
@@ -309,7 +327,11 @@ color: rgb(0, 0, 0);</string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/res/2.bmp);</string>
+    <string notr="true">QPushButton{
+border-image: url(:/res/2.bmp);}
+QPushButton:pressed
+{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}
+</string>
    </property>
    <property name="text">
     <string/>
@@ -322,13 +344,16 @@ color: rgb(0, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>946</x>
-     <y>100</y>
+     <y>90</y>
      <width>69</width>
      <height>30</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/res/right.bmp);</string>
+    <string notr="true">QPushButton{
+border-image: url(:/res/right.bmp);}
+QPushButton:pressed
+{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -344,7 +369,7 @@ color: rgb(0, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>890</x>
-     <y>240</y>
+     <y>230</y>
      <width>31</width>
      <height>17</height>
     </rect>
@@ -361,13 +386,16 @@ color: rgb(0, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>810</x>
-     <y>100</y>
+     <y>90</y>
      <width>69</width>
      <height>30</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/res/left.bmp);</string>
+    <string notr="true">QPushButton{
+border-image: url(:/res/left.bmp);}
+QPushButton:pressed
+{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -383,8 +411,8 @@ color: rgb(0, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>794</x>
-     <y>60</y>
-     <width>226</width>
+     <y>40</y>
+     <width>231</width>
      <height>131</height>
     </rect>
    </property>
@@ -410,7 +438,7 @@ color: rgb(0, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>810</x>
-     <y>450</y>
+     <y>430</y>
      <width>81</width>
      <height>32</height>
     </rect>
@@ -421,7 +449,10 @@ color: rgb(0, 0, 0);</string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/res/setuse.bmp);</string>
+    <string notr="true">QPushButton{
+border-image: url(:/res/setuse.bmp);}
+QPushButton:pressed
+{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -437,7 +468,7 @@ color: rgb(0, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>910</x>
-     <y>390</y>
+     <y>370</y>
      <width>42</width>
      <height>41</height>
     </rect>
@@ -448,7 +479,10 @@ color: rgb(0, 0, 0);</string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/res/7.bmp);</string>
+    <string notr="true">QPushButton{
+border-image: url(:/res/7.bmp);}
+QPushButton:pressed
+{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -461,13 +495,16 @@ color: rgb(0, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>850</x>
-     <y>140</y>
+     <y>130</y>
      <width>110</width>
      <height>30</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/res/down.bmp);</string>
+    <string notr="true">QPushButton{
+border-image: url(:/res/down.bmp);}
+QPushButton:pressed
+{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -483,7 +520,7 @@ color: rgb(0, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>830</x>
-     <y>580</y>
+     <y>550</y>
      <width>151</width>
      <height>31</height>
     </rect>
@@ -494,7 +531,10 @@ color: rgb(0, 0, 0);</string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/monres/savevedio.bmp);</string>
+    <string notr="true">QPushButton{
+border-image: url(:/monres/savevedio.bmp);}
+QPushButton:pressed
+{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -504,7 +544,7 @@ color: rgb(0, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>810</x>
-     <y>620</y>
+     <y>600</y>
      <width>71</width>
      <height>31</height>
     </rect>
@@ -515,7 +555,10 @@ color: rgb(0, 0, 0);</string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/monres/alertoff.bmp);</string>
+    <string notr="true">QPushButton{
+border-image: url(:/monres/alertoff.bmp);}
+QPushButton:pressed
+{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -528,7 +571,7 @@ color: rgb(0, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>920</x>
-     <y>500</y>
+     <y>470</y>
      <width>81</width>
      <height>32</height>
     </rect>
@@ -557,7 +600,7 @@ QPushButton:checked
    <property name="geometry">
     <rect>
      <x>956</x>
-     <y>330</y>
+     <y>310</y>
      <width>42</width>
      <height>41</height>
     </rect>
@@ -568,7 +611,10 @@ QPushButton:checked
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/res/4.bmp);</string>
+    <string notr="true">QPushButton{
+border-image: url(:/res/4.bmp);}
+QPushButton:pressed
+{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -581,8 +627,8 @@ QPushButton:checked
    <property name="geometry">
     <rect>
      <x>794</x>
-     <y>569</y>
-     <width>226</width>
+     <y>560</y>
+     <width>231</width>
      <height>101</height>
     </rect>
    </property>
@@ -603,7 +649,7 @@ QPushButton:checked
    <property name="geometry">
     <rect>
      <x>970</x>
-     <y>540</y>
+     <y>510</y>
      <width>30</width>
      <height>31</height>
     </rect>
@@ -628,13 +674,16 @@ QPushButton:checked
    <property name="geometry">
     <rect>
      <x>850</x>
-     <y>60</y>
+     <y>50</y>
      <width>110</width>
      <height>30</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/res/up.bmp);</string>
+    <string notr="true">QPushButton{
+border-image: url(:/res/up.bmp);}
+QPushButton:pressed
+{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -653,7 +702,7 @@ QPushButton:checked
    <property name="geometry">
     <rect>
      <x>810</x>
-     <y>540</y>
+     <y>510</y>
      <width>30</width>
      <height>31</height>
     </rect>
@@ -678,9 +727,9 @@ QPushButton:checked
    <property name="geometry">
     <rect>
      <x>794</x>
-     <y>5</y>
-     <width>226</width>
-     <height>55</height>
+     <y>-5</y>
+     <width>231</width>
+     <height>51</height>
     </rect>
    </property>
    <property name="font">
@@ -711,7 +760,7 @@ QPushButton:checked
    <property name="geometry">
     <rect>
      <x>860</x>
-     <y>390</y>
+     <y>370</y>
      <width>42</width>
      <height>41</height>
     </rect>
@@ -722,7 +771,10 @@ QPushButton:checked
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/res/6.bmp);</string>
+    <string notr="true">QPushButton{
+border-image: url(:/res/6.bmp);}
+QPushButton:pressed
+{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -735,7 +787,7 @@ QPushButton:checked
    <property name="geometry">
     <rect>
      <x>807</x>
-     <y>330</y>
+     <y>310</y>
      <width>41</width>
      <height>41</height>
     </rect>
@@ -746,7 +798,11 @@ QPushButton:checked
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/res/1.bmp);</string>
+    <string notr="true">QPushButton
+{border-image: url(:/res/1.bmp);}
+QPushButton:pressed
+{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}
+</string>
    </property>
    <property name="text">
     <string/>
@@ -765,7 +821,7 @@ QPushButton:checked
    <property name="geometry">
     <rect>
      <x>810</x>
-     <y>390</y>
+     <y>370</y>
      <width>42</width>
      <height>41</height>
     </rect>
@@ -776,7 +832,10 @@ QPushButton:checked
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/res/5.bmp);</string>
+    <string notr="true">QPushButton{
+border-image: url(:/res/5.bmp);}
+QPushButton:pressed
+{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -789,8 +848,8 @@ QPushButton:checked
    <property name="geometry">
     <rect>
      <x>794</x>
-     <y>185</y>
-     <width>226</width>
+     <y>170</y>
+     <width>231</width>
      <height>51</height>
     </rect>
    </property>
@@ -815,9 +874,9 @@ QPushButton:checked
   <widget class="QLabel" name="label_8">
    <property name="geometry">
     <rect>
-     <x>794</x>
-     <y>323</y>
-     <width>226</width>
+     <x>795</x>
+     <y>310</y>
+     <width>231</width>
      <height>251</height>
     </rect>
    </property>
@@ -837,7 +896,7 @@ QPushButton:checked
    <property name="geometry">
     <rect>
      <x>920</x>
-     <y>450</y>
+     <y>430</y>
      <width>81</width>
      <height>32</height>
     </rect>
@@ -848,7 +907,10 @@ QPushButton:checked
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/res/usepreset.bmp);</string>
+    <string notr="true">QPushButton{
+border-image: url(:/res/usepreset.bmp);}
+QPushButton:pressed
+{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -858,8 +920,8 @@ QPushButton:checked
    <property name="geometry">
     <rect>
      <x>794</x>
-     <y>270</y>
-     <width>226</width>
+     <y>250</y>
+     <width>231</width>
      <height>61</height>
     </rect>
    </property>
@@ -891,7 +953,7 @@ QPushButton:checked
    <property name="geometry">
     <rect>
      <x>930</x>
-     <y>620</y>
+     <y>600</y>
      <width>71</width>
      <height>31</height>
     </rect>
@@ -902,7 +964,10 @@ QPushButton:checked
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/monres/cancel.bmp);</string>
+    <string notr="true">QPushButton{
+border-image: url(:/monres/cancel.bmp);}
+QPushButton:pressed
+{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -911,6 +976,23 @@ QPushButton:checked
     <bool>true</bool>
    </property>
   </widget>
+  <widget class="QLabel" name="label_11">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1024</width>
+     <height>665</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <zorder>label_11</zorder>
   <zorder>label_6</zorder>
   <zorder>label_2</zorder>
   <zorder>label_4</zorder>

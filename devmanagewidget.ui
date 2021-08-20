@@ -13,39 +13,6 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QRadioButton" name="groupSetRadioButton_2">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>360</x>
-     <y>30</y>
-     <width>81</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);</string>
-   </property>
-   <property name="text">
-    <string>16编组</string>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
-    <bool>false</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
-   </property>
-  </widget>
   <widget class="QLineEdit" name="TrainNumberLineEdit">
    <property name="geometry">
     <rect>
@@ -76,295 +43,19 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: rgb(33, 131, 229);background-color: rgb(255, 255, 255);</string>
+    <string notr="true">color: rgb(0, 0, 0);background-color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
     <string>当前车次</string>
    </property>
   </widget>
-  <widget class="Line" name="line_4">
-   <property name="geometry">
-    <rect>
-     <x>100</x>
-     <y>398</y>
-     <width>821</width>
-     <height>2</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">border-top: 1px solid  rgb(33, 131, 229); 
-background-color: rgb(33, 131, 229); </string>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
-   </property>
-  </widget>
-  <widget class="QLabel" name="devStorageLabel">
-   <property name="geometry">
-    <rect>
-     <x>110</x>
-     <y>370</y>
-     <width>81</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>14</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: rgb(33, 131, 229);background-color: rgb(255, 255, 255);</string>
-   </property>
-   <property name="text">
-    <string>设备存储</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="devStatusLabel">
-   <property name="geometry">
-    <rect>
-     <x>110</x>
-     <y>90</y>
-     <width>81</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>14</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: rgb(33, 131, 229);background-color: rgb(255, 255, 255);</string>
-   </property>
-   <property name="text">
-    <string>设备状态</string>
-   </property>
-  </widget>
-  <widget class="QTableWidget" name="devStatusTableWidget">
-   <property name="geometry">
-    <rect>
-     <x>110</x>
-     <y>122</y>
-     <width>801</width>
-     <height>201</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">border-style: none;
-background-color: rgb(255, 255, 255);</string>
-   </property>
-   <property name="showDropIndicator" stdset="0">
-    <bool>true</bool>
-   </property>
-   <property name="showGrid">
-    <bool>false</bool>
-   </property>
-   <attribute name="verticalHeaderVisible">
-    <bool>false</bool>
-   </attribute>
-   <column>
-    <property name="text">
-     <string>序号</string>
-    </property>
-    <property name="font">
-     <font>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-    <property name="background">
-     <color>
-      <red>220</red>
-      <green>220</green>
-      <blue>220</blue>
-     </color>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>设备名称</string>
-    </property>
-    <property name="font">
-     <font>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-    <property name="background">
-     <color>
-      <red>220</red>
-      <green>220</green>
-      <blue>220</blue>
-     </color>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>设备位置</string>
-    </property>
-    <property name="font">
-     <font>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-    <property name="background">
-     <color>
-      <red>220</red>
-      <green>220</green>
-      <blue>220</blue>
-     </color>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>设备IP</string>
-    </property>
-    <property name="font">
-     <font>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-    <property name="background">
-     <color>
-      <red>220</red>
-      <green>220</green>
-      <blue>220</blue>
-     </color>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>设备版本</string>
-    </property>
-    <property name="font">
-     <font>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-    <property name="background">
-     <color>
-      <red>220</red>
-      <green>220</green>
-      <blue>220</blue>
-     </color>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>设备状态</string>
-    </property>
-    <property name="font">
-     <font>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-    <property name="background">
-     <color>
-      <red>220</red>
-      <green>220</green>
-      <blue>220</blue>
-     </color>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>设备供应商</string>
-    </property>
-    <property name="font">
-     <font>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-    <property name="background">
-     <color>
-      <red>220</red>
-      <green>220</green>
-      <blue>220</blue>
-     </color>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>报警</string>
-    </property>
-    <property name="font">
-     <font>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-    <property name="background">
-     <color>
-      <red>220</red>
-      <green>220</green>
-      <blue>220</blue>
-     </color>
-    </property>
-   </column>
-  </widget>
-  <widget class="QLabel" name="label_3">
-   <property name="geometry">
-    <rect>
-     <x>100</x>
-     <y>75</y>
-     <width>821</width>
-     <height>271</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"> #label_3 { 
-    background-color: rgb(255, 255, 255);
-  } 
- #label-3 * { 
-     background-color:; 
- }</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
   <widget class="QPushButton" name="TrainNumberSetPushButton">
    <property name="geometry">
     <rect>
-     <x>490</x>
+     <x>270</x>
      <y>24</y>
-     <width>81</width>
-     <height>31</height>
+     <width>135</width>
+     <height>33</height>
     </rect>
    </property>
    <property name="font">
@@ -373,50 +64,7 @@ background-color: rgb(255, 255, 255);</string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">QPushButton
-{background-color: rgb(255, 255, 255);color: rgb(86, 164, 246);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}
-
-QPushButton:hover{background-color: rgb(246, 246, 246);color: rgb(86, 164, 246);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}
-
-QPushButton:pressed{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}</string>
-   </property>
-   <property name="text">
-    <string>车次设置</string>
-   </property>
-  </widget>
-  <widget class="Line" name="line_3">
-   <property name="geometry">
-    <rect>
-     <x>100</x>
-     <y>120</y>
-     <width>821</width>
-     <height>2</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">border-top: 1px solid  rgb(33, 131, 229); 
-background-color: rgb(33, 131, 229); </string>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>100</x>
-     <y>10</y>
-     <width>821</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"> #label { 
-    background-color: rgb(255, 255, 255);
-  } 
- #label * { 
-     background-color:; 
- }</string>
+    <string notr="true">border-image: url(:/monres/ccsz.bmp);</string>
    </property>
    <property name="text">
     <string/>
@@ -427,8 +75,8 @@ background-color: rgb(33, 131, 229); </string>
     <rect>
      <x>480</x>
      <y>620</y>
-     <width>99</width>
-     <height>27</height>
+     <width>80</width>
+     <height>34</height>
     </rect>
    </property>
    <property name="font">
@@ -437,30 +85,38 @@ background-color: rgb(33, 131, 229); </string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">QPushButton
-{background-color: rgb(255, 255, 255);color: rgb(86, 164, 246);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}
-
-QPushButton:hover{background-color: rgb(246, 246, 246);color: rgb(86, 164, 246);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}
-
-QPushButton:pressed{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}
-
-QPushButton:checked
-{background-color: rgb(255, 0, 0);color: rgb(86, 164, 246);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}</string>
+    <string notr="true">border-image: url(:/monres/alertoff.bmp);</string>
    </property>
    <property name="text">
-    <string>报警</string>
+    <string/>
    </property>
    <property name="checkable">
     <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>720</x>
+     <y>620</y>
+     <width>80</width>
+     <height>34</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-image: url(:/monres/cancel.bmp);</string>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
   <widget class="QTableWidget" name="devStorageTableWidget">
    <property name="geometry">
     <rect>
      <x>110</x>
-     <y>400</y>
+     <y>395</y>
      <width>797</width>
-     <height>191</height>
+     <height>201</height>
     </rect>
    </property>
    <property name="font">
@@ -469,7 +125,7 @@ QPushButton:checked
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-style: none;background-color: rgb(255, 255, 255);</string>
+    <string notr="true">border-style: none;background-color: rgb(204, 232, 207);</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::StyledPanel</enum>
@@ -513,9 +169,9 @@ QPushButton:checked
     </property>
     <property name="font">
      <font>
-      <weight>75</weight>
+      <weight>50</weight>
       <italic>false</italic>
-      <bold>true</bold>
+      <bold>false</bold>
       <underline>false</underline>
       <strikeout>false</strikeout>
       <kerning>true</kerning>
@@ -526,9 +182,9 @@ QPushButton:checked
     </property>
     <property name="background">
      <color>
-      <red>220</red>
-      <green>220</green>
-      <blue>220</blue>
+      <red>255</red>
+      <green>255</green>
+      <blue>255</blue>
      </color>
     </property>
    </column>
@@ -538,8 +194,8 @@ QPushButton:checked
     </property>
     <property name="font">
      <font>
-      <weight>75</weight>
-      <bold>true</bold>
+      <weight>50</weight>
+      <bold>false</bold>
      </font>
     </property>
     <property name="textAlignment">
@@ -547,9 +203,9 @@ QPushButton:checked
     </property>
     <property name="background">
      <color>
-      <red>220</red>
-      <green>220</green>
-      <blue>220</blue>
+      <red>255</red>
+      <green>255</green>
+      <blue>255</blue>
      </color>
     </property>
    </column>
@@ -559,8 +215,8 @@ QPushButton:checked
     </property>
     <property name="font">
      <font>
-      <weight>75</weight>
-      <bold>true</bold>
+      <weight>50</weight>
+      <bold>false</bold>
      </font>
     </property>
     <property name="textAlignment">
@@ -568,9 +224,9 @@ QPushButton:checked
     </property>
     <property name="background">
      <color>
-      <red>220</red>
-      <green>220</green>
-      <blue>220</blue>
+      <red>255</red>
+      <green>255</green>
+      <blue>255</blue>
      </color>
     </property>
    </column>
@@ -580,8 +236,8 @@ QPushButton:checked
     </property>
     <property name="font">
      <font>
-      <weight>75</weight>
-      <bold>true</bold>
+      <weight>50</weight>
+      <bold>false</bold>
      </font>
     </property>
     <property name="textAlignment">
@@ -589,9 +245,9 @@ QPushButton:checked
     </property>
     <property name="background">
      <color>
-      <red>220</red>
-      <green>220</green>
-      <blue>220</blue>
+      <red>255</red>
+      <green>255</green>
+      <blue>255</blue>
      </color>
     </property>
    </column>
@@ -601,8 +257,8 @@ QPushButton:checked
     </property>
     <property name="font">
      <font>
-      <weight>75</weight>
-      <bold>true</bold>
+      <weight>50</weight>
+      <bold>false</bold>
      </font>
     </property>
     <property name="textAlignment">
@@ -610,9 +266,9 @@ QPushButton:checked
     </property>
     <property name="background">
      <color>
-      <red>220</red>
-      <green>220</green>
-      <blue>220</blue>
+      <red>255</red>
+      <green>255</green>
+      <blue>255</blue>
      </color>
     </property>
    </column>
@@ -622,8 +278,8 @@ QPushButton:checked
     </property>
     <property name="font">
      <font>
-      <weight>75</weight>
-      <bold>true</bold>
+      <weight>50</weight>
+      <bold>false</bold>
      </font>
     </property>
     <property name="textAlignment">
@@ -631,9 +287,9 @@ QPushButton:checked
     </property>
     <property name="background">
      <color>
-      <red>220</red>
-      <green>220</green>
-      <blue>220</blue>
+      <red>255</red>
+      <green>255</green>
+      <blue>255</blue>
      </color>
     </property>
    </column>
@@ -643,8 +299,8 @@ QPushButton:checked
     </property>
     <property name="font">
      <font>
-      <weight>75</weight>
-      <bold>true</bold>
+      <weight>50</weight>
+      <bold>false</bold>
      </font>
     </property>
     <property name="textAlignment">
@@ -652,98 +308,312 @@ QPushButton:checked
     </property>
     <property name="background">
      <color>
-      <red>220</red>
-      <green>220</green>
-      <blue>220</blue>
+      <red>255</red>
+      <green>255</green>
+      <blue>255</blue>
      </color>
     </property>
    </column>
   </widget>
-  <widget class="QLabel" name="groupSetLabel">
+  <widget class="QTableWidget" name="devStatusTableWidget">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>30</y>
+     <x>110</x>
+     <y>107</y>
+     <width>801</width>
+     <height>231</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-style: none;
+background-color: rgb(204, 232, 207);</string>
+   </property>
+   <property name="showDropIndicator" stdset="0">
+    <bool>true</bool>
+   </property>
+   <property name="showGrid">
+    <bool>false</bool>
+   </property>
+   <attribute name="verticalHeaderVisible">
+    <bool>false</bool>
+   </attribute>
+   <column>
+    <property name="text">
+     <string>序号</string>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="textAlignment">
+     <set>AlignCenter</set>
+    </property>
+    <property name="background">
+     <color>
+      <red>255</red>
+      <green>255</green>
+      <blue>255</blue>
+     </color>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>设备名称</string>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="textAlignment">
+     <set>AlignCenter</set>
+    </property>
+    <property name="background">
+     <color>
+      <red>255</red>
+      <green>255</green>
+      <blue>255</blue>
+     </color>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>设备位置</string>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="textAlignment">
+     <set>AlignCenter</set>
+    </property>
+    <property name="background">
+     <color>
+      <red>255</red>
+      <green>255</green>
+      <blue>255</blue>
+     </color>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>设备IP</string>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="textAlignment">
+     <set>AlignCenter</set>
+    </property>
+    <property name="background">
+     <color>
+      <red>255</red>
+      <green>255</green>
+      <blue>255</blue>
+     </color>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>设备版本</string>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="textAlignment">
+     <set>AlignCenter</set>
+    </property>
+    <property name="background">
+     <color>
+      <red>255</red>
+      <green>255</green>
+      <blue>255</blue>
+     </color>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>设备状态</string>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="textAlignment">
+     <set>AlignCenter</set>
+    </property>
+    <property name="background">
+     <color>
+      <red>255</red>
+      <green>255</green>
+      <blue>255</blue>
+     </color>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>设备供应商</string>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="textAlignment">
+     <set>AlignCenter</set>
+    </property>
+    <property name="background">
+     <color>
+      <red>255</red>
+      <green>255</green>
+      <blue>255</blue>
+     </color>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>报警</string>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="textAlignment">
+     <set>AlignCenter</set>
+    </property>
+    <property name="background">
+     <color>
+      <red>255</red>
+      <green>255</green>
+      <blue>255</blue>
+     </color>
+    </property>
+   </column>
+  </widget>
+  <widget class="QLabel" name="devStatusLabel">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>80</y>
      <width>81</width>
      <height>21</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>12</pointsize>
+     <pointsize>14</pointsize>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: rgb(33, 131, 229);background-color: rgb(255, 255, 255);</string>
+    <string notr="true">color: rgb(0, 0, 0);</string>
    </property>
    <property name="text">
-    <string>编组设置:</string>
+    <string>设备状态</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_4">
+  <widget class="QLabel" name="devStorageLabel">
    <property name="geometry">
     <rect>
-     <x>100</x>
-     <y>360</y>
-     <width>821</width>
-     <height>245</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"> #label_4 { 
-    background-color: rgb(255, 255, 255);
-  } 
- #label-4 * { 
-     background-color:; 
- }</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QRadioButton" name="groupSetRadioButton">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>270</x>
-     <y>30</y>
-     <width>71</width>
-     <height>22</height>
+     <x>110</x>
+     <y>365</y>
+     <width>81</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>12</pointsize>
+     <pointsize>14</pointsize>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(0, 0, 0);</string>
+   </property>
+   <property name="text">
+    <string>设备存储</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1024</width>
+     <height>661</height>
+    </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
-    <string>8编组</string>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
+    <string/>
    </property>
   </widget>
-  <zorder>label_3</zorder>
-  <zorder>line_3</zorder>
-  <zorder>label</zorder>
+  <widget class="QLineEdit" name="lineEdit">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>70</y>
+     <width>951</width>
+     <height>281</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_2">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>360</y>
+     <width>951</width>
+     <height>251</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+   </property>
+  </widget>
+  <zorder>label_2</zorder>
   <zorder>alarmPushButton</zorder>
-  <zorder>groupSetLabel</zorder>
-  <zorder>label_4</zorder>
-  <zorder>groupSetRadioButton</zorder>
   <zorder>TrainNumberLineEdit</zorder>
   <zorder>TrainNumberlabel</zorder>
   <zorder>TrainNumberSetPushButton</zorder>
-  <zorder>groupSetRadioButton_2</zorder>
-  <zorder>devStatusLabel</zorder>
+  <zorder>pushButton</zorder>
+  <zorder>lineEdit</zorder>
   <zorder>devStatusTableWidget</zorder>
-  <zorder>devStorageTableWidget</zorder>
+  <zorder>devStatusLabel</zorder>
+  <zorder>lineEdit_2</zorder>
   <zorder>devStorageLabel</zorder>
-  <zorder>line_4</zorder>
+  <zorder>devStorageTableWidget</zorder>
  </widget>
  <resources/>
  <connections/>

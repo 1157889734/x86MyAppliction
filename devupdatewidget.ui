@@ -13,13 +13,16 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QPushButton" name="permissonManagePushButton">
    <property name="geometry">
     <rect>
-     <x>400</x>
-     <y>590</y>
-     <width>111</width>
-     <height>35</height>
+     <x>350</x>
+     <y>540</y>
+     <width>203</width>
+     <height>102</height>
     </rect>
    </property>
    <property name="font">
@@ -28,16 +31,10 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: rgb(255, 255, 255);
-background-image: url(:/res/anniubk.png);
-border-color: rgb(33, 131, 229);
-border-width: 1px;
-border-style: solid;
-
-</string>
+    <string notr="true">border-image: url(:/monres/bitmap19.bmp);</string>
    </property>
    <property name="text">
-    <string>权限管理</string>
+    <string/>
    </property>
   </widget>
   <widget class="QLabel" name="presetReturnTimeSetLabel">
@@ -55,7 +52,7 @@ border-style: solid;
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: rgb(33, 131, 229);
+    <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
@@ -289,7 +286,7 @@ border-style: solid;</string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: rgb(33, 131, 229);
+    <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
@@ -446,9 +443,9 @@ background-color: rgb(255, 255, 255);</string>
    <property name="geometry">
     <rect>
      <x>590</x>
-     <y>590</y>
-     <width>111</width>
-     <height>35</height>
+     <y>560</y>
+     <width>80</width>
+     <height>34</height>
     </rect>
    </property>
    <property name="font">
@@ -457,18 +454,10 @@ background-color: rgb(255, 255, 255);</string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">QPushButton
-{background-color: rgb(255, 255, 255);color: rgb(86, 164, 246);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}
-
-QPushButton:hover{background-color: rgb(246, 246, 246);color: rgb(86, 164, 246);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}
-
-QPushButton:pressed{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}
-
-QPushButton:checked
-{background-color: rgb(255, 0, 0);color: rgb(86, 164, 246);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}</string>
+    <string notr="true">border-image: url(:/monres/alertoff.bmp);</string>
    </property>
    <property name="text">
-    <string>报警</string>
+    <string/>
    </property>
    <property name="checkable">
     <bool>true</bool>
@@ -499,9 +488,9 @@ QPushButton:checked
    <property name="geometry">
     <rect>
      <x>760</x>
-     <y>590</y>
-     <width>111</width>
-     <height>35</height>
+     <y>560</y>
+     <width>80</width>
+     <height>34</height>
     </rect>
    </property>
    <property name="font">
@@ -510,69 +499,13 @@ QPushButton:checked
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">QPushButton
-{background-color: rgb(255, 255, 255);color: rgb(86, 164, 246);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}
-
-QPushButton:hover{background-color: rgb(246, 246, 246);color: rgb(86, 164, 246);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}
-
-QPushButton:pressed{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}
-
-QPushButton:checked
-{background-color: rgb(255, 0, 0);color: rgb(86, 164, 246);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}</string>
+    <string notr="true">border-image: url(:/monres/cancel.bmp);</string>
    </property>
    <property name="text">
-    <string>注销</string>
+    <string/>
    </property>
    <property name="checkable">
     <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_8">
-   <property name="geometry">
-    <rect>
-     <x>600</x>
-     <y>55</y>
-     <width>67</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>PIS设置</string>
-   </property>
-  </widget>
-  <widget class="QComboBox" name="PISSetcomboBox">
-   <property name="geometry">
-    <rect>
-     <x>680</x>
-     <y>50</y>
-     <width>151</width>
-     <height>27</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="PISSetPushButton">
-   <property name="geometry">
-    <rect>
-     <x>860</x>
-     <y>50</y>
-     <width>101</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: rgb(255, 255, 255);
-background-image: url(:/res/anniubk.png);
-border-color: rgb(33, 131, 229);
-border-width: 1px;
-border-style: solid;</string>
-   </property>
-   <property name="text">
-    <string>确定</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_17">
@@ -603,14 +536,14 @@ border-style: solid;</string>
      <x>40</x>
      <y>130</y>
      <width>944</width>
-     <height>435</height>
+     <height>411</height>
     </rect>
    </property>
    <widget class="QLineEdit" name="configFileDisplayLineEdit">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>330</y>
+      <y>310</y>
       <width>311</width>
       <height>27</height>
      </rect>
@@ -624,7 +557,7 @@ border-style: solid;</string>
    <widget class="QLineEdit" name="brightnessLineEdit">
     <property name="geometry">
      <rect>
-      <x>560</x>
+      <x>540</x>
       <y>300</y>
       <width>81</width>
       <height>27</height>
@@ -642,7 +575,7 @@ border-style: solid;</string>
    <widget class="QLabel" name="carriageLabel">
     <property name="geometry">
      <rect>
-      <x>510</x>
+      <x>480</x>
       <y>264</y>
       <width>51</width>
       <height>17</height>
@@ -654,7 +587,7 @@ border-style: solid;</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 255);</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>车厢号:</string>
@@ -663,10 +596,10 @@ border-style: solid;</string>
    <widget class="QPushButton" name="configFilelookPushButton">
     <property name="geometry">
      <rect>
-      <x>360</x>
-      <y>330</y>
-      <width>51</width>
-      <height>27</height>
+      <x>350</x>
+      <y>310</y>
+      <width>110</width>
+      <height>30</height>
      </rect>
     </property>
     <property name="font">
@@ -675,14 +608,10 @@ border-style: solid;</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);
-background-image: url(:/res/anniubk.png);
-border-color: rgb(33, 131, 229);
-border-width: 1px;
-border-style: solid;</string>
+     <string notr="true">border-image: url(:/monres/browse.bmp);</string>
     </property>
     <property name="text">
-     <string>浏览</string>
+     <string/>
     </property>
    </widget>
    <widget class="QComboBox" name="carriageSelectionComboBox">
@@ -691,7 +620,7 @@ border-style: solid;</string>
     </property>
     <property name="geometry">
      <rect>
-      <x>580</x>
+      <x>540</x>
       <y>260</y>
       <width>121</width>
       <height>24</height>
@@ -753,7 +682,7 @@ border-style: solid;</string>
    <widget class="QLineEdit" name="contrastLineEdit">
     <property name="geometry">
      <rect>
-      <x>860</x>
+      <x>840</x>
       <y>300</y>
       <width>81</width>
       <height>27</height>
@@ -766,22 +695,6 @@ border-style: solid;</string>
     </property>
     <property name="text">
      <string>128</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_13">
-    <property name="geometry">
-     <rect>
-      <x>490</x>
-      <y>220</y>
-      <width>455</width>
-      <height>201</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 255);</string>
-    </property>
-    <property name="text">
-     <string/>
     </property>
    </widget>
    <widget class="QLabel" name="label_9">
@@ -802,19 +715,15 @@ border-style: solid;</string>
      <rect>
       <x>190</x>
       <y>160</y>
-      <width>81</width>
-      <height>27</height>
+      <width>135</width>
+      <height>37</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);
-background-image: url(:/res/anniubk.png);
-border-color: rgb(33, 131, 229);
-border-width: 1px;
-border-style: solid;</string>
+     <string notr="true">border-image: url(:/monres/timing.bmp);</string>
     </property>
     <property name="text">
-     <string>校  时</string>
+     <string/>
     </property>
    </widget>
    <widget class="QLabel" name="label_15">
@@ -848,7 +757,7 @@ border-style: solid;</string>
    <widget class="QLineEdit" name="saturationLineEdit">
     <property name="geometry">
      <rect>
-      <x>710</x>
+      <x>690</x>
       <y>300</y>
       <width>81</width>
       <height>27</height>
@@ -866,10 +775,10 @@ border-style: solid;</string>
    <widget class="QPushButton" name="imageParamSetPushButton">
     <property name="geometry">
      <rect>
-      <x>670</x>
-      <y>380</y>
-      <width>81</width>
-      <height>27</height>
+      <x>640</x>
+      <y>340</y>
+      <width>159</width>
+      <height>40</height>
      </rect>
     </property>
     <property name="font">
@@ -878,14 +787,10 @@ border-style: solid;</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);
-background-image: url(:/res/anniubk.png);
-border-color: rgb(33, 131, 229);
-border-width: 1px;
-border-style: solid;</string>
+     <string notr="true">border-image: url(:/monres/settingconfig.bmp);</string>
     </property>
     <property name="text">
-     <string>设置参数</string>
+     <string/>
     </property>
    </widget>
    <widget class="QLabel" name="systimeAdjustLabel">
@@ -904,7 +809,7 @@ border-style: solid;</string>
    <widget class="QLabel" name="saturationLabel">
     <property name="geometry">
      <rect>
-      <x>650</x>
+      <x>630</x>
       <y>300</y>
       <width>52</width>
       <height>24</height>
@@ -916,37 +821,16 @@ border-style: solid;</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 255);</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>饱和度:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_11">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>220</y>
-      <width>471</width>
-      <height>201</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"> #label_11 { 
-    background-color: rgb(255, 255, 255);
-  } 
- #label_11 * { 
-     background-color:; 
- }</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
    <widget class="QLabel" name="brightnessLabel">
     <property name="geometry">
      <rect>
-      <x>500</x>
+      <x>480</x>
       <y>300</y>
       <width>51</width>
       <height>24</height>
@@ -958,7 +842,7 @@ border-style: solid;</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 255);</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>亮   度:</string>
@@ -967,10 +851,10 @@ border-style: solid;</string>
    <widget class="QPushButton" name="clientRebootPushButton">
     <property name="geometry">
      <rect>
-      <x>760</x>
-      <y>170</y>
-      <width>81</width>
-      <height>27</height>
+      <x>810</x>
+      <y>160</y>
+      <width>80</width>
+      <height>35</height>
      </rect>
     </property>
     <property name="font">
@@ -979,21 +863,17 @@ border-style: solid;</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);
-background-image: url(:/res/anniubk.png);
-border-color: rgb(33, 131, 229);
-border-width: 1px;
-border-style: solid;</string>
+     <string notr="true">border-image: url(:/monres/restat.bmp);</string>
     </property>
     <property name="text">
-     <string>重启</string>
+     <string/>
     </property>
    </widget>
    <widget class="QLabel" name="configFileSelectionLabel">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>300</y>
+      <y>280</y>
       <width>101</width>
       <height>17</height>
      </rect>
@@ -1004,7 +884,7 @@ border-style: solid;</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 255);</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>选择配置文件:</string>
@@ -1020,37 +900,16 @@ border-style: solid;</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 255);</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>   摄像机:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_14">
-    <property name="geometry">
-     <rect>
-      <x>463</x>
-      <y>10</y>
-      <width>481</width>
-      <height>201</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"> #label_14 { 
-    background-color: rgb(255, 255, 255);
-  } 
- #label_14 * { 
-     background-color:; 
- }</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
    <widget class="QLabel" name="contrastLabel">
     <property name="geometry">
      <rect>
-      <x>800</x>
+      <x>780</x>
       <y>300</y>
       <width>52</width>
       <height>24</height>
@@ -1062,7 +921,7 @@ border-style: solid;</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 255);</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>对比度:</string>
@@ -1071,10 +930,10 @@ border-style: solid;</string>
    <widget class="QPushButton" name="configFileImportPushButton">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>370</y>
-      <width>61</width>
-      <height>27</height>
+      <x>40</x>
+      <y>350</y>
+      <width>81</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="font">
@@ -1083,14 +942,10 @@ border-style: solid;</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);
-background-image: url(:/res/anniubk.png);
-border-color: rgb(33, 131, 229);
-border-width: 1px;
-border-style: solid;</string>
+     <string notr="true">border-image: url(:/monres/putin.bmp);</string>
     </property>
     <property name="text">
-     <string>导入</string>
+     <string/>
     </property>
    </widget>
    <widget class="QLabel" name="sysDataAdjustLabel">
@@ -1117,10 +972,10 @@ border-style: solid;</string>
    <widget class="QLabel" name="devConfigLabel">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>60</x>
       <y>220</y>
-      <width>431</width>
-      <height>31</height>
+      <width>351</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="font">
@@ -1135,37 +990,11 @@ border-style: solid;</string>
      <string>                                         设备配置</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_10">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>10</y>
-      <width>441</width>
-      <height>201</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>10</pointsize>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"> #label_10 { 
-    background-color: rgb(255, 255, 255);
-  } 
- #label_10 * { 
-     background-color:; 
- }</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
    <widget class="QLabel" name="updateStatusLabel">
     <property name="geometry">
      <rect>
       <x>670</x>
-      <y>20</y>
+      <y>10</y>
       <width>71</width>
       <height>17</height>
      </rect>
@@ -1176,7 +1005,7 @@ border-style: solid;</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 255);</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>程序更新</string>
@@ -1216,10 +1045,10 @@ border-style: solid;</string>
    <widget class="QPushButton" name="updateBeginPushButton">
     <property name="geometry">
      <rect>
-      <x>620</x>
-      <y>170</y>
-      <width>81</width>
-      <height>27</height>
+      <x>550</x>
+      <y>160</y>
+      <width>110</width>
+      <height>30</height>
      </rect>
     </property>
     <property name="font">
@@ -1228,23 +1057,19 @@ border-style: solid;</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);
-background-image: url(:/res/anniubk.png);
-border-color: rgb(33, 131, 229);
-border-width: 1px;
-border-style: solid;</string>
+     <string notr="true">border-image: url(:/monres/kaishigegnxin.bmp);</string>
     </property>
     <property name="text">
-     <string>开始更新</string>
+     <string/>
     </property>
    </widget>
    <widget class="QPushButton" name="clientRebootPushButton_2">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>370</y>
-      <width>81</width>
-      <height>27</height>
+      <x>300</x>
+      <y>350</y>
+      <width>80</width>
+      <height>35</height>
      </rect>
     </property>
     <property name="font">
@@ -1253,44 +1078,104 @@ border-style: solid;</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);
-background-image: url(:/res/anniubk.png);
-border-color: rgb(33, 131, 229);
-border-width: 1px;
-border-style: solid;</string>
+     <string notr="true">border-image: url(:/monres/restat.bmp);</string>
     </property>
     <property name="text">
-     <string>重启</string>
+     <string/>
     </property>
    </widget>
    <widget class="QTextEdit" name="updateStatueTextEdit">
     <property name="geometry">
      <rect>
-      <x>570</x>
-      <y>50</y>
-      <width>302</width>
+      <x>511</x>
+      <y>40</y>
+      <width>401</width>
       <height>111</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);</string>
+background-color: rgb(172, 209, 178);</string>
     </property>
    </widget>
-   <zorder>label_13</zorder>
+   <widget class="QLineEdit" name="lineEdit">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>461</width>
+      <height>201</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_2">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>0</y>
+      <width>471</width>
+      <height>201</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_3">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>210</y>
+      <width>461</width>
+      <height>191</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_4">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>210</y>
+      <width>471</width>
+      <height>191</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
+    </property>
+   </widget>
+   <zorder>lineEdit_4</zorder>
+   <zorder>lineEdit_3</zorder>
+   <zorder>lineEdit_2</zorder>
+   <zorder>lineEdit</zorder>
    <zorder>label_15</zorder>
    <zorder>saturationLineEdit</zorder>
    <zorder>imageParamSetPushButton</zorder>
    <zorder>saturationLabel</zorder>
-   <zorder>label_11</zorder>
    <zorder>brightnessLabel</zorder>
    <zorder>configFileSelectionLabel</zorder>
    <zorder>cameraLabel</zorder>
-   <zorder>label_14</zorder>
    <zorder>contrastLabel</zorder>
    <zorder>configFileImportPushButton</zorder>
    <zorder>devConfigLabel</zorder>
-   <zorder>label_10</zorder>
    <zorder>updateStatusLabel</zorder>
    <zorder>label_18</zorder>
    <zorder>label_5</zorder>
@@ -1311,6 +1196,23 @@ background-color: rgb(255, 255, 255);</string>
    <zorder>systimeAdjustLabel</zorder>
    <zorder>updateStatueTextEdit</zorder>
   </widget>
+  <widget class="QLabel" name="label_6">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1024</width>
+     <height>651</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <zorder>label_6</zorder>
   <zorder>label_2</zorder>
   <zorder>label_3</zorder>
   <zorder>pollingTimeSetRadioButton</zorder>
@@ -1332,9 +1234,6 @@ background-color: rgb(255, 255, 255);</string>
   <zorder>pollingTimeSetLineEdit</zorder>
   <zorder>presetReturnTimeSetLabel</zorder>
   <zorder>canselPushButton</zorder>
-  <zorder>label_8</zorder>
-  <zorder>PISSetcomboBox</zorder>
-  <zorder>PISSetPushButton</zorder>
   <zorder>label_17</zorder>
   <zorder>permissonManagePushButton</zorder>
   <zorder>deviceManagewidget</zorder>
