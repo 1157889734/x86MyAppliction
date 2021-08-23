@@ -560,16 +560,17 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
     m_lastActionTime = s_info.uptime;
 
     m_iFullScreenFlag = 1;
+
+
     m_playWin = new QVideoWidget(this->parentWidget());   //新建一个与目前窗体同属一个父窗体的播放子窗体，方便实现全屏
 //    m_playWin->setGeometry(0, 0, 1024, 768);      //设置窗体在父窗体中的位置，默认一开始为全屏
-    m_playWin->setGeometry(6, 110, 782, 656);
+    m_playWin->setGeometry(0, 138, 782, 656);
     m_playWin->show();  //默认显示
     m_playWin->setObjectName("m_playWin");
-    m_playWin->setStyleSheet("#m_playWin{background-color: rgb(0, 0, 0);}");     //设置播放窗口背景色为黑色
+    m_playWin->setStyleSheet("QWidget{background-color: rgb(0, 0, 0);}");     //设置播放窗口背景色为黑色
     m_playWin->installEventFilter(this);     //播放窗体注册进事件过滤器
     m_playWin->setMouseTracking(true);
     player.setVideoOutput(m_playWin);
-
 
     m_channelStateLabel = new QLabel(this->parentWidget());
     m_channelStateLabel->setGeometry(452, 360, 130, 50);
@@ -578,7 +579,7 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
     m_channelStateLabel->show();
 
     m_channelNoLabel = new QLabel(this->parentWidget());
-    m_channelNoLabel->setGeometry(20, 690, 65, 50);
+    m_channelNoLabel->setGeometry(20, 690, 100, 50);
     m_channelNoLabel->setStyleSheet("QLabel{color:rgb(255, 255, 255);font: 24pt;background-color: rgb(0, 0, 0);}");
     m_channelNoLabel->setAttribute(Qt::WA_TranslucentBackground, true);
     m_channelNoLabel->show();
@@ -678,7 +679,7 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
 
         m_channelStateLabel->setText(tr("摄像头开启"));
         m_channelNoLabel->setText(tr("通道1"));
-//        m_iCameraPlayNo = -1;  ??????????
+        m_iCameraPlayNo = -1;
         iFirstFlag = 0;
 
     }
@@ -788,7 +789,7 @@ void pvmsMonitorWidget::registOutButtonClick()
 
     m_iPresetPasswdOkFlag = 0;
     this->hide();
-    emit registOutSignal(PVMSPAGETYPE);    //触发注销信号，带上当前设备类型
+    emit registOutSignal();    //触发注销信号，带上当前设备类型
 
 }
 
@@ -1709,7 +1710,7 @@ void pvmsMonitorWidget::alarmHappenSlot()
         struct sysinfo s_info;
         sysinfo(&s_info);
         m_lastActionTime = s_info.uptime;  //更新最后一次操作计时
-        m_playWin->move(6, 110);
+        m_playWin->move(0, 138);
         m_playWin->resize(782, 656);
         m_iFullScreenFlag = 0;
 
@@ -2178,7 +2179,7 @@ void pvmsMonitorWidget::blackScreenCtrlSlot()     //黑屏触发信号处理，�
         memset(&s_info,0,sizeof(s_info));
         sysinfo(&s_info);
         m_lastActionTime = s_info.uptime;  //更新最后一次操作计时
-        m_playWin->move(6, 110);
+        m_playWin->move(0, 138);
         m_playWin->resize(782, 656);
         m_iFullScreenFlag = 0;
 

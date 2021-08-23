@@ -16,6 +16,12 @@ loginWidget::loginWidget(QWidget *parent) :
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setGeometry(0,0,1024,768);
     this->showFullScreen();
+
+    QPalette palette;
+    palette.setBrush(QPalette::Background,QBrush(QPixmap(":/monres/Pantobg - 副本.bmp")));
+    QIcon icon;
+    this->setPalette(palette);
+
     ui->ensure->setFocusPolicy(Qt::NoFocus); // 得到焦点时，不显示虚线框
     ui->cansel->setFocusPolicy(Qt::NoFocus);
 
@@ -162,12 +168,10 @@ void loginWidget::canselButtonSlot()
 {
     this->hide();
     emit loginCanselSignal();
+
 }
-void loginWidget::showPageSlot(int iType)
+void loginWidget::showPageSlot()
 {
     this->show();
 }
-void loginWidget::canselSlot()
-{
-    this->hide();
-}
+

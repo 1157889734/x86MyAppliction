@@ -1199,7 +1199,7 @@ void recordPlayWidget::playMinusStepSlot()
 void recordPlayWidget::registOutButtonClick()
 {
     this->hide();
-    emit registOutSignal(PVMSPAGETYPE);    //触发注销信号，带上当前设备类型
+    emit registOutSignal();    //触发注销信号，带上当前设备类型
 }
 
 void recordPlayWidget::carNoChangeSlot()   //车厢号切换信号响应槽函数

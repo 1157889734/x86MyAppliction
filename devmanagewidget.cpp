@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <netinet/in.h>
 #include <QDebug>
+#include <QTabWidget>
 
 static int g_iDNum = 0;
 #define PVMSPAGETYPE  2    //此页面类型，2表示受电弓监控页面
@@ -21,9 +22,10 @@ devManageWidget::devManageWidget(QWidget *parent) :
 
 
 
-
     ui->devStorageTableWidget->setFocusPolicy(Qt::NoFocus);
     ui->devStorageTableWidget->setColumnCount(7);
+    ui->devStorageTableWidget->setShowGrid(true);
+//    ui->devStorageTableWidget->setStyleSheet("QTableWidget{ gridline-color : rgb(255, 255, 255)}");
     QStringList header;
     header<<tr("序号")<<tr("设备名称")<<tr("设备位置")<<tr("设备IP")<<tr("硬盘容量")<<tr("硬盘使用量")<<tr("硬盘状态");
     ui->devStorageTableWidget->setHorizontalHeaderLabels(header);
@@ -45,6 +47,8 @@ devManageWidget::devManageWidget(QWidget *parent) :
 
     ui->devStatusTableWidget->setFocusPolicy(Qt::NoFocus);
     ui->devStatusTableWidget->setColumnCount(7);
+    ui->devStatusTableWidget->setShowGrid(true);
+
     QStringList header_2;
     header_2<<tr("序号")<<tr("设备名称")<<tr("设备位置")<<tr("设备IP")<<tr("设备版本")<<tr("设备状态")<<tr("设备状态")<<tr("报警");
     ui->devStatusTableWidget->setHorizontalHeaderLabels(header_2);
@@ -531,7 +535,7 @@ void devManageWidget::registOutButtonClick()
 
 //    m_pvmsMonitorPage->m_iPresetPasswdOkFlag = 0;
     this->hide();
-    emit registOutSignal(PVMSPAGETYPE);    //触发注销信号，带上当前设备类型
+    emit registOutSignal();    //触发注销信号，带上当前设备类型
 
 }
 

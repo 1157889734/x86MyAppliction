@@ -41,7 +41,7 @@ void inteAnalyWidget::registOutButtonClick()
 {
 
     this->hide();
-    emit registOutSignal(PVMSPAGETYPE);    //触发注销信号，带上当前设备类型
+    emit registOutSignal();    //触发注销信号，带上当前设备类型
 
 }
 void inteAnalyWidget::alarmPushButoonClickSlot()

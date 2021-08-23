@@ -13,6 +13,10 @@
 #include <QtPlugin>
 #include "log.h"
 #include <arpa/inet.h>
+#include <signal.h>
+#include <stdio.h>
+
+
 
 
 
@@ -39,6 +43,7 @@ int main(int argc, char *argv[])
     T_PVMS_INFO tPvmsInfo;
     PMSG_HANDLE pmsgHandle = 0;
     PRS485_HANDLE pRs485Handle = 0;
+	signal(SIGPIPE,SIG_IGN);    
 
 
     LOG_Init();    //本地日志模块初始化
@@ -178,15 +183,21 @@ int main(int argc, char *argv[])
 //    QObject::connect(&a, SIGNAL(blackScreenSignal()), g_pvmsMenuPage, SLOT(blackScreenCtrlSlot()));
 //    QObject::connect(&a, SIGNAL(blackScreenExitSignal()), g_pvmsMenuPage, SLOT(blackScreenExitCtrlSlot()));
 
+	
+//    QObject::connect(g_pvmsMenuPage, SIGNAL(alarmHappenSignal()), &a, SLOT(alarmHappenSignalCtrl()));
+//    QObject::connect(g_pvmsMenuPage, SIGNAL(alarmClearSignal()), &a, SLOT(alarmClearSignalCtrl()));
+
+
+	
     QObject::connect(g_waitLoginPage, SIGNAL(pageRedirectSignal()), g_choiceLoginDevPage, SLOT(showPageSlot()));
 
-    QObject::connect(g_choiceLoginDevPage, SIGNAL(confirmDevTypeSignal(int)), g_loginPage, SLOT(showPageSlot(int)));    //选择登录设备页面的确认设备类型信号连接登录页面的页面显示槽
+    QObject::connect(g_choiceLoginDevPage, SIGNAL(confirmDevTypeSignal()), g_loginPage, SLOT(showPageSlot()));    //选择登录设备页面的确认设备类型信号连接登录页面的页面显示槽
 
     QObject::connect(g_loginPage, SIGNAL(loginCanselSignal()), g_choiceLoginDevPage, SLOT(showPageSlot()));    //选择登录设备页面的确认设备类型信号连接登录页面的页面显示槽
 
     QObject::connect(g_loginPage,SIGNAL(gotoPvmsMenuPageSignal()),g_pvmsMenuPage,SLOT(showPageSlot()));
 
-    QObject::connect(g_pvmsMenuPage, SIGNAL(registOutSignal(int)), g_loginPage, SLOT(showPageSlot(int)));       //受电弓监控主菜单页面的注销信号连接登录页面的页面显示槽
+    QObject::connect(g_pvmsMenuPage, SIGNAL(registOutSignal()), g_loginPage, SLOT(showPageSlot()));       //受电弓监控主菜单页面的注销信号连接登录页面的页面显示槽
 
 
     usleep(1*1000*1000);
@@ -215,10 +226,6 @@ int main(int argc, char *argv[])
     delete g_pvmsMenuPage;
     g_pvmsMenuPage = NULL;
 
-//    QObject::connect(g_monitorPage,SIGNAL(registOutSignal(int)),g_loginPage,SLOT(showPageSlot(int)));
-
-//    MyApplication w;
-//    w.show();
 
     PMSG_Uninit();
     LOG_UnInit();

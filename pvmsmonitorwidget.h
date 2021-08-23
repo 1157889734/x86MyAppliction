@@ -163,7 +163,7 @@ public:
 
 signals:
     void alarmPushButoonClickSignal();
-    void registOutSignal(int iType);     //注销信号，iType:表示执行注销的页面类型，这里应该为2，表示受电弓监控页面,
+    void registOutSignal();     //注销信号，iType:表示执行注销的页面类型，这里应该为2，表示受电弓监控页面,
     void chStateLabelTextCtrlSignal(int iFlag);   //通道状态标签文本显示的处理信号，0-显示关闭，1-显示开启
     void camSwitchButtonTextCtrlSignal(int iFlag);   //摄像机开关状态按钮文本显示的处理信号，0-显示关闭，1-显示开启
     void chLabelDisplayCtrlSignal();   //通道状态和通道号标签是否显示的处理信号

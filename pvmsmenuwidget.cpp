@@ -3,6 +3,8 @@
 #include <QDebug>
 #include <netinet/in.h>
 #include <QIcon>
+#include <QTextCodec>
+
 
 
 #define PVMSPAGETYPE  2    //此页面类型，2表示受电弓监控页面
@@ -62,6 +64,12 @@ pvmsMenuWidget::pvmsMenuWidget(QWidget *parent) :
     m_alarmPage = NULL;
     m_iAlarmPageOpenFlag = 0;
 
+    for (int i = 0; i < MAX_SERVER_NUM; i++)
+    {
+        m_iNoCheckDiskErrNum[i] = 0;
+        m_iCheckDiskErrFlag[i] = 0;
+    }
+
 
     ui->pvmsMonitorMenuPushButton->setFocusPolicy(Qt::NoFocus); // 得到焦点时，不显示虚线框
     ui->recordPlayMenuPushButton->setFocusPolicy(Qt::NoFocus);
@@ -93,11 +101,11 @@ pvmsMenuWidget::pvmsMenuWidget(QWidget *parent) :
     connect(ui->devManageMenuPushButton, SIGNAL(clicked()), this, SLOT(menuButtonClick()));		  //连接设备管理菜单按钮的按键信号和响应函数
     connect(ui->devUpdateMenuPushButton, SIGNAL(clicked()), this, SLOT(menuButtonClick()));		  //连接设备更新菜单按钮的按键信号和响应函数
 
-    connect(m_pvmsMonitorPage,SIGNAL(registOutSignal(int)),this,SLOT(registOutButtonClick()));
-    connect(m_recordPlayPage,SIGNAL(registOutSignal(int)),this,SLOT(registOutButtonClick()));
+    connect(m_pvmsMonitorPage,SIGNAL(registOutSignal()),this,SLOT(registOutButtonClick()));
+    connect(m_recordPlayPage,SIGNAL(registOutSignal()),this,SLOT(registOutButtonClick()));
 //    connect(m_inteAnalyPage,SIGNAL(registOutSignal(int)),this,SLOT(registOutButtonClick()));
-    connect(m_devUpdatePage,SIGNAL(registOutSignal(int)),this,SLOT(registOutButtonClick()));
-    connect(m_devManagePage,SIGNAL(registOutSignal(int)),this,SLOT(registOutButtonClick()));
+    connect(m_devUpdatePage,SIGNAL(registOutSignal()),this,SLOT(registOutButtonClick()));
+    connect(m_devManagePage,SIGNAL(registOutSignal()),this,SLOT(registOutButtonClick()));
 
 
 
@@ -494,7 +502,7 @@ void pvmsMenuWidget::registOutButtonClick()
     m_recordPlayPage->closePlayWin();   //关闭录像回放界面的播放窗口
 
     this->hide();
-    emit registOutSignal(PVMSPAGETYPE);    //触发注销信号，带上当前设备类型
+    emit registOutSignal();    //触发注销信号，带上当前设备类型
 }
 
 void pvmsMenuWidget::serverOffLineSlot(int iDex)   //服务器离线后将服务器检测硬盘错误标志及不检测计数清0，使得再次连上服务器后头3分钟依然不处理硬盘报警
@@ -621,7 +629,6 @@ void pvmsMenuWidget::menuButtonClick()
 //        ui->inteAnalyMenuPushButton->setChecked(false);
         ui->devManageMenuPushButton->setChecked(false);
         ui->devUpdateMenuPushButton->setChecked(false);
-
 
     }
 

@@ -151,7 +151,7 @@ void devUpdateWidget::registOutButtonClick()
 
 //    m_pvmsMonitorPage->m_iPresetPasswdOkFlag = 0;
     this->hide();
-    emit registOutSignal(PVMSPAGETYPE);    //触发注销信号，带上当前设备类型
+    emit registOutSignal();    //触发注销信号，带上当前设备类型
 
 }
 

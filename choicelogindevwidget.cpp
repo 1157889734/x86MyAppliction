@@ -31,7 +31,7 @@ void choiceLoginDevWidget::choiceCvmsSlot()
 {
 
     this->hide();
-    emit confirmDevTypeSignal(E_CVMSTYPE);
+    emit confirmDevTypeSignal();
 }
 
 void choiceLoginDevWidget::choicePvmsSlot()

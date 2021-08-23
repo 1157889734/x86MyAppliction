@@ -16,7 +16,7 @@ public:
     ~choiceLoginDevWidget();
 
 signals:
-    void confirmDevTypeSignal(int iType);    //确定设备类型信号，iType:设备类型，1-车厢监控设备,2-受电弓监控设备
+    void confirmDevTypeSignal();    //确定设备类型信号，iType:设备类型，1-车厢监控设备,2-受电弓监控设备
 
 public slots:
     void showPageSlot();    //显示当前页面的响应槽函数

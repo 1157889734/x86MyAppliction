@@ -46,7 +46,7 @@ public slots:
     void blackScreenExitCtrlSlot();
 
 signals:
-    void registOutSignal(int iType);     //注销信号，iType:表示执行注销的页面类型，这里应该为2，表示受电弓监控页面,
+    void registOutSignal();     //注销信号，iType:表示执行注销的页面类型，这里应该为2，表示受电弓监控页面,
     void reflushAlarmPageSignal(int iAlarmType, int iCarriageNO, int iDevPos);
     void alarmHappenSignal();
     void alarmClearSignal();
