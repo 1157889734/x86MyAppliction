@@ -602,17 +602,14 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
 //        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] server:%s has camera num=%d\n",__FUNCTION__,acRtspUrl, tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum);
         m_NvrServerPhandle[i] = STATE_GetNvrServerPmsgHandle(i);
 
-        qDebug()<<"*************startVideoPolling*****************"<<__FUNCTION__<<__LINE__<<endl;
-
         for (j = 0; j < tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum; j++)
         {
+ #if 1
             /*保存所有摄像机的信息*/
             m_tCameraInfo[m_iCameraNum].phandle = STATE_GetNvrServerPmsgHandle(i);
             m_tCameraInfo[m_iCameraNum].iPosNO = 8+j;
             snprintf(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl, sizeof(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl), "%s:554/%d",acRtspUrl, 8+j); //core dump
-
-            qDebug()<<"*************startVideoPolling*****************"<<__FUNCTION__<<__LINE__<<endl;
-
+#endif
 
 //            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] camer %d rtspUrl=%s\n",__FUNCTION__,m_iCameraNum, m_tCameraInfo[m_iCameraNum].acCameraRtspUrl);
 //            printf("##############i=%d, rtspurl:%s\n",m_iCameraNum,m_tCameraInfo[m_iCameraNum].acCameraRtspUrl);
@@ -625,7 +622,6 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
             m_tCameraInfo[m_iCameraNum].tPtzOprateTime = s_info.uptime;
             m_iCameraNum++;
         }
-        qDebug()<<"*************startVideoPolling*****************"<<__FUNCTION__<<__LINE__<<endl;
 
     }
 
@@ -688,8 +684,6 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
         m_channelNoLabel->setText(tr("通道1"));
         m_iCameraPlayNo = -1;
         iFirstFlag = 0;
-        qDebug()<<"*************startVideoPolling*****************"<<__FUNCTION__<<__LINE__<<endl;
-
 
     }
     else    //非第一次，则保持摄像头开关状态、补光灯开关状态不变，也不用发开关摄像头的命令到服务器，并且根据不同的摄像头开关状态显示不同的通道状态
@@ -704,11 +698,8 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
         }
         chStr += QString::number(m_iCameraPlayNo+1);
         m_channelNoLabel->setText(chStr);
-        qDebug()<<"*************startVideoPolling*****************"<<__FUNCTION__<<__LINE__<<endl;
 
     }
-
-    qDebug()<<"*************startVideoPolling*****************"<<__FUNCTION__<<__LINE__<<endl;
 
     m_PisServerPhandle = STATE_GetPisPmsgHandle();
     tPollingOparateTime = s_info.uptime;
@@ -1696,6 +1687,29 @@ void pvmsMonitorWidget::videoChannelCtrl()
 
 void pvmsMonitorWidget::closePlayWin()
 {
+    T_CMP_PACKET tPkt;
+
+
+    if (m_threadId != 0)
+    {
+        m_iThreadRunFlag = 0;
+//        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] monitor thread join begin !\n", __FUNCTION__);
+        pthread_join(m_threadId, NULL);
+//        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] monitor thread join end !\n", __FUNCTION__);
+        m_threadId = 0;
+    }
+
+    for (int i = 0; i < m_iCameraNum; i++)
+    {
+        if (1 == m_tCameraInfo[i].iCmpOpenFlag)
+        {
+            tPkt.iMsgCmd = CMP_CMD_DESTORY_CH;
+            tPkt.iCh = i;
+            PutNodeToCmpQueue(m_ptQueue, &tPkt);
+        }
+    }
+    m_iCameraNum = 0;
+
     if (m_channelStateLabel != NULL)
     {
         delete m_channelStateLabel;

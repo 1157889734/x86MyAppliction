@@ -493,12 +493,6 @@ void pvmsMenuWidget::closeAlarmWidget()
 }
 void pvmsMenuWidget::registOutButtonClick()
 {
-    ui->pvmsMonitorMenuPushButton->setChecked(true);
-    ui->recordPlayMenuPushButton->setChecked(false);
-//    ui->inteAnalyMenuPushButton->setChecked(false);
-    ui->devManageMenuPushButton->setChecked(false);
-    ui->devUpdateMenuPushButton->setChecked(false);
-
     m_pvmsMonitorPage->closePlayWin();   //关闭受电弓监控界面的播放窗口
     m_recordPlayPage->closePlayWin();   //关闭录像回放界面的播放窗口
 
@@ -598,11 +592,11 @@ void pvmsMenuWidget::menuButtonClick()
     if (Sender->objectName() == "pvmsMonitorMenuPushButton")     //受电弓监控按钮被按，则切换到受电弓监控页面
     {
         m_recordPlayPage->hide();
-        m_recordPlayPage->closePlayWin();   //关闭录像回放界面的播放窗口
-//        m_inteAnalyPage->hide();
         m_devManagePage->hide();
         m_devUpdatePage->hide();
         m_pvmsMonitorPage->show();
+
+        m_recordPlayPage->closePlayWin();   //关闭录像回放界面的播放窗口
         m_pvmsMonitorPage->m_playWin->show();
 
         m_pvmsMonitorPage->showMaximized();
@@ -611,7 +605,6 @@ void pvmsMenuWidget::menuButtonClick()
 
         ui->pvmsMonitorMenuPushButton->setChecked(true);
         ui->recordPlayMenuPushButton->setChecked(false);
-//        ui->inteAnalyMenuPushButton->setChecked(false);
         ui->devManageMenuPushButton->setChecked(false);
         ui->devUpdateMenuPushButton->setChecked(false);
 
@@ -619,40 +612,20 @@ void pvmsMenuWidget::menuButtonClick()
     else if (Sender->objectName() == "recordPlayMenuPushButton")     //录像回放按钮被按，则切换到录像回放页面
     {
         m_pvmsMonitorPage->hide();
-        m_pvmsMonitorPage->m_playWin->hide();
         m_pvmsMonitorPage->enableVideoPlay(0);   //禁止受电弓监控页面解码显示
-//        m_inteAnalyPage->hide();
         m_devManagePage->hide();
         m_devUpdatePage->hide();
         m_recordPlayPage->show();
 
+        m_pvmsMonitorPage->m_playWin->hide();
+
+
         ui->pvmsMonitorMenuPushButton->setChecked(false);
         ui->recordPlayMenuPushButton->setChecked(true);
-//        ui->inteAnalyMenuPushButton->setChecked(false);
         ui->devManageMenuPushButton->setChecked(false);
         ui->devUpdateMenuPushButton->setChecked(false);
 
     }
-
-//    else if (Sender->objectName() == "inteAnalyMenuPushButton")      //智能分析按钮被按，则切换到智能分析页面
-//    {
-//        m_pvmsMonitorPage->hide();
-//        m_pvmsMonitorPage->m_playWin->hide();
-//        m_pvmsMonitorPage->enableVideoPlay(0);   //禁止受电弓监控页面解码显示
-//        m_recordPlayPage->hide();
-//        m_recordPlayPage->closePlayWin();   //关闭录像回放界面的播放窗口
-//        m_devManagePage->hide();
-//        m_devUpdatePage->hide();
-//        m_inteAnalyPage->show();
-
-
-//        ui->pvmsMonitorMenuPushButton->setChecked(false);
-//        ui->recordPlayMenuPushButton->setChecked(false);
-//        ui->inteAnalyMenuPushButton->setChecked(true);
-//        ui->devManageMenuPushButton->setChecked(false);
-//        ui->devUpdateMenuPushButton->setChecked(false);
-
-//    }
     else if (Sender->objectName() == "devManageMenuPushButton")      //设备管理按钮被按，则切换到设备管理页面
     {
         if (!strcmp(acUserType, "operator"))   //操作员不能查看此界面
@@ -666,17 +639,17 @@ void pvmsMenuWidget::menuButtonClick()
         }
 
         m_pvmsMonitorPage->hide();
-        m_pvmsMonitorPage->m_playWin->hide();
         m_pvmsMonitorPage->enableVideoPlay(0);   //禁止受电弓监控页面解码显示
         m_recordPlayPage->hide();
-        m_recordPlayPage->closePlayWin();   //关闭录像回放界面的播放窗口
-//        m_inteAnalyPage->hide();
         m_devUpdatePage->hide();
         m_devManagePage->show();
 
+        m_pvmsMonitorPage->m_playWin->hide();
+        m_recordPlayPage->closePlayWin();   //关闭录像回放界面的播放窗口
+
+
         ui->pvmsMonitorMenuPushButton->setChecked(false);
         ui->recordPlayMenuPushButton->setChecked(false);
-//        ui->inteAnalyMenuPushButton->setChecked(false);
         ui->devManageMenuPushButton->setChecked(true);
         ui->devUpdateMenuPushButton->setChecked(false);
 
@@ -694,17 +667,18 @@ void pvmsMenuWidget::menuButtonClick()
         }
 
         m_pvmsMonitorPage->hide();
-        m_pvmsMonitorPage->m_playWin->hide();
         m_pvmsMonitorPage->enableVideoPlay(0);   //禁止受电弓监控页面解码显示
         m_recordPlayPage->hide();
-        m_recordPlayPage->closePlayWin();   //关闭录像回放界面的播放窗口
-//        m_inteAnalyPage->hide();
         m_devManagePage->hide();
         m_devUpdatePage->show();
 
+        m_pvmsMonitorPage->m_playWin->hide();
+        m_recordPlayPage->closePlayWin();   //关闭录像回放界面的播放窗口
+
+
+
         ui->pvmsMonitorMenuPushButton->setChecked(false);
         ui->recordPlayMenuPushButton->setChecked(false);
-//        ui->inteAnalyMenuPushButton->setChecked(false);
         ui->devManageMenuPushButton->setChecked(false);
         ui->devUpdateMenuPushButton->setChecked(true);
 

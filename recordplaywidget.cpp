@@ -952,12 +952,21 @@ void recordPlayWidget::recordPlayStopSlot()
 
 void recordPlayWidget::closePlayWin()
 {
+    if (m_threadId != 0)
+    {
+        m_iThreadRunFlag = 0;
+        pthread_join(m_threadId, NULL);
+        m_threadId = 0;
+    }
+
+
     m_playSlider->setRange(0, 0);
     m_playSlider->setValue(0);
-
-    player.stop();
-    emit setRecordPlayFlagSignal(0);
-
+    if(player.state() == QMediaPlayer::PlayingState)
+    {
+        player.stop();
+        emit setRecordPlayFlagSignal(0);
+    }
 //    ui->playMinLabel->setText("00");
 //    ui->playSecLabel->setText("00");
 //    ui->rangeMinLabel->setText("00");
