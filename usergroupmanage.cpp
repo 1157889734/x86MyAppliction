@@ -9,15 +9,15 @@
 #include <QButtonGroup>
 #include "state.h"
 
-static int g_curTextState = 0;
 
+
+static int g_curTextState = 0;
 
 usergroupManage::usergroupManage(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::usergroupManage)
 {
     ui->setupUi(this);
-
     this->setWindowFlags(Qt::FramelessWindowHint);
 
     ui->tableWidget->setFocusPolicy(Qt::NoFocus);
@@ -41,19 +41,32 @@ usergroupManage::usergroupManage(QWidget *parent) :
     ui->tableWidget->horizontalHeader()->resizeSection(5,116);
     ui->tableWidget->horizontalHeader()->resizeSection(6,111);
 
+
+}
+void usergroupManage::init_datavase()
+{
     QSqlDatabase db;
     bool query_OK=0;
-    db=QSqlDatabase::addDatabase("QSQLITE");
+    if(QSqlDatabase::contains("qt_sql_default_connection"))
+         db = QSqlDatabase::database("qt_sql_default_connection");
+    else
+        db=QSqlDatabase::addDatabase("QSQLITE");
+
     db.setDatabaseName("data.db");
     bool ok=db.open();
     if(ok)
-        QMessageBox::information(this,"Information","open sucessfully");
+    {
+//        QMessageBox::information(this,"Information","open sucessfully");
+    }
     else
+    {
         QMessageBox::information(this,"Information","open fail");
+    }
     update_database_function();
     db.close();
 
 }
+
 
 void usergroupManage::on_addpushButton_clicked()
 {
@@ -295,6 +308,8 @@ void usergroupManage::table_choose_fuction(QTableWidgetItem *item)
     ui->usernamelineEdit->setText(text);
 
 }
+
+
 
 void usergroupManage::choose_type_function(int type)
 {

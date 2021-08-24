@@ -43,14 +43,14 @@ SOURCES += \
     presetpasswdconfirm.cpp \
     myslider.cpp \
 #    qplayer.cpp \
-    useredit.cpp \
-    useradd.cpp \
-    usermanage.cpp \
+#    useredit.cpp \
+#    useradd.cpp \
+#    usermanage.cpp \
     ftpApi.c \
     rs485serv.c \
-    usergroupmanage.cpp \
     waitloginwidget.cpp \
-    usermanageconfig.cpp
+    usergroupmanage.cpp
+#    usermanageconfig.cpp
 
 HEADERS += \
     MyApplication.h \
@@ -74,14 +74,14 @@ HEADERS += \
     presetpasswdconfirm.h \
     myslider.h \
 #    qplayer.h \
-    useredit.h \
-    useradd.h \
-    usermanage.h \
+#    useredit.h \
+#    useradd.h \
+#    usermanage.h \
     ftpApi.h \
     rs485serv.h \
-    usergroupmanage.h \
     waitloginwidget.h \
-    usermanageconfig.h
+    usergroupmanage.h
+#    usermanageconfig.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

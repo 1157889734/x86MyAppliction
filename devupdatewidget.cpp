@@ -58,18 +58,8 @@ devUpdateWidget::devUpdateWidget(QWidget *parent) :
 
 
     gusergroupManage = new usergroupManage(this);   //受电弓监控页面
-    gusergroupManage->setGeometry(40, 140, gusergroupManage->width(), gusergroupManage->height());   //设置位置
+    gusergroupManage->setGeometry(40, 260, gusergroupManage->width(), gusergroupManage->height());   //设置位置
     gusergroupManage->hide();
-
-//    gusermanageconfigpage = new usermanageconfig(this);   //受电弓监控页面
-//    gusermanageconfigpage->setGeometry(40, 140, gusermanageconfigpage->width(), gusermanageconfigpage->height());   //设置位置
-//    gusermanageconfigpage->show();
-
-//    usermanagePage = new userManage(this);
-//    usermanagePage->setGeometry(245, 189, usermanagePage->width(), usermanagePage->height());
-//    usermanagePage->hide();
-//    connect(this->usermanagePage, SIGNAL(SendEscape()), this, SLOT(closeUserManageWidget()));
-
 
 
     connect(ui->permissonManagePushButton, SIGNAL(clicked(bool)), this, SLOT(userManageSlot()));
@@ -512,6 +502,7 @@ void devUpdateWidget::userManageSlot()  //点击用户管理按钮响应函数�
         chagepage = 1;
         gusergroupManage->show();
         ui->deviceManagewidget->hide();
+        gusergroupManage->init_datavase();
     }
     else
     {

@@ -1085,6 +1085,9 @@ background-color: rgb(255, 255, 255);</string>
     </property>
    </widget>
    <widget class="QTextEdit" name="updateStatueTextEdit">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>511</x>

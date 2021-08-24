@@ -56,7 +56,7 @@ waitLoginWidget::waitLoginWidget(QWidget *parent) :
     palette.setBrush(QPalette::Background,QBrush(QPixmap(":/monres/background.bmp")));
     QIcon icon;
     this->setPalette(palette);
-
+    this->showFullScreen();
 
     this->setWindowFlags(Qt::FramelessWindowHint);    //隐藏界面标题栏
     ui->okPushButton->setFocusPolicy(Qt::NoFocus); // 得到焦点时，不显示虚线框
@@ -75,7 +75,7 @@ waitLoginWidget::waitLoginWidget(QWidget *parent) :
     if (strlen(acVersion) != 0)
     {
 //        DebugPrint(DEBUG_UI_NOMAL_PRINT, "ui app version:%s!\n",acVersion);
-//        ui->versionLabel->setText(QString(QLatin1String(acVersion)));
+        ui->versionLabel->setText(QString(QLatin1String(acVersion)));
     }
 }
 

@@ -3,7 +3,7 @@
 #include <QDebug>
 #include <QString>
 
-#define VERSION "V1.0.0"
+#define VERSION "V2.0.0"
 
 #define SYSCONFIGFILEPATH "/userdata/C3SysConfig.ini"
 #define DATACONFIGFILEPATH "/userdata/C3DataConfig.ini"

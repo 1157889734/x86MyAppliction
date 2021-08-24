@@ -20,6 +20,8 @@ public:
     void update_database_function();
     QButtonGroup *g_buttonGroup;
     QString gtype_text;
+    void init_datavase();
+
 
 signals:
     void buttonClicked(int);

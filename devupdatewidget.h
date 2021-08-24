@@ -1,6 +1,7 @@
 #ifndef DEVUPDATEWIDGET_H
 #define DEVUPDATEWIDGET_H
 
+
 #include <QWidget>
 #include <QTimer>
 #include <QDateTime>
@@ -9,9 +10,7 @@
 #include "timeset.h"
 #include "pvmsmonitorwidget.h"
 
-#include "usermanage.h"
 #include "usergroupmanage.h"
-#include "usermanageconfig.h"
 
 
 namespace Ui {
@@ -80,9 +79,7 @@ private:
     QString m_brightNessText;
     QString m_saturationText;
     QString m_contrastText;
-    userManage *usermanagePage;
     usergroupManage *gusergroupManage;
-    usermanageconfig *gusermanageconfigpage;
 
 
 };
