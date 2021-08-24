@@ -4,6 +4,7 @@
 #include <netinet/in.h>
 #include <QIcon>
 #include <QTextCodec>
+#include <QMessageBox>
 
 
 
@@ -550,8 +551,9 @@ void pvmsMenuWidget::blackScreenExitCtrlSlot()  //黑屏退出，触发黑屏退
 
 void pvmsMenuWidget::menuButtonClick()
 {
+    char acUserType[16] = {0};
 
-
+    STATE_GetCurrentUserType(acUserType, sizeof(acUserType));
 
     QObject* Sender = sender();     //Sender->objectName(),可区分不同的信号来源，也就是不同的按钮按键
 
@@ -653,6 +655,16 @@ void pvmsMenuWidget::menuButtonClick()
 //    }
     else if (Sender->objectName() == "devManageMenuPushButton")      //设备管理按钮被按，则切换到设备管理页面
     {
+        if (!strcmp(acUserType, "operator"))   //操作员不能查看此界面
+        {
+//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "pvmsMenu Widget this user type has not this right!\n");
+            QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("该用户没有查看权限!"));
+            box.setStandardButtons (QMessageBox::Ok);
+            box.setButtonText (QMessageBox::Ok,QString::fromUtf8("确 定"));
+            box.exec();
+            return;
+        }
+
         m_pvmsMonitorPage->hide();
         m_pvmsMonitorPage->m_playWin->hide();
         m_pvmsMonitorPage->enableVideoPlay(0);   //禁止受电弓监控页面解码显示
@@ -671,6 +683,16 @@ void pvmsMenuWidget::menuButtonClick()
     }
     else if (Sender->objectName() == "devUpdateMenuPushButton")     //设备更新按钮被按，则切换到设备更新页面
     {
+        if (!strcmp(acUserType, "operator"))   //操作员不能查看此界面
+        {
+//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "pvmsMenu Widget this user type has not this right!\n");
+            QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("该用户没有查看权限!"));
+            box.setStandardButtons (QMessageBox::Ok);
+            box.setButtonText (QMessageBox::Ok,QString::fromUtf8("确 定"));
+            box.exec();
+            return;
+        }
+
         m_pvmsMonitorPage->hide();
         m_pvmsMonitorPage->m_playWin->hide();
         m_pvmsMonitorPage->enableVideoPlay(0);   //禁止受电弓监控页面解码显示

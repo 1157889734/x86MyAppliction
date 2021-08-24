@@ -42,7 +42,7 @@ loginWidget::~loginWidget()
 }
 void loginWidget::okButtonSlot()
 {
-#if 1 //TEST
+#if 0 //TEST
 
     this->hide();
     emit gotoPvmsMenuPageSignal();
@@ -63,7 +63,7 @@ void loginWidget::okButtonSlot()
     {
         database = QSqlDatabase::addDatabase("QSQLITE");
     }
-    database.setDatabaseName("database.db");   //设置连接的数据库名称
+    database.setDatabaseName("data.db");   //设置连接的数据库名称
 
     //打开数据库
     if(!database.open())
@@ -78,10 +78,11 @@ void loginWidget::okButtonSlot()
 
     if (ui->username_Edit->text() == "admin")    //admin登录用户,通过检查数据库中是否存在该用户，如果存在则和数据中的密码匹配，如果不存在则默认密码12345
     {
-        select_sql = "select passwd from usermanage where name='admin'";   //检测数据库中是否存在admin用户
+        select_sql = "select passwd from tab where username='admin'";   //检测数据库中是否存在admin用户
         if(!sql_query.exec(select_sql))    //执行SQL语句
         {
 //            DebugPrint(DEBUG_UI_ERROR_PRINT, "loginWidget database select error!\n");
+            qDebug()<<"loginWidget database select error"<<__FUNCTION__<<__LINE__<<endl;
         }
         else
         {
@@ -108,12 +109,17 @@ void loginWidget::okButtonSlot()
                 box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
                 box.setButtonText (QMessageBox::Ok,tr("确 定"));     //将按钮显示改成"确 定"
                 box.exec();
+                qDebug()<<"loginWidget okButtonSlot"<<__FUNCTION__<<__LINE__<<endl;
+
+
             }
         }
         else
         {
             if (ui->Passwd_Edit->text() != pwd)
             {
+                qDebug()<<"loginWidget username or passwd input not match"<<__FUNCTION__<<__LINE__<<endl;
+
 //                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "loginWidget username or passwd input not match!\n");
                 QMessageBox box(QMessageBox::Warning,tr("信息有误"),tr("用户名或密码错误!"));     //新建消息提示框，提示错误信息
                 box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
@@ -131,7 +137,7 @@ void loginWidget::okButtonSlot()
     }
     else
     {
-        QString select_sql = "select name, passwd, type from usermanage";    //查询数据库中所有的用户名、密码和用户类型记录
+        QString select_sql = "select username, passwd, power from tab";    //查询数据库中所有的用户名、密码和用户类型记录
         if(!sql_query.exec(select_sql))    //执行SQL语句
         {
 //            DebugPrint(DEBUG_UI_ERROR_PRINT, "loginWidget database select error!\n");

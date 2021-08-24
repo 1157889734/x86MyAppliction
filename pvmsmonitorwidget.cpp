@@ -561,6 +561,8 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
 
     m_iFullScreenFlag = 1;
 
+    memset(m_tCameraInfo, 0, sizeof(T_CAMERA_INFO)*MAX_SERVER_NUM*MAX_CAMERA_OFSERVER);
+
 
     m_playWin = new QVideoWidget(this->parentWidget());   //新建一个与目前窗体同属一个父窗体的播放子窗体，方便实现全屏
 //    m_playWin->setGeometry(0, 0, 1024, 768);      //设置窗体在父窗体中的位置，默认一开始为全屏
@@ -600,13 +602,16 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
 //        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] server:%s has camera num=%d\n",__FUNCTION__,acRtspUrl, tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum);
         m_NvrServerPhandle[i] = STATE_GetNvrServerPmsgHandle(i);
 
+        qDebug()<<"*************startVideoPolling*****************"<<__FUNCTION__<<__LINE__<<endl;
+
         for (j = 0; j < tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum; j++)
         {
             /*保存所有摄像机的信息*/
             m_tCameraInfo[m_iCameraNum].phandle = STATE_GetNvrServerPmsgHandle(i);
             m_tCameraInfo[m_iCameraNum].iPosNO = 8+j;
-            snprintf(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl, sizeof(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl), "%s:554/%d",acRtspUrl, 8+j);
+            snprintf(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl, sizeof(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl), "%s:554/%d",acRtspUrl, 8+j); //core dump
 
+            qDebug()<<"*************startVideoPolling*****************"<<__FUNCTION__<<__LINE__<<endl;
 
 
 //            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] camer %d rtspUrl=%s\n",__FUNCTION__,m_iCameraNum, m_tCameraInfo[m_iCameraNum].acCameraRtspUrl);
@@ -620,6 +625,8 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
             m_tCameraInfo[m_iCameraNum].tPtzOprateTime = s_info.uptime;
             m_iCameraNum++;
         }
+        qDebug()<<"*************startVideoPolling*****************"<<__FUNCTION__<<__LINE__<<endl;
+
     }
 
     if (1 == iFirstFlag)    //程序运行起来第一次进当前界面，需要把所有的摄像头打开,摄像头开关状态为开，补光灯开关状态为开，预置点编号为0
@@ -681,6 +688,8 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
         m_channelNoLabel->setText(tr("通道1"));
         m_iCameraPlayNo = -1;
         iFirstFlag = 0;
+        qDebug()<<"*************startVideoPolling*****************"<<__FUNCTION__<<__LINE__<<endl;
+
 
     }
     else    //非第一次，则保持摄像头开关状态、补光灯开关状态不变，也不用发开关摄像头的命令到服务器，并且根据不同的摄像头开关状态显示不同的通道状态
@@ -695,7 +704,11 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
         }
         chStr += QString::number(m_iCameraPlayNo+1);
         m_channelNoLabel->setText(chStr);
+        qDebug()<<"*************startVideoPolling*****************"<<__FUNCTION__<<__LINE__<<endl;
+
     }
+
+    qDebug()<<"*************startVideoPolling*****************"<<__FUNCTION__<<__LINE__<<endl;
 
     m_PisServerPhandle = STATE_GetPisPmsgHandle();
     tPollingOparateTime = s_info.uptime;
@@ -2423,5 +2436,15 @@ pvmsMonitorWidget::~pvmsMonitorWidget()
     }
     delete g_buttonGroup;
     g_buttonGroup = NULL;
+
+    delete m_channelStateLabel;
+    m_channelStateLabel = NULL;
+
+    delete m_channelNoLabel;
+    m_channelNoLabel = NULL;
+
+    delete m_playWin;
+    m_playWin = NULL;
+
     delete ui;
 }
