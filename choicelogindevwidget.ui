@@ -36,7 +36,11 @@ border-image:url();
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/monres/preview.bmp);</string>
+    <string notr="true">QPushButton{background-image: url(:/monres/preview.bmp);}
+QPushButton:hover{background-color: rgb(246, 246, 246);color: rgb(86, 164, 246);border-color: rgb(255, 255, 255);border-width: 2px;border-style: solid;}
+
+QPushButton:pressed
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -60,7 +64,13 @@ border-image:url();
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/monres/playback.bmp);</string>
+    <string notr="true">QPushButton{
+background-image: url(:/monres/playback.bmp);}
+
+QPushButton:hover{background-color: rgb(246, 246, 246);color: rgb(86, 164, 246);border-color: rgb(255, 255, 255);border-width: 2px;border-style: solid;}
+
+QPushButton:pressed
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>

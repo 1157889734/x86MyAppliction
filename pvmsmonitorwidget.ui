@@ -118,7 +118,7 @@ QPushButton:pressed
   <widget class="QPushButton" name="startPollingPushButton">
    <property name="geometry">
     <rect>
-     <x>910</x>
+     <x>915</x>
      <y>510</y>
      <width>30</width>
      <height>31</height>
@@ -178,15 +178,10 @@ color: rgb(0, 0, 0);</string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">QPushButton{background-color: rgb(255, 255, 255);color: rgb(86, 164, 246);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}
-
-QPushButton:hover{background-color: rgb(246, 246, 246);color: rgb(86, 164, 246);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}
-
-QPushButton:checked
-{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}</string>
+    <string notr="true">border-image: url(:/monres/cameraoff.bmp);</string>
    </property>
    <property name="text">
-    <string>摄像头关</string>
+    <string/>
    </property>
    <property name="checkable">
     <bool>true</bool>
@@ -263,7 +258,7 @@ QPushButton:pressed
   <widget class="QPushButton" name="pausePollingPushButton">
    <property name="geometry">
     <rect>
-     <x>860</x>
+     <x>865</x>
      <y>510</y>
      <width>30</width>
      <height>31</height>
@@ -582,15 +577,10 @@ QPushButton:pressed
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">QPushButton{background-color: rgb(255, 255, 255);color: rgb(86, 164, 246);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}
-
-QPushButton:hover{background-color: rgb(246, 246, 246);color: rgb(86, 164, 246);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}
-
-QPushButton:checked
-{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}</string>
+    <string notr="true">border-image: url(:/monres/ligtoff.bmp);</string>
    </property>
    <property name="text">
-    <string>补光灯开</string>
+    <string/>
    </property>
    <property name="checkable">
     <bool>true</bool>
@@ -648,7 +638,7 @@ QPushButton:pressed
   <widget class="QPushButton" name="pollingNextOnePushButton">
    <property name="geometry">
     <rect>
-     <x>970</x>
+     <x>965</x>
      <y>510</y>
      <width>30</width>
      <height>31</height>
@@ -686,7 +676,10 @@ QPushButton:pressed
     <string notr="true">QPushButton{
 border-image: url(:/res/up.bmp);}
 QPushButton:pressed
-{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
+{background-color: rgb(246, 246, 246);color: rgb(86, 164, 246);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}
+QPushButton:hover{background-color: rgb(246, 246, 246);color: rgb(86, 164, 246);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}
+
+</string>
    </property>
    <property name="text">
     <string/>
@@ -704,7 +697,7 @@ QPushButton:pressed
   <widget class="QPushButton" name="pollingLastOnePushButton">
    <property name="geometry">
     <rect>
-     <x>810</x>
+     <x>815</x>
      <y>510</y>
      <width>30</width>
      <height>31</height>

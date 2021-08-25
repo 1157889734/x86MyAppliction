@@ -154,7 +154,7 @@ background-color: rgb(204, 232, 207);</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(204, 232, 207);</string>
+    <string notr="true">QLineEdit:focus{background-color: rgb(204, 232, 207);}</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="passwdlineEdit">
@@ -166,6 +166,9 @@ background-color: rgb(204, 232, 207);</string>
      <height>30</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLineEdit:focus{background-color: rgb(204, 232, 207);}</string>
+   </property>
   </widget>
   <widget class="QLineEdit" name="surelineEdit">
    <property name="geometry">
@@ -175,6 +178,9 @@ background-color: rgb(204, 232, 207);</string>
      <width>161</width>
      <height>30</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLineEdit:focus{background-color: rgb(204, 232, 207);}</string>
    </property>
   </widget>
   <widget class="QPushButton" name="savepushButton">

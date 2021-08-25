@@ -146,7 +146,7 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
 
 
     ui->StartdateEdit->setDateTime(QDateTime::currentDateTime());
-    ui->StarttimeEdit->setDateTime(QDateTime::currentDateTime());
+//    ui->StarttimeEdit->setDateTime(QDateTime::currentDateTime());
 
     connect(ui->alarmPushButton, SIGNAL(clicked(bool)), this, SLOT(alarmPushButoonClickSlot()));   //报警按钮按键信号响应打开报警信息界面
     connect(ui->canselPushButton, SIGNAL(clicked()), this, SLOT(registOutButtonClick()));

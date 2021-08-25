@@ -201,7 +201,8 @@
    </property>
    <property name="styleSheet">
     <string notr="true">border-style: none;
-background-color: rgb(255, 255, 255);</string>
+background-color: rgb(204, 232, 207);
+gridline-color: rgb(255, 255, 255)</string>
    </property>
    <property name="showGrid">
     <bool>false</bool>
@@ -231,8 +232,8 @@ background-color: rgb(255, 255, 255);</string>
     <property name="font">
      <font>
       <pointsize>12</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
+      <weight>50</weight>
+      <bold>false</bold>
      </font>
     </property>
     <property name="textAlignment">
@@ -240,9 +241,9 @@ background-color: rgb(255, 255, 255);</string>
     </property>
     <property name="background">
      <color>
-      <red>220</red>
-      <green>220</green>
-      <blue>220</blue>
+      <red>255</red>
+      <green>255</green>
+      <blue>255</blue>
      </color>
     </property>
    </column>
@@ -253,8 +254,8 @@ background-color: rgb(255, 255, 255);</string>
     <property name="font">
      <font>
       <pointsize>12</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
+      <weight>50</weight>
+      <bold>false</bold>
      </font>
     </property>
     <property name="textAlignment">
@@ -262,9 +263,9 @@ background-color: rgb(255, 255, 255);</string>
     </property>
     <property name="background">
      <color>
-      <red>220</red>
-      <green>220</green>
-      <blue>220</blue>
+      <red>255</red>
+      <green>255</green>
+      <blue>255</blue>
      </color>
     </property>
    </column>
@@ -275,8 +276,8 @@ background-color: rgb(255, 255, 255);</string>
     <property name="font">
      <font>
       <pointsize>12</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
+      <weight>50</weight>
+      <bold>false</bold>
      </font>
     </property>
     <property name="textAlignment">
@@ -284,9 +285,9 @@ background-color: rgb(255, 255, 255);</string>
     </property>
     <property name="background">
      <color>
-      <red>220</red>
-      <green>220</green>
-      <blue>220</blue>
+      <red>255</red>
+      <green>255</green>
+      <blue>255</blue>
      </color>
     </property>
    </column>
@@ -709,6 +710,9 @@ QPushButton:pressed
      <height>31</height>
     </rect>
    </property>
+   <property name="locale">
+    <locale language="Chinese" country="China"/>
+   </property>
    <property name="keyboardTracking">
     <bool>false</bool>
    </property>
@@ -750,6 +754,9 @@ QPushButton:pressed
      <width>141</width>
      <height>31</height>
     </rect>
+   </property>
+   <property name="locale">
+    <locale language="Chinese" country="China"/>
    </property>
    <property name="keyboardTracking">
     <bool>false</bool>

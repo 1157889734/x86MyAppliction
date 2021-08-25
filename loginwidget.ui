@@ -30,6 +30,9 @@ border-image:url();
      <height>41</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLineEdit:focus{background-color: rgb(204, 232, 207);}</string>
+   </property>
   </widget>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
@@ -94,6 +97,9 @@ border-image:url();
      <width>161</width>
      <height>41</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLineEdit:focus{background-color: rgb(204, 232, 207);}</string>
    </property>
   </widget>
   <widget class="QPushButton" name="ensure">

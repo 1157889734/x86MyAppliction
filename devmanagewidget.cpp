@@ -37,12 +37,12 @@ devManageWidget::devManageWidget(QWidget *parent) :
     ui->devStorageTableWidget->setSelectionMode(QAbstractItemView::SingleSelection); //设置只能选择一行，不能多行选中
 //    ui->devStorageTableWidget->setAlternatingRowColors(true);                        //设置隔一行变一颜色，即：一灰一白
     ui->devStorageTableWidget->horizontalHeader()->resizeSection(0,50); //设置表头第一列的宽度为46
-    ui->devStorageTableWidget->horizontalHeader()->resizeSection(1,136);
-    ui->devStorageTableWidget->horizontalHeader()->resizeSection(2,136);
-    ui->devStorageTableWidget->horizontalHeader()->resizeSection(3,136);
-    ui->devStorageTableWidget->horizontalHeader()->resizeSection(4,116);
-    ui->devStorageTableWidget->horizontalHeader()->resizeSection(5,116);
-    ui->devStorageTableWidget->horizontalHeader()->resizeSection(6,111);
+    ui->devStorageTableWidget->horizontalHeader()->resizeSection(1,150);
+    ui->devStorageTableWidget->horizontalHeader()->resizeSection(2,150);
+    ui->devStorageTableWidget->horizontalHeader()->resizeSection(3,150);
+    ui->devStorageTableWidget->horizontalHeader()->resizeSection(4,150);
+    ui->devStorageTableWidget->horizontalHeader()->resizeSection(5,150);
+    ui->devStorageTableWidget->horizontalHeader()->resizeSection(6,150);
 
 
     ui->devStatusTableWidget->setFocusPolicy(Qt::NoFocus);

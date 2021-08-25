@@ -1028,6 +1028,9 @@ void pvmsMonitorWidget::cameraSwitchSlot()
         T_LOG_INFO tLogInfo;
         T_CMP_PACKET tPkt;
 
+        memset(&tTrainConfigInfo, 0, sizeof(T_TRAIN_CONFIG));
+        STATE_GetCurrentTrainConfigInfo(&tTrainConfigInfo);
+
 //        DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget cameraSwitch button pressed!\n");
 
         if (1 == m_iPollingFlag)
@@ -1039,6 +1042,18 @@ void pvmsMonitorWidget::cameraSwitchSlot()
         if (CAMERA_ON == m_tCameraInfo[m_iCameraPlayNo].iCameraSwitchState)
         {
 //            DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget close camera!\n");
+            QString  strr = QString("%1%2%3").arg("是否关闭").arg(m_iCameraPlayNo+1).arg("号受电弓摄像机?");
+            QMessageBox msgBox(QMessageBox::Question,QString(tr("")),QString(strr));
+            msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+            msgBox.button(QMessageBox::Yes)->setText("确 定");
+            msgBox.button(QMessageBox::No)->setText("取 消");
+            iRet=msgBox.exec();
+            if(iRet != QMessageBox::Yes)
+            {
+                return;
+            }
+
+
             emit chStateLabelTextCtrlSignal(0);  //触发让通道状态标签显示文本的信号
             emit camSwitchButtonTextCtrlSignal(1);  //触发让摄像头开关按钮显示文本的信号
 
@@ -1054,6 +1069,17 @@ void pvmsMonitorWidget::cameraSwitchSlot()
         }
         else
         {
+
+            QString  strr = QString("%1%2%3").arg("是否开启").arg(m_iCameraPlayNo+1).arg("号受电弓摄像机?");
+            QMessageBox msgBox(QMessageBox::Question,QString(tr("")),QString(strr));
+            msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+            msgBox.button(QMessageBox::Yes)->setText("确 定");
+            msgBox.button(QMessageBox::No)->setText("取 消");
+            iRet=msgBox.exec();
+            if(iRet != QMessageBox::Yes)
+            {
+                return;
+            }
 //                DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget open camera!\n");
             emit chStateLabelTextCtrlSignal(1);  //触发让通道状态标签显示文本的信号
             emit camSwitchButtonTextCtrlSignal(0);  //触发让摄像头开关按钮显示文本的信号
@@ -1084,8 +1110,6 @@ void pvmsMonitorWidget::cameraSwitchSlot()
         }
         else
         {
-            memset(&tTrainConfigInfo, 0, sizeof(T_TRAIN_CONFIG));
-            STATE_GetCurrentTrainConfigInfo(&tTrainConfigInfo);
 
             for (i = 0; i < tTrainConfigInfo.iNvrServerCount; i++)
             {
@@ -1132,6 +1156,19 @@ void pvmsMonitorWidget::fillLightSwitchSlot()
     /*发送开关补光灯的消息给服务器，消息内容为2个字节，第一个字节表示操作类型:开启还是关闭补光灯，第二个字节表示受电弓摄像机位置号*/
     if (FILLLIGHT_ON == m_tCameraInfo[m_iCameraPlayNo].iFillLightSwitchState)
     {
+        qDebug()<<"***************camera"<<m_iCameraPlayNo<<"**********"<<endl;
+        QString  strr = QString("%1%2%3").arg("是否关闭").arg(m_iCameraPlayNo+1).arg("号受电弓摄像机闪光灯?");
+        QMessageBox msgBox(QMessageBox::Question,QString(tr("")),QString(strr));
+        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        msgBox.button(QMessageBox::Yes)->setText("确 定");
+        msgBox.button(QMessageBox::No)->setText("取 消");
+        iRet=msgBox.exec();
+        if(iRet != QMessageBox::Yes)
+        {
+            return;
+        }
+
+
 //        DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget close fillLight!\n");
         emit fillLightSwitchButtonTextCtrlSignal(1);  //触发让补光灯开关按钮显示文本的信号
 
@@ -1140,6 +1177,19 @@ void pvmsMonitorWidget::fillLightSwitchSlot()
     }
     else
     {
+        QString  strr = QString("%1%2%3").arg("是否开启").arg(m_iCameraPlayNo+1).arg("号受电弓摄像机闪光灯?");
+        QMessageBox msgBox(QMessageBox::Question,QString(tr("")),QString(strr));
+        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        msgBox.button(QMessageBox::Yes)->setText("确 定");
+        msgBox.button(QMessageBox::No)->setText("取 消");
+        iRet=msgBox.exec();
+        if(iRet != QMessageBox::Yes)
+        {
+            return;
+        }
+
+
+
 //        DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget open fillLight!\n");
         emit fillLightSwitchButtonTextCtrlSignal(0);  //触发让补光灯开关按钮显示文本的信号
 
@@ -1590,12 +1640,12 @@ void pvmsMonitorWidget::camSwitchButtonTextCtrlSlot(int iFlag)   //摄像机开�
 {
     if (0 == iFlag)
     {
-        ui->cameraSwitchPushButton->setText(tr("摄像头关"));
+        ui->cameraSwitchPushButton->setStyleSheet("QPushButton{border-image: url(:/monres/cameraoff.bmp);background-color: rgb(255, 255, 255);}");
         ui->cameraSwitchPushButton->setChecked(true);
     }
     else
     {
-        ui->cameraSwitchPushButton->setText(tr("摄像头开"));
+        ui->cameraSwitchPushButton->setStyleSheet("QPushButton{border-image: url(:/monres/cameraon.bmp);background-color: rgb(255, 255, 255);}");
         ui->cameraSwitchPushButton->setChecked(false);
     }
 }
@@ -1604,12 +1654,12 @@ void pvmsMonitorWidget::fillLightSwitchButtonTextCtrlSlot(int iFlag)  //补光�
 {
     if (0 == iFlag)
     {
-        ui->fillLightSwitchPushButton->setText(tr("补光灯关"));
+        ui->fillLightSwitchPushButton->setStyleSheet("QPushButton{border-image: url(:/monres/lighton.bmp);background-color: rgb(255, 255, 255);}");
         ui->fillLightSwitchPushButton->setChecked(true);
     }
     else
     {
-        ui->fillLightSwitchPushButton->setText(tr("补光灯开"));
+        ui->fillLightSwitchPushButton->setStyleSheet("QPushButton{border-image: url(:/monres/ligtoff.bmp);background-color: rgb(255, 255, 255);}");
         ui->fillLightSwitchPushButton->setChecked(false);
     }
 }

@@ -199,12 +199,13 @@ int main(int argc, char *argv[])
 
     QObject::connect(g_pvmsMenuPage, SIGNAL(registOutSignal()), g_loginPage, SLOT(showPageSlot()));       //受电弓监控主菜单页面的注销信号连接登录页面的页面显示槽
 
+    a.exec();
 
-    usleep(1*1000*1000);
+
+//    usleep(1*1000*1000);
 
 //    splash.finish(g_choiceLoginDevPage);
 
-    a.exec();
 
     RS485_DestroyConnect(pRs485Handle);
 

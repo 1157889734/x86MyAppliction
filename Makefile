@@ -568,6 +568,7 @@ compiler_rcc_clean:
 qrc_res.cpp: res.qrc \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/rcc \
 		monres/4.bmp \
+		monres/lighton.bmp \
 		monres/carriagemonitor.bmp \
 		monres/right.bmp \
 		monres/before.bmp \
@@ -588,7 +589,9 @@ qrc_res.cpp: res.qrc \
 		monres/apply.bmp \
 		monres/3.bmp \
 		monres/replacevideo.bmp \
+		monres/ligtoff.jpg \
 		monres/putout.bmp \
+		monres/cameraon.jpg \
 		monres/browse.bmp \
 		monres/bitmap14.bmp \
 		monres/carriageequip1.bmp \
@@ -598,6 +601,7 @@ qrc_res.cpp: res.qrc \
 		monres/yj1.bmp \
 		monres/gj1.bmp \
 		monres/PantoMantain1.bmp \
+		monres/lighton.jpg \
 		monres/7.bmp \
 		monres/cameractrl.bmp \
 		monres/back.bmp \
@@ -620,6 +624,7 @@ qrc_res.cpp: res.qrc \
 		monres/near.bmp \
 		monres/substruct.bmp \
 		monres/cancel.bmp \
+		monres/cameraoff.bmp \
 		monres/gzpz.bmp \
 		monres/qxdd.bmp \
 		monres/C3UnifiedClient1.ico \
@@ -666,6 +671,7 @@ qrc_res.cpp: res.qrc \
 		monres/search.bmp \
 		monres/up.bmp \
 		monres/bj1.bmp \
+		monres/cameraoff.jpg \
 		monres/carriagemonitor1.bmp \
 		monres/usersave.bmp \
 		monres/pause1.bmp \
@@ -676,7 +682,9 @@ qrc_res.cpp: res.qrc \
 		monres/9.bmp \
 		monres/cameractrloff.bmp \
 		monres/carriageset.bmp \
+		monres/ligtoff.bmp \
 		monres/playback.bmp \
+		monres/cameraon.bmp \
 		monres/nextpage.bmp \
 		monres/PantoMantain.bmp \
 		monres/kaishigegnxin.bmp \
@@ -785,6 +793,7 @@ qrc_res.cpp: res.qrc \
 qrc_res.cpp: res.qrc \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/rcc \
 		monres/4.bmp \
+		monres/lighton.bmp \
 		monres/carriagemonitor.bmp \
 		monres/right.bmp \
 		monres/before.bmp \
@@ -805,7 +814,9 @@ qrc_res.cpp: res.qrc \
 		monres/apply.bmp \
 		monres/3.bmp \
 		monres/replacevideo.bmp \
+		monres/ligtoff.jpg \
 		monres/putout.bmp \
+		monres/cameraon.jpg \
 		monres/browse.bmp \
 		monres/bitmap14.bmp \
 		monres/carriageequip1.bmp \
@@ -815,6 +826,7 @@ qrc_res.cpp: res.qrc \
 		monres/yj1.bmp \
 		monres/gj1.bmp \
 		monres/PantoMantain1.bmp \
+		monres/lighton.jpg \
 		monres/7.bmp \
 		monres/cameractrl.bmp \
 		monres/back.bmp \
@@ -837,6 +849,7 @@ qrc_res.cpp: res.qrc \
 		monres/near.bmp \
 		monres/substruct.bmp \
 		monres/cancel.bmp \
+		monres/cameraoff.bmp \
 		monres/gzpz.bmp \
 		monres/qxdd.bmp \
 		monres/C3UnifiedClient1.ico \
@@ -883,6 +896,7 @@ qrc_res.cpp: res.qrc \
 		monres/search.bmp \
 		monres/up.bmp \
 		monres/bj1.bmp \
+		monres/cameraoff.jpg \
 		monres/carriagemonitor1.bmp \
 		monres/usersave.bmp \
 		monres/pause1.bmp \
@@ -893,7 +907,9 @@ qrc_res.cpp: res.qrc \
 		monres/9.bmp \
 		monres/cameractrloff.bmp \
 		monres/carriageset.bmp \
+		monres/ligtoff.bmp \
 		monres/playback.bmp \
+		monres/cameraon.bmp \
 		monres/nextpage.bmp \
 		monres/PantoMantain.bmp \
 		monres/kaishigegnxin.bmp \
@@ -3896,13 +3912,17 @@ choicelogindevwidget.o: choicelogindevwidget.cpp choicelogindevwidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qdesktopwidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qguiapplication.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qinputmethod.h \
-		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QFrame \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QLabel \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qlabel.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qframe.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QPushButton \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qpushbutton.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qabstractbutton.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qicon.h \
-		loginwidget.h
+		loginwidget.h \
+		state.h \
+		pmsgcli.h \
+		types.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o choicelogindevwidget.o choicelogindevwidget.cpp
 
 loginwidget.o: loginwidget.cpp loginwidget.h \

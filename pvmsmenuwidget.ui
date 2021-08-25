@@ -28,9 +28,9 @@ border-image:url();
   <widget class="QPushButton" name="pvmsMonitorMenuPushButton">
    <property name="geometry">
     <rect>
-     <x>1</x>
+     <x>0</x>
      <y>35</y>
-     <width>254</width>
+     <width>255</width>
      <height>102</height>
     </rect>
    </property>
@@ -50,7 +50,13 @@ border-image:url();
     <bool>false</bool>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(5, 135, 167);
+    <string notr="true">QPushButton{
+background-color: rgb(5, 135, 167);}
+
+QPushButton:hover{border-color: rgb(255, 255, 255);border-width: 2px;border-style: solid;}
+
+QPushButton:pressed
+{border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}
 
 
 
@@ -89,7 +95,7 @@ border-image:url();
     <rect>
      <x>256</x>
      <y>35</y>
-     <width>254</width>
+     <width>255</width>
      <height>102</height>
     </rect>
    </property>
@@ -116,7 +122,7 @@ border-image:url();
     <rect>
      <x>511</x>
      <y>35</y>
-     <width>254</width>
+     <width>255</width>
      <height>102</height>
     </rect>
    </property>
@@ -146,7 +152,7 @@ border-image:url();
     <rect>
      <x>766</x>
      <y>35</y>
-     <width>254</width>
+     <width>257</width>
      <height>102</height>
     </rect>
    </property>
