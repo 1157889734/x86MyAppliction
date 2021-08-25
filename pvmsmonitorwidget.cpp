@@ -566,7 +566,7 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
 
     m_playWin = new QVideoWidget(this->parentWidget());   //新建一个与目前窗体同属一个父窗体的播放子窗体，方便实现全屏
 //    m_playWin->setGeometry(0, 0, 1024, 768);      //设置窗体在父窗体中的位置，默认一开始为全屏
-    m_playWin->setGeometry(0, 138, 782, 656);
+    m_playWin->setGeometry(0, 138, 775, 656);
     m_playWin->show();  //默认显示
     m_playWin->setObjectName("m_playWin");
     m_playWin->setStyleSheet("QWidget{background-color: rgb(0, 0, 0);}");     //设置播放窗口背景色为黑色

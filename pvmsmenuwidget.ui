@@ -105,7 +105,13 @@ QPushButton:pressed
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(5, 135, 167);</string>
+    <string notr="true">QPushButton{
+background-color: rgb(5, 135, 167);}
+
+QPushButton:hover{border-color: rgb(255, 255, 255);border-width: 2px;border-style: solid;}
+
+QPushButton:pressed
+{border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -132,7 +138,13 @@ QPushButton:pressed
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(5, 135, 167);</string>
+    <string notr="true">QPushButton{
+background-color: rgb(5, 135, 167);}
+
+QPushButton:hover{border-color: rgb(255, 255, 255);border-width: 2px;border-style: solid;}
+
+QPushButton:pressed
+{border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -165,7 +177,13 @@ QPushButton:pressed
     <cursorShape>ArrowCursor</cursorShape>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(5, 135, 167);</string>
+    <string notr="true">QPushButton{
+background-color: rgb(5, 135, 167);}
+
+QPushButton:hover{border-color: rgb(255, 255, 255);border-width: 2px;border-style: solid;}
+
+QPushButton:pressed
+{border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>

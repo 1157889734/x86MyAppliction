@@ -33,6 +33,12 @@ border-image:url();
    <property name="styleSheet">
     <string notr="true">QLineEdit:focus{background-color: rgb(204, 232, 207);}</string>
    </property>
+   <property name="frame">
+    <bool>true</bool>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+   </property>
   </widget>
   <widget class="QLabel" name="label_2">
    <property name="geometry">

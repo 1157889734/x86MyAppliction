@@ -43,10 +43,10 @@
   <widget class="QPushButton" name="presetNoPushButton_8">
    <property name="geometry">
     <rect>
-     <x>960</x>
+     <x>970</x>
      <y>370</y>
-     <width>42</width>
-     <height>41</height>
+     <width>51</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
@@ -72,8 +72,8 @@ QPushButton:pressed
     <rect>
      <x>808</x>
      <y>170</y>
-     <width>71</width>
-     <height>35</height>
+     <width>69</width>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -83,9 +83,10 @@ QPushButton:pressed
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
-border-image: url(:/res/plus.bmp);}
+background-image: url(:/res/plus.bmp);}
 QPushButton:pressed
-{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}
+</string>
    </property>
    <property name="text">
     <string/>
@@ -96,8 +97,8 @@ QPushButton:pressed
     <rect>
      <x>930</x>
      <y>220</y>
-     <width>71</width>
-     <height>35</height>
+     <width>69</width>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -107,9 +108,10 @@ QPushButton:pressed
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
-border-image: url(:/res/near.bmp);}
+background-image: url(:/res/near.bmp);}
 QPushButton:pressed
-{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}
+</string>
    </property>
    <property name="text">
     <string/>
@@ -166,10 +168,10 @@ color: rgb(0, 0, 0);</string>
   <widget class="QPushButton" name="cameraSwitchPushButton">
    <property name="geometry">
     <rect>
-     <x>810</x>
+     <x>780</x>
      <y>470</y>
-     <width>81</width>
-     <height>32</height>
+     <width>110</width>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -209,8 +211,8 @@ color: rgb(0, 0, 0);</string>
     <rect>
      <x>808</x>
      <y>220</y>
-     <width>71</width>
-     <height>35</height>
+     <width>69</width>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -220,9 +222,10 @@ color: rgb(0, 0, 0);</string>
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
-border-image: url(:/res/fare.bmp);}
+background-image: url(:/res/fare.bmp);}
 QPushButton:pressed
-{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}
+</string>
    </property>
    <property name="text">
     <string/>
@@ -231,10 +234,10 @@ QPushButton:pressed
   <widget class="QPushButton" name="presetNoPushButton_3">
    <property name="geometry">
     <rect>
-     <x>906</x>
+     <x>910</x>
      <y>310</y>
-     <width>42</width>
-     <height>41</height>
+     <width>51</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
@@ -258,7 +261,7 @@ QPushButton:pressed
   <widget class="QPushButton" name="pausePollingPushButton">
    <property name="geometry">
     <rect>
-     <x>865</x>
+     <x>860</x>
      <y>510</y>
      <width>30</width>
      <height>31</height>
@@ -288,8 +291,8 @@ QPushButton:pressed
     <rect>
      <x>930</x>
      <y>170</y>
-     <width>71</width>
-     <height>35</height>
+     <width>69</width>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -299,9 +302,11 @@ QPushButton:pressed
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
-border-image: url(:/res/substruct.bmp);}
+background-image: url(:/res/substruct.bmp);}
 QPushButton:pressed
-{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}
+
+</string>
    </property>
    <property name="text">
     <string/>
@@ -310,10 +315,10 @@ QPushButton:pressed
   <widget class="QPushButton" name="presetNoPushButton_2">
    <property name="geometry">
     <rect>
-     <x>856</x>
+     <x>850</x>
      <y>310</y>
-     <width>42</width>
-     <height>41</height>
+     <width>51</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
@@ -323,10 +328,9 @@ QPushButton:pressed
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
-border-image: url(:/res/2.bmp);}
+background-image: url(:/res/2.bmp);}
 QPushButton:pressed
-{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}
-</string>
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -338,7 +342,7 @@ QPushButton:pressed
   <widget class="QPushButton" name="ptzRightPushButton">
    <property name="geometry">
     <rect>
-     <x>946</x>
+     <x>950</x>
      <y>90</y>
      <width>69</width>
      <height>30</height>
@@ -346,9 +350,10 @@ QPushButton:pressed
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
-border-image: url(:/res/right.bmp);}
+background-image: url(:/res/right.bmp);}
 QPushButton:pressed
-{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}
+</string>
    </property>
    <property name="text">
     <string/>
@@ -380,7 +385,7 @@ color: rgb(0, 0, 0);</string>
   <widget class="QPushButton" name="ptzLeftPushButton">
    <property name="geometry">
     <rect>
-     <x>810</x>
+     <x>790</x>
      <y>90</y>
      <width>69</width>
      <height>30</height>
@@ -388,9 +393,10 @@ color: rgb(0, 0, 0);</string>
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
-border-image: url(:/res/left.bmp);}
+background-image: url(:/res/left.bmp);}
 QPushButton:pressed
-{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}
+</string>
    </property>
    <property name="text">
     <string/>
@@ -432,10 +438,10 @@ QPushButton:pressed
   <widget class="QPushButton" name="presetSetPushButton">
    <property name="geometry">
     <rect>
-     <x>810</x>
+     <x>780</x>
      <y>430</y>
-     <width>81</width>
-     <height>32</height>
+     <width>110</width>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -464,8 +470,8 @@ QPushButton:pressed
     <rect>
      <x>910</x>
      <y>370</y>
-     <width>42</width>
-     <height>41</height>
+     <width>51</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
@@ -497,9 +503,10 @@ QPushButton:pressed
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
-border-image: url(:/res/down.bmp);}
+background-image: url(:/res/down.bmp);}
 QPushButton:pressed
-{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}
+</string>
    </property>
    <property name="text">
     <string/>
@@ -565,10 +572,10 @@ QPushButton:pressed
   <widget class="QPushButton" name="fillLightSwitchPushButton">
    <property name="geometry">
     <rect>
-     <x>920</x>
+     <x>910</x>
      <y>470</y>
-     <width>81</width>
-     <height>32</height>
+     <width>110</width>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -589,10 +596,10 @@ QPushButton:pressed
   <widget class="QPushButton" name="presetNoPushButton_4">
    <property name="geometry">
     <rect>
-     <x>956</x>
+     <x>970</x>
      <y>310</y>
-     <width>42</width>
-     <height>41</height>
+     <width>51</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
@@ -638,7 +645,7 @@ QPushButton:pressed
   <widget class="QPushButton" name="pollingNextOnePushButton">
    <property name="geometry">
     <rect>
-     <x>965</x>
+     <x>970</x>
      <y>510</y>
      <width>30</width>
      <height>31</height>
@@ -674,10 +681,11 @@ QPushButton:pressed
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
-border-image: url(:/res/up.bmp);}
+background-image: url(:/res/up.bmp);}
+
 QPushButton:pressed
-{background-color: rgb(246, 246, 246);color: rgb(86, 164, 246);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}
-QPushButton:hover{background-color: rgb(246, 246, 246);color: rgb(86, 164, 246);border-color: rgb(86, 164, 246);border-width: 1px;border-style: solid;}
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}
+
 
 </string>
    </property>
@@ -697,7 +705,7 @@ QPushButton:hover{background-color: rgb(246, 246, 246);color: rgb(86, 164, 246);
   <widget class="QPushButton" name="pollingLastOnePushButton">
    <property name="geometry">
     <rect>
-     <x>815</x>
+     <x>800</x>
      <y>510</y>
      <width>30</width>
      <height>31</height>
@@ -758,10 +766,10 @@ QPushButton:pressed
   <widget class="QPushButton" name="presetNoPushButton_6">
    <property name="geometry">
     <rect>
-     <x>860</x>
+     <x>850</x>
      <y>370</y>
-     <width>42</width>
-     <height>41</height>
+     <width>51</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
@@ -785,10 +793,10 @@ QPushButton:pressed
   <widget class="QPushButton" name="presetNoPushButton">
    <property name="geometry">
     <rect>
-     <x>807</x>
+     <x>790</x>
      <y>310</y>
-     <width>41</width>
-     <height>41</height>
+     <width>51</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
@@ -798,9 +806,7 @@ QPushButton:pressed
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton
-{border-image: url(:/res/1.bmp);}
-QPushButton:pressed
-{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}
+{background-image: url(:/monres/11.bmp);}
 </string>
    </property>
    <property name="text">
@@ -819,10 +825,10 @@ QPushButton:pressed
   <widget class="QPushButton" name="presetNoPushButton_5">
    <property name="geometry">
     <rect>
-     <x>810</x>
+     <x>790</x>
      <y>370</y>
-     <width>42</width>
-     <height>41</height>
+     <width>51</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
@@ -894,10 +900,10 @@ QPushButton:pressed
   <widget class="QPushButton" name="presetGetPushButton">
    <property name="geometry">
     <rect>
-     <x>920</x>
+     <x>910</x>
      <y>430</y>
-     <width>81</width>
-     <height>32</height>
+     <width>110</width>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -983,6 +989,9 @@ QPushButton:pressed
      <width>1024</width>
      <height>665</height>
     </rect>
+   </property>
+   <property name="toolTipDuration">
+    <number>0</number>
    </property>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(255, 255, 255);</string>

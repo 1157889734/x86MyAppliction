@@ -53,7 +53,6 @@ public:
     void closePlayWin();
     void recordQueryCtrl(char *pcMsgData, int iMsgDataLen);
     void recordPlayCtrl(int iRow, int iDex);
-//    void mediaInit();
     void triggerSetSliderValueSignal(int iValue);   //触发设置播放进度条值的信号
     void triggerSetRangeLabelSignal();
     void triggerCloseRecordPlaySignal();

@@ -23,11 +23,13 @@ devManageWidget::devManageWidget(QWidget *parent) :
 
 
     ui->devStorageTableWidget->setFocusPolicy(Qt::NoFocus);
-    ui->devStorageTableWidget->setColumnCount(7);
+    ui->devStorageTableWidget->setColumnCount(8);
+    ui->devStorageTableWidget->setRowCount(7);
     ui->devStorageTableWidget->setShowGrid(true);
 //    ui->devStorageTableWidget->setStyleSheet("QTableWidget{ gridline-color : rgb(255, 255, 255)}");
     QStringList header;
-    header<<tr("序号")<<tr("设备名称")<<tr("设备位置")<<tr("设备IP")<<tr("硬盘容量")<<tr("硬盘使用量")<<tr("硬盘状态");
+    header<<tr("序号")<<tr("设备名称")<<tr("设备位置")<<tr("设备IP")<<tr("硬盘容量")<<tr("硬盘使用量")<<tr("硬盘状态")<<tr("");
+    ui->devStorageTableWidget->horizontalHeader()->setStyleSheet("background-color:white");
     ui->devStorageTableWidget->setHorizontalHeaderLabels(header);
     ui->devStorageTableWidget->horizontalHeader()->setVisible(true);//temp
     ui->devStorageTableWidget->horizontalHeader()->setSectionsClickable(false); //设置表头不可点击
@@ -40,18 +42,22 @@ devManageWidget::devManageWidget(QWidget *parent) :
     ui->devStorageTableWidget->horizontalHeader()->resizeSection(1,150);
     ui->devStorageTableWidget->horizontalHeader()->resizeSection(2,150);
     ui->devStorageTableWidget->horizontalHeader()->resizeSection(3,150);
-    ui->devStorageTableWidget->horizontalHeader()->resizeSection(4,150);
-    ui->devStorageTableWidget->horizontalHeader()->resizeSection(5,150);
-    ui->devStorageTableWidget->horizontalHeader()->resizeSection(6,150);
+    ui->devStorageTableWidget->horizontalHeader()->resizeSection(4,100);
+    ui->devStorageTableWidget->horizontalHeader()->resizeSection(5,100);
+    ui->devStorageTableWidget->horizontalHeader()->resizeSection(6,100);
 
 
     ui->devStatusTableWidget->setFocusPolicy(Qt::NoFocus);
-    ui->devStatusTableWidget->setColumnCount(7);
+    ui->devStatusTableWidget->setColumnCount(8);
+    ui->devStatusTableWidget->setRowCount(7);
+
     ui->devStatusTableWidget->setShowGrid(true);
 
     QStringList header_2;
-    header_2<<tr("序号")<<tr("设备名称")<<tr("设备位置")<<tr("设备IP")<<tr("设备版本")<<tr("设备状态")<<tr("设备状态")<<tr("报警");
+    header_2<<tr("序号")<<tr("设备名称")<<tr("设备位置")<<tr("设备IP")<<tr("设备版本")<<tr("设备状态")<<tr("设备供应商")<<tr("");
     ui->devStatusTableWidget->setHorizontalHeaderLabels(header_2);
+    ui->devStatusTableWidget->horizontalHeader()->setStyleSheet("background-color:white");
+
 
     ui->devStatusTableWidget->horizontalHeader()->setVisible(true);  //temp
     ui->devStatusTableWidget->horizontalHeader()->setSectionsClickable(false); //设置表头不可点击
@@ -64,9 +70,9 @@ devManageWidget::devManageWidget(QWidget *parent) :
     ui->devStatusTableWidget->horizontalHeader()->resizeSection(1,150);
     ui->devStatusTableWidget->horizontalHeader()->resizeSection(2,150);
     ui->devStatusTableWidget->horizontalHeader()->resizeSection(3,150);
-    ui->devStatusTableWidget->horizontalHeader()->resizeSection(4,150);
-    ui->devStatusTableWidget->horizontalHeader()->resizeSection(5,150);
-    ui->devStatusTableWidget->horizontalHeader()->resizeSection(6,150);
+    ui->devStatusTableWidget->horizontalHeader()->resizeSection(4,100);
+    ui->devStatusTableWidget->horizontalHeader()->resizeSection(5,100);
+    ui->devStatusTableWidget->horizontalHeader()->resizeSection(6,100);
     //ui->devStatusTableWidget->horizontalHeader()->resizeSection(7,61);
 
     ui->alarmPushButton->setFocusPolicy(Qt::NoFocus);
@@ -592,7 +598,7 @@ void devManageWidget::getDevStateSignalCtrl()
                 ui->devStatusTableWidget->item(m_aiServerIdex[i]-1, 5)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
                 ui->devStatusTableWidget->setItem(m_aiServerIdex[i]-1, 4, new QTableWidgetItem(""));
                 ui->devStatusTableWidget->setItem(m_aiServerIdex[i]-1, 6, new QTableWidgetItem(""));
-                ui->devStatusTableWidget->setItem(m_aiServerIdex[i]-1, 7, new QTableWidgetItem(""));
+//                ui->devStatusTableWidget->setItem(m_aiServerIdex[i]-1, 7, new QTableWidgetItem(""));
                 for (j = 0; j < ui->devStorageTableWidget->rowCount(); j++)  //设备存储列表里找到同一个服务器的那一行，把后三列显示硬盘总容量、使用量和状态清空
                 {
                     if (0 == QString::compare(ui->devStatusTableWidget->item(m_aiServerIdex[i]-1, 3)->text(), ui->devStorageTableWidget->item(j, 3)->text()))
@@ -609,7 +615,7 @@ void devManageWidget::getDevStateSignalCtrl()
                     ui->devStatusTableWidget->item(m_aiServerIdex[i]-1+j, 5)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
                     ui->devStatusTableWidget->setItem(m_aiServerIdex[i]-1+j, 4, new QTableWidgetItem(""));
                     ui->devStatusTableWidget->setItem(m_aiServerIdex[i]-1+j, 6, new QTableWidgetItem(""));
-                    ui->devStatusTableWidget->setItem(m_aiServerIdex[i]-1+j, 7, new QTableWidgetItem(""));
+//                    ui->devStatusTableWidget->setItem(m_aiServerIdex[i]-1+j, 7, new QTableWidgetItem(""));
                     if (1 == m_aiCameraOnlineFlag[i][j-1])
                     {
                         memset(&tLogInfo, 0, sizeof(T_LOG_INFO));

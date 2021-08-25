@@ -19,9 +19,9 @@
   <widget class="QComboBox" name="cameraSelectionComboBox">
    <property name="geometry">
     <rect>
-     <x>220</x>
+     <x>205</x>
      <y>160</y>
-     <width>91</width>
+     <width>76</width>
      <height>27</height>
     </rect>
    </property>
@@ -61,7 +61,7 @@
   <widget class="QPushButton" name="playNextOnePushButton">
    <property name="geometry">
     <rect>
-     <x>705</x>
+     <x>660</x>
      <y>575</y>
      <width>49</width>
      <height>49</height>
@@ -86,7 +86,7 @@
   <widget class="QPushButton" name="stopPushButton">
    <property name="geometry">
     <rect>
-     <x>575</x>
+     <x>530</x>
      <y>575</y>
      <width>49</width>
      <height>49</height>
@@ -111,9 +111,9 @@
   <widget class="QLabel" name="label_7">
    <property name="geometry">
     <rect>
-     <x>150</x>
+     <x>140</x>
      <y>150</y>
-     <width>161</width>
+     <width>151</width>
      <height>41</height>
     </rect>
    </property>
@@ -138,7 +138,7 @@
   <widget class="QPushButton" name="alarmPushButton">
    <property name="geometry">
     <rect>
-     <x>770</x>
+     <x>720</x>
      <y>585</y>
      <width>80</width>
      <height>34</height>
@@ -164,7 +164,7 @@
     <rect>
      <x>0</x>
      <y>190</y>
-     <width>311</width>
+     <width>281</width>
      <height>41</height>
     </rect>
    </property>
@@ -190,8 +190,8 @@
     <rect>
      <x>0</x>
      <y>270</y>
-     <width>311</width>
-     <height>301</height>
+     <width>281</width>
+     <height>291</height>
     </rect>
    </property>
    <property name="font">
@@ -202,7 +202,9 @@
    <property name="styleSheet">
     <string notr="true">border-style: none;
 background-color: rgb(204, 232, 207);
-gridline-color: rgb(255, 255, 255)</string>
+gridline-color: rgb(255, 255, 255);
+border-color: rgb(130, 135, 144);
+border-width: 1px;border-style: solid;</string>
    </property>
    <property name="showGrid">
     <bool>false</bool>
@@ -271,7 +273,7 @@ gridline-color: rgb(255, 255, 255)</string>
    </column>
    <column>
     <property name="text">
-     <string>文件名</string>
+     <string>视频</string>
     </property>
     <property name="font">
      <font>
@@ -295,7 +297,7 @@ gridline-color: rgb(255, 255, 255)</string>
   <widget class="QPushButton" name="playLastOnePushButton">
    <property name="geometry">
     <rect>
-     <x>315</x>
+     <x>270</x>
      <y>575</y>
      <width>49</width>
      <height>49</height>
@@ -320,7 +322,7 @@ gridline-color: rgb(255, 255, 255)</string>
   <widget class="QPushButton" name="queryPushButton">
    <property name="geometry">
     <rect>
-     <x>110</x>
+     <x>90</x>
      <y>200</y>
      <width>91</width>
      <height>31</height>
@@ -394,10 +396,10 @@ gridline-color: rgb(255, 255, 255)</string>
   <widget class="QPushButton" name="downLoadPushButton">
    <property name="geometry">
     <rect>
-     <x>110</x>
-     <y>590</y>
-     <width>91</width>
-     <height>31</height>
+     <x>30</x>
+     <y>570</y>
+     <width>205</width>
+     <height>53</height>
     </rect>
    </property>
    <property name="font">
@@ -415,21 +417,14 @@ gridline-color: rgb(255, 255, 255)</string>
   <widget class="QPushButton" name="minusStepPushButton">
    <property name="geometry">
     <rect>
-     <x>940</x>
-     <y>580</y>
-     <width>41</width>
-     <height>41</height>
+     <x>880</x>
+     <y>570</y>
+     <width>67</width>
+     <height>57</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QPushButton
-{border-image: url(:/res/minus_nor.png);background-color: rgb(255, 255, 255);}
-
-QPushButton:hover
-{border-image: url(:/res/minus_hover.png);background-color: rgb(255, 255, 255);}
-
-QPushButton:pressed
-{border-image: url(:/res/minus_down.png);background-color: rgb(255, 255, 255);}</string>
+    <string notr="true">background-image: url(:/monres/mslow.bmp);</string>
    </property>
    <property name="text">
     <string/>
@@ -447,7 +442,7 @@ QPushButton:pressed
   <widget class="QPushButton" name="playPushButton">
    <property name="geometry">
     <rect>
-     <x>445</x>
+     <x>400</x>
      <y>575</y>
      <width>49</width>
      <height>49</height>
@@ -474,7 +469,7 @@ QPushButton:pressed
     <rect>
      <x>0</x>
      <y>150</y>
-     <width>156</width>
+     <width>141</width>
      <height>41</height>
     </rect>
    </property>
@@ -526,7 +521,7 @@ QPushButton:pressed
   <widget class="QPushButton" name="fastForwardPushButton">
    <property name="geometry">
     <rect>
-     <x>640</x>
+     <x>590</x>
      <y>575</y>
      <width>49</width>
      <height>49</height>
@@ -575,32 +570,10 @@ QPushButton:pressed
     <string> 文件列表</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_10">
-   <property name="geometry">
-    <rect>
-     <x>-10</x>
-     <y>292</y>
-     <width>321</width>
-     <height>361</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>15</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);
-</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
   <widget class="QPushButton" name="slowForwardPushButton">
    <property name="geometry">
     <rect>
-     <x>380</x>
+     <x>330</x>
      <y>575</y>
      <width>49</width>
      <height>49</height>
@@ -652,9 +625,9 @@ QPushButton:pressed
   <widget class="QComboBox" name="carSeletionComboBox">
    <property name="geometry">
     <rect>
-     <x>60</x>
+     <x>55</x>
      <y>160</y>
-     <width>91</width>
+     <width>81</width>
      <height>27</height>
     </rect>
    </property>
@@ -672,21 +645,14 @@ QPushButton:pressed
   <widget class="QPushButton" name="plusStepPushButton">
    <property name="geometry">
     <rect>
-     <x>980</x>
-     <y>580</y>
-     <width>41</width>
-     <height>41</height>
+     <x>950</x>
+     <y>570</y>
+     <width>67</width>
+     <height>57</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QPushButton
-{border-image: url(:/res/plus_nor.png);background-color: rgb(255, 255, 255);}
-
-QPushButton:hover
-{border-image: url(:/res/plus_hover.png);background-color: rgb(255, 255, 255);}
-
-QPushButton:pressed
-{border-image: url(:/res/plus_down.png);background-color: rgb(255, 255, 255);}</string>
+    <string notr="true">background-image: url(:/monres/mfast.bmp);</string>
    </property>
    <property name="text">
     <string/>
@@ -706,7 +672,7 @@ QPushButton:pressed
     <rect>
      <x>70</x>
      <y>50</y>
-     <width>141</width>
+     <width>101</width>
      <height>31</height>
     </rect>
    </property>
@@ -717,7 +683,7 @@ QPushButton:pressed
     <bool>false</bool>
    </property>
    <property name="displayFormat">
-    <string>yyyy/MM/dd ddd</string>
+    <string>yyyy/MM/dd</string>
    </property>
    <property name="calendarPopup">
     <bool>false</bool>
@@ -736,7 +702,7 @@ QPushButton:pressed
   <widget class="QTimeEdit" name="StarttimeEdit">
    <property name="geometry">
     <rect>
-     <x>255</x>
+     <x>230</x>
      <y>50</y>
      <width>51</width>
      <height>31</height>
@@ -751,7 +717,7 @@ QPushButton:pressed
     <rect>
      <x>70</x>
      <y>90</y>
-     <width>141</width>
+     <width>101</width>
      <height>31</height>
     </rect>
    </property>
@@ -762,7 +728,7 @@ QPushButton:pressed
     <bool>false</bool>
    </property>
    <property name="displayFormat">
-    <string>yyyy/MM/dd ddd</string>
+    <string>yyyy/MM/dd</string>
    </property>
    <property name="calendarPopup">
     <bool>false</bool>
@@ -784,7 +750,7 @@ QPushButton:pressed
   <widget class="QTimeEdit" name="EndtimeEdit">
    <property name="geometry">
     <rect>
-     <x>255</x>
+     <x>230</x>
      <y>90</y>
      <width>51</width>
      <height>31</height>
@@ -797,7 +763,7 @@ QPushButton:pressed
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>220</x>
+     <x>190</x>
      <y>55</y>
      <width>31</width>
      <height>21</height>
@@ -810,7 +776,7 @@ QPushButton:pressed
   <widget class="QLabel" name="label_14">
    <property name="geometry">
     <rect>
-     <x>220</x>
+     <x>190</x>
      <y>95</y>
      <width>31</width>
      <height>21</height>
@@ -823,7 +789,7 @@ QPushButton:pressed
   <widget class="QPushButton" name="canselPushButton">
    <property name="geometry">
     <rect>
-     <x>860</x>
+     <x>800</x>
      <y>585</y>
      <width>80</width>
      <height>34</height>
@@ -847,7 +813,7 @@ QPushButton:pressed
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>510</x>
+     <x>460</x>
      <y>575</y>
      <width>49</width>
      <height>49</height>
@@ -863,7 +829,7 @@ QPushButton:pressed
   <widget class="QLabel" name="label_12">
    <property name="geometry">
     <rect>
-     <x>-4</x>
+     <x>0</x>
      <y>0</y>
      <width>1024</width>
      <height>661</height>
@@ -891,7 +857,6 @@ QPushButton:pressed
   <zorder>label_4</zorder>
   <zorder>fastForwardPushButton</zorder>
   <zorder>label_9</zorder>
-  <zorder>label_10</zorder>
   <zorder>slowForwardPushButton</zorder>
   <zorder>label_3</zorder>
   <zorder>carSeletionComboBox</zorder>

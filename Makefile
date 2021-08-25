@@ -627,6 +627,7 @@ qrc_res.cpp: res.qrc \
 		monres/cameraoff.bmp \
 		monres/gzpz.bmp \
 		monres/qxdd.bmp \
+		monres/mfast.bmp \
 		monres/C3UnifiedClient1.ico \
 		monres/savevedio.bmp \
 		monres/LoginOK.bmp \
@@ -669,9 +670,11 @@ qrc_res.cpp: res.qrc \
 		monres/cameractrloff\ -\ 副本.bmp \
 		monres/5.bmp \
 		monres/search.bmp \
+		monres/sure.bmp \
 		monres/up.bmp \
 		monres/bj1.bmp \
 		monres/cameraoff.jpg \
+		monres/mslow.bmp \
 		monres/carriagemonitor1.bmp \
 		monres/usersave.bmp \
 		monres/pause1.bmp \
@@ -852,6 +855,7 @@ qrc_res.cpp: res.qrc \
 		monres/cameraoff.bmp \
 		monres/gzpz.bmp \
 		monres/qxdd.bmp \
+		monres/mfast.bmp \
 		monres/C3UnifiedClient1.ico \
 		monres/savevedio.bmp \
 		monres/LoginOK.bmp \
@@ -894,9 +898,11 @@ qrc_res.cpp: res.qrc \
 		monres/cameractrloff\ -\ 副本.bmp \
 		monres/5.bmp \
 		monres/search.bmp \
+		monres/sure.bmp \
 		monres/up.bmp \
 		monres/bj1.bmp \
 		monres/cameraoff.jpg \
+		monres/mslow.bmp \
 		monres/carriagemonitor1.bmp \
 		monres/usersave.bmp \
 		monres/pause1.bmp \
@@ -4663,6 +4669,7 @@ recordplaywidget.o: recordplaywidget.cpp recordplaywidget.h \
 		ui_recordplaywidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QDate \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qdatetime.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QLocale \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QApplication \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qapplication.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qdesktopwidget.h \

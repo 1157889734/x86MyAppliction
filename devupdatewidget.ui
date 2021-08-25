@@ -20,7 +20,7 @@
    <property name="geometry">
     <rect>
      <x>350</x>
-     <y>540</y>
+     <y>520</y>
      <width>203</width>
      <height>102</height>
     </rect>
@@ -41,7 +41,7 @@
    <property name="geometry">
     <rect>
      <x>50</x>
-     <y>92</y>
+     <y>80</y>
      <width>211</width>
      <height>21</height>
     </rect>
@@ -65,7 +65,7 @@ background-color: rgb(255, 255, 255);</string>
      <x>780</x>
      <y>10</y>
      <width>151</width>
-     <height>27</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
@@ -110,9 +110,9 @@ background-color: rgb(255, 255, 255);</string>
    <property name="geometry">
     <rect>
      <x>390</x>
-     <y>50</y>
-     <width>101</width>
-     <height>31</height>
+     <y>45</y>
+     <width>110</width>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -121,14 +121,10 @@ background-color: rgb(255, 255, 255);</string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: rgb(255, 255, 255);
-background-image: url(:/res/anniubk.png);
-border-color: rgb(33, 131, 229);
-border-width: 1px;
-border-style: solid;</string>
+    <string notr="true">background-image: url(:/monres/sure.bmp);</string>
    </property>
    <property name="text">
-    <string>确定</string>
+    <string/>
    </property>
   </widget>
   <widget class="QRadioButton" name="pollingTimeSetRadioButton_3">
@@ -195,18 +191,27 @@ border-style: solid;</string>
      <pointsize>12</pointsize>
     </font>
    </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);</string>
+    <string notr="true"/>
    </property>
    <property name="text">
     <string>10秒</string>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>16</width>
+     <height>16</height>
+    </size>
    </property>
   </widget>
   <widget class="QRadioButton" name="presetReturnTimeSetRadioButton_2">
    <property name="geometry">
     <rect>
      <x>350</x>
-     <y>95</y>
+     <y>80</y>
      <width>81</width>
      <height>22</height>
     </rect>
@@ -251,7 +256,7 @@ border-style: solid;</string>
    <property name="geometry">
     <rect>
      <x>440</x>
-     <y>95</y>
+     <y>80</y>
      <width>81</width>
      <height>22</height>
     </rect>
@@ -297,7 +302,7 @@ background-color: rgb(255, 255, 255);</string>
    <property name="geometry">
     <rect>
      <x>270</x>
-     <y>95</y>
+     <y>80</y>
      <width>71</width>
      <height>22</height>
     </rect>
@@ -318,7 +323,7 @@ background-color: rgb(255, 255, 255);</string>
    <property name="geometry">
     <rect>
      <x>700</x>
-     <y>95</y>
+     <y>80</y>
      <width>81</width>
      <height>22</height>
     </rect>
@@ -339,7 +344,7 @@ background-color: rgb(255, 255, 255);</string>
    <property name="geometry">
     <rect>
      <x>940</x>
-     <y>100</y>
+     <y>85</y>
      <width>31</width>
      <height>17</height>
     </rect>
@@ -381,7 +386,7 @@ background-color: rgb(255, 255, 255);</string>
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>50</y>
+     <y>40</y>
      <width>944</width>
      <height>31</height>
     </rect>
@@ -407,7 +412,7 @@ background-color: rgb(255, 255, 255);</string>
    <property name="geometry">
     <rect>
      <x>130</x>
-     <y>51</y>
+     <y>45</y>
      <width>161</width>
      <height>27</height>
     </rect>
@@ -422,9 +427,9 @@ background-color: rgb(255, 255, 255);</string>
    <property name="geometry">
     <rect>
      <x>790</x>
-     <y>95</y>
+     <y>80</y>
      <width>141</width>
-     <height>27</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
@@ -443,7 +448,7 @@ background-color: rgb(255, 255, 255);</string>
    <property name="geometry">
     <rect>
      <x>590</x>
-     <y>560</y>
+     <y>570</y>
      <width>80</width>
      <height>34</height>
     </rect>
@@ -488,7 +493,7 @@ background-color: rgb(255, 255, 255);</string>
    <property name="geometry">
     <rect>
      <x>760</x>
-     <y>560</y>
+     <y>570</y>
      <width>80</width>
      <height>34</height>
     </rect>
@@ -534,9 +539,9 @@ background-color: rgb(255, 255, 255);</string>
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>130</y>
+     <y>115</y>
      <width>944</width>
-     <height>411</height>
+     <height>401</height>
     </rect>
    </property>
    <widget class="QLineEdit" name="configFileDisplayLineEdit">
@@ -560,7 +565,7 @@ background-color: rgb(255, 255, 255);</string>
       <x>540</x>
       <y>300</y>
       <width>81</width>
-      <height>27</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
@@ -685,7 +690,7 @@ background-color: rgb(255, 255, 255);</string>
       <x>840</x>
       <y>300</y>
       <width>81</width>
-      <height>27</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
@@ -714,7 +719,7 @@ background-color: rgb(255, 255, 255);</string>
     <property name="geometry">
      <rect>
       <x>190</x>
-      <y>160</y>
+      <y>140</y>
       <width>135</width>
       <height>37</height>
      </rect>
@@ -760,7 +765,7 @@ background-color: rgb(255, 255, 255);</string>
       <x>690</x>
       <y>300</y>
       <width>81</width>
-      <height>27</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
@@ -797,7 +802,7 @@ background-color: rgb(255, 255, 255);</string>
     <property name="geometry">
      <rect>
       <x>330</x>
-      <y>110</y>
+      <y>100</y>
       <width>91</width>
       <height>21</height>
      </rect>
@@ -852,7 +857,7 @@ background-color: rgb(255, 255, 255);</string>
     <property name="geometry">
      <rect>
       <x>810</x>
-      <y>160</y>
+      <y>150</y>
       <width>80</width>
       <height>35</height>
      </rect>
@@ -952,7 +957,7 @@ background-color: rgb(255, 255, 255);</string>
     <property name="geometry">
      <rect>
       <x>160</x>
-      <y>110</y>
+      <y>100</y>
       <width>161</width>
       <height>21</height>
      </rect>
@@ -1028,7 +1033,7 @@ background-color: rgb(255, 255, 255);</string>
     <property name="geometry">
      <rect>
       <x>70</x>
-      <y>110</y>
+      <y>100</y>
       <width>67</width>
       <height>17</height>
      </rect>
@@ -1046,7 +1051,7 @@ background-color: rgb(255, 255, 255);</string>
     <property name="geometry">
      <rect>
       <x>550</x>
-      <y>160</y>
+      <y>150</y>
       <width>110</width>
       <height>30</height>
      </rect>
@@ -1093,7 +1098,7 @@ background-color: rgb(255, 255, 255);</string>
       <x>511</x>
       <y>40</y>
       <width>401</width>
-      <height>111</height>
+      <height>101</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -1110,7 +1115,7 @@ background-color: rgb(172, 209, 178);</string>
       <x>0</x>
       <y>0</y>
       <width>461</width>
-      <height>201</height>
+      <height>191</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -1126,7 +1131,7 @@ background-color: rgb(172, 209, 178);</string>
       <x>470</x>
       <y>0</y>
       <width>471</width>
-      <height>201</height>
+      <height>191</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -1140,9 +1145,9 @@ background-color: rgb(172, 209, 178);</string>
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>210</y>
+      <y>195</y>
       <width>461</width>
-      <height>191</height>
+      <height>201</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -1156,9 +1161,9 @@ background-color: rgb(172, 209, 178);</string>
     <property name="geometry">
      <rect>
       <x>470</x>
-      <y>210</y>
+      <y>195</y>
       <width>471</width>
-      <height>191</height>
+      <height>201</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -1205,7 +1210,7 @@ background-color: rgb(172, 209, 178);</string>
      <x>0</x>
      <y>0</y>
      <width>1024</width>
-     <height>651</height>
+     <height>631</height>
     </rect>
    </property>
    <property name="styleSheet">

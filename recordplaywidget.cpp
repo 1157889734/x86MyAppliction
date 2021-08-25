@@ -63,7 +63,7 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
 
     m_playSlider = new mySlider(this);    //创建播放进度条
     m_playSlider->setOrientation(Qt::Horizontal);    //设置水平方向
-    m_playSlider->setGeometry(320, 554, 702, 29);
+    m_playSlider->setGeometry(290, 545, 730, 35);
     m_playSlider->show();
     /*定义播放进度条样式*/
     m_playSlider->setStyleSheet("QSlider::groove:horizontal{border: 1px solid #4A708B;background: #C0C0C0;height: 5px;border-radius: 1px;padding-left:-1px;padding-right:-1px;}"
@@ -126,7 +126,6 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
 
     setPlayButtonStyleSheet();
     getTrainConfig();
-//    mediaInit();
     createMeadia();
 
 
@@ -211,7 +210,7 @@ void recordPlayWidget::createMeadia()
 {
     /*新建一个播放窗体*/
     m_playWin = new QVideoWidget(this);
-    m_playWin->setGeometry(325, 5, 698, 560);
+    m_playWin->setGeometry(290, 5, 730, 550);
     m_playWin->show();
     m_playWin->setStyleSheet("QWidget{background-color: rgb(0, 0, 0);}");
 

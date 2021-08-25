@@ -276,7 +276,7 @@ border-style: solid;</string>
      <x>710</x>
      <y>290</y>
      <width>81</width>
-     <height>27</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
@@ -346,7 +346,7 @@ border-style: solid;</string>
      <x>560</x>
      <y>290</y>
      <width>81</width>
-     <height>27</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
@@ -364,7 +364,7 @@ border-style: solid;</string>
      <x>860</x>
      <y>290</y>
      <width>81</width>
-     <height>27</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
