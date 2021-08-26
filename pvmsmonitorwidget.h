@@ -220,6 +220,8 @@ public slots:
     void systimeSetSlot();
     void blackScreenCtrlSlot();
     void blackScreenExitCtrlSlot();
+    void cameraSwitchEndSlot();
+
 
 
 private:

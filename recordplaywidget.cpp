@@ -92,15 +92,22 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
     m_tableWidgetStyle = QStyleFactory::create("windows");
     ui->recordFileTableWidget->setStyle(m_tableWidgetStyle);   //设置tablewidget显示风格为windows风格，否则里面的checkbox选中默认显示叉而不是勾
     ui->recordFileTableWidget->setFocusPolicy(Qt::NoFocus);
+    ui->recordFileTableWidget->setShowGrid(true);
+
+
+
     ui->recordFileTableWidget->horizontalHeader()->setSectionsClickable(false); //设置表头不可点击
     ui->recordFileTableWidget->horizontalHeader()->setStretchLastSection(true); //设置充满表宽度
     ui->recordFileTableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers); //设置不可编辑
     ui->recordFileTableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);  //设置整行选中方式
     ui->recordFileTableWidget->setSelectionMode(QAbstractItemView::NoSelection); //设置只能选择一行，不能多行选中
-    ui->recordFileTableWidget->setAlternatingRowColors(true);                        //设置隔一行变一颜色，即：一灰一白
+//    ui->recordFileTableWidget->setAlternatingRowColors(true);                        //设置隔一行变一颜色，即：一灰一白
     ui->recordFileTableWidget->horizontalHeader()->resizeSection(0,46); //设置表头第一列的宽度为46
     ui->recordFileTableWidget->horizontalHeader()->resizeSection(1,46);
-    ui->recordFileTableWidget->horizontalHeader()->resizeSection(2,219);
+    ui->recordFileTableWidget->horizontalHeader()->resizeSection(2,280);
+//    ui->recordFileTableWidget->resizeColumnToContents(2);
+    ui->recordFileTableWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+
 
     ui->playPushButton->setFocusPolicy(Qt::NoFocus);
     ui->stopPushButton->setFocusPolicy(Qt::NoFocus);
@@ -136,7 +143,7 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
     ui->EnddateEdit->setCalendarPopup(true);
 //    ui->StartdateEdit->setAttribute(Qt::WA_TransparentForMouseEvents,Mouseflag);
 
-    ui->EnddateEdit->setDateTime(QDateTime::currentDateTime());
+    ui->EnddateEdit->setDate(QDate::currentDate());
 
     ui->EndtimeEdit->setDateTime(QDateTime::currentDateTime());
 
@@ -144,7 +151,7 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
 
 
 
-    ui->StartdateEdit->setDateTime(QDateTime::currentDateTime());
+    ui->StartdateEdit->setDate(QDate::currentDate());
 //    ui->StarttimeEdit->setDateTime(QDateTime::currentDateTime());
 
     connect(ui->alarmPushButton, SIGNAL(clicked(bool)), this, SLOT(alarmPushButoonClickSlot()));   //报警按钮按键信号响应打开报警信息界面
@@ -574,9 +581,11 @@ void recordPlayWidget::recordQuerySlot()
         memset(&tRecordSeach, 0, sizeof(T_NVR_SEARCH_RECORD));
 //            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] query  start timeStr:%s!\n", __FUNCTION__, ui->startTimeLabel->text().toLatin1().data());
 //            sscanf(ui->startTimeLabel->text().toLatin1().data(), "%4d-%2d-%2d %2d:%2d:%2d", &year, &mon, &day, &hour, &min, &sec);
-        sscanf(ui->StartdateEdit->text().toLatin1().data(),"%4d-%2d-%2d", &year, &mon, &day);
+
+        sscanf(ui->StartdateEdit->text().toLatin1().data(),"%4d/%2d/%2d", &year, &mon, &day);
         sscanf(ui->StarttimeEdit->text().toLatin1().data(),"%2d:%2d:%2d", &hour, &min, &sec);
 //            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] get query start time:%d-%d-%d %d:%d:%d!\n", __FUNCTION__, year, mon, day, hour, min, sec);
+
         yr = year;
         tRecordSeach.tStartTime.i16Year = htons(yr);
         tRecordSeach.tStartTime.i8Mon = mon;
@@ -587,8 +596,9 @@ void recordPlayWidget::recordQuerySlot()
 //            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] query  stop timeStr:%s!\n", __FUNCTION__, ui->endTimeLabel->text().toLatin1().data());
 //            sscanf(ui->endTimeLabel->text().toLatin1().data(), "%4d-%2d-%2d %2d:%2d:%2d", &year, &mon, &day, &hour, &min, &sec);
 //            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] get query stop time:%d-%d-%d %d:%d:%d!\n", __FUNCTION__, year, mon, day, hour, min, sec);
-        sscanf(ui->EnddateEdit->text().toLatin1().data(),"%4d-%2d-%2d", &year, &mon, &day);
+        sscanf(ui->EnddateEdit->text().toLatin1().data(),"%4d/%2d/%2d", &year, &mon, &day);
         sscanf(ui->EndtimeEdit->text().toLatin1().data(),"%2d:%2d:%2d", &hour, &min, &sec);
+
         yr = year;
         tRecordSeach.tEndTime.i16Year = htons(yr);
         tRecordSeach.tEndTime.i8Mon = mon;
@@ -723,7 +733,6 @@ void recordPlayWidget::recordDownloadSlot()
             msgBox.exec();
             return;
         }
-
         if (access("/mnt/usb/u/", F_OK) < 0)
         {
 //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not get USB device!\n");
@@ -745,7 +754,6 @@ void recordPlayWidget::recordDownloadSlot()
                 return;
             }
         }
-
         iRet = STATE_ParseUsbLicense(fileSavePath.toLatin1().data());
         if (iRet < 0)
         {
@@ -847,7 +855,7 @@ void recordPlayWidget::getTrainConfig()    	//获取车型配置文件，初始�
     STATE_GetCurrentTrainConfigInfo(&tTrainConfigInfo);
 
 //    DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] GetCurrentTrainConfigInfo, nvr server num=%d\n",__FUNCTION__,tTrainConfigInfo.iNvrServerCount);
-    qDebug()<<"DEBUG_UI_NOMAL_PRINT GetCurrentTrainConfigInfo, nvr server num="<<tTrainConfigInfo.iNvrServerCount<<__FUNCTION__<<__LINE__<<endl;
+//    qDebug()<<"DEBUG_UI_NOMAL_PRINT GetCurrentTrainConfigInfo, nvr server num="<<tTrainConfigInfo.iNvrServerCount<<__FUNCTION__<<__LINE__<<endl;
     for (i = 0; i < tTrainConfigInfo.iNvrServerCount; i++)
     {
         item = "";
@@ -855,11 +863,11 @@ void recordPlayWidget::getTrainConfig()    	//获取车型配置文件，初始�
         item += tr("号车厢");
         ui->carSeletionComboBox->addItem(item);
         m_Phandle[i] = STATE_GetNvrServerPmsgHandle(i);
-        qDebug()<<"DEBUG_UI_NOMAL_PRINT  tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO::="<<i<<":="<<tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO;
-        if (0 == i)
+//        qDebug()<<"DEBUG_UI_NOMAL_PRINT  tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO::="<<i<<":="<<tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO;
+//        if (0 == i)
         {
 //            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] the first server has camera num=%d\n",__FUNCTION__,tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum);
-            qDebug()<<"DEBUG_UI_NOMAL_PRINT the first server has camera num="<<tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum<<__FUNCTION__<<__LINE__<<endl;
+//            qDebug()<<"DEBUG_UI_NOMAL_PRINT the first server has camera num="<<tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum<<__FUNCTION__<<__LINE__<<endl;
 
             for (j = 0; j < tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum; j++)
             {
@@ -867,7 +875,7 @@ void recordPlayWidget::getTrainConfig()    	//获取车型配置文件，初始�
                 item = QString::number(8+j);
                 item += tr("号摄像机");
                 ui->cameraSelectionComboBox->addItem(item);
-                qDebug()<<"DEBUG_UI_NOMAL_PRINT tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum ="<<i<<"=:"<<tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum<<__FUNCTION__<<__LINE__<<endl;
+//                qDebug()<<"DEBUG_UI_NOMAL_PRINT tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum ="<<i<<"=:"<<tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum<<__FUNCTION__<<__LINE__<<endl;
 
             }
         }
@@ -1440,7 +1448,7 @@ void recordPlayWidget::recordPlayCtrl(int iRow, int iDex)
 //    ui->playSpeedLineEdit->setText(playSpeedStr);
     setPlayButtonStyleSheet();
 
-    snprintf(acRtspAddr, sizeof(acRtspAddr), "rtsp://192.168.%d.81:554/%s",tTrainConfigInfo.tNvrServerInfo[iDex].iCarriageNO+100, m_acFilePath[iRow]);
+    snprintf(acRtspAddr, sizeof(acRtspAddr), "rtsp://192.168.%d.81:554%s",tTrainConfigInfo.tNvrServerInfo[iDex].iCarriageNO+100, m_acFilePath[iRow]);
     printf("************----recordPlayCtrl---%s\n",acRtspAddr);
     iRet = openMedia(acRtspAddr);
     if(iRet < 0)

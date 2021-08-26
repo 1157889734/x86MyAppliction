@@ -596,8 +596,8 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
         snprintf(acRtspUrl, sizeof(acRtspUrl), "192.168.%d.200", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO);
 //        snprintf(acRtspUrl, sizeof(acRtspUrl), "168.168.102.%d", 70+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO);
 
-        qDebug()<<"tTrainConfigInfo.iNvrServerCount"<<tTrainConfigInfo.iNvrServerCount<<endl;
-        qDebug()<<"acRtspUrl****"<<acRtspUrl;
+//        qDebug()<<"tTrainConfigInfo.iNvrServerCount"<<tTrainConfigInfo.iNvrServerCount<<endl;
+//        qDebug()<<"acRtspUrl****"<<acRtspUrl;
 
 //        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] server:%s has camera num=%d\n",__FUNCTION__,acRtspUrl, tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum);
         m_NvrServerPhandle[i] = STATE_GetNvrServerPmsgHandle(i);
@@ -955,6 +955,21 @@ void pvmsMonitorWidget::presetGetCtrlSlot()
       this->m_tCameraInfo[m_iCameraPlayNo].tPtzOprateTime = s_info.uptime;
       this->m_tCameraInfo[m_iCameraPlayNo].iPresetNo = m_iSelectPresetNo;
 
+}
+
+void pvmsMonitorWidget::cameraSwitchEndSlot()
+{
+    ui->cameraSwitchPushButton->setEnabled(true);
+
+    if (m_cameraSwitchTimer != NULL)
+    {
+        if (m_cameraSwitchTimer->isActive())
+        {
+            m_cameraSwitchTimer->stop();
+        }
+        delete m_cameraSwitchTimer;
+        m_cameraSwitchTimer = NULL;
+    }
 }
 void pvmsMonitorWidget::temporarySaveBeginSlot()
 {

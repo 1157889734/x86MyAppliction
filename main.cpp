@@ -19,7 +19,6 @@
 
 
 
-
 waitLoginWidget *g_waitLoginPage = NULL;  //等待登录页面
 choiceLoginDevWidget *g_choiceLoginDevPage = NULL;    //选择登录设备页面
 loginWidget *g_loginPage = NULL;   //登录页面
@@ -66,8 +65,8 @@ int main(int argc, char *argv[])
         snprintf(acNvrServerIp, sizeof(acNvrServerIp), "192.168.%d.81", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO);
         iRet = PMSG_CreateConnect(acNvrServerIp, 10100);
 //        qDebug()<<"********PMSG_CreateConnect--:"<<iRet<<endl;
-        qDebug()<<"********PMSG_CreateConnect--acNvrServerIp:"<<acNvrServerIp;
-        printf("********PMSG_CreateConnect--%d\n",iRet);
+//        qDebug()<<"********PMSG_CreateConnect--acNvrServerIp:"<<acNvrServerIp;
+//        printf("********PMSG_CreateConnect--%d\n",iRet);
         if (0 == iRet)
         {
 //            DebugPrint(DEBUG_UI_ERROR_PRINT, "create connection to server:%s error!\n",acNvrServerIp);
@@ -88,7 +87,7 @@ int main(int argc, char *argv[])
     if (0 == iRet)
     {
 //        DebugPrint(DEBUG_UI_ERROR_PRINT, "create connection to server:%s error!\n",acNvrServerIp);
-        qDebug()<<"create connection to server:%s error"<<__FUNCTION__<<__LINE__<<acNvrServerIp<<endl;
+//        qDebug()<<"create connection to server:%s error"<<__FUNCTION__<<__LINE__<<acNvrServerIp<<endl;
     }
     if (STATE_SetPisPmsgHandle((PMSG_HANDLE)iRet) < 0)
     {
