@@ -168,7 +168,7 @@ color: rgb(0, 0, 0);</string>
   <widget class="QPushButton" name="cameraSwitchPushButton">
    <property name="geometry">
     <rect>
-     <x>780</x>
+     <x>785</x>
      <y>470</y>
      <width>110</width>
      <height>30</height>
@@ -180,7 +180,13 @@ color: rgb(0, 0, 0);</string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/monres/cameraoff.bmp);</string>
+    <string notr="true">QPushButton{
+background-image: url(:/monres/cameraoff.bmp);}
+
+QPushButton:pressed
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}
+
+</string>
    </property>
    <property name="text">
     <string/>
@@ -249,7 +255,7 @@ QPushButton:pressed
     <string notr="true">QPushButton{
 border-image: url(:/res/3.bmp);}
 QPushButton:pressed
-{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -327,8 +333,10 @@ QPushButton:pressed
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">QPushButton{
-background-image: url(:/res/2.bmp);}
+    <string notr="true">
+QPushButton
+{border-image: url(:/monres/2.bmp);}
+
 QPushButton:pressed
 {background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
    </property>
@@ -438,7 +446,7 @@ QPushButton:pressed
   <widget class="QPushButton" name="presetSetPushButton">
    <property name="geometry">
     <rect>
-     <x>780</x>
+     <x>785</x>
      <y>430</y>
      <width>110</width>
      <height>30</height>
@@ -451,9 +459,10 @@ QPushButton:pressed
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
-border-image: url(:/res/setuse.bmp);}
+background-image: url(:/res/setuse.bmp);}
 QPushButton:pressed
-{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}
+</string>
    </property>
    <property name="text">
     <string/>
@@ -534,9 +543,10 @@ QPushButton:pressed
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
-border-image: url(:/monres/savevedio.bmp);}
+background-image: url(:/monres/savevedio.bmp);}
 QPushButton:pressed
-{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}
+</string>
    </property>
    <property name="text">
     <string/>
@@ -558,9 +568,9 @@ QPushButton:pressed
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
-border-image: url(:/monres/alertoff.bmp);}
+background-image: url(:/monres/alertoff.bmp);}
 QPushButton:pressed
-{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -584,7 +594,12 @@ QPushButton:pressed
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/monres/ligtoff.bmp);</string>
+    <string notr="true">QPushButton{
+background-image: url(:/monres/ligtoff.bmp);
+}
+QPushButton:pressed
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}
+</string>
    </property>
    <property name="text">
     <string/>
@@ -805,9 +820,11 @@ QPushButton:pressed
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">QPushButton
-{background-image: url(:/monres/11.bmp);}
-</string>
+    <string notr="true">QPushButton{
+border-image: url(:/monres/11.bmp);}
+
+QPushButton:pressed
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -913,7 +930,7 @@ QPushButton:pressed
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
-border-image: url(:/res/usepreset.bmp);}
+background-image: url(:/res/usepreset.bmp);}
 QPushButton:pressed
 {background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
    </property>
@@ -970,9 +987,9 @@ QPushButton:pressed
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
-border-image: url(:/monres/cancel.bmp);}
+background-image: url(:/monres/cancel.bmp);}
 QPushButton:pressed
-{background-color: rgb(255, 255, 255);color: rgb(255, 255, 255);border-color: rgb(86, 164, 246);border-width: 6px;border-style: solid;}</string>
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -1000,16 +1017,16 @@ QPushButton:pressed
     <string/>
    </property>
   </widget>
+  <zorder>label_9</zorder>
+  <zorder>label_8</zorder>
   <zorder>label_11</zorder>
   <zorder>label_6</zorder>
   <zorder>label_2</zorder>
   <zorder>label_4</zorder>
   <zorder>ptzDownPushButton</zorder>
-  <zorder>label_9</zorder>
   <zorder>ptzUpPushButton</zorder>
   <zorder>label_3</zorder>
   <zorder>label_5</zorder>
-  <zorder>label_8</zorder>
   <zorder>presetGetPushButton</zorder>
   <zorder>label_7</zorder>
   <zorder>zoomOutPushButton</zorder>

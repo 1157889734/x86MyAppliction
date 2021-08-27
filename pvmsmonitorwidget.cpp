@@ -1441,7 +1441,7 @@ void pvmsMonitorWidget::setFullScreenSignalCtrl()
         PutNodeToCmpQueue(m_ptQueue, &tPkt);
 
         m_channelStateLabel->setGeometry(452, 360, 130, 50);
-        m_channelNoLabel->setGeometry(20, 690, 65, 50);
+        m_channelNoLabel->setGeometry(20, 690, 100, 50);
         if (m_presetPasswdConfirmPage != NULL)
         {
             m_presetPasswdConfirmPage->hide();
@@ -1816,7 +1816,7 @@ void pvmsMonitorWidget::alarmHappenSlot()
         }
         if (m_channelNoLabel != NULL)
         {
-            m_channelNoLabel->setGeometry(20, 690, 65, 50);
+            m_channelNoLabel->setGeometry(20, 690, 100, 50);
         }
 
 //        if (m_presetPasswdConfirmPage != NULL)
@@ -1892,7 +1892,7 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
                 }
 
                 m_iFullScreenFlag = 0;
-                m_playWin->move(6, 110);
+                m_playWin->move(0, 138);
                 m_playWin->resize(782, 656);
 
 
@@ -1902,7 +1902,7 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
                 PutNodeToCmpQueue(m_ptQueue, &tPkt);
 
                 m_channelStateLabel->setGeometry(320, 385, 130, 50);
-                m_channelNoLabel->setGeometry(20, 690, 65, 50);
+                m_channelNoLabel->setGeometry(20, 690, 100, 50);
 //                if (m_presetPasswdConfirmPage != NULL)
 //                {
 //                    m_presetPasswdConfirmPage->show();
@@ -1931,7 +1931,7 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
                 PutNodeToCmpQueue(m_ptQueue, &tPkt);
 
                 m_channelStateLabel->setGeometry(452, 360, 130, 50);
-                m_channelNoLabel->setGeometry(20, 690, 65, 50);
+                m_channelNoLabel->setGeometry(20, 690, 100, 50);
 
 //                if (m_presetPasswdConfirmPage != NULL)
 //                {
@@ -2285,7 +2285,7 @@ void pvmsMonitorWidget::blackScreenCtrlSlot()     //黑屏触发信号处理，�
         }
         if (m_channelNoLabel != NULL)
         {
-            m_channelNoLabel->setGeometry(20, 690, 65, 50);
+            m_channelNoLabel->setGeometry(20, 690, 100, 50);
         }
         if (m_presetPasswdConfirmPage != NULL)
         {

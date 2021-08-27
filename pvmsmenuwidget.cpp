@@ -15,8 +15,9 @@ pvmsMenuWidget::pvmsMenuWidget(QWidget *parent) :
     ui(new Ui::pvmsMenuWidget)
 {
     ui->setupUi(this);
-    this->setWindowFlags(Qt::FramelessWindowHint);
-    this->setGeometry(0,0,1024,768);
+//    this->setWindowFlags(this->windowFlags() | Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint);  //设置窗体属性，无标题栏，总是在最上端
+//    this->setGeometry(0,0,1024,768);
+//    this->setWindowFlags(this->windowFlags()&~Qt::WindowCloseButtonHint);
     this->showFullScreen();
 
     this->setAutoFillBackground(true);

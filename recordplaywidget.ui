@@ -150,7 +150,12 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/monres/alertoff.bmp);</string>
+    <string notr="true">QPushButton{
+background-image: url(:/monres/alertoff.bmp);}
+
+
+QPushButton:pressed
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -324,7 +329,7 @@ border-width: 1px;border-style: solid;</string>
     <rect>
      <x>90</x>
      <y>200</y>
-     <width>91</width>
+     <width>110</width>
      <height>31</height>
     </rect>
    </property>
@@ -334,7 +339,12 @@ border-width: 1px;border-style: solid;</string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/monres/search.bmp);</string>
+    <string notr="true">QPushButton{
+background-image: url(:/monres/search.bmp);}
+
+
+QPushButton:pressed
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -397,9 +407,9 @@ border-width: 1px;border-style: solid;</string>
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>570</y>
+     <y>582</y>
      <width>205</width>
-     <height>53</height>
+     <height>41</height>
     </rect>
    </property>
    <property name="font">
@@ -408,7 +418,11 @@ border-width: 1px;border-style: solid;</string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/monres/videodownload.bmp);</string>
+    <string notr="true">QPushButton{
+background-image: url(:/monres/videodownload.bmp);}
+
+QPushButton:pressed
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -424,7 +438,11 @@ border-width: 1px;border-style: solid;</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-image: url(:/monres/mslow.bmp);</string>
+    <string notr="true">QPushButton{
+background-image: url(:/monres/mslow.bmp);}
+
+QPushButton:pressed
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -647,7 +665,11 @@ border-width: 1px;border-style: solid;</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-image: url(:/monres/mfast.bmp);</string>
+    <string notr="true">QPushButton{
+background-image: url(:/monres/mfast.bmp);}
+
+QPushButton:pressed
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -796,7 +818,11 @@ border-width: 1px;border-style: solid;</string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/monres/cancel.bmp);</string>
+    <string notr="true">QPushButton{
+background-image: url(:/monres/cancel.bmp);}
+
+QPushButton:pressed
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>

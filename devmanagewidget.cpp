@@ -262,7 +262,8 @@ void devManageWidget::getIpcStatusCtrl(PMSG_HANDLE pHandle, char *pcMsgData)
     STATE_GetCurrentTrainConfigInfo(&tTrainConfigInfo);
 
     snprintf(actmp, sizeof(actmp), "%d", htons(ptIpcstaus->i16Version));
-    snprintf(acVersion, sizeof(acVersion), "V%c.%c.%c",actmp[0],actmp[1],actmp[2]);
+//    snprintf(acVersion, sizeof(acVersion), "V%c.%c.%c",actmp[0],actmp[1],actmp[2]);
+    snprintf(acVersion, sizeof(acVersion), "V0.0.%c",actmp[0]);
     devStatus = (ptIpcstaus->i8OnLine == 1)?tr("在线"):tr("离线");
 
     for (i =0; i < MAX_SERVER_NUM; i++)

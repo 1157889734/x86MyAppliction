@@ -64,7 +64,11 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/monres/ccsz.bmp);</string>
+    <string notr="true">QPushButton{
+background-image: url(:/monres/ccsz.bmp);}
+
+QPushButton:pressed
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -85,7 +89,12 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/monres/alertoff.bmp);</string>
+    <string notr="true">QPushButton{
+background-image: url(:/monres/alertoff.bmp);}
+
+
+QPushButton:pressed
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
@@ -104,7 +113,11 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/monres/cancel.bmp);</string>
+    <string notr="true">QPushButton{
+background-image: url(:/monres/cancel.bmp);}
+
+QPushButton:pressed
+{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
    </property>
    <property name="text">
     <string/>
