@@ -42,7 +42,7 @@ loginWidget::~loginWidget()
 }
 void loginWidget::okButtonSlot()
 {
-#if 0 //TEST
+#if 1 //TEST
 
     this->hide();
     emit gotoPvmsMenuPageSignal();

@@ -37,7 +37,10 @@
    </property>
    <property name="styleSheet">
     <string notr="true">border-style: none;
-background-color: rgb(204, 232, 207);</string>
+background-color: rgb(204, 232, 207);
+gridline-color: rgb(255, 255, 255);
+border-color: rgb(130, 135, 144);
+border-width: 1px;border-style: solid;</string>
    </property>
   </widget>
   <widget class="QPushButton" name="addpushButton">

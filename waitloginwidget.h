@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <pthread.h>
+#include <QLabel>
 
 namespace Ui {
 class waitLoginWidget;
@@ -19,6 +20,8 @@ public:
     pthread_t m_threadId;    //倒计时线程ID
     int m_iThreadRunFlag;    //线程运行标识
     void triggerSetCountDownValueSignal(QString timeStr);
+    QTimer *change_label;
+    int g_ilaybel_width;
 
 signals:
     void pageRedirectSignal();    //页面跳转信号
@@ -27,7 +30,7 @@ signals:
 public slots:
     void okButtonClickSlot();    //确认按钮按键信号相应槽函数
     void setCountDownValueSlot(QString timeStr);  //设置倒计时的值
-
+    void chage_label_function();
 private:
     Ui::waitLoginWidget *ui;
 };

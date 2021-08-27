@@ -6,6 +6,7 @@
 #include <QTime>
 #include <QTextCodec>
 #include <stdio.h>
+#include <QTimer>
 
 void *pageCountDownBrushThread(void *param)      //页面倒计时刷新线程
 {
@@ -26,13 +27,16 @@ void *pageCountDownBrushThread(void *param)      //页面倒计时刷新线程
         waitLoginPage->triggerSetCountDownValueSignal(str);  //更新倒计时显示控件的内容
         usleep(1*1000*1000);
         iCountDownValue--;
+
     }
 
     if (0 == iCountDownValue)
     {
         /*倒计时时间到了，进行页面跳转操作*/
         waitLoginPage->pageRedirect();
+
     }
+
     return NULL;
 }
 
@@ -41,6 +45,8 @@ void waitLoginWidget::pageRedirect()
 //    DebugPrint(DEBUG_UI_NOMAL_PRINT, "waitLogin Widget jump to choiceLoginDev Widget!\n");
     this->hide();   //隐藏当前页面
     emit pageRedirectSignal();    //触发页面跳转信号
+    change_label->stop();
+
 }
 
 waitLoginWidget::waitLoginWidget(QWidget *parent) :
@@ -57,6 +63,9 @@ waitLoginWidget::waitLoginWidget(QWidget *parent) :
     QIcon icon;
     this->setPalette(palette);
     this->showFullScreen();
+
+    g_ilaybel_width = 290;
+    ui->label_2->setGeometry(340,290,g_ilaybel_width,31);
 
     this->setWindowFlags(Qt::FramelessWindowHint);    //隐藏界面标题栏
     ui->okPushButton->setFocusPolicy(Qt::NoFocus); // 得到焦点时，不显示虚线框
@@ -77,11 +86,32 @@ waitLoginWidget::waitLoginWidget(QWidget *parent) :
 //        DebugPrint(DEBUG_UI_NOMAL_PRINT, "ui app version:%s!\n",acVersion);
         ui->versionLabel->setText(QString(QLatin1String(acVersion)));
     }
+
+    change_label = new QTimer(this);
+    connect(change_label,SIGNAL(timeout()),this,SLOT(chage_label_function()));
+    change_label->start(1000);
+
 }
+
+void waitLoginWidget::chage_label_function()
+{
+    if(g_ilaybel_width > 370)
+    {
+        g_ilaybel_width = 290;
+    }
+    ui->label_2->setGeometry(340,290,g_ilaybel_width,31);
+    g_ilaybel_width += 15;
+
+}
+
 
 waitLoginWidget::~waitLoginWidget()
 {
     delete ui;
+    if(change_label !=NULL)
+    {
+        delete  change_label;
+    }
 }
 
 void waitLoginWidget::triggerSetCountDownValueSignal(QString timeStr)

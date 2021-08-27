@@ -22,7 +22,9 @@ usergroupManage::usergroupManage(QWidget *parent) :
 
     ui->tableWidget->setFocusPolicy(Qt::NoFocus);
     ui->tableWidget->setShowGrid(true);
-    ui->tableWidget->setColumnCount(7);
+    ui->tableWidget->setColumnCount(2);
+
+
     QStringList header;
     header<<tr("用户名")<<tr("类型");
     ui->tableWidget->setHorizontalHeaderLabels(header);
@@ -32,14 +34,23 @@ usergroupManage::usergroupManage(QWidget *parent) :
     ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers); //设置不可编辑
     ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);  //整行选中的方式
     ui->tableWidget->setSelectionMode(QAbstractItemView::SingleSelection); //设置只能选择一行，不能多行选中
-    ui->tableWidget->setAlternatingRowColors(true);                        //设置隔一行变一颜色，即：一灰一白
-    ui->tableWidget->horizontalHeader()->resizeSection(0,46); //设置表头第一列的宽度为46
-    ui->tableWidget->horizontalHeader()->resizeSection(1,136);
-    ui->tableWidget->horizontalHeader()->resizeSection(2,136);
-    ui->tableWidget->horizontalHeader()->resizeSection(3,136);
-    ui->tableWidget->horizontalHeader()->resizeSection(4,116);
-    ui->tableWidget->horizontalHeader()->resizeSection(5,116);
-    ui->tableWidget->horizontalHeader()->resizeSection(6,111);
+//    ui->tableWidget->setAlternatingRowColors(true);                        //设置隔一行变一颜色，即：一灰一白
+    ui->tableWidget->horizontalHeader()->resizeSection(0,60); //设置表头第一列的宽度为46
+    ui->tableWidget->horizontalHeader()->resizeSection(1,100);
+//    ui->tableWidget->horizontalHeader()->resizeSection(2,136);
+
+    ui->passwdlineEdit->setEchoMode(QLineEdit::Password);
+    ui->surelineEdit->setEchoMode(QLineEdit::Password);
+
+    g_buttonGroup = new QButtonGroup();      //轮询时间设置单选按钮组成一组，以保证改组中的单选框同时只能选一个，同时与以下其他类别的单选框之间互不影响
+    g_buttonGroup->addButton(ui->radioButton,1);
+    g_buttonGroup->addButton(ui->radioButton_2,2);
+    g_buttonGroup->addButton(ui->radioButton_3,3);
+
+    connect(g_buttonGroup,SIGNAL(buttonClicked(int)),this,SLOT(choose_type_function(int)));
+
+    connect(ui->tableWidget,SIGNAL(itemClicked(QTableWidgetItem*)),this,SLOT(table_choose_fuction(QTableWidgetItem*)));
+
 
 
 }
@@ -128,6 +139,18 @@ void usergroupManage::on_savepushButton_clicked()
     QString value_passwd = ui->passwdlineEdit->text();
     QString value_ensure_passwd = ui->surelineEdit->text();
 
+    if(ui->usernamelineEdit->text().isEmpty())
+    {
+        return;
+    }
+
+    if(ui->passwdlineEdit->text().isEmpty() || ui->surelineEdit->text().isEmpty())
+    {
+        QMessageBox::information(this ,tr("提示") , tr("密码不能为空!"));
+        return;
+    }
+
+
     QSqlQuery query;
     query.exec("select username from tab");
     query.isActive();
@@ -141,6 +164,8 @@ void usergroupManage::on_savepushButton_clicked()
             T2=false;
         }
    }
+
+
     if(1 == g_curTextState)
     {
 
@@ -306,7 +331,8 @@ void usergroupManage::table_choose_fuction(QTableWidgetItem *item)
     QTableWidgetItem *mitem = items.at(0);
     QString text = mitem->text(); //获取内容
     ui->usernamelineEdit->setText(text);
-
+    ui->passwdlineEdit->clear();
+    ui->surelineEdit->clear();
 }
 
 
