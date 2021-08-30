@@ -12,6 +12,7 @@
 #include "myslider.h"
 #include <QSlider>
 #include <QMessageBox>
+#include <QDebug>
 int g_iDateEditNo = 0;      //要显示时间的不同控件的编号
 static int g_iRNum = 0;
 #define PVMSPAGETYPE  2    //此页面类型，2表示受电弓监控页面
@@ -53,10 +54,9 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowFlags(Qt::FramelessWindowHint);
 
-//    mousePressEvent(e);
 
-//    ui->fileDownloadProgressBar->hide();
-//    ui->fileDownloadProgressBar->setRange(0,100);
+    ui->fileDownloadProgressBar->hide();
+    ui->fileDownloadProgressBar->setRange(0,100);
 
     ui->alarmPushButton->setFocusPolicy(Qt::NoFocus);
 
@@ -119,16 +119,23 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
     ui->minusStepPushButton->setFocusPolicy(Qt::NoFocus);
 //    ui->playSpeedLineEdit->setFocusPolicy(Qt::NoFocus);
 
-
     //参数初始化
     m_alarmHappenTimer = NULL;
     m_recorQueryTimer = NULL;
+    m_recordTabelWidgetFillTimer = NULL;
+
     posTimer = NULL;
     m_iPlayFlag = 0;
     m_iRecordIdex = -1;
     m_iSliderValue = 0;
     m_threadId = 0;
     m_pcRecordFileBuf = (char *)malloc(MAX_RECORD_SEACH_NUM*MAX_RECFILE_PATH_LEN);
+
+    for (i = 0; i < MAX_SERVER_NUM; i++)
+    {
+        m_Phandle[i] = 0;
+        m_tFtpHandle[i] = 0;
+    }
 
 
     setPlayButtonStyleSheet();
@@ -166,8 +173,8 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
     connect(ui->slowForwardPushButton, SIGNAL(clicked(bool)), this, SLOT(recordPlaySlowForwardSlot()));    //慢放按钮按键信号响应
     connect(ui->playLastOnePushButton, SIGNAL(clicked(bool)), this, SLOT(recordPlayLastOneSlot()));    //播放上一个按钮按键信号响应
     connect(ui->playNextOnePushButton, SIGNAL(clicked(bool)), this, SLOT(recordPlayNextOneSlot()));	 //播放下一个按钮按键信号响应
-    connect(ui->plusStepPushButton, SIGNAL(clicked(bool)), this, SLOT(playPlusStepSlot()));   //拖动进度条信号响应
-    connect(ui->minusStepPushButton, SIGNAL(clicked(bool)), this, SLOT(playMinusStepSlot()));   //拖动进度条信号响应
+    connect(ui->plusStepPushButton, SIGNAL(pressed()), this, SLOT(playPlusStepSlot()));   //拖动进度条信号响应
+    connect(ui->minusStepPushButton, SIGNAL(pressed()), this, SLOT(playMinusStepSlot()));   //拖动进度条信号响应
 
 
     connect(ui->recordFileTableWidget, SIGNAL(itemClicked(QTableWidgetItem*)), this, SLOT(recordSelectionSlot(QTableWidgetItem*)));  //单击录像文件列表某行触发信号连接相应槽函数
@@ -202,6 +209,15 @@ recordPlayWidget::~recordPlayWidget()
         delete m_tableWidgetStyle;
         m_tableWidgetStyle = NULL;
     }
+    for (int i = 0; i < MAX_SERVER_NUM; i++)
+    {
+        if (m_tFtpHandle[i] != 0)
+        {
+            FTP_DestoryConnect(m_tFtpHandle[i]);
+            m_tFtpHandle[i] = 0;
+        }
+    }
+
     delete m_playSlider;
     m_playSlider = NULL;
     delete m_playWin;
@@ -237,8 +253,6 @@ int recordPlayWidget::openMedia(const char *pcRtspFile)
 
 void recordPlayWidget::playSliderMoveSlot(int iPosTime)
 {
-
-    qDebug()<<"***********---playSliderMoveSlot--"<<iPosTime<<endl;
     QString playSpeedStr = "";
 
 //    DebugPrint(DEBUG_UI_OPTION_PRINT, "recordPlayWidget  press play slider!\n");
@@ -262,8 +276,10 @@ void recordPlayWidget::playSliderMoveSlot(int iPosTime)
     }
     m_iPlayFlag = 1;
     m_dPlaySpeed = 1.00;
+    iPosTime *=1000;
     playSpeedStr = "1.00x";
 //    ui->playSpeedLineEdit->setText(playSpeedStr);
+    player.pause();
 
     pthread_mutex_lock(&g_sliderValueSetMutex);
     //m_iSliderValue = iPosTime;
@@ -273,14 +289,12 @@ void recordPlayWidget::playSliderMoveSlot(int iPosTime)
     playingTime = iPosTime;
 
     pthread_mutex_unlock(&g_sliderValueSetMutex);
+    player.play();
 
 }
 
 void recordPlayWidget::playSliderPressSlot(int iPosTime)
 {
-
-    qDebug()<<"***********---playSliderPressSlot--"<<iPosTime<<endl;
-
     QString playSpeedStr = "";
 
 //    DebugPrint(DEBUG_UI_OPTION_PRINT, "recordPlayWidget  press play slider!\n");
@@ -304,9 +318,10 @@ void recordPlayWidget::playSliderPressSlot(int iPosTime)
     }
     m_iPlayFlag = 1;
     m_dPlaySpeed = 1.00;
+    iPosTime *=1000;
     playSpeedStr = "1.00x";
 //    ui->playSpeedLineEdit->setText(playSpeedStr);
-
+    player.pause();
     pthread_mutex_lock(&g_sliderValueSetMutex);
     m_playSlider->setValue(iPosTime);
     playingTime = iPosTime;
@@ -314,7 +329,7 @@ void recordPlayWidget::playSliderPressSlot(int iPosTime)
      qDebug()<<"********-------playSliderPressSlot-----"<<iPosTime<<endl;
      player.setPosition(iPosTime);
     pthread_mutex_unlock(&g_sliderValueSetMutex);
-
+    player.play();
 
 }
 void recordPlayWidget::getduration(qint64 playtime)
@@ -333,7 +348,7 @@ void recordPlayWidget::positionchaged(qint64 pos)
 
 void recordPlayWidget::downloadProcessBarDisplaySlot(int iEnableFlag)   //是否显示文件下载进度条，iEnableFlag为1，显示，为0不显示
 {
-#if 0
+#if 1
     if ((0 == iEnableFlag) && (0 == ui->fileDownloadProgressBar->isHidden()))
     {
         ui->fileDownloadProgressBar->hide();
@@ -396,7 +411,7 @@ void recordPlayWidget::setDownloadProcessBarValueSlot(int iValue)   //设置文�
             return;
         }
 
-//        ui->fileDownloadProgressBar->setValue(iValue);
+        ui->fileDownloadProgressBar->setValue(iValue);
 
         if (100 == iValue)   //iValue=100,下载结束，销毁ftp连接
         {
@@ -945,14 +960,10 @@ void recordPlayWidget::recordPauseSlot()
 
 void recordPlayWidget::recordPlayStopSlot()
 {
+
     closePlayWin();
     setPlayButtonStyleSheet();
 
-    if(player.state()!= QMediaPlayer::StoppedState)
-    {
-        m_iPlayFlag = 0;
-        player.stop();
-    }
 
 
 }
@@ -1077,8 +1088,6 @@ void recordPlayWidget::recordPlayLastOneSlot()
 
 //    DebugPrint(DEBUG_UI_OPTION_PRINT, "recordPlayWidget lastOne play PushButton pressed!\n");
 
-    setPlayButtonStyleSheet();
-
     if (ui->recordFileTableWidget->rowCount() <= 0 /*|| NULL == m_cmpHandle*/)
     {
         return;
@@ -1100,12 +1109,7 @@ void recordPlayWidget::recordPlayLastOneSlot()
     setPlayButtonStyleSheet();
 
     emit setRecordPlayFlagSignal(1);
-
     recordPlayCtrl(iRow, iDex);
-
-
-
-
 }
 void recordPlayWidget::recordPlayNextOneSlot()
 {
@@ -1113,8 +1117,6 @@ void recordPlayWidget::recordPlayNextOneSlot()
     int iDex = 0, iRow = 0;
 
 //    DebugPrint(DEBUG_UI_OPTION_PRINT, "recordPlayWidget nextOne play PushButton pressed!\n");
-
-    setPlayButtonStyleSheet();
 
     if (ui->recordFileTableWidget->rowCount() <= 0 /*|| NULL == m_cmpHandle*/)
     {
@@ -1156,7 +1158,9 @@ void recordPlayWidget::playPlusStepSlot()
 //    ui->playSpeedLineEdit->setText(playSpeedStr);
     setPlayButtonStyleSheet();
 
-    iPosTime = player.position() + 60;
+    iPosTime = player.position() + 30000;
+    player.pause();
+
     if (iPosTime > 0)
     {
         pthread_mutex_lock(&g_sliderValueSetMutex);
@@ -1174,6 +1178,7 @@ void recordPlayWidget::playPlusStepSlot()
         pthread_mutex_unlock(&g_sliderValueSetMutex);
 
     }
+    player.play();
 
 }
 
@@ -1191,7 +1196,7 @@ void recordPlayWidget::playMinusStepSlot()
 //    ui->playSpeedLineEdit->setText(playSpeedStr);
     setPlayButtonStyleSheet();
 
-    iPosTime = player.position() - 60;
+    iPosTime = player.position() - 30000;
 
     if (iPosTime > 0)
     {
@@ -1210,6 +1215,8 @@ void recordPlayWidget::playMinusStepSlot()
         pthread_mutex_unlock(&g_sliderValueSetMutex);
 
     }
+    player.play();
+
 }
 
 void recordPlayWidget::registOutButtonClick()
@@ -1284,22 +1291,6 @@ void recordPlayWidget::recordPlaySlot(QTableWidgetItem *item)    //录像文件�
     recordPlayCtrl(iRow, iDex);
 }
 
-
-void recordPlayWidget:: mousePressEvent(QMouseEvent *event)
-{
-    int x =event->x();
-    int y = event->y();
-    if(((90 < x < 190) && (50 < y < 80)) || ((90 < y < 190) && (50 < y < 80)))
-    {
-        Mouseflag = false;
-    }
-    else
-    {
-        Mouseflag = true;
-
-    }
-
-}
 
 void recordPlayWidget::alarmPushButoonClickSlot()
 {

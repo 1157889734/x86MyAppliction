@@ -63,11 +63,6 @@ public:
     void unMute();
 
 
-
-
-protected:
-    void mousePressEvent(QMouseEvent *event);
-
 public slots:
     void alarmPushButoonClickSlot();
     void alarmHappenCtrlSlot();

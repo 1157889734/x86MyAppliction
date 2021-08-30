@@ -13,8 +13,10 @@
 #include "log.h"
 #include <arpa/inet.h>
 #include <netinet/in.h>
+#include <QProcess>
 
-static int chagepage = 0;
+
+static int g_ichagepage = 0;
 static int g_iVNum = 0;
 #define PVMSPAGETYPE  2    //此页面类型，2表示受电弓监控页面
 
@@ -52,14 +54,15 @@ devUpdateWidget::devUpdateWidget(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowFlags(Qt::FramelessWindowHint);
 
+
     connect(ui->alarmPushButton, SIGNAL(clicked(bool)), this, SLOT(alarmPushButoonClickSlot()));   //报警按钮按键信号响应打开报警信息界面
     ui->alarmPushButton->setFocusPolicy(Qt::NoFocus);
     m_alarmHappenTimer = NULL;
 
 
-    gusergroupManage = new usergroupManage(this);   //受电弓监控页面
-    gusergroupManage->setGeometry(40, 260, gusergroupManage->width(), gusergroupManage->height());   //设置位置
-    gusergroupManage->hide();
+//    gusergroupManage = new usergroupManage(this);   //受电弓监控页面
+//    gusergroupManage->setGeometry(40, 120, gusergroupManage->width(), gusergroupManage->height());   //设置位置
+//    gusergroupManage->hide();
 
 
     connect(ui->permissonManagePushButton, SIGNAL(clicked(bool)), this, SLOT(userManageSlot()));
@@ -497,16 +500,16 @@ void devUpdateWidget::closeUserManageWidget()
 
 void devUpdateWidget::userManageSlot()  //点击用户管理按钮响应函数，弹出用户管理界面
 {
-    if( chagepage == 0)
+    if( g_ichagepage == 0)
      {
-        chagepage = 1;
+        g_ichagepage = 1;
         gusergroupManage->show();
         ui->deviceManagewidget->hide();
         gusergroupManage->init_datavase();
     }
     else
     {
-        chagepage = 0;
+        g_ichagepage = 0;
         gusergroupManage->hide();
         ui->deviceManagewidget->show();
 
@@ -557,8 +560,8 @@ void devUpdateWidget::configFileSelectionSlot()
                     return;
                 }
             }
-
-            if (STATE_ParseUsbLicense("/mnt/sdcard/") < 0)
+#if 0  //test ?????
+            if (STATE_ParseUsbLicense("//mnt/sdcard/") < 0)
             {
 //                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget configFileSelection check License error!\n");
                 QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("授权失败!"));
@@ -567,7 +570,7 @@ void devUpdateWidget::configFileSelectionSlot()
                 box.exec();
                 return;
             }
-
+#endif
             filename = QFileDialog::getOpenFileName(this, "打开文件", "/mnt/sdcard/", "ini文件(*.ini)");
             if (!filename.isNull())
             {
@@ -691,7 +694,7 @@ void devUpdateWidget::devUpdateSlot()
                 return;
             }
         }
-
+#if 0  //test ?????
         if (STATE_ParseUsbLicense("/mnt/usb/u/") < 0)
         {
 //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget update check License error!\n");
@@ -701,10 +704,12 @@ void devUpdateWidget::devUpdateSlot()
             box.exec();
             return;
         }
-
+#endif
         ui->updateStatueTextEdit->append(tr("发现USB，已准备好"));
 
-        if ((access("/mnt/usb/u/mornitorapp.exe", F_OK) < 0) || (access("/mnt/usb/u/version.ini", F_OK) < 0))
+
+//        if ((access("/mnt/usb/u/mornitorapp.exe", F_OK) < 0) || (access("/mnt/usb/u/version.ini", F_OK) < 0))
+        if ((access("/mnt/usb/u/x86MyApplication", F_OK) < 0) || (access("/mnt/usb/u/version.ini", F_OK) < 0))
         {
 //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget not find update file in USB device!\n");
             QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("U盘中未检测更新文件!")));
@@ -736,7 +741,8 @@ void devUpdateWidget::devUpdateSlot()
             msgBox.exec();
             fclose(fp);
             ui->clientRebootPushButton->setEnabled(true);
-            return;
+            return;        QApplication *app;
+            app->exit();
         }
         fclose(fp);
 
@@ -769,21 +775,22 @@ void devUpdateWidget::devUpdateSlot()
 //        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] update device from version:%s to version:%s\n", __FUNCTION__, acLocalVersion, acUpdateVersion);
 
         ui->updateStatueTextEdit->append(tr("正在复制文件..."));
-
-        if (access("/home/data/backup", F_OK) < 0)
+        if (access("/userdata/backup",F_OK) < 0)
         {
-            system("mkdir /home/data/backup");
+            system("mkdir /userdata/backup");
         }
 
-        system("cp /mnt/usb/u/mornitorapp.exe /home/data/emuVideoMornitorClient/mornitorapp.exe");
+//        system("cp /mnt/usb/u/mornitorapp.exe /home/data/emuVideoMornitorClient/mornitorapp.exe");
+
+        system("cp /userdata/x86MyApplication /userdata/backup/");
+        system("rm /userdata/x86MyApplication");
+        system("cp /mnt/usb/u/x86MyApplication /userdata/x86MyApplication");
         system("sync");
 
         ui->updateStatueTextEdit->append(tr("复制文件完成"));
         ui->updateStatueTextEdit->append(tr("更新完成，请重启!"));
         ui->clientRebootPushButton->setEnabled(true);    //更新完成，恢复重启按钮可操作
     }
-
-
 
 }
 void devUpdateWidget::devRebootSlot()
@@ -809,8 +816,22 @@ void devUpdateWidget::devRebootSlot()
         snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "monitor Client reboot!");
         LOG_WriteLog(&tLogInfo);
 
-        QApplication *app;
-        app->exit();
+
+        QString program = QApplication::applicationFilePath();
+        QStringList arguments = QApplication::arguments();
+        QString workingDirectory = QDir::currentPath();
+        if("/userdata/x86MyApplication" != program)
+        {
+            system("cp /userdata/backup/x86MyApplication /userdata/ ");
+            program = "/userdata/x86MyApplication";
+        }
+
+        QProcess::startDetached(program, arguments, workingDirectory);
+        QApplication::exit();
+
+
+//        QApplication *app;
+//        app->exit();
     }
 
 
@@ -905,7 +926,9 @@ void devUpdateWidget::configFileImportSlot()
             return;
         }
 
-        system("cp /mnt/usb/u/Station.ini /home/data/emuVideoMornitorClient/Station.ini");
+//        system("cp /mnt/usb/u/Station.ini /home/data/emuVideoMornitorClient/Station.ini");
+        system("cp /mnt/usb/u/Station.ini /userdata/Station.ini");
+
         system("sync");
 
         QMessageBox msgBox2(QMessageBox::Information,QString(tr("注意")),QString(tr("导入成功，请拔出U盘!")));

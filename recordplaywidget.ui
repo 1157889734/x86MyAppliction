@@ -194,7 +194,7 @@ QPushButton:pressed
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>270</y>
+     <y>260</y>
      <width>281</width>
      <height>291</height>
     </rect>
@@ -328,7 +328,7 @@ border-width: 1px;border-style: solid;</string>
    <property name="geometry">
     <rect>
      <x>90</x>
-     <y>200</y>
+     <y>195</y>
      <width>110</width>
      <height>31</height>
     </rect>
@@ -407,7 +407,7 @@ QPushButton:pressed
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>582</y>
+     <y>590</y>
      <width>205</width>
      <height>41</height>
     </rect>
@@ -565,7 +565,7 @@ QPushButton:pressed
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>229</y>
+     <y>220</y>
      <width>101</width>
      <height>41</height>
     </rect>
@@ -863,6 +863,38 @@ QPushButton:pressed
     <string/>
    </property>
   </widget>
+  <widget class="QProgressBar" name="fileDownloadProgressBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>560</y>
+     <width>271</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QProgressBar {
+	background-color: rgb(0, 193, 37);
+   border: 1px solid grey;
+   border-radius: 2px;
+   background-color: #FFFFFF;
+}
+ 
+QProgressBar::chunk {
+   background-color: #4FEE9C;
+   width: 20px;
+}
+ 
+QProgressBar {
+   border: 1px solid grey;
+   border-radius: 2px;
+   text-align: center;
+}</string>
+   </property>
+   <property name="value">
+    <number>0</number>
+   </property>
+  </widget>
   <zorder>label_12</zorder>
   <zorder>label_5</zorder>
   <zorder>stopPushButton</zorder>
@@ -895,6 +927,7 @@ QPushButton:pressed
   <zorder>canselPushButton</zorder>
   <zorder>pushButton</zorder>
   <zorder>queryPushButton</zorder>
+  <zorder>fileDownloadProgressBar</zorder>
  </widget>
  <resources/>
  <connections/>
