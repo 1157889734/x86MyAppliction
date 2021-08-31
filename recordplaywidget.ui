@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1024</width>
-    <height>665</height>
+    <height>630</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -141,7 +141,7 @@
      <x>720</x>
      <y>585</y>
      <width>80</width>
-     <height>34</height>
+     <height>35</height>
     </rect>
    </property>
    <property name="font">
@@ -407,7 +407,7 @@ QPushButton:pressed
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>590</y>
+     <y>585</y>
      <width>205</width>
      <height>41</height>
     </rect>
@@ -809,7 +809,7 @@ QPushButton:pressed
      <x>800</x>
      <y>585</y>
      <width>80</width>
-     <height>34</height>
+     <height>35</height>
     </rect>
    </property>
    <property name="font">
@@ -853,7 +853,7 @@ QPushButton:pressed
      <x>0</x>
      <y>0</y>
      <width>1024</width>
-     <height>661</height>
+     <height>630</height>
     </rect>
    </property>
    <property name="styleSheet">

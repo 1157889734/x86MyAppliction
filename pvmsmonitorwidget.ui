@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1024</width>
-    <height>665</height>
+    <height>630</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -564,9 +564,9 @@ QPushButton:pressed
    <property name="geometry">
     <rect>
      <x>810</x>
-     <y>600</y>
+     <y>590</y>
      <width>71</width>
-     <height>31</height>
+     <height>32</height>
     </rect>
    </property>
    <property name="font">
@@ -990,9 +990,9 @@ QPushButton:pressed
    <property name="geometry">
     <rect>
      <x>930</x>
-     <y>600</y>
+     <y>590</y>
      <width>71</width>
-     <height>31</height>
+     <height>32</height>
     </rect>
    </property>
    <property name="font">
@@ -1019,7 +1019,7 @@ QPushButton:pressed
      <x>0</x>
      <y>0</y>
      <width>1024</width>
-     <height>665</height>
+     <height>630</height>
     </rect>
    </property>
    <property name="toolTipDuration">

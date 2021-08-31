@@ -6,6 +6,7 @@
 
 QT       += core gui widgets virtualkeyboard multimedia multimediawidgets sql
 
+
 TARGET = x86MyApplication
 TEMPLATE = app
 
