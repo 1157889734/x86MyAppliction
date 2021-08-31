@@ -194,6 +194,7 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
     connect(this, SIGNAL(setRangeLabelSignal()), this, SLOT(setRangeLabelSlot()));
     connect(this, SIGNAL(recordSeletPlay(QTableWidgetItem *)), this, SLOT(recordPlaySlot(QTableWidgetItem*)));
 
+    g_recordPlayThis = this;
 
 //    QObject::connect(m_playSlider,SIGNAL(QSlider::sliderMoved()),this,SLOT(setpostion()));
 }
@@ -769,6 +770,7 @@ void recordPlayWidget::recordDownloadSlot()
                 return;
             }
         }
+#if 0//test ?????
         iRet = STATE_ParseUsbLicense(fileSavePath.toLatin1().data());
         if (iRet < 0)
         {
@@ -779,7 +781,7 @@ void recordPlayWidget::recordDownloadSlot()
             box.exec();
             return;
         }
-
+#endif
         idex = ui->carSeletionComboBox->currentIndex();
 
         if (idex < 0)
@@ -804,7 +806,7 @@ void recordPlayWidget::recordDownloadSlot()
             {
                 if (parseFileName(m_acFilePath[row]) != NULL)
                 {
-                    snprintf(acSaveFileName, sizeof(acSaveFileName), "%s/%s", "/mnt/usb/u/", parseFileName(m_acFilePath[row]));
+                    snprintf(acSaveFileName, sizeof(acSaveFileName), "%s%s", "/mnt/usb/u/", parseFileName(m_acFilePath[row]));
                 }
 
 //                DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] add download file:%s!\n", __FUNCTION__, m_acFilePath[row]);
