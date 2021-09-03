@@ -576,13 +576,13 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
 
     m_channelStateLabel = new QLabel(this->parentWidget());
     m_channelStateLabel->setGeometry(452, 360, 130, 50);
-    m_channelStateLabel->setStyleSheet("QLabel{color:rgb(255, 255, 255);font: 24pt;background-color: rgb(0, 0, 0);}");
+    m_channelStateLabel->setStyleSheet("QLabel{color:rgb(55, 82, 103);font: 24pt;background-color: rgb(0, 0, 0);}");
     m_channelStateLabel->setAttribute(Qt::WA_TranslucentBackground, true); //设置控件背景透明
     m_channelStateLabel->show();
 
     m_channelNoLabel = new QLabel(this->parentWidget());
     m_channelNoLabel->setGeometry(20, 690, 100, 50);
-    m_channelNoLabel->setStyleSheet("QLabel{color:rgb(255, 255, 255);font: 24pt;background-color: rgb(0, 0, 0);}");
+    m_channelNoLabel->setStyleSheet("QLabel{color:rgb(55, 82, 103);font: 24pt;background-color: rgb(0, 0, 0);}");
     m_channelNoLabel->setAttribute(Qt::WA_TranslucentBackground, true);
     m_channelNoLabel->show();
 
@@ -953,6 +953,12 @@ void pvmsMonitorWidget::presetGetCtrlSlot()
       sysinfo(&s_info);
       this->m_tCameraInfo[m_iCameraPlayNo].tPtzOprateTime = s_info.uptime;
       this->m_tCameraInfo[m_iCameraPlayNo].iPresetNo = m_iSelectPresetNo;
+
+      QMessageBox box(QMessageBox::Information,QString::fromUtf8("注意"),QString::fromUtf8("预置点调用成功!"));
+      box.setStandardButtons (QMessageBox::Ok);
+      box.setButtonText (QMessageBox::Ok,QString::fromUtf8("确 定"));
+      box.exec();
+
 
 }
 
@@ -1859,6 +1865,24 @@ void pvmsMonitorWidget::alarmHappenSlot()
     }
 
 }
+void pvmsMonitorWidget::alarmHappenCtrlSlot()
+{
+    if (this->isHidden() != 1)
+    {
+        if (0 == g_iPNum%2)
+        {
+            ui->alarmPushButton->setChecked(true);
+            ui->alarmPushButton->setStyleSheet("QPushButton{border-image: url(:/monres/alerton.bmp);background-color: rgb(255, 255, 255);}");
+
+        }
+        else
+        {
+            ui->alarmPushButton->setChecked(false);
+            ui->alarmPushButton->setStyleSheet("QPushButton{border-image: url(:/monres/alertoff.bmp);background-color: rgb(255, 255, 255);}");
+        }
+        g_iPNum++;
+    }
+}
 void pvmsMonitorWidget::alarmClearSlot()
 {
     /*删除样式刷新定时器，并恢复报警按钮样式为正常样式*/
@@ -1868,6 +1892,7 @@ void pvmsMonitorWidget::alarmClearSlot()
         m_alarmHappenTimer = NULL;
     }
     ui->alarmPushButton->setChecked(false);
+    ui->alarmPushButton->setStyleSheet("QPushButton{border-image: url(:/monres/alertoff.bmp);background-color: rgb(255, 255, 255);}");
 
     m_iAlarmNotCtrlFlag = 0;
     g_iPNum = 0;
@@ -2324,15 +2349,6 @@ void pvmsMonitorWidget::blackScreenExitCtrlSlot()  //黑屏退出触发信号处
     m_iBlackScreenFlag = 0;
 }
 
-
-void pvmsMonitorWidget::createMeadia()
-{
-
-
-
-
-
-}
 
 void pvmsMonitorWidget::pvmsUpdownCtrl(char *pcMsgData)
 {
