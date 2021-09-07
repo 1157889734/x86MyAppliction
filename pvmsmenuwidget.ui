@@ -51,7 +51,7 @@ border-image:url();
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
-background-color: rgb(5, 135, 167);}
+background-color: rgb(0, 216, 255);}
 
 QPushButton:hover{border-color: rgb(255, 255, 255);border-width: 2px;border-style: solid;}
 
@@ -106,7 +106,7 @@ QPushButton:pressed
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
-background-color: rgb(5, 135, 167);}
+background-color: rgb(0, 216, 255);}
 
 QPushButton:hover{border-color: rgb(255, 255, 255);border-width: 2px;border-style: solid;}
 
@@ -139,7 +139,7 @@ QPushButton:pressed
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
-background-color: rgb(5, 135, 167);}
+background-color: rgb(0, 216, 255);}
 
 QPushButton:hover{border-color: rgb(255, 255, 255);border-width: 2px;border-style: solid;}
 
@@ -178,7 +178,7 @@ QPushButton:pressed
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
-background-color: rgb(5, 135, 167);}
+background-color: rgb(0, 216, 255);}
 
 QPushButton:hover{border-color: rgb(255, 255, 255);border-width: 2px;border-style: solid;}
 

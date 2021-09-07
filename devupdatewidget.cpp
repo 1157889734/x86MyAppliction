@@ -22,7 +22,7 @@ static int g_iVNum = 0;
 
 #define NVR_RESTART_PORT 11001
 QButtonGroup *g_buttonGroup1 = NULL, *g_buttonGroup2 = NULL, *g_buttonGroup3 = NULL;
-devUpdateWidget *g_devUpdateThis = NULL;
+devUpdateWidget *g_devUpdateThis = nullptr;
 
 char *parseFileNameFromPath(char *pcSrcStr)     //根据导入文件路径全名解析得到单纯的导入文件名
 {
@@ -60,9 +60,9 @@ devUpdateWidget::devUpdateWidget(QWidget *parent) :
     m_alarmHappenTimer = NULL;
 
 
-//    gusergroupManage = new usergroupManage(this);   //受电弓监控页面
-//    gusergroupManage->setGeometry(40, 120, gusergroupManage->width(), gusergroupManage->height());   //设置位置
-//    gusergroupManage->hide();
+    gusergroupManage = new usergroupManage(this);   //受电弓监控页面
+    gusergroupManage->setGeometry(40, 120, gusergroupManage->width(), gusergroupManage->height());   //设置位置
+    gusergroupManage->hide();
 
 
     connect(ui->permissonManagePushButton, SIGNAL(clicked(bool)), this, SLOT(userManageSlot()));
@@ -141,10 +141,9 @@ devUpdateWidget::~devUpdateWidget()
 
 void devUpdateWidget::registOutButtonClick()
 {
-
-//    m_pvmsMonitorPage->m_iPresetPasswdOkFlag = 0;
+    int update_page = 4;
     this->hide();
-    emit registOutSignal();    //触发注销信号，带上当前设备类型
+    emit registOutSignal(update_page);    //触发注销信号，带上当前设备类型
 
 }
 
@@ -537,7 +536,7 @@ void devUpdateWidget::configFileSelectionSlot()
         }
         else
         {
-            if (access("//mnt/sdcard/", F_OK) < 0)
+            if (access("/mnt/usb/u/", F_OK) < 0)
             {
 //                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget::%s %d not get USB device!\n",__FUNCTION__,__LINE__);
                 QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));

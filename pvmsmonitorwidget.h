@@ -101,7 +101,7 @@ public:
     time_t m_lastActionTime;    //界面最后一次操作时间
     int pmsgCtrl(PMSG_HANDLE pHandle, unsigned char ucMsgCmd, char *pcMsgData, int iMsgDataLen);   //与服务器通信消息处理
     void pvmsUpdownCtrl(char *pcMsgData);
-    int  openMedia(const char *pcRtspFile);
+    int  openMedia(const char *pcRtspFile,QStringList list);
     int  closeMedia(const char *pcRtspFile);
 
 
@@ -162,7 +162,7 @@ public:
 
 signals:
     void alarmPushButoonClickSignal();
-    void registOutSignal();     //注销信号，iType:表示执行注销的页面类型，这里应该为2，表示受电弓监控页面,
+    void registOutSignal(int page);     //注销信号，iType:表示执行注销的页面类型，这里应该为2，表示受电弓监控页面,
     void chStateLabelTextCtrlSignal(int iFlag);   //通道状态标签文本显示的处理信号，0-显示关闭，1-显示开启
     void camSwitchButtonTextCtrlSignal(int iFlag);   //摄像机开关状态按钮文本显示的处理信号，0-显示关闭，1-显示开启
     void chLabelDisplayCtrlSignal();   //通道状态和通道号标签是否显示的处理信号
@@ -234,10 +234,15 @@ private:
     QTimer *m_fillLightSwitchTimer;
     QTimer *m_cameraSwitchTimer;
 
+    QVideoWidget *video;
     QMediaPlayer player;
+    QMediaPlayer *mplayer;
+
     QMediaPlaylist *list;
-    QVideoWidget *videoViewer;
     QList<QMediaPlaylist*> *multiPlayList;
+    QList<QMediaPlayer*> *playerlist;
+    QList<QVideoWidget*> *videoList;
+
 
 };
 

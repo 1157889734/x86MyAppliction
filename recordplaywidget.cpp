@@ -66,7 +66,7 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
     m_playSlider->setGeometry(290, 545, 730, 35);
     m_playSlider->show();
     /*定义播放进度条样式*/
-    m_playSlider->setStyleSheet("QSlider::groove:horizontal{border: 1px solid #4A708B;background: #C0C0C0;height: 5px;border-radius: 1px;padding-left:-1px;padding-right:-1px;}"
+    m_playSlider->setStyleSheet("QSlider::groove:horizontal{border: 1px solid #4A708B;background: #C0C0C0;height: 6px;border-radius: 3px;padding-left:-1px;padding-right:-1px;}"
                                 "QSlider::sub-page:horizontal{background: qlineargradient(x1:0, y1:0, x2:0, y2:1,stop:0 #B1B1B1,stop:1 #c4c4c4);background:qlineargradient(x1: 0, y1: 0.2, x2: 1, y2: 1,stop: 0 #5DCCFF,stop: 1 #1874CD);border: 1px solid #4A708B;height: 10px;border-radius: 2px;}"
                                 "QSlider::add-page:horizontal{background: #575757;border: 0px solid #777;height: 10px;border-radius: 2px;}"
                                 "QSlider::handle:horizontal{background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,stop:0.6 #45ADED, stop:0.778409 rgba(255, 255, 255, 255));width: 11px;margin-top: -3px;margin-bottom: -3px;border-radius: 5px;}"
@@ -1223,8 +1223,9 @@ void recordPlayWidget::playMinusStepSlot()
 
 void recordPlayWidget::registOutButtonClick()
 {
+    int record_page = 2;
     this->hide();
-    emit registOutSignal();    //触发注销信号，带上当前设备类型
+    emit registOutSignal(record_page);    //触发注销信号，带上当前设备类型
 }
 
 void recordPlayWidget::carNoChangeSlot()   //车厢号切换信号响应槽函数

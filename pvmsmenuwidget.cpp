@@ -9,6 +9,12 @@
 
 
 #define PVMSPAGETYPE  2    //此页面类型，2表示受电弓监控页面
+#define PAGENONE    0
+#define PAGEMONITOR 1
+#define PAGERCORDE  2
+#define PAGEMANAGE  3
+#define PAGEUPDATE  4
+static int g_ipageValue;
 
 pvmsMenuWidget::pvmsMenuWidget(QWidget *parent) :
     QWidget(parent),
@@ -27,6 +33,8 @@ pvmsMenuWidget::pvmsMenuWidget(QWidget *parent) :
     palette.setBrush(QPalette::Background,QBrush(QPixmap(":/monres/Pantobg.bmp")));
     QIcon icon;
     this->setPalette(palette);
+
+    g_ipageValue = 0;
 
 //    ui->pvmsMonitorMenuPushButton->setStyleSheet("QPushButton{border-image: url(:/monres/PantoMonitor.bmp)}"
 //                                                 "QPushButton:pressed{border-image: url(:/monres/PantoMonitor1.bmp)}");
@@ -105,11 +113,11 @@ pvmsMenuWidget::pvmsMenuWidget(QWidget *parent) :
     connect(ui->devManageMenuPushButton, SIGNAL(clicked()), this, SLOT(menuButtonClick()));		  //连接设备管理菜单按钮的按键信号和响应函数
     connect(ui->devUpdateMenuPushButton, SIGNAL(clicked()), this, SLOT(menuButtonClick()));		  //连接设备更新菜单按钮的按键信号和响应函数
 
-    connect(m_pvmsMonitorPage,SIGNAL(registOutSignal()),this,SLOT(registOutButtonClick()));
-    connect(m_recordPlayPage,SIGNAL(registOutSignal()),this,SLOT(registOutButtonClick()));
+    connect(m_pvmsMonitorPage,SIGNAL(registOutSignal(int)),this,SLOT(registOutButtonClick(int)));
+    connect(m_recordPlayPage,SIGNAL(registOutSignal(int)),this,SLOT(registOutButtonClick(int)));
 //    connect(m_inteAnalyPage,SIGNAL(registOutSignal(int)),this,SLOT(registOutButtonClick()));
-    connect(m_devUpdatePage,SIGNAL(registOutSignal()),this,SLOT(registOutButtonClick()));
-    connect(m_devManagePage,SIGNAL(registOutSignal()),this,SLOT(registOutButtonClick()));
+    connect(m_devUpdatePage,SIGNAL(registOutSignal(int)),this,SLOT(registOutButtonClick(int)));
+    connect(m_devManagePage,SIGNAL(registOutSignal(int)),this,SLOT(registOutButtonClick(int)));
 
 
 
@@ -447,15 +455,51 @@ void pvmsMenuWidget::alarmPageShowSlot()
 void pvmsMenuWidget::showPageSlot()
 {
     this->show();
-    m_pvmsMonitorPage->show();
-    m_recordPlayPage->hide();
-//    m_inteAnalyPage->hide();
-    m_devManagePage->hide();
-    m_devUpdatePage->hide();
-
     m_pvmsMonitorPage->startVideoPolling();   //启动视频轮询
     m_pvmsMonitorPage->enableVideoPlay(1);   //运行受电弓监控页面解码的显示
+#if 1
+    if(g_ipageValue == PAGENONE){
+        m_pvmsMonitorPage->show();
+        m_recordPlayPage->hide();
+        m_devManagePage->hide();
+        m_devUpdatePage->hide();
+    }
+    else if (g_ipageValue == PAGEMONITOR) {
+        m_pvmsMonitorPage->show();
+        m_recordPlayPage->hide();
+        m_devManagePage->hide();
+        m_devUpdatePage->hide();
+    }
+    else if (g_ipageValue == PAGERCORDE) {
+        m_pvmsMonitorPage->hide();
+        m_recordPlayPage->show();
+        m_pvmsMonitorPage->m_playWin->hide();
 
+        m_devManagePage->hide();
+        m_devUpdatePage->hide();
+    }
+    else if (g_ipageValue == PAGEMANAGE) {
+        m_pvmsMonitorPage->hide();
+        m_recordPlayPage->hide();
+        m_pvmsMonitorPage->m_playWin->hide();
+
+        m_devManagePage->show();
+        m_devUpdatePage->hide();
+    }
+    else if (g_ipageValue == PAGEUPDATE) {
+        m_pvmsMonitorPage->hide();
+        m_recordPlayPage->hide();
+        m_pvmsMonitorPage->m_playWin->hide();
+
+        m_devManagePage->hide();
+        m_devUpdatePage->show();
+    }
+#endif
+//    if(g_ipageValue > 1)
+//    {
+//        m_pvmsMonitorPage->m_channelStateLabel->hide();
+//        m_pvmsMonitorPage->m_channelNoLabel->hide();
+//    }
 
     if (NULL == m_alarmPage)
     {
@@ -494,10 +538,12 @@ void pvmsMenuWidget::closeAlarmWidget()
     m_iAlarmPageOpenFlag = 0;
     m_alarmPage->hide();
 }
-void pvmsMenuWidget::registOutButtonClick()
+void pvmsMenuWidget::registOutButtonClick(int page)
 {
+    g_ipageValue = page;
     m_pvmsMonitorPage->closePlayWin();   //关闭受电弓监控界面的播放窗口
     m_recordPlayPage->closePlayWin();   //关闭录像回放界面的播放窗口
+    m_pvmsMonitorPage->m_iPresetPasswdOkFlag = 0;
 
     this->hide();
     emit registOutSignal();    //触发注销信号，带上当前设备类型
@@ -621,7 +667,6 @@ void pvmsMenuWidget::menuButtonClick()
         m_recordPlayPage->show();
 
         m_pvmsMonitorPage->m_playWin->hide();
-
 
         ui->pvmsMonitorMenuPushButton->setChecked(false);
         ui->recordPlayMenuPushButton->setChecked(true);

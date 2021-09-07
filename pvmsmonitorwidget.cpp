@@ -327,6 +327,10 @@ pvmsMonitorWidget::pvmsMonitorWidget(QWidget *parent) :
     connect(this, SIGNAL(fillLightSwitchButtonTextCtrlSignal(int)), this, SLOT(fillLightSwitchButtonTextCtrlSlot(int)));
 
 
+    playerlist = new QList<QMediaPlayer*>();
+    videoList = new QList<QVideoWidget*>();
+    multiPlayList = new QList<QMediaPlaylist*>();
+
     //参数初始化
     m_channelStateLabel = NULL;
     m_channelNoLabel = NULL;
@@ -592,6 +596,7 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
 
     for (i = 0; i < tTrainConfigInfo.iNvrServerCount; i++)
     {
+
         memset(acRtspUrl, 0, sizeof(acRtspUrl));
         snprintf(acRtspUrl, sizeof(acRtspUrl), "192.168.%d.200", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO);
 //        snprintf(acRtspUrl, sizeof(acRtspUrl), "168.168.102.%d", 70+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO);
@@ -604,15 +609,18 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
 
         for (j = 0; j < tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum; j++)
         {
+//            memset(acRtspUrl, 0, sizeof(acRtspUrl));
+//            snprintf(acRtspUrl, sizeof(acRtspUrl), "192.168.%d.%d", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO,200+j);
+            printf("*****************************acRtspUrl**********=%s\n",acRtspUrl);
  #if 1
             /*保存所有摄像机的信息*/
             m_tCameraInfo[m_iCameraNum].phandle = STATE_GetNvrServerPmsgHandle(i);
             m_tCameraInfo[m_iCameraNum].iPosNO = 8+j;
-            snprintf(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl, sizeof(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl), "%s:554/%d",acRtspUrl, 8+j); //core dump
+            snprintf(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl, sizeof(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl), "%s:554",acRtspUrl); //core dump
 #endif
 
 //            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] camer %d rtspUrl=%s\n",__FUNCTION__,m_iCameraNum, m_tCameraInfo[m_iCameraNum].acCameraRtspUrl);
-//            printf("##############i=%d, rtspurl:%s\n",m_iCameraNum,m_tCameraInfo[m_iCameraNum].acCameraRtspUrl);
+            printf("##############i=%d, rtspurl:%s\n",m_iCameraNum,m_tCameraInfo[m_iCameraNum].acCameraRtspUrl);
             tPkt.iMsgCmd = CMP_CMD_CREATE_CH;
             tPkt.iCh = m_iCameraNum;
             PutNodeToCmpQueue(m_ptQueue, &tPkt);
@@ -790,10 +798,9 @@ void pvmsMonitorWidget::enableVideoPlay(int iFlag)    //对摄像头进行解码
 
 void pvmsMonitorWidget::registOutButtonClick()
 {
-
-    m_iPresetPasswdOkFlag = 0;
+    int monitor_page = 1;
     this->hide();
-    emit registOutSignal();    //触发注销信号，带上当前设备类型
+    emit registOutSignal(monitor_page);    //触发注销信号，带上当前设备类型
 
 }
 
@@ -1465,8 +1472,8 @@ void pvmsMonitorWidget::setFullScreenSignalCtrl()
         tPkt.iCh = 0;
         PutNodeToCmpQueue(m_ptQueue, &tPkt);
 
-        m_channelStateLabel->setGeometry(452, 360, 130, 50);
-        m_channelNoLabel->setGeometry(20, 690, 100, 50);
+        m_channelStateLabel->setGeometry(452, 230, 130, 50);
+        m_channelNoLabel->setGeometry(20, 550, 100, 50);
         if (m_presetPasswdConfirmPage != NULL)
         {
             m_presetPasswdConfirmPage->hide();
@@ -1597,6 +1604,8 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
 {
 //    int iRet = 0, i = 0;
     char rtspStr[30];
+    QStringList list;
+
 //    CMPHandle cmpHandle = NULL;
 
     if (iCh > (MAX_SERVER_NUM*MAX_CAMERA_OFSERVER - 1))
@@ -1606,17 +1615,20 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
     if (CMP_CMD_CREATE_CH == iType)
     {
 
-        sprintf(rtspStr,"rtsp://%s",m_tCameraInfo[iCh].acCameraRtspUrl);
-//        printf("************cmpOptionCtrlSlot----%s---%d\n",rtspStr,iCh);
-        openMedia(rtspStr);
+        sprintf(rtspStr,"rtsp://admin:admin123@%s",m_tCameraInfo[iCh].acCameraRtspUrl);
+        printf("*************rtsp*************1111111111111111%s---iCh%d\n",rtspStr,iCh);
+        list<<rtspStr;
+        qDebug()<<"*************"<<list<<endl;
+        openMedia(rtspStr,list);
         m_tCameraInfo[iCh].iCmpOpenFlag = 1;
 
 
     }
     else if (CMP_CMD_DESTORY_CH == iType)
     {
-        sprintf(rtspStr,"rtsp://%s",m_tCameraInfo[iCh].acCameraRtspUrl);
-        closeMedia(rtspStr);
+        sprintf(rtspStr,"rtsp://admin:admin123@%s",m_tCameraInfo[iCh].acCameraRtspUrl);
+        printf("*************rtsp*************22222222222222222%s\n",rtspStr);
+//        closeMedia(rtspStr);
         m_tCameraInfo[iCh].iCmpOpenFlag = 0;
 
     }
@@ -1946,7 +1958,7 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
                 PutNodeToCmpQueue(m_ptQueue, &tPkt);
 
                 m_channelStateLabel->setGeometry(320, 385, 130, 50);
-                m_channelNoLabel->setGeometry(20, 690, 100, 50);
+                m_channelNoLabel->setGeometry(20, 550, 100, 50);
 //                if (m_presetPasswdConfirmPage != NULL)
 //                {
 //                    m_presetPasswdConfirmPage->show();
@@ -2277,12 +2289,53 @@ void pvmsMonitorWidget::pvmsDownEndSlot4()
     }
 }
 
-int pvmsMonitorWidget::openMedia(const char *pcRtspFile)
+int pvmsMonitorWidget::openMedia(const char *pcRtspFile,QStringList list)
 {
+#if 0
+
+    for(int i=0; i <list.count(); i++)
+    {
+        QMediaPlayer *player = new QMediaPlayer(this, QMediaPlayer::LowLatency);
+        playerlist->append(player);
+        QVideoWidget *video = new QVideoWidget(this);
+        video->setGeometry(0, 0, 782, 630);
+        video->show();  //默认显示
+        video->setStyleSheet("QWidget{background-color: rgb(0, 0, 0);}");     //设置播放窗口背景色为黑色
+        video->installEventFilter(this);     //播放窗体注册进事件过滤器
+        video->setMouseTracking(true);
+        videoList->append(video);
+        QMediaPlaylist *playlist = new QMediaPlaylist(this);
+        multiPlayList->append(playlist);
+        QString str = list.at(i);
+        QUrl u(str);
+        if(u.isValid())
+        {
+            playlist->addMedia(u);
+        }
+//        playlist->setCurrentIndex(1);
+//        playlist->setPlaybackMode(QMediaPlaylist::Loop);
+        player->setPlaylist(playlist);
+
+    }
+
+    for(int i=0; i<list.count(); i++){
+        video = videoList->value(i);
+        mplayer = playerlist->value(i);
+        if(video && mplayer){
+            mplayer->setVideoOutput(video);
+
+            video->show();
+            mplayer->play();
+
+        }
+    }
+#else
+
     const QString str = QString::fromUtf8(pcRtspFile);
     QUrl url(str);
     player.setMedia(url);
     player.play();
+#endif
 
     return 0;
 
