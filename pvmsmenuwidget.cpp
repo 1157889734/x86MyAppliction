@@ -473,24 +473,27 @@ void pvmsMenuWidget::showPageSlot()
     else if (g_ipageValue == PAGERCORDE) {
         m_pvmsMonitorPage->hide();
         m_recordPlayPage->show();
+#ifdef mplaybin
         m_pvmsMonitorPage->m_playWin->hide();
-
+#endif
         m_devManagePage->hide();
         m_devUpdatePage->hide();
     }
     else if (g_ipageValue == PAGEMANAGE) {
         m_pvmsMonitorPage->hide();
         m_recordPlayPage->hide();
+#ifdef mplaybin
         m_pvmsMonitorPage->m_playWin->hide();
-
+#endif
         m_devManagePage->show();
         m_devUpdatePage->hide();
     }
     else if (g_ipageValue == PAGEUPDATE) {
         m_pvmsMonitorPage->hide();
         m_recordPlayPage->hide();
+#ifdef mplaybin
         m_pvmsMonitorPage->m_playWin->hide();
-
+#endif
         m_devManagePage->hide();
         m_devUpdatePage->show();
     }
@@ -646,8 +649,9 @@ void pvmsMenuWidget::menuButtonClick()
         m_pvmsMonitorPage->show();
 
         m_recordPlayPage->closePlayWin();   //关闭录像回放界面的播放窗口
+#ifdef mplaybin
         m_pvmsMonitorPage->m_playWin->show();
-
+#endif
         m_pvmsMonitorPage->showMaximized();
         m_pvmsMonitorPage->enableVideoPlay(1);   //运行受电弓监控页面解码的显示
 
@@ -665,9 +669,9 @@ void pvmsMenuWidget::menuButtonClick()
         m_devManagePage->hide();
         m_devUpdatePage->hide();
         m_recordPlayPage->show();
-
+#ifdef mplaybin
         m_pvmsMonitorPage->m_playWin->hide();
-
+#endif
         ui->pvmsMonitorMenuPushButton->setChecked(false);
         ui->recordPlayMenuPushButton->setChecked(true);
         ui->devManageMenuPushButton->setChecked(false);
@@ -691,8 +695,9 @@ void pvmsMenuWidget::menuButtonClick()
         m_recordPlayPage->hide();
         m_devUpdatePage->hide();
         m_devManagePage->show();
-
+#ifdef mplaybin
         m_pvmsMonitorPage->m_playWin->hide();
+#endif
         m_recordPlayPage->closePlayWin();   //关闭录像回放界面的播放窗口
 
 
@@ -719,8 +724,9 @@ void pvmsMenuWidget::menuButtonClick()
         m_recordPlayPage->hide();
         m_devManagePage->hide();
         m_devUpdatePage->show();
-
+#ifdef mplaybin
         m_pvmsMonitorPage->m_playWin->hide();
+#endif
         m_recordPlayPage->closePlayWin();   //关闭录像回放界面的播放窗口
 
 

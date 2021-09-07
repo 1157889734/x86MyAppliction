@@ -21,6 +21,7 @@ namespace Ui {
 class pvmsMonitorWidget;
 }
 
+//#define mplaybin
 
 typedef enum _E_CAMERA_STATE    //摄像机状态
 {
@@ -72,7 +73,7 @@ typedef struct _T_CMP_QUEUE
 
 typedef struct _T_CAMERA_INFO
 {
-    char acCameraRtspUrl[128];    //保存rtsp地址
+    char acCameraRtspUrl[256];    //保存rtsp地址
     int iPosNO;    //位置号
     int iCameraSwitchState;    //摄像头开关状态，E_CAMERA_STATUE
     int iFillLightSwitchState;   //补光灯开关状态，E_FILLLIGHT_STATUE
@@ -101,8 +102,9 @@ public:
     time_t m_lastActionTime;    //界面最后一次操作时间
     int pmsgCtrl(PMSG_HANDLE pHandle, unsigned char ucMsgCmd, char *pcMsgData, int iMsgDataLen);   //与服务器通信消息处理
     void pvmsUpdownCtrl(char *pcMsgData);
-    int  openMedia(const char *pcRtspFile,QStringList list);
-    int  closeMedia(const char *pcRtspFile);
+    void createMedia();
+    int  openMedia(const char *pcRtspFile,QStringList list,int ch);
+    int  closeMedia(const char *pcRtspFile,QStringList list,int ch);
 
 
     QLabel *m_channelStateLabel;
@@ -131,8 +133,9 @@ public:
     int m_iSystimeChangeFlag;   //系统时间改变标志
 
     PMSG_HANDLE m_PisServerPhandle;    //pis服务器PMSG通信句柄
-
+#ifdef mplaybin
     QVideoWidget *m_playWin;    //播放窗体
+#endif
     int m_iMousePosX;
     int m_iMousePosY;
 
@@ -235,13 +238,16 @@ private:
     QTimer *m_cameraSwitchTimer;
 
     QVideoWidget *video;
+#ifdef mplaybin
     QMediaPlayer player;
+#endif
     QMediaPlayer *mplayer;
 
     QMediaPlaylist *list;
     QList<QMediaPlaylist*> *multiPlayList;
     QList<QMediaPlayer*> *playerlist;
     QList<QVideoWidget*> *videoList;
+    QStringList mlist;
 
 
 };

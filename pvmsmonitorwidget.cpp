@@ -326,11 +326,12 @@ pvmsMonitorWidget::pvmsMonitorWidget(QWidget *parent) :
     connect(this, SIGNAL(camSwitchButtonTextCtrlSignal(int)), this, SLOT(camSwitchButtonTextCtrlSlot(int)));
     connect(this, SIGNAL(fillLightSwitchButtonTextCtrlSignal(int)), this, SLOT(fillLightSwitchButtonTextCtrlSlot(int)));
 
-
+#ifndef mplaybin
     playerlist = new QList<QMediaPlayer*>();
     videoList = new QList<QVideoWidget*>();
     multiPlayList = new QList<QMediaPlaylist*>();
-
+    createMedia();
+#endif
     //参数初始化
     m_channelStateLabel = NULL;
     m_channelNoLabel = NULL;
@@ -353,9 +354,9 @@ pvmsMonitorWidget::pvmsMonitorWidget(QWidget *parent) :
     m_iBlackScreenFlag = 0;
     m_iPisGetFlag = 0;
     m_iOldRecordPlayFlag = 0;
-
+#ifdef mplaybin
     m_playWin = NULL;
-
+#endif
     memset(m_tCameraInfo, 0, sizeof(T_CAMERA_INFO)*MAX_SERVER_NUM*MAX_CAMERA_OFSERVER);
 
     pthread_mutexattr_init(&mutexattr);
@@ -567,7 +568,7 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
 
     memset(m_tCameraInfo, 0, sizeof(T_CAMERA_INFO)*MAX_SERVER_NUM*MAX_CAMERA_OFSERVER);
 
-
+#ifdef mplaybin
     m_playWin = new QVideoWidget(this->parentWidget());   //新建一个与目前窗体同属一个父窗体的播放子窗体，方便实现全屏
 //    m_playWin->setGeometry(0, 0, 1024, 768);      //设置窗体在父窗体中的位置，默认一开始为全屏
     m_playWin->setGeometry(0, 138, 782, 630);
@@ -577,7 +578,7 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
     m_playWin->installEventFilter(this);     //播放窗体注册进事件过滤器
     m_playWin->setMouseTracking(true);
     player.setVideoOutput(m_playWin);
-
+#endif
     m_channelStateLabel = new QLabel(this->parentWidget());
     m_channelStateLabel->setGeometry(452, 360, 130, 50);
     m_channelStateLabel->setStyleSheet("QLabel{color:rgb(55, 82, 103);font: 24pt;background-color: rgb(0, 0, 0);}");
@@ -597,8 +598,8 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
     for (i = 0; i < tTrainConfigInfo.iNvrServerCount; i++)
     {
 
-        memset(acRtspUrl, 0, sizeof(acRtspUrl));
-        snprintf(acRtspUrl, sizeof(acRtspUrl), "192.168.%d.200", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO);
+//        memset(acRtspUrl, 0, sizeof(acRtspUrl));
+//        snprintf(acRtspUrl, sizeof(acRtspUrl), "192.168.%d.200", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO);
 //        snprintf(acRtspUrl, sizeof(acRtspUrl), "168.168.102.%d", 70+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO);
 
 //        qDebug()<<"tTrainConfigInfo.iNvrServerCount"<<tTrainConfigInfo.iNvrServerCount<<endl;
@@ -609,9 +610,9 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
 
         for (j = 0; j < tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum; j++)
         {
-//            memset(acRtspUrl, 0, sizeof(acRtspUrl));
-//            snprintf(acRtspUrl, sizeof(acRtspUrl), "192.168.%d.%d", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO,200+j);
-            printf("*****************************acRtspUrl**********=%s\n",acRtspUrl);
+            memset(acRtspUrl, 0, sizeof(acRtspUrl));
+            snprintf(acRtspUrl, sizeof(acRtspUrl), "192.168.%d.%d", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO,200+j);
+//            printf("*****************************acRtspUrl**********=%s\n",acRtspUrl);
  #if 1
             /*保存所有摄像机的信息*/
             m_tCameraInfo[m_iCameraNum].phandle = STATE_GetNvrServerPmsgHandle(i);
@@ -620,7 +621,7 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
 #endif
 
 //            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] camer %d rtspUrl=%s\n",__FUNCTION__,m_iCameraNum, m_tCameraInfo[m_iCameraNum].acCameraRtspUrl);
-            printf("##############i=%d, rtspurl:%s\n",m_iCameraNum,m_tCameraInfo[m_iCameraNum].acCameraRtspUrl);
+//            printf("##############i=%d, rtspurl:%s\n",m_iCameraNum,m_tCameraInfo[m_iCameraNum].acCameraRtspUrl);
             tPkt.iMsgCmd = CMP_CMD_CREATE_CH;
             tPkt.iCh = m_iCameraNum;
             PutNodeToCmpQueue(m_ptQueue, &tPkt);
@@ -1465,8 +1466,10 @@ void pvmsMonitorWidget::setFullScreenSignalCtrl()
 //    DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] fullScreen Ctrl!\n", __FUNCTION__);
     if ((this->isHidden() != 1)  && (m_iAlarmNotCtrlFlag != 1) && (m_iBlackScreenFlag != 1))    //当前未显示，不做全屏监视处理,有报警信息未处理也不做全屏监视处理,处于黑屏状态也不做全屏监视处理
     {
+#ifdef mplaybin
         m_playWin->move(0, 0);
         m_playWin->resize(1024, 768);
+#endif
 
         tPkt.iMsgCmd = CMP_CMD_CHG_ALL_VIDEOWIN;
         tPkt.iCh = 0;
@@ -1603,7 +1606,7 @@ void pvmsMonitorWidget::recordPlayCtrlSlot()
 void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
 {
 //    int iRet = 0, i = 0;
-    char rtspStr[30];
+    char rtspStr[128]={0};
     QStringList list;
 
 //    CMPHandle cmpHandle = NULL;
@@ -1615,21 +1618,25 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
     if (CMP_CMD_CREATE_CH == iType)
     {
 
-        sprintf(rtspStr,"rtsp://admin:admin123@%s",m_tCameraInfo[iCh].acCameraRtspUrl);
-        printf("*************rtsp*************1111111111111111%s---iCh%d\n",rtspStr,iCh);
+            sprintf(rtspStr,"rtsp://%s",m_tCameraInfo[iCh].acCameraRtspUrl);
+
         list<<rtspStr;
         qDebug()<<"*************"<<list<<endl;
-        openMedia(rtspStr,list);
+        openMedia(rtspStr,list,iCh);
         m_tCameraInfo[iCh].iCmpOpenFlag = 1;
 
 
     }
     else if (CMP_CMD_DESTORY_CH == iType)
     {
-        sprintf(rtspStr,"rtsp://admin:admin123@%s",m_tCameraInfo[iCh].acCameraRtspUrl);
-        printf("*************rtsp*************22222222222222222%s\n",rtspStr);
-//        closeMedia(rtspStr);
+
+            sprintf(rtspStr,"rtsp://%s",m_tCameraInfo[iCh].acCameraRtspUrl);
+
+        list<<rtspStr;
+
+        closeMedia(rtspStr,list,iCh);
         m_tCameraInfo[iCh].iCmpOpenFlag = 0;
+
 
     }
 
@@ -1822,25 +1829,31 @@ void pvmsMonitorWidget::closePlayWin()
         delete m_channelNoLabel;
         m_channelNoLabel = NULL;
     }
-
+#ifdef mplaybin
     if (m_playWin != NULL)
     {
         delete m_playWin;
         m_playWin = NULL;
     }
-
+#endif
 }
 
 void pvmsMonitorWidget::alarmHappenSlot()
 {
     T_CMP_PACKET tPkt;
+#ifdef mplaybin
     if ((1 == m_iFullScreenFlag) && (m_playWin != NULL))  //有报警发生时退出全屏
+#else
+    if ((1 == m_iFullScreenFlag) /*&& (m_playWin != NULL)*/)  //有报警发生时退出全屏
+#endif
     {
         struct sysinfo s_info;
         sysinfo(&s_info);
         m_lastActionTime = s_info.uptime;  //更新最后一次操作计时
+#ifdef mplaybin
         m_playWin->move(0, 138);
         m_playWin->resize(782, 630);
+#endif
         m_iFullScreenFlag = 0;
 
         tPkt.iMsgCmd = CMP_CMD_CHG_ALL_VIDEOWIN;
@@ -1938,7 +1951,11 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
             m_lastActionTime = s_info.uptime;  //更新最后一次操作计时  //更新最后一次操作计时
 
             /*当播放窗体处于全屏状态时，再次单击退出全屏,全屏标志清0，并恢复播放窗体原始播放状态*/
+#ifdef mplaybin
             if ((1 == m_iFullScreenFlag) && (target == m_playWin) && (event->type()==QEvent::MouseButtonPress))
+#else
+            if ((1 == m_iFullScreenFlag) /*&& (target == m_playWin)*/ && (event->type()==QEvent::MouseButtonPress))
+#endif
             {
 //                DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget quit full screen!\n");
                 QMouseEvent *mouseEvent=static_cast<QMouseEvent*>(event);
@@ -1948,9 +1965,10 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
                 }
 
                 m_iFullScreenFlag = 0;
+#ifdef mplaybin
                 m_playWin->move(0, 138);
                 m_playWin->resize(782, 630);
-
+#endif
 
 
                 tPkt.iMsgCmd = CMP_CMD_CHG_ALL_VIDEOWIN;
@@ -1970,18 +1988,19 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
                 emit showAlarmWidgetSignal();
             }
     }
-
+#ifdef mplaybin
     if (target == m_playWin)
+#endif
     {
         if (event->type()==QEvent::MouseButtonDblClick && (m_iAlarmNotCtrlFlag != 1))   //双击全屏,但是如何有报警未处理也不全屏
         {
             if (0 == m_iFullScreenFlag)
             {
 //                DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget mouse double click to full screen!\n");
-
+#ifdef mplaybin
                 m_playWin->move(0, 0);
                 m_playWin->resize(1024, 768);
-
+#endif
                 tPkt.iMsgCmd = CMP_CMD_CHG_ALL_VIDEOWIN;
                 tPkt.iCh = 0;
                 PutNodeToCmpQueue(m_ptQueue, &tPkt);
@@ -2288,39 +2307,85 @@ void pvmsMonitorWidget::pvmsDownEndSlot4()
         m_tCameraInfo[3].pvmsDownMonitorTimer  = NULL;
     }
 }
-
-int pvmsMonitorWidget::openMedia(const char *pcRtspFile,QStringList list)
+void pvmsMonitorWidget::createMedia()
 {
-#if 0
+//    char rtspStr[256];
+    int i = 0, j = 0;
+    char acRtspUrl[128] = {0};
+    char desRtspUrl[256] = {0};
+    T_TRAIN_CONFIG tTrainConfigInfo;
 
-    for(int i=0; i <list.count(); i++)
+    memset(m_tCameraInfo, 0, sizeof(T_CAMERA_INFO)*MAX_SERVER_NUM*MAX_CAMERA_OFSERVER);
+
+    memset(&tTrainConfigInfo, 0, sizeof(T_TRAIN_CONFIG));
+    STATE_GetCurrentTrainConfigInfo(&tTrainConfigInfo);
+
+    for (i = 0; i < tTrainConfigInfo.iNvrServerCount; i++)
     {
-        QMediaPlayer *player = new QMediaPlayer(this, QMediaPlayer::LowLatency);
-        playerlist->append(player);
-        QVideoWidget *video = new QVideoWidget(this);
-        video->setGeometry(0, 0, 782, 630);
-        video->show();  //默认显示
-        video->setStyleSheet("QWidget{background-color: rgb(0, 0, 0);}");     //设置播放窗口背景色为黑色
-        video->installEventFilter(this);     //播放窗体注册进事件过滤器
-        video->setMouseTracking(true);
-        videoList->append(video);
-        QMediaPlaylist *playlist = new QMediaPlaylist(this);
-        multiPlayList->append(playlist);
-        QString str = list.at(i);
-        QUrl u(str);
-        if(u.isValid())
+
+        m_NvrServerPhandle[i] = STATE_GetNvrServerPmsgHandle(i);
+
+        for (j = 0; j < tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum; j++)
         {
-            playlist->addMedia(u);
+            memset(acRtspUrl, 0, sizeof(acRtspUrl));
+            snprintf(acRtspUrl, sizeof(acRtspUrl), "192.168.%d.%d", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO,200+j);
+            snprintf(desRtspUrl,sizeof (desRtspUrl),"rtsp://admin:admin123@%s:554",acRtspUrl);
+            mlist<<desRtspUrl;
+            qDebug()<<mlist[i];
+
         }
-//        playlist->setCurrentIndex(1);
-//        playlist->setPlaybackMode(QMediaPlaylist::Loop);
-        player->setPlaylist(playlist);
 
     }
 
+    for(int i=0; i <mlist.count(); i++)
+    {
+        for(int i=0; i <mlist.count(); i++)
+       {
+            QMediaPlayer *player = new QMediaPlayer(this, QMediaPlayer::LowLatency);
+            playerlist->append(player);
+            QVideoWidget *video = new QVideoWidget(this);
+            video->setGeometry(0, 0, 782, 630);
+            video->show();  //默认显示
+            video->setStyleSheet("QWidget{background-color: rgb(0, 0, 0);}");     //设置播放窗口背景色为黑色
+            video->installEventFilter(this);     //播放窗体注册进事件过滤器
+            video->setMouseTracking(true);
+            videoList->append(video);
+
+            QMediaPlaylist *playlist = new QMediaPlaylist(this);
+            multiPlayList->append(playlist);
+            QString str = mlist.at(i);
+            QFile f(mlist.at(i));
+            QUrl u(str);
+            if(f.exists()){
+                playlist->addMedia(QUrl::fromLocalFile(str));
+            }else if(u.isValid()){
+                playlist->addMedia(u);
+            }
+//            playlist->setCurrentIndex(1);
+//            playlist->setPlaybackMode(QMediaPlaylist::Loop);
+            player->setPlaylist(playlist);
+        }
+
+    }
+
+}
+
+
+int pvmsMonitorWidget::openMedia(const char *pcRtspFile,QStringList list,int ch)
+{
+#ifdef mplaybin
+    const QString str = QString::fromUtf8(pcRtspFile);
+    QUrl url(str);
+    player.setMedia(url);
+    player.play();
+#else
+
+
     for(int i=0; i<list.count(); i++){
-        video = videoList->value(i);
-        mplayer = playerlist->value(i);
+        qDebug()<<"*******************play---mlist"<<"******i***"<<"ich="<<ch<<endl;
+
+        video = videoList->value(ch);
+        mplayer = playerlist->value(ch);
         if(video && mplayer){
             mplayer->setVideoOutput(video);
 
@@ -2329,24 +2394,27 @@ int pvmsMonitorWidget::openMedia(const char *pcRtspFile,QStringList list)
 
         }
     }
-#else
-
-    const QString str = QString::fromUtf8(pcRtspFile);
-    QUrl url(str);
-    player.setMedia(url);
-    player.play();
 #endif
-
     return 0;
 
 }
 
-int pvmsMonitorWidget::closeMedia(const char *pcRtspFile)
+int pvmsMonitorWidget::closeMedia(const char *pcRtspFile,QStringList list,int ch)
 {
     const QString str = QString::fromUtf8(pcRtspFile);
     QUrl url(str);
+#ifdef mplaybin
     player.setMedia(url);
     player.stop();
+#endif
+
+
+        video = videoList->value(ch);
+        mplayer = playerlist->value(ch);
+        if(video && mplayer){
+            mplayer->stop();
+
+        }
 
     return 0;
 
@@ -2361,15 +2429,20 @@ void pvmsMonitorWidget::systimeSetSlot()
 void pvmsMonitorWidget::blackScreenCtrlSlot()     //黑屏触发信号处理，如果处于全屏时则退出全屏，m_iBlackScreenFlag标志置1，全屏监控暂时无效
 {
     T_CMP_PACKET tPkt;
-
+#ifdef mplaybin
     if ((1 == m_iFullScreenFlag) && (m_playWin != NULL))
+#else
+    if ((1 == m_iFullScreenFlag) /*&& (m_playWin != NULL)*/)
+#endif
     {
         struct sysinfo s_info;
         memset(&s_info,0,sizeof(s_info));
         sysinfo(&s_info);
         m_lastActionTime = s_info.uptime;  //更新最后一次操作计时
+#ifdef mplaybin
         m_playWin->move(0, 138);
         m_playWin->resize(782, 630);
+#endif
         m_iFullScreenFlag = 0;
 
         tPkt.iMsgCmd = CMP_CMD_CHG_ALL_VIDEOWIN;
@@ -2609,9 +2682,9 @@ pvmsMonitorWidget::~pvmsMonitorWidget()
 
     delete m_channelNoLabel;
     m_channelNoLabel = NULL;
-
+#ifdef mplaybin
     delete m_playWin;
     m_playWin = NULL;
-
+#endif
     delete ui;
 }
