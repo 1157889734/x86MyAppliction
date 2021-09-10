@@ -51,6 +51,7 @@ signals:
     void alarmHappenSignal();
     void alarmClearSignal();
 
+
     void blackScreenSignal();
     void blackScreenExitSignal();
 

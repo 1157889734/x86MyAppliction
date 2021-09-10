@@ -21,7 +21,7 @@ namespace Ui {
 class pvmsMonitorWidget;
 }
 
-//#define mplaybin
+#define mplaybin
 
 typedef enum _E_CAMERA_STATE    //摄像机状态
 {
@@ -109,6 +109,7 @@ public:
 
     QLabel *m_channelStateLabel;
     QLabel *m_channelNoLabel;
+    int pageType;
 
     int m_iSelectPresetNo;   //保存选中的预置点编号
     int m_iAlarmNotCtrlFlag;   //有报警信息未处理标志
@@ -239,7 +240,7 @@ private:
 
     QVideoWidget *video;
 #ifdef mplaybin
-    QMediaPlayer player;
+    QMediaPlayer *player;
 #endif
     QMediaPlayer *mplayer;
 

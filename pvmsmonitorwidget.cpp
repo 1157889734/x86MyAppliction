@@ -12,8 +12,9 @@
 
 static pthread_mutex_t g_tCmpCtrlMutex;
 
+#define PageNone 0
 
-
+#define PageMonitot 1
 static int g_iPNum = 0;
 QButtonGroup *g_buttonGroup = NULL;
 #define PVMSPAGETYPE  2    //此页面类型，2表示受电弓监控页面
@@ -332,6 +333,7 @@ pvmsMonitorWidget::pvmsMonitorWidget(QWidget *parent) :
     multiPlayList = new QList<QMediaPlaylist*>();
     createMedia();
 #endif
+    player = new QMediaPlayer(this, QMediaPlayer::LowLatency);
     //参数初始化
     m_channelStateLabel = NULL;
     m_channelNoLabel = NULL;
@@ -577,8 +579,9 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
     m_playWin->setStyleSheet("QWidget{background-color: rgb(0, 0, 0);}");     //设置播放窗口背景色为黑色
     m_playWin->installEventFilter(this);     //播放窗体注册进事件过滤器
     m_playWin->setMouseTracking(true);
-    player.setVideoOutput(m_playWin);
+    player->setVideoOutput(m_playWin);
 #endif
+    qDebug()<<"**************"<<endl;
     m_channelStateLabel = new QLabel(this->parentWidget());
     m_channelStateLabel->setGeometry(452, 360, 130, 50);
     m_channelStateLabel->setStyleSheet("QLabel{color:rgb(55, 82, 103);font: 24pt;background-color: rgb(0, 0, 0);}");
@@ -598,8 +601,8 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
     for (i = 0; i < tTrainConfigInfo.iNvrServerCount; i++)
     {
 
-//        memset(acRtspUrl, 0, sizeof(acRtspUrl));
-//        snprintf(acRtspUrl, sizeof(acRtspUrl), "192.168.%d.200", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO);
+        memset(acRtspUrl, 0, sizeof(acRtspUrl));
+        snprintf(acRtspUrl, sizeof(acRtspUrl), "192.168.%d.200", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO);
 //        snprintf(acRtspUrl, sizeof(acRtspUrl), "168.168.102.%d", 70+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO);
 
 //        qDebug()<<"tTrainConfigInfo.iNvrServerCount"<<tTrainConfigInfo.iNvrServerCount<<endl;
@@ -610,14 +613,14 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
 
         for (j = 0; j < tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum; j++)
         {
-            memset(acRtspUrl, 0, sizeof(acRtspUrl));
-            snprintf(acRtspUrl, sizeof(acRtspUrl), "192.168.%d.%d", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO,200+j);
+//            memset(acRtspUrl, 0, sizeof(acRtspUrl));
+//            snprintf(acRtspUrl, sizeof(acRtspUrl), "192.168.%d.%d", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO,200+j);
 //            printf("*****************************acRtspUrl**********=%s\n",acRtspUrl);
  #if 1
             /*保存所有摄像机的信息*/
             m_tCameraInfo[m_iCameraNum].phandle = STATE_GetNvrServerPmsgHandle(i);
             m_tCameraInfo[m_iCameraNum].iPosNO = 8+j;
-            snprintf(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl, sizeof(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl), "%s:554",acRtspUrl); //core dump
+            snprintf(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl, sizeof(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl), "%s:554/%d",acRtspUrl, 8+j); //core dump
 #endif
 
 //            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] camer %d rtspUrl=%s\n",__FUNCTION__,m_iCameraNum, m_tCameraInfo[m_iCameraNum].acCameraRtspUrl);
@@ -1665,14 +1668,20 @@ void pvmsMonitorWidget::chLabelDisplayCtrlSlot()   //通道状态和通道号标
             }
             else
             {
-                m_channelStateLabel->show();
-                m_channelNoLabel->show();
+                if(pageType == PageMonitot || pageType == PageNone)
+                {
+                    m_channelStateLabel->show();
+                    m_channelNoLabel->show();
+                }
             }
         }
         else
         {
-            m_channelStateLabel->show();
-            m_channelNoLabel->show();
+            if(pageType == PageMonitot || pageType == PageNone)
+            {
+                m_channelStateLabel->show();
+                m_channelNoLabel->show();
+            }
         }
     }
     else  		//播放窗体全部禁止时，通道状态和通道号也需同时隐藏
@@ -2376,8 +2385,9 @@ int pvmsMonitorWidget::openMedia(const char *pcRtspFile,QStringList list,int ch)
 #ifdef mplaybin
     const QString str = QString::fromUtf8(pcRtspFile);
     QUrl url(str);
-    player.setMedia(url);
-    player.play();
+    player->setMedia(url);
+    player->setVolume(0);
+    player->play();
 #else
 
 
@@ -2401,13 +2411,12 @@ int pvmsMonitorWidget::openMedia(const char *pcRtspFile,QStringList list,int ch)
 
 int pvmsMonitorWidget::closeMedia(const char *pcRtspFile,QStringList list,int ch)
 {
+#ifdef mplaybin
     const QString str = QString::fromUtf8(pcRtspFile);
     QUrl url(str);
-#ifdef mplaybin
-    player.setMedia(url);
-    player.stop();
-#endif
-
+    player->setMedia(url);
+    player->stop();
+#else
 
         video = videoList->value(ch);
         mplayer = playerlist->value(ch);
@@ -2415,6 +2424,7 @@ int pvmsMonitorWidget::closeMedia(const char *pcRtspFile,QStringList list,int ch
             mplayer->stop();
 
         }
+#endif
 
     return 0;
 
@@ -2686,5 +2696,7 @@ pvmsMonitorWidget::~pvmsMonitorWidget()
     delete m_playWin;
     m_playWin = NULL;
 #endif
+   delete player;
+    player = NULL;
     delete ui;
 }
