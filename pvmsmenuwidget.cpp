@@ -472,8 +472,6 @@ void pvmsMenuWidget::showPageSlot()
         m_devUpdatePage->hide();
     }
     else if (g_ipageValue == PAGERCORDE) {
-        m_pvmsMonitorPage->m_channelStateLabel->hide();
-        m_pvmsMonitorPage->m_channelNoLabel->hide();
         m_pvmsMonitorPage->hide();
         m_recordPlayPage->show();
 #ifdef mplaybin
@@ -483,8 +481,6 @@ void pvmsMenuWidget::showPageSlot()
         m_devUpdatePage->hide();
     }
     else if (g_ipageValue == PAGEMANAGE) {
-        m_pvmsMonitorPage->m_channelStateLabel->hide();
-        m_pvmsMonitorPage->m_channelNoLabel->hide();
         m_pvmsMonitorPage->hide();
         m_recordPlayPage->hide();
 #ifdef mplaybin
@@ -494,8 +490,6 @@ void pvmsMenuWidget::showPageSlot()
         m_devUpdatePage->hide();
     }
     else if (g_ipageValue == PAGEUPDATE) {
-        m_pvmsMonitorPage->m_channelStateLabel->hide();
-        m_pvmsMonitorPage->m_channelNoLabel->hide();
         m_pvmsMonitorPage->hide();
         m_recordPlayPage->hide();
 #ifdef mplaybin
@@ -505,11 +499,11 @@ void pvmsMenuWidget::showPageSlot()
         m_devUpdatePage->show();
     }
 #endif
-//    if(g_ipageValue > 1)
-//    {
-//        m_pvmsMonitorPage->m_channelStateLabel->hide();
-//        m_pvmsMonitorPage->m_channelNoLabel->hide();
-//    }
+    if(g_ipageValue > 1)
+    {
+        m_pvmsMonitorPage->m_channelStateLabel->hide();
+        m_pvmsMonitorPage->m_channelNoLabel->hide();
+    }
 
     if (NULL == m_alarmPage)
     {

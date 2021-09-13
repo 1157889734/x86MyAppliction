@@ -125,7 +125,8 @@ private:
     QTimer *m_alarmHappenTimer;
     QTimer *m_recorQueryTimer;
     QStyle *m_tableWidgetStyle;
-    QVideoWidget *m_playWin;     //播放窗体
+    QWidget *m_playWin;     //播放窗体
+    QVideoWidget *playWin;
     char *m_pcRecordFileBuf;
     int m_iTotalLen;
     char m_acFilePath[MAX_RECORD_SEACH_NUM][MAX_RECFILE_PATH_LEN];   //记录查询到的录像文件路径全名

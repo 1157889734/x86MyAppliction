@@ -221,9 +221,12 @@ recordPlayWidget::~recordPlayWidget()
 
     delete m_playSlider;
     m_playSlider = NULL;
+
     delete m_playWin;
     m_playWin = NULL;
 
+    delete playWin;
+    playWin = NULL;
 
     free(m_pcRecordFileBuf);
     m_pcRecordFileBuf = NULL;
@@ -233,12 +236,13 @@ recordPlayWidget::~recordPlayWidget()
 void recordPlayWidget::createMeadia()
 {
     /*新建一个播放窗体*/
-    m_playWin = new QVideoWidget(this);
+    m_playWin = new QWidget(this);
     m_playWin->setGeometry(290, 0, 730, 555);
     m_playWin->show();
     m_playWin->setStyleSheet("QWidget{background-color: rgb(0, 0, 0);}");
 
-    player.setVideoOutput(m_playWin);
+    playWin = new QVideoWidget(m_playWin);
+    playWin->setGeometry(0, 0, 730, 555);
 
 
 }
@@ -246,7 +250,7 @@ int recordPlayWidget::openMedia(const char *pcRtspFile)
 {
     const QString str = QString::fromUtf8(pcRtspFile);
     QUrl url(str);
-    qDebug()<<"***********---str--"<<str;
+    player.setVideoOutput(playWin);
     player.setMedia(url);
     player.play();
     return 0;
@@ -845,20 +849,11 @@ void recordPlayWidget::setPlayButtonStyleSheet()
 {
     if (0 == m_iPlayFlag)
     {
-//        ui->playPushButton->setStyleSheet("QPushButton{border-image: url(:/res/play_nor.png);background-color: rgb(255, 255, 255);}"
-//                                            "QPushButton:hover{border-image: url(:/res/play_hover.png);background-color: rgb(255, 255, 255);}"
-//                                            "QPushButton:pressed{border-image: url(:/res/play_down.png);background-color: rgb(255, 255, 255);}");
-
         ui->pushButton->setStyleSheet("QPushButton{border-image: url(:/monres/pause.bmp);background-color: rgb(255, 255, 255);}");
-
     }
     else
     {
-//        ui->playPushButton->setStyleSheet("QPushButton{border-image: url(:/res/pause_nor.png);background-color: rgb(255, 255, 255);}"
-//                                            "QPushButton:hover{border-image: url(:/res/pause_hover.png);background-color: rgb(255, 255, 255);}"
-//                                            "QPushButton:pressed{border-image: url(:/res/pause_down.png);background-color: rgb(255, 255, 255);}");
         ui->pushButton->setStyleSheet("QPushButton{border-image: url(:/monres/pause1.bmp);background-color: rgb(255, 255, 255);}");
-
     }
 }
 
