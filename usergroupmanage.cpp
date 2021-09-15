@@ -230,6 +230,9 @@ void usergroupManage::on_savepushButton_clicked()
 
 usergroupManage::~usergroupManage()
 {
+    delete g_buttonGroup;
+    g_buttonGroup = NULL;
+
     delete ui;
 }
 

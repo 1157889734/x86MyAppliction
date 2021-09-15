@@ -135,6 +135,21 @@ devUpdateWidget::devUpdateWidget(QWidget *parent) :
 
 devUpdateWidget::~devUpdateWidget()
 {
+    if (gusergroupManage != NULL)
+    {
+        delete gusergroupManage;
+        gusergroupManage = NULL;
+    }
+
+    delete g_buttonGroup1;
+    g_buttonGroup1 = NULL;
+    delete g_buttonGroup2;
+    g_buttonGroup2 = NULL;
+    delete g_buttonGroup3;
+    g_buttonGroup3 = NULL;
+
+    delete m_sys_timer;
+    m_sys_timer = NULL;
     delete ui;
 }
 

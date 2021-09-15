@@ -9,12 +9,11 @@
 #include "presetpasswdconfirm.h"
 #include "pmsgcli.h"
 #include "state.h"
-
+#include <QtCore/qmath.h>
 #include <QVideoWidget>
 #include <QMediaPlaylist>
 #include <QMediaPlayer>
 #include "qplayer.h"
-
 
 
 namespace Ui {
@@ -111,6 +110,7 @@ public:
     QLabel *m_channelNoLabel;
     int pageType;
 
+    int cameFlag;
     int m_iSelectPresetNo;   //保存选中的预置点编号
     int m_iAlarmNotCtrlFlag;   //有报警信息未处理标志
     time_t tPollingOparateTime;  //轮询操作时间
@@ -240,7 +240,7 @@ private:
 
     QVideoWidget *video;
 #ifdef mplaybin
-    QMediaPlayer *player;
+    QMediaPlayer player;
 #endif
     QMediaPlayer *mplayer;
 
@@ -248,6 +248,8 @@ private:
     QList<QMediaPlaylist*> *multiPlayList;
     QList<QMediaPlayer*> *playerlist;
     QList<QVideoWidget*> *videoList;
+    QList<QHBoxLayout*> *hLayoutList;
+
     QStringList mlist;
 
 

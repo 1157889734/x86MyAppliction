@@ -121,9 +121,7 @@ int main(int argc, char *argv[])
         tPvmsInfo.i8PvmsVideoNum = tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum;
         tPvmsInfo.i8PvmsCarriageNo = tTrainConfigInfo.tNvrServerInfo[i].iPvmsCarriageNO;
         pmsgHandle = STATE_GetNvrServerPmsgHandle(i);
-//        qDebug()<<"*******************---111111:"<<tPvmsInfo.i8PvmsVideoNum<<tPvmsInfo.i8PvmsCarriageNo<<endl;
 
-//        printf("*******************---111111=%d--=%d\n",tPvmsInfo.i8PvmsVideoNum,tPvmsInfo.i8PvmsCarriageNo);
         iRet = PMSG_SendPmsgData(pmsgHandle, CLI_SERV_MSG_TYPE_SET_PVMS_INFO, (char *)&tPvmsInfo, sizeof(T_PVMS_INFO));
         if (iRet < 0)
         {
