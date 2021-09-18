@@ -20,7 +20,7 @@ namespace Ui {
 class pvmsMonitorWidget;
 }
 
-#define mplaybin
+//#define mplaybin
 
 typedef enum _E_CAMERA_STATE    //摄像机状态
 {
@@ -104,6 +104,11 @@ public:
     void createMedia();
     int  openMedia(const char *pcRtspFile,QStringList list,int ch);
     int  closeMedia(const char *pcRtspFile,QStringList list,int ch);
+    void showMedia(int ch);
+    void hideMedia(int ch);
+    QWidget *playwidget;
+
+
 
 
     QLabel *m_channelStateLabel;
