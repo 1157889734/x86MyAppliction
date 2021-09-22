@@ -317,13 +317,11 @@ pvmsMonitorWidget::pvmsMonitorWidget(QWidget *parent) :
     connect(this, SIGNAL(camSwitchButtonTextCtrlSignal(int)), this, SLOT(camSwitchButtonTextCtrlSlot(int)));
     connect(this, SIGNAL(fillLightSwitchButtonTextCtrlSignal(int)), this, SLOT(fillLightSwitchButtonTextCtrlSlot(int)));
 
-#ifndef mplaybin
     playerlist = new QList<QMediaPlayer*>();
     videoList = new QList<QVideoWidget*>();
     multiPlayList = new QList<QMediaPlaylist*>();
     hLayoutList = new QList<QHBoxLayout*>();
 
-#endif
 //    player = new QMediaPlayer(this, QMediaPlayer::StreamPlayback);
     //参数初始化
     m_channelStateLabel = NULL;
@@ -563,14 +561,14 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
 
 #ifdef mplaybin
     m_playWin = new QVideoWidget(this->parentWidget());   //新建一个与目前窗体同属一个父窗体的播放子窗体，方便实现全屏
-//    m_playWin->setGeometry(0, 0, 1024, 768);      //设置窗体在父窗体中的位置，默认一开始为全屏
+    m_playWin->setGeometry(0, 0, 1024, 768);      //设置窗体在父窗体中的位置，默认一开始为全屏
     m_playWin->setGeometry(0, 138, 782, 630);
     m_playWin->show();  //默认显示
     m_playWin->setObjectName("m_playWin");
     m_playWin->setStyleSheet("QWidget{background-color: rgb(0, 0, 0);}");     //设置播放窗口背景色为黑色
     m_playWin->installEventFilter(this);     //播放窗体注册进事件过滤器
     m_playWin->setMouseTracking(true);
-    player.setVideoOutput(m_playWin);
+//    player.setVideoOutput(m_playWin);
 #endif
 
     m_channelStateLabel = new QLabel(this->parentWidget());
@@ -1115,7 +1113,6 @@ void pvmsMonitorWidget::cameraSwitchSlot()
             tPkt.iMsgCmd = CMP_CMD_DESTORY_CH;
             tPkt.iCh = m_iCameraPlayNo;
             PutNodeToCmpQueue(m_ptQueue, &tPkt);
-            cameFlag = 1;
             /*把相机的状态切换成关闭状态时，同时需显示通道状态和通道号*/
             emit chLabelDisplayCtrlSignal();  //触发通道状态和通道号标签显示处理信号
 
@@ -1139,7 +1136,6 @@ void pvmsMonitorWidget::cameraSwitchSlot()
 
             acSendBuf[0] = 1;  //操作类型为开启摄像头
             m_tCameraInfo[m_iCameraPlayNo].iCameraSwitchState = CAMERA_ON;
-            cameFlag = 0;
 
             if (0 == m_tCameraInfo[i].iCmpOpenFlag)
             {
@@ -1610,7 +1606,7 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
     char rtspStr[128]={0};
     QStringList list;
 
-//    CMPHandle cmpHandle = NULL;
+    CMPHandle cmpHandle = NULL;
 
     if (iCh > (MAX_SERVER_NUM*MAX_CAMERA_OFSERVER - 1))
     {
@@ -1621,8 +1617,8 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
         sprintf(rtspStr,"%s",m_tCameraInfo[iCh].acCameraRtspUrl);
         list<<rtspStr;
 
-//        qDebug()<<"******open*******"<<m_tCameraInfo[iCh].acCameraRtspUrl<<"ich="<<iCh<<endl;
-        //openMedia(rtspStr,list,iCh);
+        qDebug()<<"******open*******"<<m_tCameraInfo[iCh].acCameraRtspUrl<<"ich="<<iCh<<endl;
+        openMedia(rtspStr,list,iCh);
 
         m_tCameraInfo[iCh].iCmpOpenFlag = 1;
 
@@ -1631,25 +1627,20 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
     {
         sprintf(rtspStr,"%s",m_tCameraInfo[iCh].acCameraRtspUrl);
         list<<rtspStr;
-//        if(1 == cameFlag)
-        {
-//        closeMedia(rtspStr,list,iCh);
-//            qDebug()<<"******close*******"<<m_tCameraInfo[iCh].acCameraRtspUrl<<"ich="<<iCh<<endl;
 
-        }
+        closeMedia(rtspStr,list,iCh);
+        qDebug()<<"******close*******"<<m_tCameraInfo[iCh].acCameraRtspUrl<<"ich="<<iCh<<endl;
+
         m_tCameraInfo[iCh].iCmpOpenFlag = 0;
 
     }
     else if(CMP_CMD_ENABLE_CH == iType)
     {
-
         showMedia(iCh);
     }
     else if(CMP_CMD_DISABLE_CH == iType)
     {
-
         hideMedia(iCh);
-
     }
 }
 
@@ -1790,9 +1781,10 @@ void pvmsMonitorWidget::videoChannelCtrl()
         }
         else
         {
+
             if ((i == m_iCameraPlayNo) || (i == iLastCamaraNo) || (i == iNextCamaraNo))
             {
-                if (0 == m_tCameraInfo[i].iCmpOpenFlag)
+//                if (0 == m_tCameraInfo[i].iCmpOpenFlag)
                 {
                     tPkt.iMsgCmd = CMP_CMD_CREATE_CH;
                     tPkt.iCh = i;
@@ -1888,14 +1880,6 @@ void pvmsMonitorWidget::alarmHappenSlot()
             m_channelNoLabel->setGeometry(20, 690, 100, 50);
         }
 
-//        if (m_presetPasswdConfirmPage != NULL)
-//        {
-//            m_presetPasswdConfirmPage->show();
-//            if ((m_presetPasswdConfirmPage->p_ipmethod != NULL) && (m_presetPasswdConfirmPage->p_ipmethod->p_inputwidget != NULL))
-//            {
-//                m_presetPasswdConfirmPage->p_ipmethod->p_inputwidget->show();
-//            }
- //       }
     }
 
     m_iAlarmNotCtrlFlag = 1;
@@ -1996,14 +1980,7 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
 
                 m_channelStateLabel->setGeometry(320, 385, 130, 50);
                 m_channelNoLabel->setGeometry(20, 550, 100, 50);
-//                if (m_presetPasswdConfirmPage != NULL)
-//                {
-//                    m_presetPasswdConfirmPage->show();
-//                    if ((m_presetPasswdConfirmPage->p_ipmethod != NULL) && (m_presetPasswdConfirmPage->p_ipmethod->p_inputwidget != NULL))
-//                    {
-//                        m_presetPasswdConfirmPage->p_ipmethod->p_inputwidget->show();
-//                    }
-//                }
+
                 emit showAlarmWidgetSignal();
             }
     }
@@ -2329,12 +2306,7 @@ void pvmsMonitorWidget::pvmsDownEndSlot4()
 void pvmsMonitorWidget::createMedia()
 {
     int i, num = 0;
-//    mlist<<"rtsp://admin:admin123@192.168.104.201"<<"rtsp://admin:admin123@192.168.104.201"<<"rtsp://admin:admin123@192.168.104.201"<<"rtsp://admin:admin123@192.168.104.201";
       mlist<<"rtsp://192.168.104.200"<<"rtsp://192.168.104.200"<<"rtsp://admin:admin123@192.168.104.201"<<"rtsp://admin:admin123@192.168.104.201";
-    for(int i=0;i<mlist.count();i++)
-    {
-        qDebug()<<"***********list="<<mlist.at(i);
-    }
     if(mlist.count() > 0){
         num = qSqrt(mlist.count());
         if(qreal(num) < qSqrt(mlist.count())){
@@ -2382,29 +2354,22 @@ void pvmsMonitorWidget::createMedia()
         widget->setLayout(hLayoutList->value(i));
         mainLayout->addWidget(widget);
     }
+    m_playWin->setLayout(mainLayout);
 
-    playwidget = new QWidget(this);
-    playwidget->setGeometry(0, 0, 782, 630);
-    playwidget->setLayout(mainLayout);
-    playwidget->setObjectName("m_playWin");
-    playwidget->setStyleSheet("QWidget{background-color: rgb(0, 0, 0);}");     //设置播放窗口背景色为黑色
-    playwidget->show();  //默认显示
-
-
-//    for(int i=0; i<mlist.count(); i++){
-//        video = videoList->value(i);
-//        mplayer = playerlist->value(i);
-//        if(video && mplayer){
-//            mplayer->setVideoOutput(video);
+    for(int i=0; i<mlist.count(); i++){
+        video = videoList->value(i);
+        mplayer = playerlist->value(i);
+        if(video && mplayer){
+            mplayer->setVideoOutput(video);
 //            video->show();
 //            mplayer->play();
-//        }
-//    }
-
+        }
+    }
 
 }
 void pvmsMonitorWidget::showMedia(int ch)
 {
+#if 1
     video = videoList->value(ch);
     mplayer = playerlist->value(ch);
 
@@ -2416,29 +2381,21 @@ void pvmsMonitorWidget::showMedia(int ch)
         if(i != ch){
             video = videoList->value(i);
             video->hide();
-            }
+         }
      }
+#endif
     qDebug()<<"show-media*********11111111111111*****ich="<<ch<<endl;
 
 }
 void pvmsMonitorWidget::hideMedia(int ch)
 {
-
     qDebug()<<"hide-media*********11111111111111*****ich="<<ch<<endl;
-
-//    video = videoList->value(ch);
-//    mplayer = playerlist->value(ch);
-//    pthread_mutex_lock(&g_tPlayMdiaMutex);
-//    if(video && mplayer){
-//    video->hide();
-//    }
-//    pthread_mutex_unlock(&g_tPlayMdiaMutex);
 
 }
 
 int pvmsMonitorWidget::openMedia(const char *pcRtspFile,QStringList list,int ch)
 {
-#ifdef mplaybin
+#ifndef mplaybin
     player.stop();
     const QString str = QString::fromUtf8(pcRtspFile);
 //    qDebug()<<"*******************play---mlist"<<pcRtspFile<<"******i***"<<"ich="<<ch<<endl;
@@ -2449,17 +2406,15 @@ int pvmsMonitorWidget::openMedia(const char *pcRtspFile,QStringList list,int ch)
     player.play();
 #else
     qDebug()<<"*******************play---mlist"<<"******i***"<<"ich="<<ch<<endl;
-    return 0;
-   for(int i=0; i<mlist.count(); i++){
+    QMediaPlayer *mplayer = new  QMediaPlayer(this);
+    QVideoWidget *video = new QVideoWidget(this);
+    for(int i=0; i<mlist.count(); i++){
         video = videoList->value(ch);
         mplayer = playerlist->value(ch);
         if(video && mplayer){
-            mplayer->setVideoOutput(video);
             mplayer->play();
         }
     }
-
-
 #endif
     return 0;
 
@@ -2467,7 +2422,7 @@ int pvmsMonitorWidget::openMedia(const char *pcRtspFile,QStringList list,int ch)
 
 int pvmsMonitorWidget::closeMedia(const char *pcRtspFile,QStringList list,int ch)
 {
-#ifdef mplaybin
+#ifndef mplaybin
     const QString str = QString::fromUtf8(pcRtspFile);
     QUrl url(str);
     player.setMedia(url);
@@ -2475,23 +2430,17 @@ int pvmsMonitorWidget::closeMedia(const char *pcRtspFile,QStringList list,int ch
 //    player.pause();
 
 #else
-    return 0;
-    for(int i=0; i<mlist.count(); i++){
-        video = videoList->value(i);
-        mplayer = playerlist->value(i);
-        if(video && mplayer){
-            if(i == ch){
-            mplayer->setVideoOutput(video);
-            mplayer->stop();
-            }
-        }
-    }
-//    video = videoList->value(ch);
-//    video->hide();
     qDebug()<<"*******************close---mlist"<<"******i***"<<"ich="<<ch<<endl;
 
-#endif
+    QMediaPlayer *mplayer = new  QMediaPlayer(this);
+    QVideoWidget *video = new QVideoWidget(this);
 
+    video = videoList->value(ch);
+    mplayer = playerlist->value(ch);
+    if(video && mplayer){
+        mplayer->stop();
+    }
+#endif
     return 0;
 
 
@@ -2727,10 +2676,6 @@ int pvmsMonitorWidget::pmsgCtrl(PMSG_HANDLE pHandle, unsigned char ucMsgCmd, cha
 
         return 0;
 
-
-
-
-
 }
 
 pvmsMonitorWidget::~pvmsMonitorWidget()
@@ -2763,8 +2708,8 @@ pvmsMonitorWidget::~pvmsMonitorWidget()
     m_playWin = NULL;
 #endif
 
-    delete playwidget;
-    playwidget = NULL;
+//    delete playwidget;
+//    playwidget = NULL;
 //   delete player;
 //    player = NULL;
     delete ui;

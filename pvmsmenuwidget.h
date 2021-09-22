@@ -24,6 +24,7 @@ class pvmsMenuWidget : public QWidget
 public:
     explicit pvmsMenuWidget(QWidget *parent = 0);
     ~pvmsMenuWidget();
+    void showEvent(QShowEvent *event);
 
     void recvRs485Ctrl(char *pcData, int iDataLen);
     void recvPmsgCtrl(PMSG_HANDLE pHandle, unsigned char ucMsgCmd, char *pcMsgData, int iMsgDataLen);

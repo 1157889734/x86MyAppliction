@@ -147,6 +147,12 @@ pvmsMenuWidget::pvmsMenuWidget(QWidget *parent) :
 }
 
 
+void pvmsMenuWidget::showEvent(QShowEvent *event)
+{
+    this->setAttribute(Qt::WA_Mapped);
+    QWidget::showEvent(event);
+
+}
 
 pvmsMenuWidget::~pvmsMenuWidget()
 {
@@ -645,6 +651,8 @@ void pvmsMenuWidget::menuButtonClick()
     }
     if (Sender->objectName() == "pvmsMonitorMenuPushButton")     //受电弓监控按钮被按，则切换到受电弓监控页面
     {
+//        m_pvmsMonitorPage->playwidget->show();
+
         m_recordPlayPage->hide();
         m_devManagePage->hide();
         m_devUpdatePage->hide();
@@ -654,7 +662,6 @@ void pvmsMenuWidget::menuButtonClick()
 #ifdef mplaybin
         m_pvmsMonitorPage->m_playWin->show();
 #endif
-        m_pvmsMonitorPage->playwidget->show();
         m_pvmsMonitorPage->showMaximized();
         m_pvmsMonitorPage->enableVideoPlay(1);   //运行受电弓监控页面解码的显示
 
@@ -678,7 +685,8 @@ void pvmsMenuWidget::menuButtonClick()
 #ifdef mplaybin
         m_pvmsMonitorPage->m_playWin->hide();
 #endif
-        m_pvmsMonitorPage->playwidget->hide();
+//        m_pvmsMonitorPage->playwidget->hide();
+
 
         m_pvmsMonitorPage->m_channelStateLabel->hide();
         m_pvmsMonitorPage->m_channelNoLabel->hide();
@@ -709,7 +717,8 @@ void pvmsMenuWidget::menuButtonClick()
 #ifdef mplaybin
         m_pvmsMonitorPage->m_playWin->hide();
 #endif
-        m_pvmsMonitorPage->playwidget->hide();
+//        m_pvmsMonitorPage->playwidget->hide();
+
 
         m_recordPlayPage->closePlayWin();   //关闭录像回放界面的播放窗口
 
@@ -741,7 +750,8 @@ void pvmsMenuWidget::menuButtonClick()
 #ifdef mplaybin
         m_pvmsMonitorPage->m_playWin->hide();
 #endif
-        m_pvmsMonitorPage->playwidget->hide();
+//        m_pvmsMonitorPage->playwidget->hide();
+
 
         m_recordPlayPage->closePlayWin();   //关闭录像回放界面的播放窗口
 

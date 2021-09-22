@@ -303,8 +303,6 @@ void devUpdateWidget::setTrainTypeCombox()     //读取系统配置文件，获�
 
 void devUpdateWidget::getTrainConfig()
 {
-
-
     int i = 0;
     QString item = "";
 
@@ -449,8 +447,14 @@ void devUpdateWidget::setTrainType()
             snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "change traintype to %s and monitor Client reboot!", acTrainType);
             LOG_WriteLog(&tLogInfo);
 
-            QApplication *app;
-            app->exit();
+//            QApplication *app;
+//            app->exit();
+            QString program = QApplication::applicationFilePath();
+            QStringList arguments = QApplication::arguments();
+            QString workingDirectory = QDir::currentPath();
+
+            QProcess::startDetached(program, arguments, workingDirectory);
+            QApplication::exit();
         }
     }
 }
@@ -789,16 +793,16 @@ void devUpdateWidget::devUpdateSlot()
 //        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] update device from version:%s to version:%s\n", __FUNCTION__, acLocalVersion, acUpdateVersion);
 
         ui->updateStatueTextEdit->append(tr("正在复制文件..."));
-        if (access("/userdata/backup",F_OK) < 0)
+        if (access("/home/data/backup",F_OK) < 0)
         {
-            system("mkdir /userdata/backup");
+            system("mkdir /home/data/backup");
         }
 
 //        system("cp /mnt/usb/u/mornitorapp.exe /home/data/emuVideoMornitorClient/mornitorapp.exe");
 
-        system("cp /userdata/x86MyApplication /userdata/backup/");
-        system("rm /userdata/x86MyApplication");
-        system("cp /mnt/usb/u/x86MyApplication /userdata/x86MyApplication");
+        system("cp /home/data/x86MyApplication /home/data/backup/");
+        system("rm /home/data/x86MyApplication");
+        system("cp /mnt/usb/u/x86MyApplication /home/data/x86MyApplication");
         system("sync");
 
         ui->updateStatueTextEdit->append(tr("复制文件完成"));
@@ -815,7 +819,7 @@ void devUpdateWidget::devRebootSlot()
 //    DebugPrint(DEBUG_UI_OPTION_PRINT, "devUpdateWidget client reboot!\n");
 
     STATE_GetCurrentUserType(acUserType, sizeof(acUserType));
-    if (!strcmp(acUserType, "operator"))	 //操作员无权校时
+    if (!strcmp(acUserType, "operator"))
     {
 //        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget this user type has no right to reboot client!\n");
         QMessageBox box(QMessageBox::Warning,tr("提示"),tr("无权限设置!"));	  //新建消息提示框，提示错误信息
@@ -834,18 +838,15 @@ void devUpdateWidget::devRebootSlot()
         QString program = QApplication::applicationFilePath();
         QStringList arguments = QApplication::arguments();
         QString workingDirectory = QDir::currentPath();
-        if("/userdata/x86MyApplication" != program)
+        if("/home/data/x86MyApplication" != program)
         {
-            system("cp /userdata/backup/x86MyApplication /userdata/ ");
-            program = "/userdata/x86MyApplication";
+            system("cp /home/data/backup/x86MyApplication /home/data/ ");
+            program = "/home/data/x86MyApplication";
         }
 
         QProcess::startDetached(program, arguments, workingDirectory);
         QApplication::exit();
 
-
-//        QApplication *app;
-//        app->exit();
     }
 
 
@@ -941,7 +942,7 @@ void devUpdateWidget::configFileImportSlot()
         }
 
 //        system("cp /mnt/usb/u/Station.ini /home/data/emuVideoMornitorClient/Station.ini");
-        system("cp /mnt/usb/u/Station.ini /userdata/Station.ini");
+        system("cp /mnt/usb/u/Station.ini /home/data/Station.ini");
 
         system("sync");
 

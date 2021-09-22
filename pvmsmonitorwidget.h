@@ -14,13 +14,16 @@
 #include <QMediaPlaylist>
 #include <QMediaPlayer>
 #include "qplayer.h"
+#include <QPainter>
 
 
 namespace Ui {
 class pvmsMonitorWidget;
 }
 
-//#define mplaybin
+typedef void* CMPHandle;
+
+#define mplaybin
 
 typedef enum _E_CAMERA_STATE    //摄像机状态
 {
@@ -84,7 +87,7 @@ typedef struct _T_CAMERA_INFO
     int iStreamState;
     time_t tPtzOprateTime;    //云台操作时间
     PMSG_HANDLE phandle;   //所属服务器的通信句柄
-/*    CMPHandle cmpHandle;    //客户端媒体播放句柄*/
+    CMPHandle cmpHandle;    //客户端媒体播放句柄
 } __attribute__((packed)) T_CAMERA_INFO, *PT_CAMERA_INFO;
 
 
@@ -109,13 +112,10 @@ public:
     QWidget *playwidget;
 
 
-
-
     QLabel *m_channelStateLabel;
     QLabel *m_channelNoLabel;
     int pageType;
 
-    int cameFlag;
     int m_iSelectPresetNo;   //保存选中的预置点编号
     int m_iAlarmNotCtrlFlag;   //有报警信息未处理标志
     time_t tPollingOparateTime;  //轮询操作时间
@@ -140,7 +140,7 @@ public:
 
     PMSG_HANDLE m_PisServerPhandle;    //pis服务器PMSG通信句柄
 #ifdef mplaybin
-    QVideoWidget *m_playWin;    //播放窗体
+    QWidget *m_playWin;    //播放窗体
 #endif
     int m_iMousePosX;
     int m_iMousePosY;
