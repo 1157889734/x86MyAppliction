@@ -448,7 +448,7 @@ void *monitorThread(void *param)     //实时监控线程，对通道轮询、�
             iCameraIdex = pvmsMonitorPage->m_iCameraNum - 1;
         }
 //        DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread polling to last camera no=%d !\n",iCameraIdex);
-
+        qDebug()<<"**********************LASTONE"<<iCameraIdex<<__FUNCTION__<<__LINE__<<endl;
         pvmsMonitorPage->m_iCameraSwitchState = NORMAL;   //摄像头切换状态恢复到正常不切换状态
         iPollingFlag = 1;
     }
@@ -459,6 +459,8 @@ void *monitorThread(void *param)     //实时监控线程，对通道轮询、�
         {
             iCameraIdex = 0;
         }
+        qDebug()<<"**********************NEXTONE"<<iCameraIdex<<__FUNCTION__<<__LINE__<<endl;
+
 //        DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread polling to next camera, no=%d !\n",iCameraIdex);
 
         pvmsMonitorPage->m_iCameraSwitchState = NORMAL;   //摄像头切换状态恢复到正常不切换状态
@@ -1616,7 +1618,7 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
         sprintf(rtspStr,"%s",m_tCameraInfo[iCh].acCameraRtspUrl);
         list<<rtspStr;
 
-        qDebug()<<"******open*******"<<m_tCameraInfo[iCh].acCameraRtspUrl<<"ich="<<iCh<<endl;
+//        qDebug()<<"******open*******"<<m_tCameraInfo[iCh].acCameraRtspUrl<<"ich="<<iCh<<endl;
         openMedia(rtspStr,list,iCh);
 
         m_tCameraInfo[iCh].iCmpOpenFlag = 1;
@@ -1628,7 +1630,7 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
         list<<rtspStr;
 
         closeMedia(rtspStr,list,iCh);
-        qDebug()<<"******close*******"<<m_tCameraInfo[iCh].acCameraRtspUrl<<"ich="<<iCh<<endl;
+//        qDebug()<<"******close*******"<<m_tCameraInfo[iCh].acCameraRtspUrl<<"ich="<<iCh<<endl;
 
         m_tCameraInfo[iCh].iCmpOpenFlag = 0;
 
@@ -2296,7 +2298,7 @@ void pvmsMonitorWidget::pvmsDownEndSlot4()
 void pvmsMonitorWidget::createMedia()
 {
     int i, num = 0;
-    mlist<<"rtsp://192.168.104.200"<<"rtsp://192.168.104.200"<<"rtsp://admin:admin123@192.168.104.201"<<"rtsp://admin:admin123@192.168.104.201";
+    mlist<<"rtsp://192.168.104.200"<<"rtsp://admin:admin123@192.168.104.201"<<"rtsp://192.168.104.200"<<"rtsp://admin:admin123@192.168.104.201";
     if(mlist.count() > 0){
         num = qSqrt(mlist.count());
         if(qreal(num) < qSqrt(mlist.count())){
@@ -2310,7 +2312,7 @@ void pvmsMonitorWidget::createMedia()
     }
 
     for(i=0; i<mlist.count(); i++){
-        QMediaPlayer *player = new QMediaPlayer(this, QMediaPlayer::VideoSurface);
+        QMediaPlayer *player = new QMediaPlayer(this, QMediaPlayer::LowLatency);
         playerlist->append(player);
         QVideoWidget *video = new QVideoWidget();
         videoList->append(video);
@@ -2351,7 +2353,6 @@ void pvmsMonitorWidget::createMedia()
         mplayer = playerlist->value(i);
         if(video && mplayer){
             mplayer->setVideoOutput(video);
-//            video->show();
 //            mplayer->play();
         }
     }
@@ -2360,17 +2361,19 @@ void pvmsMonitorWidget::createMedia()
 void pvmsMonitorWidget::showMedia(int ch)
 {
 
+
 #if 1
     video = videoList->value(ch);
     mplayer = playerlist->value(ch);
-
+    qDebug()<<"**************show---ch"<<ch<<endl;
     if(video && mplayer){
     video->show();
     }
 
     for(int i=0; i<mlist.count(); i++){
+        video = videoList->value(i);
         if(i != ch){
-            video = videoList->value(i);
+            qDebug()<<"**************hide---i"<<i<<endl;
             video->hide();
          }
      }
@@ -2394,26 +2397,28 @@ int pvmsMonitorWidget::openMedia(const char *pcRtspFile,QStringList list,int ch)
     player.setMuted(true);
     player.play();
 #else
-    qDebug()<<"*******************play---mlist"<<"******i***"<<"ich="<<ch<<endl;
-
-    int preCh,nextCh;
+//    qDebug()<<"*******************play---mlist"<<"******i***"<<"ich="<<ch<<endl;
+    currentCh = ch;
     preCh  =  ch== 0 ? (mlist.count() - 1) : ch-1;
     nextCh =  ch== (mlist.count()-1) ? 0 : ch+1;
+    mplayer->stop();
 
-    qDebug()<<"**********ch="<<ch<<"*********preCh="<<preCh<<"**************nextCh="<<nextCh<<endl;
+//    qDebug()<<"****open******currentCh="<<currentCh<<"*********preCh="<<preCh<<"**************nextCh="<<nextCh<<endl;
 
     for(int i=0; i<mlist.count(); i++){
-        if(i == ch || i == preCh || i == nextCh)
+        video = videoList->value(i);
+        mplayer = playerlist->value(i);
+        if(i == currentCh || i == preCh || i == nextCh)
         {
-            video = videoList->value(i);
-            mplayer = playerlist->value(i);
             if(video && mplayer){
+//                video->show();
                 mplayer->play();
             }
         }
     }
-#endif
 
+
+#endif
 
     return 0;
 
@@ -2429,12 +2434,19 @@ int pvmsMonitorWidget::closeMedia(const char *pcRtspFile,QStringList list,int ch
 //    player.pause();
 
 #else
-    qDebug()<<"*******************close---mlist"<<"******i***"<<"ich="<<ch<<endl;
+//    qDebug()<<"*******************close---mlist"<<"******i***"<<"ich="<<ch<<endl;
+//    qDebug()<<"****close******currentCh="<<currentCh<<"*********preCh="<<preCh<<"**************nextCh="<<nextCh<<endl;
 
-    video = videoList->value(ch);
-    mplayer = playerlist->value(ch);
-    if(video && mplayer){
-        mplayer->stop();
+    for(int i=0; i<mlist.count(); i++){
+        if(i != currentCh && i != preCh && i != nextCh)
+        {
+//            qDebug()<<"******************stop***ch="<<i<<endl;
+            video = videoList->value(i);
+            mplayer = playerlist->value(i);
+            if(video && mplayer){
+                mplayer->stop();
+            }
+        }
     }
 #endif
 

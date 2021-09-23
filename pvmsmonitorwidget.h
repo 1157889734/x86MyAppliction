@@ -110,6 +110,9 @@ public:
     void showMedia(int ch);
     void hideMedia(int ch);
     QWidget *playwidget;
+    int currentCh;
+    int preCh;
+    int nextCh;
 
 
     QLabel *m_channelStateLabel;
