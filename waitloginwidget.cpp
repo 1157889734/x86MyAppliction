@@ -45,7 +45,7 @@ void waitLoginWidget::pageRedirect()
 //    DebugPrint(DEBUG_UI_NOMAL_PRINT, "waitLogin Widget jump to choiceLoginDev Widget!\n");
     this->hide();   //隐藏当前页面
     emit pageRedirectSignal();    //触发页面跳转信号
-    change_label->stop();
+    readyTimer->stop();
 
 }
 
@@ -87,9 +87,9 @@ waitLoginWidget::waitLoginWidget(QWidget *parent) :
         ui->versionLabel->setText(QString(QLatin1String(acVersion)));
     }
 
-    change_label = new QTimer(this);
-    connect(change_label,SIGNAL(timeout()),this,SLOT(chage_label_function()));
-    change_label->start(1000);
+    readyTimer = new QTimer(this);
+    connect(readyTimer,SIGNAL(timeout()),this,SLOT(chage_label_function()));
+    readyTimer->start(1000);
 
 }
 
@@ -108,9 +108,9 @@ void waitLoginWidget::chage_label_function()
 waitLoginWidget::~waitLoginWidget()
 {
     delete ui;
-    if(change_label !=NULL)
+    if(readyTimer !=NULL)
     {
-        delete  change_label;
+        delete  readyTimer;
     }
 }
 

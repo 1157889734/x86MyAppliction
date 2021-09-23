@@ -561,7 +561,7 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
 
 #ifdef mplaybin
     m_playWin = new QVideoWidget(this->parentWidget());   //新建一个与目前窗体同属一个父窗体的播放子窗体，方便实现全屏
-    m_playWin->setGeometry(0, 0, 1024, 768);      //设置窗体在父窗体中的位置，默认一开始为全屏
+//    m_playWin->setGeometry(0, 0, 1024, 768);      //设置窗体在父窗体中的位置，默认一开始为全屏
     m_playWin->setGeometry(0, 138, 782, 630);
     m_playWin->show();  //默认显示
     m_playWin->setObjectName("m_playWin");
@@ -1466,7 +1466,6 @@ void pvmsMonitorWidget::videoPollingSignalCtrl()
 void pvmsMonitorWidget::setFullScreenSignalCtrl()
 {
     T_CMP_PACKET tPkt;
-//    DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] fullScreen Ctrl!\n", __FUNCTION__);
     if ((this->isHidden() != 1)  && (m_iAlarmNotCtrlFlag != 1) && (m_iBlackScreenFlag != 1))    //当前未显示，不做全屏监视处理,有报警信息未处理也不做全屏监视处理,处于黑屏状态也不做全屏监视处理
     {
 #ifdef mplaybin
@@ -1784,7 +1783,7 @@ void pvmsMonitorWidget::videoChannelCtrl()
 
             if ((i == m_iCameraPlayNo) || (i == iLastCamaraNo) || (i == iNextCamaraNo))
             {
-//                if (0 == m_tCameraInfo[i].iCmpOpenFlag)
+                if (0 == m_tCameraInfo[i].iCmpOpenFlag)
                 {
                     tPkt.iMsgCmd = CMP_CMD_CREATE_CH;
                     tPkt.iCh = i;
@@ -2003,15 +2002,6 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
 
                 m_channelStateLabel->setGeometry(452, 360, 130, 50);
                 m_channelNoLabel->setGeometry(20, 690, 100, 50);
-
-//                if (m_presetPasswdConfirmPage != NULL)
-//                {
-//                    m_presetPasswdConfirmPage->hide();
-//                    if ((m_presetPasswdConfirmPage->p_ipmethod != NULL) && (m_presetPasswdConfirmPage->p_ipmethod->p_inputwidget != NULL))
-//                    {
-//                        m_presetPasswdConfirmPage->p_ipmethod->p_inputwidget->hide();
-//                    }
-//               }
                 m_iFullScreenFlag = 1;
             }
         }
@@ -2306,7 +2296,7 @@ void pvmsMonitorWidget::pvmsDownEndSlot4()
 void pvmsMonitorWidget::createMedia()
 {
     int i, num = 0;
-      mlist<<"rtsp://192.168.104.200"<<"rtsp://192.168.104.200"<<"rtsp://admin:admin123@192.168.104.201"<<"rtsp://admin:admin123@192.168.104.201";
+    mlist<<"rtsp://192.168.104.200"<<"rtsp://192.168.104.200"<<"rtsp://admin:admin123@192.168.104.201"<<"rtsp://admin:admin123@192.168.104.201";
     if(mlist.count() > 0){
         num = qSqrt(mlist.count());
         if(qreal(num) < qSqrt(mlist.count())){
@@ -2369,6 +2359,7 @@ void pvmsMonitorWidget::createMedia()
 }
 void pvmsMonitorWidget::showMedia(int ch)
 {
+
 #if 1
     video = videoList->value(ch);
     mplayer = playerlist->value(ch);
@@ -2384,12 +2375,10 @@ void pvmsMonitorWidget::showMedia(int ch)
          }
      }
 #endif
-    qDebug()<<"show-media*********11111111111111*****ich="<<ch<<endl;
 
 }
 void pvmsMonitorWidget::hideMedia(int ch)
 {
-    qDebug()<<"hide-media*********11111111111111*****ich="<<ch<<endl;
 
 }
 
@@ -2406,16 +2395,26 @@ int pvmsMonitorWidget::openMedia(const char *pcRtspFile,QStringList list,int ch)
     player.play();
 #else
     qDebug()<<"*******************play---mlist"<<"******i***"<<"ich="<<ch<<endl;
-    QMediaPlayer *mplayer = new  QMediaPlayer(this);
-    QVideoWidget *video = new QVideoWidget(this);
+
+    int preCh,nextCh;
+    preCh  =  ch== 0 ? (mlist.count() - 1) : ch-1;
+    nextCh =  ch== (mlist.count()-1) ? 0 : ch+1;
+
+    qDebug()<<"**********ch="<<ch<<"*********preCh="<<preCh<<"**************nextCh="<<nextCh<<endl;
+
     for(int i=0; i<mlist.count(); i++){
-        video = videoList->value(ch);
-        mplayer = playerlist->value(ch);
-        if(video && mplayer){
-            mplayer->play();
+        if(i == ch || i == preCh || i == nextCh)
+        {
+            video = videoList->value(i);
+            mplayer = playerlist->value(i);
+            if(video && mplayer){
+                mplayer->play();
+            }
         }
     }
 #endif
+
+
     return 0;
 
 }
@@ -2432,15 +2431,13 @@ int pvmsMonitorWidget::closeMedia(const char *pcRtspFile,QStringList list,int ch
 #else
     qDebug()<<"*******************close---mlist"<<"******i***"<<"ich="<<ch<<endl;
 
-    QMediaPlayer *mplayer = new  QMediaPlayer(this);
-    QVideoWidget *video = new QVideoWidget(this);
-
     video = videoList->value(ch);
     mplayer = playerlist->value(ch);
     if(video && mplayer){
         mplayer->stop();
     }
 #endif
+
     return 0;
 
 
@@ -2708,6 +2705,17 @@ pvmsMonitorWidget::~pvmsMonitorWidget()
     m_playWin = NULL;
 #endif
 
+    delete  playerlist;
+    playerlist = NULL;
+
+    delete videoList;
+    videoList = NULL;
+
+    delete multiPlayList;
+    multiPlayList = NULL;
+
+    delete hLayoutList;
+    hLayoutList = NULL;
 //    delete playwidget;
 //    playwidget = NULL;
 //   delete player;

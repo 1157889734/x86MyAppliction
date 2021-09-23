@@ -20,7 +20,7 @@ public:
     pthread_t m_threadId;    //倒计时线程ID
     int m_iThreadRunFlag;    //线程运行标识
     void triggerSetCountDownValueSignal(QString timeStr);
-    QTimer *change_label;
+    QTimer *readyTimer;
     int g_ilaybel_width;
 
 signals:
