@@ -317,6 +317,9 @@ pvmsMonitorWidget::pvmsMonitorWidget(QWidget *parent) :
     connect(this, SIGNAL(camSwitchButtonTextCtrlSignal(int)), this, SLOT(camSwitchButtonTextCtrlSlot(int)));
     connect(this, SIGNAL(fillLightSwitchButtonTextCtrlSignal(int)), this, SLOT(fillLightSwitchButtonTextCtrlSlot(int)));
 
+    connect(this,SIGNAL(showIcamera(int)),this,SLOT(showCameraSLot(int)));
+
+
     playerlist = new QList<QMediaPlayer*>();
     videoList = new QList<QVideoWidget*>();
     multiPlayList = new QList<QMediaPlaylist*>();
@@ -872,6 +875,7 @@ void pvmsMonitorWidget::manualSwitchEndSlot()
 {
     ui->pollingLastOnePushButton->setEnabled(true);
     ui->pollingNextOnePushButton->setEnabled(true);
+    emit showIcamera(m_iCameraPlayNo);
 
     if (m_manualSwitchTimer != NULL)
     {
@@ -1462,7 +1466,7 @@ void pvmsMonitorWidget::setFullScreenSignalCtrl()
         PutNodeToCmpQueue(m_ptQueue, &tPkt);
 
         m_channelStateLabel->setGeometry(452, 230, 130, 50);
-        m_channelNoLabel->setGeometry(20, 550, 100, 50);
+        m_channelNoLabel->setGeometry(20, 690, 100, 50);
         if (m_presetPasswdConfirmPage != NULL)
         {
             m_presetPasswdConfirmPage->hide();
@@ -1857,7 +1861,7 @@ void pvmsMonitorWidget::alarmHappenSlot()
 
         if (m_channelStateLabel != NULL)
         {
-            m_channelStateLabel->setGeometry(320, 385, 121, 50);
+            m_channelStateLabel->setGeometry(320, 385, 130, 50);
         }
         if (m_channelNoLabel != NULL)
         {
@@ -1962,8 +1966,8 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
                 tPkt.iCh = 0;
                 PutNodeToCmpQueue(m_ptQueue, &tPkt);
 
-                m_channelStateLabel->setGeometry(320, 385, 130, 50);
-                m_channelNoLabel->setGeometry(20, 550, 100, 50);
+                m_channelStateLabel->setGeometry(452, 360, 130, 50);
+                m_channelNoLabel->setGeometry(20, 690, 100, 50);
 
                 emit showAlarmWidgetSignal();
             }
@@ -2321,8 +2325,6 @@ void pvmsMonitorWidget::createMedia()
             else
                 snprintf(acRtspUrl, sizeof(acRtspUrl), "rtsp://192.168.%d.%d", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO,200+j);
 
-
-//            printf("*****************************acRtspUrl**********=%s\n",acRtspUrl);
             /*保存所有摄像机的信息*/
             m_tCameraInfo[m_iCameraNum].phandle = STATE_GetNvrServerPmsgHandle(i);
             m_tCameraInfo[m_iCameraNum].iPosNO = 8+j;
@@ -2331,9 +2333,7 @@ void pvmsMonitorWidget::createMedia()
             else
                 snprintf(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl, sizeof(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl), "%s:554/%d",acRtspUrl, 8+j);
 
-            mlist<<m_tCameraInfo[m_iCameraNum].acCameraRtspUrl;
-
-//            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] camer %d rtspUrl=%s\n",__FUNCTION__,m_iCameraNum, m_tCameraInfo[m_iCameraNum].acCameraRtspUrl);
+//            mlist<<m_tCameraInfo[m_iCameraNum].acCameraRtspUrl;
 
             struct sysinfo s_info;
             sysinfo(&s_info);
@@ -2345,7 +2345,7 @@ void pvmsMonitorWidget::createMedia()
     m_iCameraNum = 0;
     memset(m_tCameraInfo, 0, sizeof(T_CAMERA_INFO)*MAX_SERVER_NUM*MAX_CAMERA_OFSERVER);
 
-//    mlist<<"rtsp://192.168.104.200"<<"rtsp://admin:admin123@192.168.104.201"<<"rtsp://192.168.104.200"<<"rtsp://admin:admin123@192.168.104.201";
+    mlist<<"rtsp://192.168.104.200"<<"rtsp://admin:admin123@192.168.104.201"<<"rtsp://192.168.104.200"<<"rtsp://admin:admin123@192.168.104.201";
 
 
     if(mlist.count() > 0){
@@ -2429,6 +2429,24 @@ void pvmsMonitorWidget::showMedia(int ch)
 }
 void pvmsMonitorWidget::hideMedia(int ch)
 {
+
+}
+
+void pvmsMonitorWidget::showCameraSLot(int num)
+{
+    qDebug()<<"**********num="<<num<<__FUNCTION__<<__LINE__<<endl;
+    video = videoList->value(num);
+    mplayer = playerlist->value(num);
+    if(video && mplayer){
+    video->show();
+    }
+
+    for(int i=0; i<mlist.count(); i++){
+        video = videoList->value(i);
+        if(i != num){
+            video->hide();
+         }
+     }
 
 }
 
@@ -2543,7 +2561,7 @@ void pvmsMonitorWidget::blackScreenCtrlSlot()     //黑屏触发信号处理，�
 
         if (m_channelStateLabel != NULL)
         {
-            m_channelStateLabel->setGeometry(320, 385, 121, 50);
+            m_channelStateLabel->setGeometry(452, 360, 130, 50);
         }
         if (m_channelNoLabel != NULL)
         {

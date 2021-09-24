@@ -656,6 +656,7 @@ void pvmsMenuWidget::menuButtonClick()
 #ifdef mplaybin
         m_pvmsMonitorPage->m_playWin->show();
 #endif
+        m_pvmsMonitorPage->showMedia(m_pvmsMonitorPage->m_iCameraPlayNo);
         m_recordPlayPage->hide();
         m_devManagePage->hide();
         m_devUpdatePage->hide();

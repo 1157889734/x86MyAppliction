@@ -190,6 +190,7 @@ signals:
     void getDevStateSignal();
     void setTimeSignal();
 
+    void showIcamera(int num);
 
 public slots:
     void presetNoGroupButtonClickSlot(int iButtonNo);     //预置点编号按钮组按键信号响应槽函数，iButtonNo为按钮编号
@@ -235,7 +236,7 @@ public slots:
     void blackScreenExitCtrlSlot();
     void cameraSwitchEndSlot();
 
-
+    void showCameraSLot(int num);
 
 private:
     Ui::pvmsMonitorWidget *ui;
