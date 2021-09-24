@@ -462,7 +462,8 @@ void pvmsMenuWidget::showPageSlot()
 {
     this->show();
     m_pvmsMonitorPage->startVideoPolling();   //启动视频轮询
-    m_pvmsMonitorPage->createMedia();
+//    m_pvmsMonitorPage->createMedia();
+
     m_pvmsMonitorPage->enableVideoPlay(1);   //运行受电弓监控页面解码的显示
     m_pvmsMonitorPage->pageType = g_ipageValue;
 #if 1

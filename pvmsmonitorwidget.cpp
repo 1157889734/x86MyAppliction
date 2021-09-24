@@ -350,6 +350,9 @@ pvmsMonitorWidget::pvmsMonitorWidget(QWidget *parent) :
 #endif
     memset(m_tCameraInfo, 0, sizeof(T_CAMERA_INFO)*MAX_SERVER_NUM*MAX_CAMERA_OFSERVER);
 
+
+    createMedia();
+
     pthread_mutexattr_init(&mutexattr);
     pthread_mutexattr_settype(&mutexattr,PTHREAD_MUTEX_TIMED_NP);
     pthread_mutex_init(&tMutex, &mutexattr);
@@ -561,17 +564,7 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
 
     memset(m_tCameraInfo, 0, sizeof(T_CAMERA_INFO)*MAX_SERVER_NUM*MAX_CAMERA_OFSERVER);
 
-#ifdef mplaybin
-    m_playWin = new QVideoWidget(this->parentWidget());   //新建一个与目前窗体同属一个父窗体的播放子窗体，方便实现全屏
-//    m_playWin->setGeometry(0, 0, 1024, 768);      //设置窗体在父窗体中的位置，默认一开始为全屏
-    m_playWin->setGeometry(0, 138, 782, 630);
-    m_playWin->show();  //默认显示
-    m_playWin->setObjectName("m_playWin");
-    m_playWin->setStyleSheet("QWidget{background-color: rgb(0, 0, 0);}");     //设置播放窗口背景色为黑色
-    m_playWin->installEventFilter(this);     //播放窗体注册进事件过滤器
-    m_playWin->setMouseTracking(true);
-//    player.setVideoOutput(m_playWin);
-#endif
+
 
     m_channelStateLabel = new QLabel(this->parentWidget());
     m_channelStateLabel->setGeometry(452, 360, 130, 50);
@@ -590,15 +583,6 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
     for (i = 0; i < tTrainConfigInfo.iNvrServerCount; i++)
     {
 
-//        memset(acRtspUrl, 0, sizeof(acRtspUrl));
-//        snprintf(acRtspUrl, sizeof(acRtspUrl), "rtsp://192.168.%d.200", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO);
-
-//        snprintf(acRtspUrl, sizeof(acRtspUrl), "168.168.102.%d", 70+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO);
-
-//        qDebug()<<"tTrainConfigInfo.iNvrServerCount"<<tTrainConfigInfo.iNvrServerCount<<endl;
-//        qDebug()<<"acRtspUrl****"<<acRtspUrl;
-
-//        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] server:%s has camera num=%d\n",__FUNCTION__,acRtspUrl, tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum);
         m_NvrServerPhandle[i] = STATE_GetNvrServerPmsgHandle(i);
 
         for (j = 0; j < tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum; j++)
@@ -609,8 +593,6 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
             else
                 snprintf(acRtspUrl, sizeof(acRtspUrl), "rtsp://192.168.%d.%d", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO,200+j);
 
-
-//            printf("*****************************acRtspUrl**********=%s\n",acRtspUrl);
             /*保存所有摄像机的信息*/
             m_tCameraInfo[m_iCameraNum].phandle = STATE_GetNvrServerPmsgHandle(i);
             m_tCameraInfo[m_iCameraNum].iPosNO = 8+j;
@@ -618,7 +600,7 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
                 snprintf(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl, sizeof(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl), "%s:554",acRtspUrl);
             else
                 snprintf(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl, sizeof(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl), "%s:554/%d",acRtspUrl, 8+j);
-            printf("##############i=%d, rtspurl:%s\n-------m_iCameraNum=%d",m_iCameraNum,m_tCameraInfo[m_iCameraNum].acCameraRtspUrl,m_iCameraNum);
+//            printf("##############i=%d, rtspurl:%s\n-------m_iCameraNum=%d",m_iCameraNum,m_tCameraInfo[m_iCameraNum].acCameraRtspUrl,m_iCameraNum);
 
 //            mlist<<m_tCameraInfo[m_iCameraNum].acCameraRtspUrl;
 //            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] camer %d rtspUrl=%s\n",__FUNCTION__,m_iCameraNum, m_tCameraInfo[m_iCameraNum].acCameraRtspUrl);
@@ -1842,11 +1824,12 @@ void pvmsMonitorWidget::closePlayWin()
         m_channelNoLabel = NULL;
     }
 #ifdef mplaybin
-    if (m_playWin != NULL)
-    {
-        delete m_playWin;
-        m_playWin = NULL;
-    }
+    qDebug()<<"**************"<<__FUNCTION__<<__LINE__<<endl;
+//    if (m_playWin != NULL)
+//    {
+//        delete m_playWin;
+//        m_playWin = NULL;
+//    }
 #endif
 }
 
@@ -2298,7 +2281,73 @@ void pvmsMonitorWidget::pvmsDownEndSlot4()
 void pvmsMonitorWidget::createMedia()
 {
     int i, num = 0;
-    mlist<<"rtsp://192.168.104.200"<<"rtsp://admin:admin123@192.168.104.201"<<"rtsp://192.168.104.200"<<"rtsp://admin:admin123@192.168.104.201";
+
+    int j = 0;
+    char acRtspUrl[128] = {0};
+    T_TRAIN_CONFIG tTrainConfigInfo;
+    T_LOG_INFO tLogInfo;
+    T_CMP_PACKET tPkt;
+
+    struct sysinfo s_info;
+    memset(&s_info,0,sizeof(s_info));
+    sysinfo(&s_info);
+    m_lastActionTime = s_info.uptime;
+
+#ifdef mplaybin
+    m_playWin = new QVideoWidget(this->parentWidget());   //新建一个与目前窗体同属一个父窗体的播放子窗体，方便实现全屏
+//    m_playWin->setGeometry(0, 0, 1024, 768);      //设置窗体在父窗体中的位置，默认一开始为全屏
+    m_playWin->setGeometry(0, 138, 782, 630);
+    m_playWin->show();  //默认显示
+    m_playWin->setObjectName("m_playWin");
+    m_playWin->setStyleSheet("QWidget{background-color: rgb(0, 0, 0);}");     //设置播放窗口背景色为黑色
+    m_playWin->installEventFilter(this);     //播放窗体注册进事件过滤器
+    m_playWin->setMouseTracking(true);
+//    player.setVideoOutput(m_playWin);
+#endif
+
+
+    memset(&tTrainConfigInfo, 0, sizeof(T_TRAIN_CONFIG));
+    STATE_GetCurrentTrainConfigInfo(&tTrainConfigInfo);
+
+
+    for (i = 0; i < tTrainConfigInfo.iNvrServerCount; i++)
+    {
+        m_NvrServerPhandle[i] = STATE_GetNvrServerPmsgHandle(i);
+        for (j = 0; j < tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum; j++)
+        {
+            memset(acRtspUrl, 0, sizeof(acRtspUrl));
+            if(j == 1)
+                snprintf(acRtspUrl, sizeof(acRtspUrl), "rtsp://admin:admin123@192.168.%d.%d", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO,200+j);
+            else
+                snprintf(acRtspUrl, sizeof(acRtspUrl), "rtsp://192.168.%d.%d", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO,200+j);
+
+
+//            printf("*****************************acRtspUrl**********=%s\n",acRtspUrl);
+            /*保存所有摄像机的信息*/
+            m_tCameraInfo[m_iCameraNum].phandle = STATE_GetNvrServerPmsgHandle(i);
+            m_tCameraInfo[m_iCameraNum].iPosNO = 8+j;
+            if(j == 1)
+                snprintf(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl, sizeof(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl), "%s:554",acRtspUrl);
+            else
+                snprintf(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl, sizeof(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl), "%s:554/%d",acRtspUrl, 8+j);
+
+            mlist<<m_tCameraInfo[m_iCameraNum].acCameraRtspUrl;
+
+//            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] camer %d rtspUrl=%s\n",__FUNCTION__,m_iCameraNum, m_tCameraInfo[m_iCameraNum].acCameraRtspUrl);
+
+            struct sysinfo s_info;
+            sysinfo(&s_info);
+            m_tCameraInfo[m_iCameraNum].tPtzOprateTime = s_info.uptime;
+            m_iCameraNum++;
+
+        }
+    }
+    m_iCameraNum = 0;
+    memset(m_tCameraInfo, 0, sizeof(T_CAMERA_INFO)*MAX_SERVER_NUM*MAX_CAMERA_OFSERVER);
+
+//    mlist<<"rtsp://192.168.104.200"<<"rtsp://admin:admin123@192.168.104.201"<<"rtsp://192.168.104.200"<<"rtsp://admin:admin123@192.168.104.201";
+
+
     if(mlist.count() > 0){
         num = qSqrt(mlist.count());
         if(qreal(num) < qSqrt(mlist.count())){
