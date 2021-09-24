@@ -2360,8 +2360,6 @@ void pvmsMonitorWidget::createMedia()
 }
 void pvmsMonitorWidget::showMedia(int ch)
 {
-
-
 #if 1
     video = videoList->value(ch);
     mplayer = playerlist->value(ch);
@@ -2401,22 +2399,31 @@ int pvmsMonitorWidget::openMedia(const char *pcRtspFile,QStringList list,int ch)
     currentCh = ch;
     preCh  =  ch== 0 ? (mlist.count() - 1) : ch-1;
     nextCh =  ch== (mlist.count()-1) ? 0 : ch+1;
-    mplayer->stop();
 
-//    qDebug()<<"****open******currentCh="<<currentCh<<"*********preCh="<<preCh<<"**************nextCh="<<nextCh<<endl;
+    qDebug()<<"****open******currentCh="<<currentCh<<"*********preCh="<<preCh<<"**************nextCh="<<nextCh<<endl;
 
     for(int i=0; i<mlist.count(); i++){
         video = videoList->value(i);
         mplayer = playerlist->value(i);
         if(i == currentCh || i == preCh || i == nextCh)
         {
-            if(video && mplayer){
-//                video->show();
-                mplayer->play();
+            if(mplayer->state() != QMediaPlayer::PlayingState){
+               if(video && mplayer){
+                    qDebug()<<"play***********i="<<i<<endl;
+                    mplayer->play();
+                }
+           }
+        }
+        else
+        {
+            if(mplayer->state() == QMediaPlayer::PlayingState){
+                if(video && mplayer){
+                    qDebug()<<"stop***********i="<<i<<endl;
+                    mplayer->stop();
+                }
             }
         }
     }
-
 
 #endif
 
@@ -2433,9 +2440,9 @@ int pvmsMonitorWidget::closeMedia(const char *pcRtspFile,QStringList list,int ch
     player.stop();
 //    player.pause();
 
-#else
+//#else
 //    qDebug()<<"*******************close---mlist"<<"******i***"<<"ich="<<ch<<endl;
-//    qDebug()<<"****close******currentCh="<<currentCh<<"*********preCh="<<preCh<<"**************nextCh="<<nextCh<<endl;
+    qDebug()<<"****close******currentCh="<<currentCh<<"*********preCh="<<preCh<<"**************nextCh="<<nextCh<<endl;
 
     for(int i=0; i<mlist.count(); i++){
         if(i != currentCh && i != preCh && i != nextCh)
@@ -2446,6 +2453,8 @@ int pvmsMonitorWidget::closeMedia(const char *pcRtspFile,QStringList list,int ch
             if(video && mplayer){
                 mplayer->stop();
             }
+            qDebug()<<"mplayer**********status="<<mplayer->state()<<"i=="<<i<<endl;
+
         }
     }
 #endif

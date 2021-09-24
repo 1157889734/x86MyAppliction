@@ -652,16 +652,16 @@ void pvmsMenuWidget::menuButtonClick()
     if (Sender->objectName() == "pvmsMonitorMenuPushButton")     //受电弓监控按钮被按，则切换到受电弓监控页面
     {
 //        m_pvmsMonitorPage->playwidget->show();
-
+#ifdef mplaybin
+        m_pvmsMonitorPage->m_playWin->show();
+#endif
         m_recordPlayPage->hide();
         m_devManagePage->hide();
         m_devUpdatePage->hide();
         m_pvmsMonitorPage->show();
 
         m_recordPlayPage->closePlayWin();   //关闭录像回放界面的播放窗口
-#ifdef mplaybin
-        m_pvmsMonitorPage->m_playWin->show();
-#endif
+
         m_pvmsMonitorPage->showMaximized();
         m_pvmsMonitorPage->enableVideoPlay(1);   //运行受电弓监控页面解码的显示
 
