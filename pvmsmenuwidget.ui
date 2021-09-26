@@ -201,6 +201,27 @@ QPushButton:pressed
     <bool>false</bool>
    </property>
   </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1024</width>
+     <height>768</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <zorder>label</zorder>
+  <zorder>pvmsMonitorMenuPushButton</zorder>
+  <zorder>recordPlayMenuPushButton</zorder>
+  <zorder>devManageMenuPushButton</zorder>
+  <zorder>devUpdateMenuPushButton</zorder>
  </widget>
  <resources/>
  <connections/>

@@ -14,6 +14,7 @@ static pthread_mutex_t g_tCmpCtrlMutex;
 
 #define PageNone 0
 
+
 #define PageMonitot 1
 static int g_iPNum = 0;
 QButtonGroup *g_buttonGroup = NULL;
@@ -2308,11 +2309,8 @@ void pvmsMonitorWidget::createMedia()
     m_playWin->setMouseTracking(true);
 //    player.setVideoOutput(m_playWin);
 #endif
-
-
     memset(&tTrainConfigInfo, 0, sizeof(T_TRAIN_CONFIG));
     STATE_GetCurrentTrainConfigInfo(&tTrainConfigInfo);
-
 
     for (i = 0; i < tTrainConfigInfo.iNvrServerCount; i++)
     {
@@ -2402,7 +2400,7 @@ void pvmsMonitorWidget::createMedia()
         mplayer = playerlist->value(i);
         if(video && mplayer){
             mplayer->setVideoOutput(video);
-//            mplayer->play();
+            mplayer->play();
         }
     }
 
@@ -2447,7 +2445,6 @@ void pvmsMonitorWidget::showCameraSLot(int num)
             video->hide();
          }
      }
-
 }
 
 int pvmsMonitorWidget::openMedia(const char *pcRtspFile,QStringList list,int ch)
@@ -2461,38 +2458,38 @@ int pvmsMonitorWidget::openMedia(const char *pcRtspFile,QStringList list,int ch)
     player.setMedia(url);
     player.setMuted(true);
     player.play();
-#else
-//    qDebug()<<"*******************play---mlist"<<"******i***"<<"ich="<<ch<<endl;
+//#else
+
     currentCh = ch;
     preCh  =  ch== 0 ? (mlist.count() - 1) : ch-1;
     nextCh =  ch== (mlist.count()-1) ? 0 : ch+1;
-
     qDebug()<<"****open******currentCh="<<currentCh<<"*********preCh="<<preCh<<"**************nextCh="<<nextCh<<endl;
-
     for(int i=0; i<mlist.count(); i++){
-        video = videoList->value(i);
-        mplayer = playerlist->value(i);
+//        video = videoList->value(i);
+//        mplayer = playerlist->value(i);
+
         if(i == currentCh || i == preCh || i == nextCh)
         {
-            if(mplayer->state() != QMediaPlayer::PlayingState){
+            if(playerlist->value(i)->state() != QMediaPlayer::PlayingState){
                if(video && mplayer){
                     qDebug()<<"play***********i="<<i<<endl;
-                    mplayer->play();
+                    playerlist->value(i)->play();
                 }
            }
         }
         else
         {
-            if(mplayer->state() == QMediaPlayer::PlayingState){
-                if(video && mplayer){
-                    qDebug()<<"stop***********i="<<i<<endl;
-                    mplayer->stop();
-                }
+            if(video && mplayer){
+                qDebug()<<"stop***********i="<<i<<endl;
+                playerlist->value(i)->stop();
             }
         }
     }
 
+
 #endif
+
+
 
     return 0;
 
@@ -2508,22 +2505,21 @@ int pvmsMonitorWidget::closeMedia(const char *pcRtspFile,QStringList list,int ch
 //    player.pause();
 
 //#else
-//    qDebug()<<"*******************close---mlist"<<"******i***"<<"ich="<<ch<<endl;
     qDebug()<<"****close******currentCh="<<currentCh<<"*********preCh="<<preCh<<"**************nextCh="<<nextCh<<endl;
 
     for(int i=0; i<mlist.count(); i++){
         if(i != currentCh && i != preCh && i != nextCh)
         {
-//            qDebug()<<"******************stop***ch="<<i<<endl;
+            qDebug()<<"******************stop***ch="<<i<<endl;
             video = videoList->value(i);
             mplayer = playerlist->value(i);
             if(video && mplayer){
                 mplayer->stop();
             }
-            qDebug()<<"mplayer**********status="<<mplayer->state()<<"i=="<<i<<endl;
 
         }
     }
+
 #endif
 
     return 0;
