@@ -7,6 +7,7 @@
 #include <QTableWidget>
 #include "timeset.h"
 #include <QMouseEvent>
+#include "cmplayer.h"
 #include "pvmsmonitorwidget.h"
 #include "pmsgcli.h"
 #include "state.h"
@@ -15,6 +16,7 @@
 #include <QMediaPlayer>
 #include "qplayer.h"
 #include "ftpApi.h"
+
 
 
 
@@ -43,6 +45,7 @@ public:
     double m_dPlaySpeed;   //播放速度
     int m_iPlayRange;    //录像文件总播放时长
     int playingTime;
+    CMPHandle m_cmpHandle;   //客户端媒体播放句柄
 
     int m_iSliderValue;     //进度条当前值
     pthread_t m_threadId;      //刷新进度条线程ID
@@ -58,8 +61,7 @@ public:
     void triggerCloseRecordPlaySignal();
     void triggerDownloadProcessBarDisplaySignal(int iEnableFlag);   //触发是否显示文件下载进度条的信号，iEnableFlag为1，显示，为0不显示
     void triggerSetDownloadProcessBarValueSignal(int iValue);   //触发设置文件下载进度条的值的信号
-    void createMeadia();
-    int  openMedia(const char *pcRtspFile);
+
     void unMute();
 
 
@@ -88,10 +90,7 @@ public slots:
 
     void playSliderMoveSlot(int iPosTime);
     void playSliderPressSlot(int iPosTime);
-    void positionchaged(qint64 pos);
-    void getduration(qint64  playtime);
 
-    void onTimerOut();
     void setPlaySliderValueSlot(int iValue);       //刷新进度条
     void downloadProcessBarDisplaySlot(int iEnableFlag);	//是否显示文件下载进度条，iEnableFlag为1，显示，为0不显示
     void setDownloadProcessBarValueSlot(int iValue);   //设置文件下载进度条的值
@@ -126,7 +125,6 @@ private:
     QTimer *m_recorQueryTimer;
     QStyle *m_tableWidgetStyle;
     QWidget *m_playWin;     //播放窗体
-    QVideoWidget *playWin;
     char *m_pcRecordFileBuf;
     int m_iTotalLen;
     char m_acFilePath[MAX_RECORD_SEACH_NUM][MAX_RECFILE_PATH_LEN];   //记录查询到的录像文件路径全名

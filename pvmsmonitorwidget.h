@@ -15,7 +15,7 @@
 #include <QMediaPlayer>
 #include "qplayer.h"
 #include <QPainter>
-
+#include "cmplayer.h"
 
 namespace Ui {
 class pvmsMonitorWidget;
@@ -104,15 +104,6 @@ public:
     time_t m_lastActionTime;    //界面最后一次操作时间
     int pmsgCtrl(PMSG_HANDLE pHandle, unsigned char ucMsgCmd, char *pcMsgData, int iMsgDataLen);   //与服务器通信消息处理
     void pvmsUpdownCtrl(char *pcMsgData);
-    void createMedia();
-    int  openMedia(const char *pcRtspFile,QStringList list,int ch);
-    int  closeMedia(const char *pcRtspFile,QStringList list,int ch);
-    void showMedia(int ch);
-    void hideMedia(int ch);
-    QWidget *playwidget;
-    int currentCh;
-    int preCh;
-    int nextCh;
 
 
     QLabel *m_channelStateLabel;
@@ -142,9 +133,7 @@ public:
     int m_iSystimeChangeFlag;   //系统时间改变标志
 
     PMSG_HANDLE m_PisServerPhandle;    //pis服务器PMSG通信句柄
-#ifdef mplaybin
     QWidget *m_playWin;    //播放窗体
-#endif
     int m_iMousePosX;
     int m_iMousePosY;
 
@@ -190,8 +179,6 @@ signals:
     void getDevStateSignal();
     void setTimeSignal();
 
-    void showIcamera(int num);
-
 public slots:
     void presetNoGroupButtonClickSlot(int iButtonNo);     //预置点编号按钮组按键信号响应槽函数，iButtonNo为按钮编号
     void alarmPushButoonClickSlot();
@@ -236,8 +223,6 @@ public slots:
     void blackScreenExitCtrlSlot();
     void cameraSwitchEndSlot();
 
-    void showCameraSLot(int num);
-
 private:
     Ui::pvmsMonitorWidget *ui;
     QTimer *m_alarmHappenTimer;
@@ -248,9 +233,7 @@ private:
     QTimer *m_cameraSwitchTimer;
 
     QVideoWidget *video;
-#ifdef mplaybin
     QMediaPlayer player;
-#endif
     QMediaPlayer *mplayer;
 
     QMediaPlaylist *list;

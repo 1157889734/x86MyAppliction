@@ -17,7 +17,7 @@ CXX           = /home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk356
 DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_MULTIMEDIAWIDGETS_LIB -DQT_WIDGETS_LIB -DQT_VIRTUALKEYBOARD_LIB -DQT_QUICK_LIB -DQT_MULTIMEDIA_LIB -DQT_GUI_LIB -DQT_QMLMODELS_LIB -DQT_QML_LIB -DQT_NETWORK_LIB -DQT_SQL_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -Os --sysroot=/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -Os --sysroot=/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot -std=gnu++11 -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -I../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5 -I../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets -I../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets -I../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard -I../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick -I../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia -I../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui -I../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels -I../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml -I../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork -I../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql -I../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore -I. -I. -I../rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++
+INCPATH       = -I. -I../include -I../include/gstreamer-1.0 -I../include/glib-2.0 -I../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5 -I../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets -I../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets -I../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard -I../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick -I../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia -I../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui -I../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels -I../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml -I../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork -I../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql -I../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore -I. -I. -I../rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++
 QMAKE         = /home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -40,7 +40,7 @@ DISTNAME      = x86MyApplication1.0.0
 DISTDIR = /home/forlinx/share/x86MyAppliction/.tmp/x86MyApplication1.0.0
 LINK          = /home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/aarch64-buildroot-linux-gnu-g++
 LFLAGS        = --sysroot=/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot -Wl,-O1 -Wl,-rpath-link,/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib
-LIBS          = $(SUBLIBS) -latomic /home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5MultimediaWidgets.so /home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Widgets.so /home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5VirtualKeyboard.so /home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Quick.so /home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Multimedia.so /home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Gui.so /home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5QmlModels.so /home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Qml.so /home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Network.so /home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Sql.so /home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Core.so -L/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib -lmali -lGLESv2 -lpthread  -lrt -lpthread -ldl 
+LIBS          = $(SUBLIBS) -latomic -Wl,-dn -L../lib -Wl,-dy -ldl -rdynamic -L ../lib -lgobject-2.0 -lglib-2.0 -lgstreamer-1.0 -lgstvideo-1.0 /home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5MultimediaWidgets.so /home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Widgets.so /home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5VirtualKeyboard.so /home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Quick.so /home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Multimedia.so /home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Gui.so /home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5QmlModels.so /home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Qml.so /home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Network.so /home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Sql.so /home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Core.so -L/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib -lmali -lGLESv2 -lpthread  -lrt -lpthread -ldl 
 AR            = /home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/aarch64-buildroot-linux-gnu-ar cqs
 RANLIB        = 
 SED           = sed
@@ -73,7 +73,8 @@ SOURCES       = main.cpp \
 		ftpApi.c \
 		rs485serv.c \
 		waitloginwidget.cpp \
-		usergroupmanage.cpp qrc_res.cpp \
+		usergroupmanage.cpp \
+		cmplayer.cpp qrc_res.cpp \
 		moc_MyApplication.cpp \
 		moc_choicelogindevwidget.cpp \
 		moc_loginwidget.cpp \
@@ -110,6 +111,7 @@ OBJECTS       = main.o \
 		rs485serv.o \
 		waitloginwidget.o \
 		usergroupmanage.o \
+		cmplayer.o \
 		qrc_res.o \
 		moc_MyApplication.o \
 		moc_choicelogindevwidget.o \
@@ -258,7 +260,8 @@ DIST          = ../rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/fe
 		ftpApi.h \
 		rs485serv.h \
 		waitloginwidget.h \
-		usergroupmanage.h main.cpp \
+		usergroupmanage.h \
+		cmplayer.h main.cpp \
 		MyApplication.cpp \
 		choicelogindevwidget.cpp \
 		loginwidget.cpp \
@@ -279,7 +282,8 @@ DIST          = ../rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/fe
 		ftpApi.c \
 		rs485serv.c \
 		waitloginwidget.cpp \
-		usergroupmanage.cpp
+		usergroupmanage.cpp \
+		cmplayer.cpp
 QMAKE_TARGET  = x86MyApplication
 DESTDIR       = 
 TARGET        = x86MyApplication
@@ -534,10 +538,10 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents res.qrc res.qrc $(DISTDIR)/
+	$(COPY_FILE) --parents res.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents MyApplication.h choicelogindevwidget.h loginwidget.h pvmsmenuwidget.h pvmsmonitorwidget.h recordplaywidget.h inteanalywidget.h devmanagewidget.h devupdatewidget.h alarmwidget.h fileConfig.h gb2312_utf8.h log.h pmsgcli.h state.h types.h presetpasswdconfirm.h myslider.h ftpApi.h rs485serv.h waitloginwidget.h usergroupmanage.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp MyApplication.cpp choicelogindevwidget.cpp loginwidget.cpp pvmsmenuwidget.cpp pvmsmonitorwidget.cpp recordplaywidget.cpp inteanalywidget.cpp devmanagewidget.cpp devupdatewidget.cpp alarmwidget.cpp fileConfig.cpp state.cpp gb2312_utf8.c log.c pmsgcli.c presetpasswdconfirm.cpp myslider.cpp ftpApi.c rs485serv.c waitloginwidget.cpp usergroupmanage.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents MyApplication.h choicelogindevwidget.h loginwidget.h pvmsmenuwidget.h pvmsmonitorwidget.h recordplaywidget.h inteanalywidget.h devmanagewidget.h devupdatewidget.h alarmwidget.h fileConfig.h gb2312_utf8.h log.h pmsgcli.h state.h types.h presetpasswdconfirm.h myslider.h ftpApi.h rs485serv.h waitloginwidget.h usergroupmanage.h cmplayer.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp MyApplication.cpp choicelogindevwidget.cpp loginwidget.cpp pvmsmenuwidget.cpp pvmsmonitorwidget.cpp recordplaywidget.cpp inteanalywidget.cpp devmanagewidget.cpp devupdatewidget.cpp alarmwidget.cpp fileConfig.cpp state.cpp gb2312_utf8.c log.c pmsgcli.c presetpasswdconfirm.cpp myslider.cpp ftpApi.c rs485serv.c waitloginwidget.cpp usergroupmanage.cpp cmplayer.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents choicelogindevwidget.ui loginwidget.ui pvmsmenuwidget.ui pvmsmonitorwidget.ui recordplaywidget.ui inteanalywidget.ui devmanagewidget.ui devupdatewidget.ui alarmwidget.ui presetpasswdconfirm.ui useredit.ui useradd.ui usermanage.ui usergroupmanage.ui waitloginwidget.ui usermanageconfig.ui devupdatewidget_base.ui $(DISTDIR)/
 
 
@@ -562,238 +566,9 @@ check: first
 
 benchmark: first
 
-compiler_rcc_make_all: qrc_res.cpp qrc_res.cpp
+compiler_rcc_make_all: qrc_res.cpp
 compiler_rcc_clean:
-	-$(DEL_FILE) qrc_res.cpp qrc_res.cpp
-qrc_res.cpp: res.qrc \
-		../rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/rcc \
-		monres/4.bmp \
-		monres/lighton.bmp \
-		monres/carriagemonitor.bmp \
-		monres/right.bmp \
-		monres/before.bmp \
-		monres/Pantoequip1.bmp \
-		monres/C3UnifiedClient.rc2 \
-		monres/return1.bmp \
-		monres/8.bmp \
-		monres/background.bmp \
-		monres/alerton2.bmp \
-		monres/Pantobg.bmp \
-		monres/next.bmp \
-		monres/12.bmp \
-		monres/bitmap19.bmp \
-		monres/savevedio_ing\ -\ 副本.bmp \
-		monres/gj.bmp \
-		monres/faultmapdownload.bmp \
-		monres/left.bmp \
-		monres/apply.bmp \
-		monres/3.bmp \
-		monres/replacevideo.bmp \
-		monres/ligtoff.jpg \
-		monres/putout.bmp \
-		monres/cameraon.jpg \
-		monres/browse.bmp \
-		monres/bitmap14.bmp \
-		monres/carriageequip1.bmp \
-		monres/downlog.bmp \
-		monres/16.bmp \
-		monres/timing.bmp \
-		monres/yj1.bmp \
-		monres/gj1.bmp \
-		monres/PantoMantain1.bmp \
-		monres/lighton.jpg \
-		monres/7.bmp \
-		monres/cameractrl.bmp \
-		monres/back.bmp \
-		monres/PantoPlay1.bmp \
-		monres/alerton1.bmp \
-		monres/erroconfig.bmp \
-		monres/plus.bmp \
-		monres/LoginCancel.bmp \
-		monres/11.bmp \
-		monres/leftup.bmp \
-		monres/return.bmp \
-		monres/bitmap18.bmp \
-		monres/start.bmp \
-		monres/carriageplay.bmp \
-		monres/PantoIntell.bmp \
-		monres/gengxin.bmp \
-		monres/setuse.bmp \
-		monres/2.bmp \
-		monres/carriagemaintain1.bmp \
-		monres/near.bmp \
-		monres/substruct.bmp \
-		monres/cancel.bmp \
-		monres/cameraoff.bmp \
-		monres/gzpz.bmp \
-		monres/qxdd.bmp \
-		monres/mfast.bmp \
-		monres/C3UnifiedClient1.ico \
-		monres/savevedio.bmp \
-		monres/LoginOK.bmp \
-		monres/15.bmp \
-		monres/fast.bmp \
-		monres/bj.bmp \
-		monres/useradd.bmp \
-		monres/alertoff.bmp \
-		monres/ccsz.bmp \
-		monres/PantoMonitor1.bmp \
-		monres/6.bmp \
-		monres/videodownload.bmp \
-		monres/1受电弓监控_63.png \
-		monres/PantoIntell1.bmp \
-		monres/Pantobg\ -\ 副本.bmp \
-		monres/Rights\ management.bmp \
-		monres/in.bmp \
-		monres/alerton.bmp \
-		monres/carriageplay1.bmp \
-		monres/10.bmp \
-		monres/cameractrl\ -\ 副本.bmp \
-		monres/bitmap17.bmp \
-		monres/preview.bmp \
-		monres/saveing.bmp \
-		monres/open.bmp \
-		monres/close.bmp \
-		monres/userdel.bmp \
-		monres/1.bmp \
-		monres/ledon.bmp \
-		monres/ledoff.bmp \
-		monres/stop.bmp \
-		monres/yj.bmp \
-		monres/restat.bmp \
-		monres/fare.bmp \
-		monres/carriagemaintain.bmp \
-		monres/putin.bmp \
-		monres/carriageequip.bmp \
-		monres/PantoPlay.bmp \
-		monres/pause.bmp \
-		monres/14.bmp \
-		monres/cameractrloff\ -\ 副本.bmp \
-		monres/5.bmp \
-		monres/search.bmp \
-		monres/sure.bmp \
-		monres/up.bmp \
-		monres/bj1.bmp \
-		monres/cameraoff.jpg \
-		monres/mslow.bmp \
-		monres/carriagemonitor1.bmp \
-		monres/usersave.bmp \
-		monres/pause1.bmp \
-		monres/slow.bmp \
-		monres/videodownload\ -\ 副本.bmp \
-		monres/PantoMonitor.bmp \
-		monres/down.bmp \
-		monres/9.bmp \
-		monres/cameractrloff.bmp \
-		monres/carriageset.bmp \
-		monres/ligtoff.bmp \
-		monres/playback.bmp \
-		monres/cameraon.bmp \
-		monres/nextpage.bmp \
-		monres/PantoMantain.bmp \
-		monres/kaishigegnxin.bmp \
-		monres/usepreset.bmp \
-		monres/Pantoequip.bmp \
-		monres/13.bmp \
-		monres/start1.bmp \
-		monres/settingconfig.bmp \
-		res/background.png \
-		res/ptz_right.png \
-		res/4.bmp \
-		res/pause_down.png \
-		res/right.bmp \
-		res/time_set.png \
-		res/Pantoequip1.bmp \
-		res/111.png \
-		res/fast_hover.png \
-		res/stop_nor.png \
-		res/prev_nor.png \
-		res/sdgbt.png \
-		res/cansel_wait.bmp \
-		res/8.bmp \
-		res/slow_hover.png \
-		res/pause_hover.png \
-		res/Pantobg.bmp \
-		res/plus_hover.png \
-		res/prev_hover.png \
-		res/stop_down.png \
-		res/ptz_up.png \
-		res/stop_hover.png \
-		res/left.bmp \
-		res/777.png \
-		res/ptz_down.png \
-		res/3.bmp \
-		res/MainDlgHead.png \
-		res/shiftSmall.png \
-		res/minus_nor.png \
-		res/next_nor.png \
-		res/myCheckBox.qss \
-		res/slow_down.png \
-		res/ck.png \
-		res/play_nor.png \
-		res/minus_down.png \
-		res/PantoMantain1.bmp \
-		res/7.bmp \
-		res/anniubk1.png \
-		res/clear.png \
-		res/PantoPlay1.bmp \
-		res/Password.png \
-		res/plus.bmp \
-		res/PantoIntell.bmp \
-		res/setuse.bmp \
-		res/2.bmp \
-		res/minus_hover.png \
-		res/near.bmp \
-		res/substruct.bmp \
-		res/savevedio.bmp \
-		res/close.png \
-		res/delete.png \
-		res/background1.png \
-		res/PantoMonitor1.bmp \
-		res/slow_nor.png \
-		res/6.bmp \
-		res/plus_nor.png \
-		res/info.png \
-		res/ptz_left.png \
-		res/pause_nor.png \
-		res/btck.png \
-		res/PantoIntell1.bmp \
-		res/bk2.png \
-		res/plus_down.png \
-		res/fast_nor.png \
-		res/preview.bmp \
-		res/saveing.bmp \
-		res/sure.png \
-		res/playerbk.png \
-		res/1.bmp \
-		res/fast_down.png \
-		res/anniubk.png \
-		res/next_hover.png \
-		res/zxanniubk.png \
-		res/fare.bmp \
-		res/PantoPlay.bmp \
-		res/title.png \
-		res/5.bmp \
-		res/title1.png \
-		res/up.bmp \
-		res/cansel.png \
-		res/play_hover.png \
-		res/gou.png \
-		res/prev_down.png \
-		res/keybackground.png \
-		res/play_down.png \
-		res/user.png \
-		res/PantoMonitor.bmp \
-		res/down.bmp \
-		res/login.png \
-		res/next_down.png \
-		res/playback.bmp \
-		res/PantoMantain.bmp \
-		res/usepreset.bmp \
-		res/nock.png \
-		res/Pantoequip.bmp
-	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/rcc -name res res.qrc -o qrc_res.cpp
-
+	-$(DEL_FILE) qrc_res.cpp
 qrc_res.cpp: res.qrc \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/rcc \
 		monres/4.bmp \
@@ -1146,7 +921,7 @@ moc_MyApplication.cpp: MyApplication.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qinputmethod.h \
 		moc_predefs.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc
-	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc $(DEFINES) --include /home/forlinx/share/x86MyAppliction/moc_predefs.h -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++ -I/home/forlinx/share/x86MyAppliction -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/aarch64-buildroot-linux-gnu -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/backward -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include-fixed -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include MyApplication.h -o moc_MyApplication.cpp
+	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc $(DEFINES) --include /home/forlinx/share/x86MyAppliction/moc_predefs.h -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++ -I/home/forlinx/share/x86MyAppliction -I/home/forlinx/share/include -I/home/forlinx/share/include/gstreamer-1.0 -I/home/forlinx/share/include/glib-2.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/aarch64-buildroot-linux-gnu -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/backward -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include-fixed -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include MyApplication.h -o moc_MyApplication.cpp
 
 moc_choicelogindevwidget.cpp: choicelogindevwidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QWidget \
@@ -1255,7 +1030,7 @@ moc_choicelogindevwidget.cpp: choicelogindevwidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtouchdevice.h \
 		moc_predefs.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc
-	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc $(DEFINES) --include /home/forlinx/share/x86MyAppliction/moc_predefs.h -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++ -I/home/forlinx/share/x86MyAppliction -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/aarch64-buildroot-linux-gnu -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/backward -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include-fixed -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include choicelogindevwidget.h -o moc_choicelogindevwidget.cpp
+	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc $(DEFINES) --include /home/forlinx/share/x86MyAppliction/moc_predefs.h -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++ -I/home/forlinx/share/x86MyAppliction -I/home/forlinx/share/include -I/home/forlinx/share/include/gstreamer-1.0 -I/home/forlinx/share/include/glib-2.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/aarch64-buildroot-linux-gnu -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/backward -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include-fixed -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include choicelogindevwidget.h -o moc_choicelogindevwidget.cpp
 
 moc_loginwidget.cpp: loginwidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QWidget \
@@ -1364,7 +1139,7 @@ moc_loginwidget.cpp: loginwidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtouchdevice.h \
 		moc_predefs.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc
-	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc $(DEFINES) --include /home/forlinx/share/x86MyAppliction/moc_predefs.h -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++ -I/home/forlinx/share/x86MyAppliction -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/aarch64-buildroot-linux-gnu -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/backward -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include-fixed -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include loginwidget.h -o moc_loginwidget.cpp
+	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc $(DEFINES) --include /home/forlinx/share/x86MyAppliction/moc_predefs.h -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++ -I/home/forlinx/share/x86MyAppliction -I/home/forlinx/share/include -I/home/forlinx/share/include/gstreamer-1.0 -I/home/forlinx/share/include/glib-2.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/aarch64-buildroot-linux-gnu -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/backward -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include-fixed -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include loginwidget.h -o moc_loginwidget.cpp
 
 moc_pvmsmenuwidget.cpp: pvmsmenuwidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QWidget \
@@ -1538,6 +1313,191 @@ moc_pvmsmenuwidget.cpp: pvmsmenuwidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QSlider \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qslider.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qabstractslider.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/QPainter \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpainter.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextoption.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpen.h \
+		cmplayer.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QHBoxLayout \
+		log.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QFile \
+		../include/gstreamer-1.0/gst/gst.h \
+		../include/glib-2.0/glib.h \
+		../include/glib-2.0/glib/galloca.h \
+		../include/glib-2.0/glib/gtypes.h \
+		../include/glib-2.0/glibconfig.h \
+		../include/glib-2.0/glib/gmacros.h \
+		../include/glib-2.0/glib/gversionmacros.h \
+		../include/glib-2.0/glib/garray.h \
+		../include/glib-2.0/glib/gasyncqueue.h \
+		../include/glib-2.0/glib/gthread.h \
+		../include/glib-2.0/glib/gatomic.h \
+		../include/glib-2.0/glib/gerror.h \
+		../include/glib-2.0/glib/gquark.h \
+		../include/glib-2.0/glib/gutils.h \
+		../include/glib-2.0/glib/gbacktrace.h \
+		../include/glib-2.0/glib/gbase64.h \
+		../include/glib-2.0/glib/gbitlock.h \
+		../include/glib-2.0/glib/gbookmarkfile.h \
+		../include/glib-2.0/glib/gbytes.h \
+		../include/glib-2.0/glib/gcharset.h \
+		../include/glib-2.0/glib/gchecksum.h \
+		../include/glib-2.0/glib/gconvert.h \
+		../include/glib-2.0/glib/gdataset.h \
+		../include/glib-2.0/glib/gdate.h \
+		../include/glib-2.0/glib/gdatetime.h \
+		../include/glib-2.0/glib/gtimezone.h \
+		../include/glib-2.0/glib/gdir.h \
+		../include/glib-2.0/glib/genviron.h \
+		../include/glib-2.0/glib/gfileutils.h \
+		../include/glib-2.0/glib/ggettext.h \
+		../include/glib-2.0/glib/ghash.h \
+		../include/glib-2.0/glib/glist.h \
+		../include/glib-2.0/glib/gmem.h \
+		../include/glib-2.0/glib/gnode.h \
+		../include/glib-2.0/glib/ghmac.h \
+		../include/glib-2.0/glib/ghook.h \
+		../include/glib-2.0/glib/ghostutils.h \
+		../include/glib-2.0/glib/giochannel.h \
+		../include/glib-2.0/glib/gmain.h \
+		../include/glib-2.0/glib/gpoll.h \
+		../include/glib-2.0/glib/gslist.h \
+		../include/glib-2.0/glib/gstring.h \
+		../include/glib-2.0/glib/gunicode.h \
+		../include/glib-2.0/glib/gkeyfile.h \
+		../include/glib-2.0/glib/gmappedfile.h \
+		../include/glib-2.0/glib/gmarkup.h \
+		../include/glib-2.0/glib/gmessages.h \
+		../include/glib-2.0/glib/gvariant.h \
+		../include/glib-2.0/glib/gvarianttype.h \
+		../include/glib-2.0/glib/goption.h \
+		../include/glib-2.0/glib/gpattern.h \
+		../include/glib-2.0/glib/gprimes.h \
+		../include/glib-2.0/glib/gqsort.h \
+		../include/glib-2.0/glib/gqueue.h \
+		../include/glib-2.0/glib/grand.h \
+		../include/glib-2.0/glib/gregex.h \
+		../include/glib-2.0/glib/gscanner.h \
+		../include/glib-2.0/glib/gsequence.h \
+		../include/glib-2.0/glib/gshell.h \
+		../include/glib-2.0/glib/gslice.h \
+		../include/glib-2.0/glib/gspawn.h \
+		../include/glib-2.0/glib/gstrfuncs.h \
+		../include/glib-2.0/glib/gstringchunk.h \
+		../include/glib-2.0/glib/gtestutils.h \
+		../include/glib-2.0/glib/gthreadpool.h \
+		../include/glib-2.0/glib/gtimer.h \
+		../include/glib-2.0/glib/gtrashstack.h \
+		../include/glib-2.0/glib/gtree.h \
+		../include/glib-2.0/glib/gurifuncs.h \
+		../include/glib-2.0/glib/guuid.h \
+		../include/glib-2.0/glib/gversion.h \
+		../include/glib-2.0/glib/gwin32.h \
+		../include/glib-2.0/glib/deprecated/gallocator.h \
+		../include/glib-2.0/glib/deprecated/gcache.h \
+		../include/glib-2.0/glib/deprecated/gcompletion.h \
+		../include/glib-2.0/glib/deprecated/gmain.h \
+		../include/glib-2.0/glib/deprecated/grel.h \
+		../include/glib-2.0/glib/deprecated/gthread.h \
+		../include/glib-2.0/glib/glib-autocleanups.h \
+		../include/gstreamer-1.0/gst/glib-compat.h \
+		../include/gstreamer-1.0/gst/gstenumtypes.h \
+		../include/glib-2.0/glib-object.h \
+		../include/glib-2.0/gobject/gbinding.h \
+		../include/glib-2.0/gobject/gobject.h \
+		../include/glib-2.0/gobject/gtype.h \
+		../include/glib-2.0/gobject/gvalue.h \
+		../include/glib-2.0/gobject/gparam.h \
+		../include/glib-2.0/gobject/gclosure.h \
+		../include/glib-2.0/gobject/gsignal.h \
+		../include/glib-2.0/gobject/gmarshal.h \
+		../include/glib-2.0/gobject/gboxed.h \
+		../include/glib-2.0/gobject/glib-types.h \
+		../include/glib-2.0/gobject/genums.h \
+		../include/glib-2.0/gobject/gparamspecs.h \
+		../include/glib-2.0/gobject/gsourceclosure.h \
+		../include/glib-2.0/gobject/gtypemodule.h \
+		../include/glib-2.0/gobject/gtypeplugin.h \
+		../include/glib-2.0/gobject/gvaluearray.h \
+		../include/glib-2.0/gobject/gvaluetypes.h \
+		../include/glib-2.0/gobject/gobject-autocleanups.h \
+		../include/gstreamer-1.0/gst/gstconfig.h \
+		../include/gstreamer-1.0/gst/gstversion.h \
+		../include/gstreamer-1.0/gst/gstatomicqueue.h \
+		../include/gstreamer-1.0/gst/gstbin.h \
+		../include/gstreamer-1.0/gst/gstelement.h \
+		../include/gstreamer-1.0/gst/gstobject.h \
+		../include/gstreamer-1.0/gst/gstcontrolbinding.h \
+		../include/gstreamer-1.0/gst/gstcontrolsource.h \
+		../include/gstreamer-1.0/gst/gstclock.h \
+		../include/gstreamer-1.0/gst/gstpad.h \
+		../include/gstreamer-1.0/gst/gstbuffer.h \
+		../include/gstreamer-1.0/gst/gstminiobject.h \
+		../include/gstreamer-1.0/gst/gstallocator.h \
+		../include/gstreamer-1.0/gst/gstmemory.h \
+		../include/gstreamer-1.0/gst/gstcaps.h \
+		../include/gstreamer-1.0/gst/gststructure.h \
+		../include/gstreamer-1.0/gst/gstdatetime.h \
+		../include/gstreamer-1.0/gst/gstcapsfeatures.h \
+		../include/gstreamer-1.0/gst/gstmeta.h \
+		../include/gstreamer-1.0/gst/gstbufferlist.h \
+		../include/gstreamer-1.0/gst/gstpadtemplate.h \
+		../include/gstreamer-1.0/gst/gstevent.h \
+		../include/gstreamer-1.0/gst/gstformat.h \
+		../include/gstreamer-1.0/gst/gstiterator.h \
+		../include/gstreamer-1.0/gst/gsttaglist.h \
+		../include/gstreamer-1.0/gst/gstsample.h \
+		../include/gstreamer-1.0/gst/gstsegment.h \
+		../include/gstreamer-1.0/gst/gstmessage.h \
+		../include/gstreamer-1.0/gst/gstquery.h \
+		../include/gstreamer-1.0/gst/gsttoc.h \
+		../include/gstreamer-1.0/gst/gstcontext.h \
+		../include/gstreamer-1.0/gst/gstdevice.h \
+		../include/gstreamer-1.0/gst/gststreams.h \
+		../include/gstreamer-1.0/gst/gststreamcollection.h \
+		../include/gstreamer-1.0/gst/gsttask.h \
+		../include/gstreamer-1.0/gst/gsttaskpool.h \
+		../include/gstreamer-1.0/gst/gstbus.h \
+		../include/gstreamer-1.0/gst/gstelementfactory.h \
+		../include/gstreamer-1.0/gst/gstplugin.h \
+		../include/gstreamer-1.0/gst/gstmacros.h \
+		../include/gstreamer-1.0/gst/gstpluginfeature.h \
+		../include/gstreamer-1.0/gst/gsturi.h \
+		../include/gstreamer-1.0/gst/gstbufferpool.h \
+		../include/gstreamer-1.0/gst/gstchildproxy.h \
+		../include/gstreamer-1.0/gst/gstdebugutils.h \
+		../include/gstreamer-1.0/gst/gstdevicemonitor.h \
+		../include/gstreamer-1.0/gst/gstdeviceprovider.h \
+		../include/gstreamer-1.0/gst/gstdeviceproviderfactory.h \
+		../include/gstreamer-1.0/gst/gstdynamictypefactory.h \
+		../include/gstreamer-1.0/gst/gstelementmetadata.h \
+		../include/gstreamer-1.0/gst/gsterror.h \
+		../include/gstreamer-1.0/gst/gstghostpad.h \
+		../include/gstreamer-1.0/gst/gstinfo.h \
+		../include/gstreamer-1.0/gst/gstparamspecs.h \
+		../include/gstreamer-1.0/gst/gstvalue.h \
+		../include/gstreamer-1.0/gst/gstpipeline.h \
+		../include/gstreamer-1.0/gst/gstpoll.h \
+		../include/gstreamer-1.0/gst/gstpreset.h \
+		../include/gstreamer-1.0/gst/gstprotection.h \
+		../include/gstreamer-1.0/gst/gstregistry.h \
+		../include/gstreamer-1.0/gst/gstpromise.h \
+		../include/gstreamer-1.0/gst/gstsystemclock.h \
+		../include/gstreamer-1.0/gst/gsttagsetter.h \
+		../include/gstreamer-1.0/gst/gsttocsetter.h \
+		../include/gstreamer-1.0/gst/gsttracer.h \
+		../include/gstreamer-1.0/gst/gsttracerfactory.h \
+		../include/gstreamer-1.0/gst/gsttracerrecord.h \
+		../include/gstreamer-1.0/gst/gsttypefind.h \
+		../include/gstreamer-1.0/gst/gsttypefindfactory.h \
+		../include/gstreamer-1.0/gst/gstutils.h \
+		../include/gstreamer-1.0/gst/gstparse.h \
+		../include/gstreamer-1.0/gst/gstcompat.h \
+		../include/gstreamer-1.0/gst/video/videooverlay.h \
+		../include/gstreamer-1.0/gst/video/gstvideosink.h \
+		../include/gstreamer-1.0/gst/base/gstbasesink.h \
+		../include/gstreamer-1.0/gst/base/base-prelude.h \
+		../include/gstreamer-1.0/gst/video/video-prelude.h \
 		recordplaywidget.h \
 		myslider.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/QMouseEvent \
@@ -1567,9 +1527,11 @@ moc_pvmsmenuwidget.cpp: pvmsmenuwidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qdatetime.h \
 		alarmwidget.h \
 		rs485serv.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QStackedWidget \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qstackedwidget.h \
 		moc_predefs.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc
-	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc $(DEFINES) --include /home/forlinx/share/x86MyAppliction/moc_predefs.h -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++ -I/home/forlinx/share/x86MyAppliction -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/aarch64-buildroot-linux-gnu -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/backward -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include-fixed -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include pvmsmenuwidget.h -o moc_pvmsmenuwidget.cpp
+	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc $(DEFINES) --include /home/forlinx/share/x86MyAppliction/moc_predefs.h -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++ -I/home/forlinx/share/x86MyAppliction -I/home/forlinx/share/include -I/home/forlinx/share/include/gstreamer-1.0 -I/home/forlinx/share/include/glib-2.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/aarch64-buildroot-linux-gnu -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/backward -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include-fixed -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include pvmsmenuwidget.h -o moc_pvmsmenuwidget.cpp
 
 moc_pvmsmonitorwidget.cpp: pvmsmonitorwidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QWidget \
@@ -1742,9 +1704,194 @@ moc_pvmsmonitorwidget.cpp: pvmsmonitorwidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QSlider \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qslider.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qabstractslider.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/QPainter \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpainter.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextoption.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpen.h \
+		cmplayer.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QHBoxLayout \
+		log.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QFile \
+		../include/gstreamer-1.0/gst/gst.h \
+		../include/glib-2.0/glib.h \
+		../include/glib-2.0/glib/galloca.h \
+		../include/glib-2.0/glib/gtypes.h \
+		../include/glib-2.0/glibconfig.h \
+		../include/glib-2.0/glib/gmacros.h \
+		../include/glib-2.0/glib/gversionmacros.h \
+		../include/glib-2.0/glib/garray.h \
+		../include/glib-2.0/glib/gasyncqueue.h \
+		../include/glib-2.0/glib/gthread.h \
+		../include/glib-2.0/glib/gatomic.h \
+		../include/glib-2.0/glib/gerror.h \
+		../include/glib-2.0/glib/gquark.h \
+		../include/glib-2.0/glib/gutils.h \
+		../include/glib-2.0/glib/gbacktrace.h \
+		../include/glib-2.0/glib/gbase64.h \
+		../include/glib-2.0/glib/gbitlock.h \
+		../include/glib-2.0/glib/gbookmarkfile.h \
+		../include/glib-2.0/glib/gbytes.h \
+		../include/glib-2.0/glib/gcharset.h \
+		../include/glib-2.0/glib/gchecksum.h \
+		../include/glib-2.0/glib/gconvert.h \
+		../include/glib-2.0/glib/gdataset.h \
+		../include/glib-2.0/glib/gdate.h \
+		../include/glib-2.0/glib/gdatetime.h \
+		../include/glib-2.0/glib/gtimezone.h \
+		../include/glib-2.0/glib/gdir.h \
+		../include/glib-2.0/glib/genviron.h \
+		../include/glib-2.0/glib/gfileutils.h \
+		../include/glib-2.0/glib/ggettext.h \
+		../include/glib-2.0/glib/ghash.h \
+		../include/glib-2.0/glib/glist.h \
+		../include/glib-2.0/glib/gmem.h \
+		../include/glib-2.0/glib/gnode.h \
+		../include/glib-2.0/glib/ghmac.h \
+		../include/glib-2.0/glib/ghook.h \
+		../include/glib-2.0/glib/ghostutils.h \
+		../include/glib-2.0/glib/giochannel.h \
+		../include/glib-2.0/glib/gmain.h \
+		../include/glib-2.0/glib/gpoll.h \
+		../include/glib-2.0/glib/gslist.h \
+		../include/glib-2.0/glib/gstring.h \
+		../include/glib-2.0/glib/gunicode.h \
+		../include/glib-2.0/glib/gkeyfile.h \
+		../include/glib-2.0/glib/gmappedfile.h \
+		../include/glib-2.0/glib/gmarkup.h \
+		../include/glib-2.0/glib/gmessages.h \
+		../include/glib-2.0/glib/gvariant.h \
+		../include/glib-2.0/glib/gvarianttype.h \
+		../include/glib-2.0/glib/goption.h \
+		../include/glib-2.0/glib/gpattern.h \
+		../include/glib-2.0/glib/gprimes.h \
+		../include/glib-2.0/glib/gqsort.h \
+		../include/glib-2.0/glib/gqueue.h \
+		../include/glib-2.0/glib/grand.h \
+		../include/glib-2.0/glib/gregex.h \
+		../include/glib-2.0/glib/gscanner.h \
+		../include/glib-2.0/glib/gsequence.h \
+		../include/glib-2.0/glib/gshell.h \
+		../include/glib-2.0/glib/gslice.h \
+		../include/glib-2.0/glib/gspawn.h \
+		../include/glib-2.0/glib/gstrfuncs.h \
+		../include/glib-2.0/glib/gstringchunk.h \
+		../include/glib-2.0/glib/gtestutils.h \
+		../include/glib-2.0/glib/gthreadpool.h \
+		../include/glib-2.0/glib/gtimer.h \
+		../include/glib-2.0/glib/gtrashstack.h \
+		../include/glib-2.0/glib/gtree.h \
+		../include/glib-2.0/glib/gurifuncs.h \
+		../include/glib-2.0/glib/guuid.h \
+		../include/glib-2.0/glib/gversion.h \
+		../include/glib-2.0/glib/gwin32.h \
+		../include/glib-2.0/glib/deprecated/gallocator.h \
+		../include/glib-2.0/glib/deprecated/gcache.h \
+		../include/glib-2.0/glib/deprecated/gcompletion.h \
+		../include/glib-2.0/glib/deprecated/gmain.h \
+		../include/glib-2.0/glib/deprecated/grel.h \
+		../include/glib-2.0/glib/deprecated/gthread.h \
+		../include/glib-2.0/glib/glib-autocleanups.h \
+		../include/gstreamer-1.0/gst/glib-compat.h \
+		../include/gstreamer-1.0/gst/gstenumtypes.h \
+		../include/glib-2.0/glib-object.h \
+		../include/glib-2.0/gobject/gbinding.h \
+		../include/glib-2.0/gobject/gobject.h \
+		../include/glib-2.0/gobject/gtype.h \
+		../include/glib-2.0/gobject/gvalue.h \
+		../include/glib-2.0/gobject/gparam.h \
+		../include/glib-2.0/gobject/gclosure.h \
+		../include/glib-2.0/gobject/gsignal.h \
+		../include/glib-2.0/gobject/gmarshal.h \
+		../include/glib-2.0/gobject/gboxed.h \
+		../include/glib-2.0/gobject/glib-types.h \
+		../include/glib-2.0/gobject/genums.h \
+		../include/glib-2.0/gobject/gparamspecs.h \
+		../include/glib-2.0/gobject/gsourceclosure.h \
+		../include/glib-2.0/gobject/gtypemodule.h \
+		../include/glib-2.0/gobject/gtypeplugin.h \
+		../include/glib-2.0/gobject/gvaluearray.h \
+		../include/glib-2.0/gobject/gvaluetypes.h \
+		../include/glib-2.0/gobject/gobject-autocleanups.h \
+		../include/gstreamer-1.0/gst/gstconfig.h \
+		../include/gstreamer-1.0/gst/gstversion.h \
+		../include/gstreamer-1.0/gst/gstatomicqueue.h \
+		../include/gstreamer-1.0/gst/gstbin.h \
+		../include/gstreamer-1.0/gst/gstelement.h \
+		../include/gstreamer-1.0/gst/gstobject.h \
+		../include/gstreamer-1.0/gst/gstcontrolbinding.h \
+		../include/gstreamer-1.0/gst/gstcontrolsource.h \
+		../include/gstreamer-1.0/gst/gstclock.h \
+		../include/gstreamer-1.0/gst/gstpad.h \
+		../include/gstreamer-1.0/gst/gstbuffer.h \
+		../include/gstreamer-1.0/gst/gstminiobject.h \
+		../include/gstreamer-1.0/gst/gstallocator.h \
+		../include/gstreamer-1.0/gst/gstmemory.h \
+		../include/gstreamer-1.0/gst/gstcaps.h \
+		../include/gstreamer-1.0/gst/gststructure.h \
+		../include/gstreamer-1.0/gst/gstdatetime.h \
+		../include/gstreamer-1.0/gst/gstcapsfeatures.h \
+		../include/gstreamer-1.0/gst/gstmeta.h \
+		../include/gstreamer-1.0/gst/gstbufferlist.h \
+		../include/gstreamer-1.0/gst/gstpadtemplate.h \
+		../include/gstreamer-1.0/gst/gstevent.h \
+		../include/gstreamer-1.0/gst/gstformat.h \
+		../include/gstreamer-1.0/gst/gstiterator.h \
+		../include/gstreamer-1.0/gst/gsttaglist.h \
+		../include/gstreamer-1.0/gst/gstsample.h \
+		../include/gstreamer-1.0/gst/gstsegment.h \
+		../include/gstreamer-1.0/gst/gstmessage.h \
+		../include/gstreamer-1.0/gst/gstquery.h \
+		../include/gstreamer-1.0/gst/gsttoc.h \
+		../include/gstreamer-1.0/gst/gstcontext.h \
+		../include/gstreamer-1.0/gst/gstdevice.h \
+		../include/gstreamer-1.0/gst/gststreams.h \
+		../include/gstreamer-1.0/gst/gststreamcollection.h \
+		../include/gstreamer-1.0/gst/gsttask.h \
+		../include/gstreamer-1.0/gst/gsttaskpool.h \
+		../include/gstreamer-1.0/gst/gstbus.h \
+		../include/gstreamer-1.0/gst/gstelementfactory.h \
+		../include/gstreamer-1.0/gst/gstplugin.h \
+		../include/gstreamer-1.0/gst/gstmacros.h \
+		../include/gstreamer-1.0/gst/gstpluginfeature.h \
+		../include/gstreamer-1.0/gst/gsturi.h \
+		../include/gstreamer-1.0/gst/gstbufferpool.h \
+		../include/gstreamer-1.0/gst/gstchildproxy.h \
+		../include/gstreamer-1.0/gst/gstdebugutils.h \
+		../include/gstreamer-1.0/gst/gstdevicemonitor.h \
+		../include/gstreamer-1.0/gst/gstdeviceprovider.h \
+		../include/gstreamer-1.0/gst/gstdeviceproviderfactory.h \
+		../include/gstreamer-1.0/gst/gstdynamictypefactory.h \
+		../include/gstreamer-1.0/gst/gstelementmetadata.h \
+		../include/gstreamer-1.0/gst/gsterror.h \
+		../include/gstreamer-1.0/gst/gstghostpad.h \
+		../include/gstreamer-1.0/gst/gstinfo.h \
+		../include/gstreamer-1.0/gst/gstparamspecs.h \
+		../include/gstreamer-1.0/gst/gstvalue.h \
+		../include/gstreamer-1.0/gst/gstpipeline.h \
+		../include/gstreamer-1.0/gst/gstpoll.h \
+		../include/gstreamer-1.0/gst/gstpreset.h \
+		../include/gstreamer-1.0/gst/gstprotection.h \
+		../include/gstreamer-1.0/gst/gstregistry.h \
+		../include/gstreamer-1.0/gst/gstpromise.h \
+		../include/gstreamer-1.0/gst/gstsystemclock.h \
+		../include/gstreamer-1.0/gst/gsttagsetter.h \
+		../include/gstreamer-1.0/gst/gsttocsetter.h \
+		../include/gstreamer-1.0/gst/gsttracer.h \
+		../include/gstreamer-1.0/gst/gsttracerfactory.h \
+		../include/gstreamer-1.0/gst/gsttracerrecord.h \
+		../include/gstreamer-1.0/gst/gsttypefind.h \
+		../include/gstreamer-1.0/gst/gsttypefindfactory.h \
+		../include/gstreamer-1.0/gst/gstutils.h \
+		../include/gstreamer-1.0/gst/gstparse.h \
+		../include/gstreamer-1.0/gst/gstcompat.h \
+		../include/gstreamer-1.0/gst/video/videooverlay.h \
+		../include/gstreamer-1.0/gst/video/gstvideosink.h \
+		../include/gstreamer-1.0/gst/base/gstbasesink.h \
+		../include/gstreamer-1.0/gst/base/base-prelude.h \
+		../include/gstreamer-1.0/gst/video/video-prelude.h \
 		moc_predefs.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc
-	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc $(DEFINES) --include /home/forlinx/share/x86MyAppliction/moc_predefs.h -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++ -I/home/forlinx/share/x86MyAppliction -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/aarch64-buildroot-linux-gnu -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/backward -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include-fixed -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include pvmsmonitorwidget.h -o moc_pvmsmonitorwidget.cpp
+	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc $(DEFINES) --include /home/forlinx/share/x86MyAppliction/moc_predefs.h -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++ -I/home/forlinx/share/x86MyAppliction -I/home/forlinx/share/include -I/home/forlinx/share/include/gstreamer-1.0 -I/home/forlinx/share/include/glib-2.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/aarch64-buildroot-linux-gnu -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/backward -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include-fixed -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include pvmsmonitorwidget.h -o moc_pvmsmonitorwidget.cpp
 
 moc_recordplaywidget.cpp: recordplaywidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QWidget \
@@ -1936,10 +2083,195 @@ moc_recordplaywidget.cpp: recordplaywidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qjsonobject.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qjsonvalue.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qfactoryinterface.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/QPainter \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpainter.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextoption.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpen.h \
+		cmplayer.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QHBoxLayout \
+		log.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QFile \
+		../include/gstreamer-1.0/gst/gst.h \
+		../include/glib-2.0/glib.h \
+		../include/glib-2.0/glib/galloca.h \
+		../include/glib-2.0/glib/gtypes.h \
+		../include/glib-2.0/glibconfig.h \
+		../include/glib-2.0/glib/gmacros.h \
+		../include/glib-2.0/glib/gversionmacros.h \
+		../include/glib-2.0/glib/garray.h \
+		../include/glib-2.0/glib/gasyncqueue.h \
+		../include/glib-2.0/glib/gthread.h \
+		../include/glib-2.0/glib/gatomic.h \
+		../include/glib-2.0/glib/gerror.h \
+		../include/glib-2.0/glib/gquark.h \
+		../include/glib-2.0/glib/gutils.h \
+		../include/glib-2.0/glib/gbacktrace.h \
+		../include/glib-2.0/glib/gbase64.h \
+		../include/glib-2.0/glib/gbitlock.h \
+		../include/glib-2.0/glib/gbookmarkfile.h \
+		../include/glib-2.0/glib/gbytes.h \
+		../include/glib-2.0/glib/gcharset.h \
+		../include/glib-2.0/glib/gchecksum.h \
+		../include/glib-2.0/glib/gconvert.h \
+		../include/glib-2.0/glib/gdataset.h \
+		../include/glib-2.0/glib/gdate.h \
+		../include/glib-2.0/glib/gdatetime.h \
+		../include/glib-2.0/glib/gtimezone.h \
+		../include/glib-2.0/glib/gdir.h \
+		../include/glib-2.0/glib/genviron.h \
+		../include/glib-2.0/glib/gfileutils.h \
+		../include/glib-2.0/glib/ggettext.h \
+		../include/glib-2.0/glib/ghash.h \
+		../include/glib-2.0/glib/glist.h \
+		../include/glib-2.0/glib/gmem.h \
+		../include/glib-2.0/glib/gnode.h \
+		../include/glib-2.0/glib/ghmac.h \
+		../include/glib-2.0/glib/ghook.h \
+		../include/glib-2.0/glib/ghostutils.h \
+		../include/glib-2.0/glib/giochannel.h \
+		../include/glib-2.0/glib/gmain.h \
+		../include/glib-2.0/glib/gpoll.h \
+		../include/glib-2.0/glib/gslist.h \
+		../include/glib-2.0/glib/gstring.h \
+		../include/glib-2.0/glib/gunicode.h \
+		../include/glib-2.0/glib/gkeyfile.h \
+		../include/glib-2.0/glib/gmappedfile.h \
+		../include/glib-2.0/glib/gmarkup.h \
+		../include/glib-2.0/glib/gmessages.h \
+		../include/glib-2.0/glib/gvariant.h \
+		../include/glib-2.0/glib/gvarianttype.h \
+		../include/glib-2.0/glib/goption.h \
+		../include/glib-2.0/glib/gpattern.h \
+		../include/glib-2.0/glib/gprimes.h \
+		../include/glib-2.0/glib/gqsort.h \
+		../include/glib-2.0/glib/gqueue.h \
+		../include/glib-2.0/glib/grand.h \
+		../include/glib-2.0/glib/gregex.h \
+		../include/glib-2.0/glib/gscanner.h \
+		../include/glib-2.0/glib/gsequence.h \
+		../include/glib-2.0/glib/gshell.h \
+		../include/glib-2.0/glib/gslice.h \
+		../include/glib-2.0/glib/gspawn.h \
+		../include/glib-2.0/glib/gstrfuncs.h \
+		../include/glib-2.0/glib/gstringchunk.h \
+		../include/glib-2.0/glib/gtestutils.h \
+		../include/glib-2.0/glib/gthreadpool.h \
+		../include/glib-2.0/glib/gtimer.h \
+		../include/glib-2.0/glib/gtrashstack.h \
+		../include/glib-2.0/glib/gtree.h \
+		../include/glib-2.0/glib/gurifuncs.h \
+		../include/glib-2.0/glib/guuid.h \
+		../include/glib-2.0/glib/gversion.h \
+		../include/glib-2.0/glib/gwin32.h \
+		../include/glib-2.0/glib/deprecated/gallocator.h \
+		../include/glib-2.0/glib/deprecated/gcache.h \
+		../include/glib-2.0/glib/deprecated/gcompletion.h \
+		../include/glib-2.0/glib/deprecated/gmain.h \
+		../include/glib-2.0/glib/deprecated/grel.h \
+		../include/glib-2.0/glib/deprecated/gthread.h \
+		../include/glib-2.0/glib/glib-autocleanups.h \
+		../include/gstreamer-1.0/gst/glib-compat.h \
+		../include/gstreamer-1.0/gst/gstenumtypes.h \
+		../include/glib-2.0/glib-object.h \
+		../include/glib-2.0/gobject/gbinding.h \
+		../include/glib-2.0/gobject/gobject.h \
+		../include/glib-2.0/gobject/gtype.h \
+		../include/glib-2.0/gobject/gvalue.h \
+		../include/glib-2.0/gobject/gparam.h \
+		../include/glib-2.0/gobject/gclosure.h \
+		../include/glib-2.0/gobject/gsignal.h \
+		../include/glib-2.0/gobject/gmarshal.h \
+		../include/glib-2.0/gobject/gboxed.h \
+		../include/glib-2.0/gobject/glib-types.h \
+		../include/glib-2.0/gobject/genums.h \
+		../include/glib-2.0/gobject/gparamspecs.h \
+		../include/glib-2.0/gobject/gsourceclosure.h \
+		../include/glib-2.0/gobject/gtypemodule.h \
+		../include/glib-2.0/gobject/gtypeplugin.h \
+		../include/glib-2.0/gobject/gvaluearray.h \
+		../include/glib-2.0/gobject/gvaluetypes.h \
+		../include/glib-2.0/gobject/gobject-autocleanups.h \
+		../include/gstreamer-1.0/gst/gstconfig.h \
+		../include/gstreamer-1.0/gst/gstversion.h \
+		../include/gstreamer-1.0/gst/gstatomicqueue.h \
+		../include/gstreamer-1.0/gst/gstbin.h \
+		../include/gstreamer-1.0/gst/gstelement.h \
+		../include/gstreamer-1.0/gst/gstobject.h \
+		../include/gstreamer-1.0/gst/gstcontrolbinding.h \
+		../include/gstreamer-1.0/gst/gstcontrolsource.h \
+		../include/gstreamer-1.0/gst/gstclock.h \
+		../include/gstreamer-1.0/gst/gstpad.h \
+		../include/gstreamer-1.0/gst/gstbuffer.h \
+		../include/gstreamer-1.0/gst/gstminiobject.h \
+		../include/gstreamer-1.0/gst/gstallocator.h \
+		../include/gstreamer-1.0/gst/gstmemory.h \
+		../include/gstreamer-1.0/gst/gstcaps.h \
+		../include/gstreamer-1.0/gst/gststructure.h \
+		../include/gstreamer-1.0/gst/gstdatetime.h \
+		../include/gstreamer-1.0/gst/gstcapsfeatures.h \
+		../include/gstreamer-1.0/gst/gstmeta.h \
+		../include/gstreamer-1.0/gst/gstbufferlist.h \
+		../include/gstreamer-1.0/gst/gstpadtemplate.h \
+		../include/gstreamer-1.0/gst/gstevent.h \
+		../include/gstreamer-1.0/gst/gstformat.h \
+		../include/gstreamer-1.0/gst/gstiterator.h \
+		../include/gstreamer-1.0/gst/gsttaglist.h \
+		../include/gstreamer-1.0/gst/gstsample.h \
+		../include/gstreamer-1.0/gst/gstsegment.h \
+		../include/gstreamer-1.0/gst/gstmessage.h \
+		../include/gstreamer-1.0/gst/gstquery.h \
+		../include/gstreamer-1.0/gst/gsttoc.h \
+		../include/gstreamer-1.0/gst/gstcontext.h \
+		../include/gstreamer-1.0/gst/gstdevice.h \
+		../include/gstreamer-1.0/gst/gststreams.h \
+		../include/gstreamer-1.0/gst/gststreamcollection.h \
+		../include/gstreamer-1.0/gst/gsttask.h \
+		../include/gstreamer-1.0/gst/gsttaskpool.h \
+		../include/gstreamer-1.0/gst/gstbus.h \
+		../include/gstreamer-1.0/gst/gstelementfactory.h \
+		../include/gstreamer-1.0/gst/gstplugin.h \
+		../include/gstreamer-1.0/gst/gstmacros.h \
+		../include/gstreamer-1.0/gst/gstpluginfeature.h \
+		../include/gstreamer-1.0/gst/gsturi.h \
+		../include/gstreamer-1.0/gst/gstbufferpool.h \
+		../include/gstreamer-1.0/gst/gstchildproxy.h \
+		../include/gstreamer-1.0/gst/gstdebugutils.h \
+		../include/gstreamer-1.0/gst/gstdevicemonitor.h \
+		../include/gstreamer-1.0/gst/gstdeviceprovider.h \
+		../include/gstreamer-1.0/gst/gstdeviceproviderfactory.h \
+		../include/gstreamer-1.0/gst/gstdynamictypefactory.h \
+		../include/gstreamer-1.0/gst/gstelementmetadata.h \
+		../include/gstreamer-1.0/gst/gsterror.h \
+		../include/gstreamer-1.0/gst/gstghostpad.h \
+		../include/gstreamer-1.0/gst/gstinfo.h \
+		../include/gstreamer-1.0/gst/gstparamspecs.h \
+		../include/gstreamer-1.0/gst/gstvalue.h \
+		../include/gstreamer-1.0/gst/gstpipeline.h \
+		../include/gstreamer-1.0/gst/gstpoll.h \
+		../include/gstreamer-1.0/gst/gstpreset.h \
+		../include/gstreamer-1.0/gst/gstprotection.h \
+		../include/gstreamer-1.0/gst/gstregistry.h \
+		../include/gstreamer-1.0/gst/gstpromise.h \
+		../include/gstreamer-1.0/gst/gstsystemclock.h \
+		../include/gstreamer-1.0/gst/gsttagsetter.h \
+		../include/gstreamer-1.0/gst/gsttocsetter.h \
+		../include/gstreamer-1.0/gst/gsttracer.h \
+		../include/gstreamer-1.0/gst/gsttracerfactory.h \
+		../include/gstreamer-1.0/gst/gsttracerrecord.h \
+		../include/gstreamer-1.0/gst/gsttypefind.h \
+		../include/gstreamer-1.0/gst/gsttypefindfactory.h \
+		../include/gstreamer-1.0/gst/gstutils.h \
+		../include/gstreamer-1.0/gst/gstparse.h \
+		../include/gstreamer-1.0/gst/gstcompat.h \
+		../include/gstreamer-1.0/gst/video/videooverlay.h \
+		../include/gstreamer-1.0/gst/video/gstvideosink.h \
+		../include/gstreamer-1.0/gst/base/gstbasesink.h \
+		../include/gstreamer-1.0/gst/base/base-prelude.h \
+		../include/gstreamer-1.0/gst/video/video-prelude.h \
 		ftpApi.h \
 		moc_predefs.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc
-	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc $(DEFINES) --include /home/forlinx/share/x86MyAppliction/moc_predefs.h -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++ -I/home/forlinx/share/x86MyAppliction -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/aarch64-buildroot-linux-gnu -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/backward -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include-fixed -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include recordplaywidget.h -o moc_recordplaywidget.cpp
+	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc $(DEFINES) --include /home/forlinx/share/x86MyAppliction/moc_predefs.h -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++ -I/home/forlinx/share/x86MyAppliction -I/home/forlinx/share/include -I/home/forlinx/share/include/gstreamer-1.0 -I/home/forlinx/share/include/glib-2.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/aarch64-buildroot-linux-gnu -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/backward -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include-fixed -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include recordplaywidget.h -o moc_recordplaywidget.cpp
 
 moc_inteanalywidget.cpp: inteanalywidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QWidget \
@@ -2113,9 +2445,194 @@ moc_inteanalywidget.cpp: inteanalywidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QSlider \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qslider.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qabstractslider.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/QPainter \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpainter.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextoption.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpen.h \
+		cmplayer.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QHBoxLayout \
+		log.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QFile \
+		../include/gstreamer-1.0/gst/gst.h \
+		../include/glib-2.0/glib.h \
+		../include/glib-2.0/glib/galloca.h \
+		../include/glib-2.0/glib/gtypes.h \
+		../include/glib-2.0/glibconfig.h \
+		../include/glib-2.0/glib/gmacros.h \
+		../include/glib-2.0/glib/gversionmacros.h \
+		../include/glib-2.0/glib/garray.h \
+		../include/glib-2.0/glib/gasyncqueue.h \
+		../include/glib-2.0/glib/gthread.h \
+		../include/glib-2.0/glib/gatomic.h \
+		../include/glib-2.0/glib/gerror.h \
+		../include/glib-2.0/glib/gquark.h \
+		../include/glib-2.0/glib/gutils.h \
+		../include/glib-2.0/glib/gbacktrace.h \
+		../include/glib-2.0/glib/gbase64.h \
+		../include/glib-2.0/glib/gbitlock.h \
+		../include/glib-2.0/glib/gbookmarkfile.h \
+		../include/glib-2.0/glib/gbytes.h \
+		../include/glib-2.0/glib/gcharset.h \
+		../include/glib-2.0/glib/gchecksum.h \
+		../include/glib-2.0/glib/gconvert.h \
+		../include/glib-2.0/glib/gdataset.h \
+		../include/glib-2.0/glib/gdate.h \
+		../include/glib-2.0/glib/gdatetime.h \
+		../include/glib-2.0/glib/gtimezone.h \
+		../include/glib-2.0/glib/gdir.h \
+		../include/glib-2.0/glib/genviron.h \
+		../include/glib-2.0/glib/gfileutils.h \
+		../include/glib-2.0/glib/ggettext.h \
+		../include/glib-2.0/glib/ghash.h \
+		../include/glib-2.0/glib/glist.h \
+		../include/glib-2.0/glib/gmem.h \
+		../include/glib-2.0/glib/gnode.h \
+		../include/glib-2.0/glib/ghmac.h \
+		../include/glib-2.0/glib/ghook.h \
+		../include/glib-2.0/glib/ghostutils.h \
+		../include/glib-2.0/glib/giochannel.h \
+		../include/glib-2.0/glib/gmain.h \
+		../include/glib-2.0/glib/gpoll.h \
+		../include/glib-2.0/glib/gslist.h \
+		../include/glib-2.0/glib/gstring.h \
+		../include/glib-2.0/glib/gunicode.h \
+		../include/glib-2.0/glib/gkeyfile.h \
+		../include/glib-2.0/glib/gmappedfile.h \
+		../include/glib-2.0/glib/gmarkup.h \
+		../include/glib-2.0/glib/gmessages.h \
+		../include/glib-2.0/glib/gvariant.h \
+		../include/glib-2.0/glib/gvarianttype.h \
+		../include/glib-2.0/glib/goption.h \
+		../include/glib-2.0/glib/gpattern.h \
+		../include/glib-2.0/glib/gprimes.h \
+		../include/glib-2.0/glib/gqsort.h \
+		../include/glib-2.0/glib/gqueue.h \
+		../include/glib-2.0/glib/grand.h \
+		../include/glib-2.0/glib/gregex.h \
+		../include/glib-2.0/glib/gscanner.h \
+		../include/glib-2.0/glib/gsequence.h \
+		../include/glib-2.0/glib/gshell.h \
+		../include/glib-2.0/glib/gslice.h \
+		../include/glib-2.0/glib/gspawn.h \
+		../include/glib-2.0/glib/gstrfuncs.h \
+		../include/glib-2.0/glib/gstringchunk.h \
+		../include/glib-2.0/glib/gtestutils.h \
+		../include/glib-2.0/glib/gthreadpool.h \
+		../include/glib-2.0/glib/gtimer.h \
+		../include/glib-2.0/glib/gtrashstack.h \
+		../include/glib-2.0/glib/gtree.h \
+		../include/glib-2.0/glib/gurifuncs.h \
+		../include/glib-2.0/glib/guuid.h \
+		../include/glib-2.0/glib/gversion.h \
+		../include/glib-2.0/glib/gwin32.h \
+		../include/glib-2.0/glib/deprecated/gallocator.h \
+		../include/glib-2.0/glib/deprecated/gcache.h \
+		../include/glib-2.0/glib/deprecated/gcompletion.h \
+		../include/glib-2.0/glib/deprecated/gmain.h \
+		../include/glib-2.0/glib/deprecated/grel.h \
+		../include/glib-2.0/glib/deprecated/gthread.h \
+		../include/glib-2.0/glib/glib-autocleanups.h \
+		../include/gstreamer-1.0/gst/glib-compat.h \
+		../include/gstreamer-1.0/gst/gstenumtypes.h \
+		../include/glib-2.0/glib-object.h \
+		../include/glib-2.0/gobject/gbinding.h \
+		../include/glib-2.0/gobject/gobject.h \
+		../include/glib-2.0/gobject/gtype.h \
+		../include/glib-2.0/gobject/gvalue.h \
+		../include/glib-2.0/gobject/gparam.h \
+		../include/glib-2.0/gobject/gclosure.h \
+		../include/glib-2.0/gobject/gsignal.h \
+		../include/glib-2.0/gobject/gmarshal.h \
+		../include/glib-2.0/gobject/gboxed.h \
+		../include/glib-2.0/gobject/glib-types.h \
+		../include/glib-2.0/gobject/genums.h \
+		../include/glib-2.0/gobject/gparamspecs.h \
+		../include/glib-2.0/gobject/gsourceclosure.h \
+		../include/glib-2.0/gobject/gtypemodule.h \
+		../include/glib-2.0/gobject/gtypeplugin.h \
+		../include/glib-2.0/gobject/gvaluearray.h \
+		../include/glib-2.0/gobject/gvaluetypes.h \
+		../include/glib-2.0/gobject/gobject-autocleanups.h \
+		../include/gstreamer-1.0/gst/gstconfig.h \
+		../include/gstreamer-1.0/gst/gstversion.h \
+		../include/gstreamer-1.0/gst/gstatomicqueue.h \
+		../include/gstreamer-1.0/gst/gstbin.h \
+		../include/gstreamer-1.0/gst/gstelement.h \
+		../include/gstreamer-1.0/gst/gstobject.h \
+		../include/gstreamer-1.0/gst/gstcontrolbinding.h \
+		../include/gstreamer-1.0/gst/gstcontrolsource.h \
+		../include/gstreamer-1.0/gst/gstclock.h \
+		../include/gstreamer-1.0/gst/gstpad.h \
+		../include/gstreamer-1.0/gst/gstbuffer.h \
+		../include/gstreamer-1.0/gst/gstminiobject.h \
+		../include/gstreamer-1.0/gst/gstallocator.h \
+		../include/gstreamer-1.0/gst/gstmemory.h \
+		../include/gstreamer-1.0/gst/gstcaps.h \
+		../include/gstreamer-1.0/gst/gststructure.h \
+		../include/gstreamer-1.0/gst/gstdatetime.h \
+		../include/gstreamer-1.0/gst/gstcapsfeatures.h \
+		../include/gstreamer-1.0/gst/gstmeta.h \
+		../include/gstreamer-1.0/gst/gstbufferlist.h \
+		../include/gstreamer-1.0/gst/gstpadtemplate.h \
+		../include/gstreamer-1.0/gst/gstevent.h \
+		../include/gstreamer-1.0/gst/gstformat.h \
+		../include/gstreamer-1.0/gst/gstiterator.h \
+		../include/gstreamer-1.0/gst/gsttaglist.h \
+		../include/gstreamer-1.0/gst/gstsample.h \
+		../include/gstreamer-1.0/gst/gstsegment.h \
+		../include/gstreamer-1.0/gst/gstmessage.h \
+		../include/gstreamer-1.0/gst/gstquery.h \
+		../include/gstreamer-1.0/gst/gsttoc.h \
+		../include/gstreamer-1.0/gst/gstcontext.h \
+		../include/gstreamer-1.0/gst/gstdevice.h \
+		../include/gstreamer-1.0/gst/gststreams.h \
+		../include/gstreamer-1.0/gst/gststreamcollection.h \
+		../include/gstreamer-1.0/gst/gsttask.h \
+		../include/gstreamer-1.0/gst/gsttaskpool.h \
+		../include/gstreamer-1.0/gst/gstbus.h \
+		../include/gstreamer-1.0/gst/gstelementfactory.h \
+		../include/gstreamer-1.0/gst/gstplugin.h \
+		../include/gstreamer-1.0/gst/gstmacros.h \
+		../include/gstreamer-1.0/gst/gstpluginfeature.h \
+		../include/gstreamer-1.0/gst/gsturi.h \
+		../include/gstreamer-1.0/gst/gstbufferpool.h \
+		../include/gstreamer-1.0/gst/gstchildproxy.h \
+		../include/gstreamer-1.0/gst/gstdebugutils.h \
+		../include/gstreamer-1.0/gst/gstdevicemonitor.h \
+		../include/gstreamer-1.0/gst/gstdeviceprovider.h \
+		../include/gstreamer-1.0/gst/gstdeviceproviderfactory.h \
+		../include/gstreamer-1.0/gst/gstdynamictypefactory.h \
+		../include/gstreamer-1.0/gst/gstelementmetadata.h \
+		../include/gstreamer-1.0/gst/gsterror.h \
+		../include/gstreamer-1.0/gst/gstghostpad.h \
+		../include/gstreamer-1.0/gst/gstinfo.h \
+		../include/gstreamer-1.0/gst/gstparamspecs.h \
+		../include/gstreamer-1.0/gst/gstvalue.h \
+		../include/gstreamer-1.0/gst/gstpipeline.h \
+		../include/gstreamer-1.0/gst/gstpoll.h \
+		../include/gstreamer-1.0/gst/gstpreset.h \
+		../include/gstreamer-1.0/gst/gstprotection.h \
+		../include/gstreamer-1.0/gst/gstregistry.h \
+		../include/gstreamer-1.0/gst/gstpromise.h \
+		../include/gstreamer-1.0/gst/gstsystemclock.h \
+		../include/gstreamer-1.0/gst/gsttagsetter.h \
+		../include/gstreamer-1.0/gst/gsttocsetter.h \
+		../include/gstreamer-1.0/gst/gsttracer.h \
+		../include/gstreamer-1.0/gst/gsttracerfactory.h \
+		../include/gstreamer-1.0/gst/gsttracerrecord.h \
+		../include/gstreamer-1.0/gst/gsttypefind.h \
+		../include/gstreamer-1.0/gst/gsttypefindfactory.h \
+		../include/gstreamer-1.0/gst/gstutils.h \
+		../include/gstreamer-1.0/gst/gstparse.h \
+		../include/gstreamer-1.0/gst/gstcompat.h \
+		../include/gstreamer-1.0/gst/video/videooverlay.h \
+		../include/gstreamer-1.0/gst/video/gstvideosink.h \
+		../include/gstreamer-1.0/gst/base/gstbasesink.h \
+		../include/gstreamer-1.0/gst/base/base-prelude.h \
+		../include/gstreamer-1.0/gst/video/video-prelude.h \
 		moc_predefs.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc
-	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc $(DEFINES) --include /home/forlinx/share/x86MyAppliction/moc_predefs.h -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++ -I/home/forlinx/share/x86MyAppliction -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/aarch64-buildroot-linux-gnu -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/backward -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include-fixed -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include inteanalywidget.h -o moc_inteanalywidget.cpp
+	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc $(DEFINES) --include /home/forlinx/share/x86MyAppliction/moc_predefs.h -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++ -I/home/forlinx/share/x86MyAppliction -I/home/forlinx/share/include -I/home/forlinx/share/include/gstreamer-1.0 -I/home/forlinx/share/include/glib-2.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/aarch64-buildroot-linux-gnu -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/backward -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include-fixed -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include inteanalywidget.h -o moc_inteanalywidget.cpp
 
 moc_devmanagewidget.cpp: devmanagewidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QWidget \
@@ -2254,7 +2771,7 @@ moc_devmanagewidget.cpp: devmanagewidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QTableWidget \
 		moc_predefs.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc
-	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc $(DEFINES) --include /home/forlinx/share/x86MyAppliction/moc_predefs.h -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++ -I/home/forlinx/share/x86MyAppliction -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/aarch64-buildroot-linux-gnu -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/backward -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include-fixed -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include devmanagewidget.h -o moc_devmanagewidget.cpp
+	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc $(DEFINES) --include /home/forlinx/share/x86MyAppliction/moc_predefs.h -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++ -I/home/forlinx/share/x86MyAppliction -I/home/forlinx/share/include -I/home/forlinx/share/include/gstreamer-1.0 -I/home/forlinx/share/include/glib-2.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/aarch64-buildroot-linux-gnu -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/backward -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include-fixed -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include devmanagewidget.h -o moc_devmanagewidget.cpp
 
 moc_devupdatewidget.cpp: devupdatewidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QWidget \
@@ -2431,6 +2948,191 @@ moc_devupdatewidget.cpp: devupdatewidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QSlider \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qslider.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qabstractslider.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/QPainter \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpainter.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextoption.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpen.h \
+		cmplayer.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QHBoxLayout \
+		log.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QFile \
+		../include/gstreamer-1.0/gst/gst.h \
+		../include/glib-2.0/glib.h \
+		../include/glib-2.0/glib/galloca.h \
+		../include/glib-2.0/glib/gtypes.h \
+		../include/glib-2.0/glibconfig.h \
+		../include/glib-2.0/glib/gmacros.h \
+		../include/glib-2.0/glib/gversionmacros.h \
+		../include/glib-2.0/glib/garray.h \
+		../include/glib-2.0/glib/gasyncqueue.h \
+		../include/glib-2.0/glib/gthread.h \
+		../include/glib-2.0/glib/gatomic.h \
+		../include/glib-2.0/glib/gerror.h \
+		../include/glib-2.0/glib/gquark.h \
+		../include/glib-2.0/glib/gutils.h \
+		../include/glib-2.0/glib/gbacktrace.h \
+		../include/glib-2.0/glib/gbase64.h \
+		../include/glib-2.0/glib/gbitlock.h \
+		../include/glib-2.0/glib/gbookmarkfile.h \
+		../include/glib-2.0/glib/gbytes.h \
+		../include/glib-2.0/glib/gcharset.h \
+		../include/glib-2.0/glib/gchecksum.h \
+		../include/glib-2.0/glib/gconvert.h \
+		../include/glib-2.0/glib/gdataset.h \
+		../include/glib-2.0/glib/gdate.h \
+		../include/glib-2.0/glib/gdatetime.h \
+		../include/glib-2.0/glib/gtimezone.h \
+		../include/glib-2.0/glib/gdir.h \
+		../include/glib-2.0/glib/genviron.h \
+		../include/glib-2.0/glib/gfileutils.h \
+		../include/glib-2.0/glib/ggettext.h \
+		../include/glib-2.0/glib/ghash.h \
+		../include/glib-2.0/glib/glist.h \
+		../include/glib-2.0/glib/gmem.h \
+		../include/glib-2.0/glib/gnode.h \
+		../include/glib-2.0/glib/ghmac.h \
+		../include/glib-2.0/glib/ghook.h \
+		../include/glib-2.0/glib/ghostutils.h \
+		../include/glib-2.0/glib/giochannel.h \
+		../include/glib-2.0/glib/gmain.h \
+		../include/glib-2.0/glib/gpoll.h \
+		../include/glib-2.0/glib/gslist.h \
+		../include/glib-2.0/glib/gstring.h \
+		../include/glib-2.0/glib/gunicode.h \
+		../include/glib-2.0/glib/gkeyfile.h \
+		../include/glib-2.0/glib/gmappedfile.h \
+		../include/glib-2.0/glib/gmarkup.h \
+		../include/glib-2.0/glib/gmessages.h \
+		../include/glib-2.0/glib/gvariant.h \
+		../include/glib-2.0/glib/gvarianttype.h \
+		../include/glib-2.0/glib/goption.h \
+		../include/glib-2.0/glib/gpattern.h \
+		../include/glib-2.0/glib/gprimes.h \
+		../include/glib-2.0/glib/gqsort.h \
+		../include/glib-2.0/glib/gqueue.h \
+		../include/glib-2.0/glib/grand.h \
+		../include/glib-2.0/glib/gregex.h \
+		../include/glib-2.0/glib/gscanner.h \
+		../include/glib-2.0/glib/gsequence.h \
+		../include/glib-2.0/glib/gshell.h \
+		../include/glib-2.0/glib/gslice.h \
+		../include/glib-2.0/glib/gspawn.h \
+		../include/glib-2.0/glib/gstrfuncs.h \
+		../include/glib-2.0/glib/gstringchunk.h \
+		../include/glib-2.0/glib/gtestutils.h \
+		../include/glib-2.0/glib/gthreadpool.h \
+		../include/glib-2.0/glib/gtimer.h \
+		../include/glib-2.0/glib/gtrashstack.h \
+		../include/glib-2.0/glib/gtree.h \
+		../include/glib-2.0/glib/gurifuncs.h \
+		../include/glib-2.0/glib/guuid.h \
+		../include/glib-2.0/glib/gversion.h \
+		../include/glib-2.0/glib/gwin32.h \
+		../include/glib-2.0/glib/deprecated/gallocator.h \
+		../include/glib-2.0/glib/deprecated/gcache.h \
+		../include/glib-2.0/glib/deprecated/gcompletion.h \
+		../include/glib-2.0/glib/deprecated/gmain.h \
+		../include/glib-2.0/glib/deprecated/grel.h \
+		../include/glib-2.0/glib/deprecated/gthread.h \
+		../include/glib-2.0/glib/glib-autocleanups.h \
+		../include/gstreamer-1.0/gst/glib-compat.h \
+		../include/gstreamer-1.0/gst/gstenumtypes.h \
+		../include/glib-2.0/glib-object.h \
+		../include/glib-2.0/gobject/gbinding.h \
+		../include/glib-2.0/gobject/gobject.h \
+		../include/glib-2.0/gobject/gtype.h \
+		../include/glib-2.0/gobject/gvalue.h \
+		../include/glib-2.0/gobject/gparam.h \
+		../include/glib-2.0/gobject/gclosure.h \
+		../include/glib-2.0/gobject/gsignal.h \
+		../include/glib-2.0/gobject/gmarshal.h \
+		../include/glib-2.0/gobject/gboxed.h \
+		../include/glib-2.0/gobject/glib-types.h \
+		../include/glib-2.0/gobject/genums.h \
+		../include/glib-2.0/gobject/gparamspecs.h \
+		../include/glib-2.0/gobject/gsourceclosure.h \
+		../include/glib-2.0/gobject/gtypemodule.h \
+		../include/glib-2.0/gobject/gtypeplugin.h \
+		../include/glib-2.0/gobject/gvaluearray.h \
+		../include/glib-2.0/gobject/gvaluetypes.h \
+		../include/glib-2.0/gobject/gobject-autocleanups.h \
+		../include/gstreamer-1.0/gst/gstconfig.h \
+		../include/gstreamer-1.0/gst/gstversion.h \
+		../include/gstreamer-1.0/gst/gstatomicqueue.h \
+		../include/gstreamer-1.0/gst/gstbin.h \
+		../include/gstreamer-1.0/gst/gstelement.h \
+		../include/gstreamer-1.0/gst/gstobject.h \
+		../include/gstreamer-1.0/gst/gstcontrolbinding.h \
+		../include/gstreamer-1.0/gst/gstcontrolsource.h \
+		../include/gstreamer-1.0/gst/gstclock.h \
+		../include/gstreamer-1.0/gst/gstpad.h \
+		../include/gstreamer-1.0/gst/gstbuffer.h \
+		../include/gstreamer-1.0/gst/gstminiobject.h \
+		../include/gstreamer-1.0/gst/gstallocator.h \
+		../include/gstreamer-1.0/gst/gstmemory.h \
+		../include/gstreamer-1.0/gst/gstcaps.h \
+		../include/gstreamer-1.0/gst/gststructure.h \
+		../include/gstreamer-1.0/gst/gstdatetime.h \
+		../include/gstreamer-1.0/gst/gstcapsfeatures.h \
+		../include/gstreamer-1.0/gst/gstmeta.h \
+		../include/gstreamer-1.0/gst/gstbufferlist.h \
+		../include/gstreamer-1.0/gst/gstpadtemplate.h \
+		../include/gstreamer-1.0/gst/gstevent.h \
+		../include/gstreamer-1.0/gst/gstformat.h \
+		../include/gstreamer-1.0/gst/gstiterator.h \
+		../include/gstreamer-1.0/gst/gsttaglist.h \
+		../include/gstreamer-1.0/gst/gstsample.h \
+		../include/gstreamer-1.0/gst/gstsegment.h \
+		../include/gstreamer-1.0/gst/gstmessage.h \
+		../include/gstreamer-1.0/gst/gstquery.h \
+		../include/gstreamer-1.0/gst/gsttoc.h \
+		../include/gstreamer-1.0/gst/gstcontext.h \
+		../include/gstreamer-1.0/gst/gstdevice.h \
+		../include/gstreamer-1.0/gst/gststreams.h \
+		../include/gstreamer-1.0/gst/gststreamcollection.h \
+		../include/gstreamer-1.0/gst/gsttask.h \
+		../include/gstreamer-1.0/gst/gsttaskpool.h \
+		../include/gstreamer-1.0/gst/gstbus.h \
+		../include/gstreamer-1.0/gst/gstelementfactory.h \
+		../include/gstreamer-1.0/gst/gstplugin.h \
+		../include/gstreamer-1.0/gst/gstmacros.h \
+		../include/gstreamer-1.0/gst/gstpluginfeature.h \
+		../include/gstreamer-1.0/gst/gsturi.h \
+		../include/gstreamer-1.0/gst/gstbufferpool.h \
+		../include/gstreamer-1.0/gst/gstchildproxy.h \
+		../include/gstreamer-1.0/gst/gstdebugutils.h \
+		../include/gstreamer-1.0/gst/gstdevicemonitor.h \
+		../include/gstreamer-1.0/gst/gstdeviceprovider.h \
+		../include/gstreamer-1.0/gst/gstdeviceproviderfactory.h \
+		../include/gstreamer-1.0/gst/gstdynamictypefactory.h \
+		../include/gstreamer-1.0/gst/gstelementmetadata.h \
+		../include/gstreamer-1.0/gst/gsterror.h \
+		../include/gstreamer-1.0/gst/gstghostpad.h \
+		../include/gstreamer-1.0/gst/gstinfo.h \
+		../include/gstreamer-1.0/gst/gstparamspecs.h \
+		../include/gstreamer-1.0/gst/gstvalue.h \
+		../include/gstreamer-1.0/gst/gstpipeline.h \
+		../include/gstreamer-1.0/gst/gstpoll.h \
+		../include/gstreamer-1.0/gst/gstpreset.h \
+		../include/gstreamer-1.0/gst/gstprotection.h \
+		../include/gstreamer-1.0/gst/gstregistry.h \
+		../include/gstreamer-1.0/gst/gstpromise.h \
+		../include/gstreamer-1.0/gst/gstsystemclock.h \
+		../include/gstreamer-1.0/gst/gsttagsetter.h \
+		../include/gstreamer-1.0/gst/gsttocsetter.h \
+		../include/gstreamer-1.0/gst/gsttracer.h \
+		../include/gstreamer-1.0/gst/gsttracerfactory.h \
+		../include/gstreamer-1.0/gst/gsttracerrecord.h \
+		../include/gstreamer-1.0/gst/gsttypefind.h \
+		../include/gstreamer-1.0/gst/gsttypefindfactory.h \
+		../include/gstreamer-1.0/gst/gstutils.h \
+		../include/gstreamer-1.0/gst/gstparse.h \
+		../include/gstreamer-1.0/gst/gstcompat.h \
+		../include/gstreamer-1.0/gst/video/videooverlay.h \
+		../include/gstreamer-1.0/gst/video/gstvideosink.h \
+		../include/gstreamer-1.0/gst/base/gstbasesink.h \
+		../include/gstreamer-1.0/gst/base/base-prelude.h \
+		../include/gstreamer-1.0/gst/video/video-prelude.h \
 		usergroupmanage.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QTableWidgetItem \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qtablewidget.h \
@@ -2450,7 +3152,7 @@ moc_devupdatewidget.cpp: devupdatewidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QTableWidget \
 		moc_predefs.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc
-	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc $(DEFINES) --include /home/forlinx/share/x86MyAppliction/moc_predefs.h -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++ -I/home/forlinx/share/x86MyAppliction -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/aarch64-buildroot-linux-gnu -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/backward -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include-fixed -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include devupdatewidget.h -o moc_devupdatewidget.cpp
+	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc $(DEFINES) --include /home/forlinx/share/x86MyAppliction/moc_predefs.h -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++ -I/home/forlinx/share/x86MyAppliction -I/home/forlinx/share/include -I/home/forlinx/share/include/gstreamer-1.0 -I/home/forlinx/share/include/glib-2.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/aarch64-buildroot-linux-gnu -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/backward -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include-fixed -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include devupdatewidget.h -o moc_devupdatewidget.cpp
 
 moc_alarmwidget.cpp: alarmwidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QWidget \
@@ -2559,7 +3261,7 @@ moc_alarmwidget.cpp: alarmwidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtouchdevice.h \
 		moc_predefs.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc
-	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc $(DEFINES) --include /home/forlinx/share/x86MyAppliction/moc_predefs.h -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++ -I/home/forlinx/share/x86MyAppliction -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/aarch64-buildroot-linux-gnu -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/backward -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include-fixed -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include alarmwidget.h -o moc_alarmwidget.cpp
+	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc $(DEFINES) --include /home/forlinx/share/x86MyAppliction/moc_predefs.h -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++ -I/home/forlinx/share/x86MyAppliction -I/home/forlinx/share/include -I/home/forlinx/share/include/gstreamer-1.0 -I/home/forlinx/share/include/glib-2.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/aarch64-buildroot-linux-gnu -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/backward -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include-fixed -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include alarmwidget.h -o moc_alarmwidget.cpp
 
 moc_presetpasswdconfirm.cpp: presetpasswdconfirm.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QWidget \
@@ -2668,7 +3370,7 @@ moc_presetpasswdconfirm.cpp: presetpasswdconfirm.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtouchdevice.h \
 		moc_predefs.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc
-	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc $(DEFINES) --include /home/forlinx/share/x86MyAppliction/moc_predefs.h -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++ -I/home/forlinx/share/x86MyAppliction -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/aarch64-buildroot-linux-gnu -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/backward -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include-fixed -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include presetpasswdconfirm.h -o moc_presetpasswdconfirm.cpp
+	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc $(DEFINES) --include /home/forlinx/share/x86MyAppliction/moc_predefs.h -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++ -I/home/forlinx/share/x86MyAppliction -I/home/forlinx/share/include -I/home/forlinx/share/include/gstreamer-1.0 -I/home/forlinx/share/include/glib-2.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/aarch64-buildroot-linux-gnu -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/backward -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include-fixed -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include presetpasswdconfirm.h -o moc_presetpasswdconfirm.cpp
 
 moc_myslider.cpp: myslider.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QSlider \
@@ -2780,7 +3482,7 @@ moc_myslider.cpp: myslider.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/QMouseEvent \
 		moc_predefs.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc
-	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc $(DEFINES) --include /home/forlinx/share/x86MyAppliction/moc_predefs.h -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++ -I/home/forlinx/share/x86MyAppliction -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/aarch64-buildroot-linux-gnu -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/backward -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include-fixed -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include myslider.h -o moc_myslider.cpp
+	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc $(DEFINES) --include /home/forlinx/share/x86MyAppliction/moc_predefs.h -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++ -I/home/forlinx/share/x86MyAppliction -I/home/forlinx/share/include -I/home/forlinx/share/include/gstreamer-1.0 -I/home/forlinx/share/include/glib-2.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/aarch64-buildroot-linux-gnu -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/backward -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include-fixed -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include myslider.h -o moc_myslider.cpp
 
 moc_waitloginwidget.cpp: waitloginwidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QWidget \
@@ -2892,7 +3594,7 @@ moc_waitloginwidget.cpp: waitloginwidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qframe.h \
 		moc_predefs.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc
-	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc $(DEFINES) --include /home/forlinx/share/x86MyAppliction/moc_predefs.h -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++ -I/home/forlinx/share/x86MyAppliction -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/aarch64-buildroot-linux-gnu -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/backward -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include-fixed -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include waitloginwidget.h -o moc_waitloginwidget.cpp
+	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc $(DEFINES) --include /home/forlinx/share/x86MyAppliction/moc_predefs.h -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++ -I/home/forlinx/share/x86MyAppliction -I/home/forlinx/share/include -I/home/forlinx/share/include/gstreamer-1.0 -I/home/forlinx/share/include/glib-2.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/aarch64-buildroot-linux-gnu -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/backward -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include-fixed -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include waitloginwidget.h -o moc_waitloginwidget.cpp
 
 moc_usergroupmanage.cpp: usergroupmanage.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QWidget \
@@ -3024,7 +3726,7 @@ moc_usergroupmanage.cpp: usergroupmanage.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QTableWidget \
 		moc_predefs.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc
-	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc $(DEFINES) --include /home/forlinx/share/x86MyAppliction/moc_predefs.h -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++ -I/home/forlinx/share/x86MyAppliction -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/aarch64-buildroot-linux-gnu -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/backward -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include-fixed -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include usergroupmanage.h -o moc_usergroupmanage.cpp
+	/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/bin/moc $(DEFINES) --include /home/forlinx/share/x86MyAppliction/moc_predefs.h -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/mkspecs/devices/linux-buildroot-g++ -I/home/forlinx/share/x86MyAppliction -I/home/forlinx/share/include -I/home/forlinx/share/include/gstreamer-1.0 -I/home/forlinx/share/include/glib-2.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0 -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/aarch64-buildroot-linux-gnu -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include/c++/9.3.0/backward -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/lib/gcc/aarch64-buildroot-linux-gnu/9.3.0/include-fixed -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/include -I/home/forlinx/share/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include usergroupmanage.h -o moc_usergroupmanage.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -3292,6 +3994,191 @@ main.o: main.cpp MyApplication.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QSlider \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qslider.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qabstractslider.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/QPainter \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpainter.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextoption.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpen.h \
+		cmplayer.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QHBoxLayout \
+		log.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QFile \
+		../include/gstreamer-1.0/gst/gst.h \
+		../include/glib-2.0/glib.h \
+		../include/glib-2.0/glib/galloca.h \
+		../include/glib-2.0/glib/gtypes.h \
+		../include/glib-2.0/glibconfig.h \
+		../include/glib-2.0/glib/gmacros.h \
+		../include/glib-2.0/glib/gversionmacros.h \
+		../include/glib-2.0/glib/garray.h \
+		../include/glib-2.0/glib/gasyncqueue.h \
+		../include/glib-2.0/glib/gthread.h \
+		../include/glib-2.0/glib/gatomic.h \
+		../include/glib-2.0/glib/gerror.h \
+		../include/glib-2.0/glib/gquark.h \
+		../include/glib-2.0/glib/gutils.h \
+		../include/glib-2.0/glib/gbacktrace.h \
+		../include/glib-2.0/glib/gbase64.h \
+		../include/glib-2.0/glib/gbitlock.h \
+		../include/glib-2.0/glib/gbookmarkfile.h \
+		../include/glib-2.0/glib/gbytes.h \
+		../include/glib-2.0/glib/gcharset.h \
+		../include/glib-2.0/glib/gchecksum.h \
+		../include/glib-2.0/glib/gconvert.h \
+		../include/glib-2.0/glib/gdataset.h \
+		../include/glib-2.0/glib/gdate.h \
+		../include/glib-2.0/glib/gdatetime.h \
+		../include/glib-2.0/glib/gtimezone.h \
+		../include/glib-2.0/glib/gdir.h \
+		../include/glib-2.0/glib/genviron.h \
+		../include/glib-2.0/glib/gfileutils.h \
+		../include/glib-2.0/glib/ggettext.h \
+		../include/glib-2.0/glib/ghash.h \
+		../include/glib-2.0/glib/glist.h \
+		../include/glib-2.0/glib/gmem.h \
+		../include/glib-2.0/glib/gnode.h \
+		../include/glib-2.0/glib/ghmac.h \
+		../include/glib-2.0/glib/ghook.h \
+		../include/glib-2.0/glib/ghostutils.h \
+		../include/glib-2.0/glib/giochannel.h \
+		../include/glib-2.0/glib/gmain.h \
+		../include/glib-2.0/glib/gpoll.h \
+		../include/glib-2.0/glib/gslist.h \
+		../include/glib-2.0/glib/gstring.h \
+		../include/glib-2.0/glib/gunicode.h \
+		../include/glib-2.0/glib/gkeyfile.h \
+		../include/glib-2.0/glib/gmappedfile.h \
+		../include/glib-2.0/glib/gmarkup.h \
+		../include/glib-2.0/glib/gmessages.h \
+		../include/glib-2.0/glib/gvariant.h \
+		../include/glib-2.0/glib/gvarianttype.h \
+		../include/glib-2.0/glib/goption.h \
+		../include/glib-2.0/glib/gpattern.h \
+		../include/glib-2.0/glib/gprimes.h \
+		../include/glib-2.0/glib/gqsort.h \
+		../include/glib-2.0/glib/gqueue.h \
+		../include/glib-2.0/glib/grand.h \
+		../include/glib-2.0/glib/gregex.h \
+		../include/glib-2.0/glib/gscanner.h \
+		../include/glib-2.0/glib/gsequence.h \
+		../include/glib-2.0/glib/gshell.h \
+		../include/glib-2.0/glib/gslice.h \
+		../include/glib-2.0/glib/gspawn.h \
+		../include/glib-2.0/glib/gstrfuncs.h \
+		../include/glib-2.0/glib/gstringchunk.h \
+		../include/glib-2.0/glib/gtestutils.h \
+		../include/glib-2.0/glib/gthreadpool.h \
+		../include/glib-2.0/glib/gtimer.h \
+		../include/glib-2.0/glib/gtrashstack.h \
+		../include/glib-2.0/glib/gtree.h \
+		../include/glib-2.0/glib/gurifuncs.h \
+		../include/glib-2.0/glib/guuid.h \
+		../include/glib-2.0/glib/gversion.h \
+		../include/glib-2.0/glib/gwin32.h \
+		../include/glib-2.0/glib/deprecated/gallocator.h \
+		../include/glib-2.0/glib/deprecated/gcache.h \
+		../include/glib-2.0/glib/deprecated/gcompletion.h \
+		../include/glib-2.0/glib/deprecated/gmain.h \
+		../include/glib-2.0/glib/deprecated/grel.h \
+		../include/glib-2.0/glib/deprecated/gthread.h \
+		../include/glib-2.0/glib/glib-autocleanups.h \
+		../include/gstreamer-1.0/gst/glib-compat.h \
+		../include/gstreamer-1.0/gst/gstenumtypes.h \
+		../include/glib-2.0/glib-object.h \
+		../include/glib-2.0/gobject/gbinding.h \
+		../include/glib-2.0/gobject/gobject.h \
+		../include/glib-2.0/gobject/gtype.h \
+		../include/glib-2.0/gobject/gvalue.h \
+		../include/glib-2.0/gobject/gparam.h \
+		../include/glib-2.0/gobject/gclosure.h \
+		../include/glib-2.0/gobject/gsignal.h \
+		../include/glib-2.0/gobject/gmarshal.h \
+		../include/glib-2.0/gobject/gboxed.h \
+		../include/glib-2.0/gobject/glib-types.h \
+		../include/glib-2.0/gobject/genums.h \
+		../include/glib-2.0/gobject/gparamspecs.h \
+		../include/glib-2.0/gobject/gsourceclosure.h \
+		../include/glib-2.0/gobject/gtypemodule.h \
+		../include/glib-2.0/gobject/gtypeplugin.h \
+		../include/glib-2.0/gobject/gvaluearray.h \
+		../include/glib-2.0/gobject/gvaluetypes.h \
+		../include/glib-2.0/gobject/gobject-autocleanups.h \
+		../include/gstreamer-1.0/gst/gstconfig.h \
+		../include/gstreamer-1.0/gst/gstversion.h \
+		../include/gstreamer-1.0/gst/gstatomicqueue.h \
+		../include/gstreamer-1.0/gst/gstbin.h \
+		../include/gstreamer-1.0/gst/gstelement.h \
+		../include/gstreamer-1.0/gst/gstobject.h \
+		../include/gstreamer-1.0/gst/gstcontrolbinding.h \
+		../include/gstreamer-1.0/gst/gstcontrolsource.h \
+		../include/gstreamer-1.0/gst/gstclock.h \
+		../include/gstreamer-1.0/gst/gstpad.h \
+		../include/gstreamer-1.0/gst/gstbuffer.h \
+		../include/gstreamer-1.0/gst/gstminiobject.h \
+		../include/gstreamer-1.0/gst/gstallocator.h \
+		../include/gstreamer-1.0/gst/gstmemory.h \
+		../include/gstreamer-1.0/gst/gstcaps.h \
+		../include/gstreamer-1.0/gst/gststructure.h \
+		../include/gstreamer-1.0/gst/gstdatetime.h \
+		../include/gstreamer-1.0/gst/gstcapsfeatures.h \
+		../include/gstreamer-1.0/gst/gstmeta.h \
+		../include/gstreamer-1.0/gst/gstbufferlist.h \
+		../include/gstreamer-1.0/gst/gstpadtemplate.h \
+		../include/gstreamer-1.0/gst/gstevent.h \
+		../include/gstreamer-1.0/gst/gstformat.h \
+		../include/gstreamer-1.0/gst/gstiterator.h \
+		../include/gstreamer-1.0/gst/gsttaglist.h \
+		../include/gstreamer-1.0/gst/gstsample.h \
+		../include/gstreamer-1.0/gst/gstsegment.h \
+		../include/gstreamer-1.0/gst/gstmessage.h \
+		../include/gstreamer-1.0/gst/gstquery.h \
+		../include/gstreamer-1.0/gst/gsttoc.h \
+		../include/gstreamer-1.0/gst/gstcontext.h \
+		../include/gstreamer-1.0/gst/gstdevice.h \
+		../include/gstreamer-1.0/gst/gststreams.h \
+		../include/gstreamer-1.0/gst/gststreamcollection.h \
+		../include/gstreamer-1.0/gst/gsttask.h \
+		../include/gstreamer-1.0/gst/gsttaskpool.h \
+		../include/gstreamer-1.0/gst/gstbus.h \
+		../include/gstreamer-1.0/gst/gstelementfactory.h \
+		../include/gstreamer-1.0/gst/gstplugin.h \
+		../include/gstreamer-1.0/gst/gstmacros.h \
+		../include/gstreamer-1.0/gst/gstpluginfeature.h \
+		../include/gstreamer-1.0/gst/gsturi.h \
+		../include/gstreamer-1.0/gst/gstbufferpool.h \
+		../include/gstreamer-1.0/gst/gstchildproxy.h \
+		../include/gstreamer-1.0/gst/gstdebugutils.h \
+		../include/gstreamer-1.0/gst/gstdevicemonitor.h \
+		../include/gstreamer-1.0/gst/gstdeviceprovider.h \
+		../include/gstreamer-1.0/gst/gstdeviceproviderfactory.h \
+		../include/gstreamer-1.0/gst/gstdynamictypefactory.h \
+		../include/gstreamer-1.0/gst/gstelementmetadata.h \
+		../include/gstreamer-1.0/gst/gsterror.h \
+		../include/gstreamer-1.0/gst/gstghostpad.h \
+		../include/gstreamer-1.0/gst/gstinfo.h \
+		../include/gstreamer-1.0/gst/gstparamspecs.h \
+		../include/gstreamer-1.0/gst/gstvalue.h \
+		../include/gstreamer-1.0/gst/gstpipeline.h \
+		../include/gstreamer-1.0/gst/gstpoll.h \
+		../include/gstreamer-1.0/gst/gstpreset.h \
+		../include/gstreamer-1.0/gst/gstprotection.h \
+		../include/gstreamer-1.0/gst/gstregistry.h \
+		../include/gstreamer-1.0/gst/gstpromise.h \
+		../include/gstreamer-1.0/gst/gstsystemclock.h \
+		../include/gstreamer-1.0/gst/gsttagsetter.h \
+		../include/gstreamer-1.0/gst/gsttocsetter.h \
+		../include/gstreamer-1.0/gst/gsttracer.h \
+		../include/gstreamer-1.0/gst/gsttracerfactory.h \
+		../include/gstreamer-1.0/gst/gsttracerrecord.h \
+		../include/gstreamer-1.0/gst/gsttypefind.h \
+		../include/gstreamer-1.0/gst/gsttypefindfactory.h \
+		../include/gstreamer-1.0/gst/gstutils.h \
+		../include/gstreamer-1.0/gst/gstparse.h \
+		../include/gstreamer-1.0/gst/gstcompat.h \
+		../include/gstreamer-1.0/gst/video/videooverlay.h \
+		../include/gstreamer-1.0/gst/video/gstvideosink.h \
+		../include/gstreamer-1.0/gst/base/gstbasesink.h \
+		../include/gstreamer-1.0/gst/base/base-prelude.h \
+		../include/gstreamer-1.0/gst/video/video-prelude.h \
 		recordplaywidget.h \
 		myslider.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/QMouseEvent \
@@ -3321,6 +4208,8 @@ main.o: main.cpp MyApplication.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qdatetime.h \
 		alarmwidget.h \
 		rs485serv.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QStackedWidget \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qstackedwidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard/QtVirtualKeyboard \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard/QtVirtualKeyboardDepends \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QtCore \
@@ -3437,8 +4326,6 @@ main.o: main.cpp MyApplication.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qabstracttextdocumentlayout.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextlayout.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextformat.h \
-		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpen.h \
-		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextoption.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qglyphrun.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qrawfont.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qfontdatabase.h \
@@ -3505,7 +4392,6 @@ main.o: main.cpp MyApplication.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpagelayout.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpagesize.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpaintengine.h \
-		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpainter.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpdfwriter.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpicture.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpictureformatplugin.h \
@@ -3682,8 +4568,7 @@ main.o: main.cpp MyApplication.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql/QSqlDatabase \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql/qsqldatabase.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql/qtsqlglobal.h \
-		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql/qtsql-config.h \
-		log.h
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql/qtsql-config.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 MyApplication.o: MyApplication.cpp MyApplication.h \
@@ -4257,6 +5142,191 @@ pvmsmenuwidget.o: pvmsmenuwidget.cpp pvmsmenuwidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QSlider \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qslider.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qabstractslider.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/QPainter \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpainter.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextoption.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpen.h \
+		cmplayer.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QHBoxLayout \
+		log.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QFile \
+		../include/gstreamer-1.0/gst/gst.h \
+		../include/glib-2.0/glib.h \
+		../include/glib-2.0/glib/galloca.h \
+		../include/glib-2.0/glib/gtypes.h \
+		../include/glib-2.0/glibconfig.h \
+		../include/glib-2.0/glib/gmacros.h \
+		../include/glib-2.0/glib/gversionmacros.h \
+		../include/glib-2.0/glib/garray.h \
+		../include/glib-2.0/glib/gasyncqueue.h \
+		../include/glib-2.0/glib/gthread.h \
+		../include/glib-2.0/glib/gatomic.h \
+		../include/glib-2.0/glib/gerror.h \
+		../include/glib-2.0/glib/gquark.h \
+		../include/glib-2.0/glib/gutils.h \
+		../include/glib-2.0/glib/gbacktrace.h \
+		../include/glib-2.0/glib/gbase64.h \
+		../include/glib-2.0/glib/gbitlock.h \
+		../include/glib-2.0/glib/gbookmarkfile.h \
+		../include/glib-2.0/glib/gbytes.h \
+		../include/glib-2.0/glib/gcharset.h \
+		../include/glib-2.0/glib/gchecksum.h \
+		../include/glib-2.0/glib/gconvert.h \
+		../include/glib-2.0/glib/gdataset.h \
+		../include/glib-2.0/glib/gdate.h \
+		../include/glib-2.0/glib/gdatetime.h \
+		../include/glib-2.0/glib/gtimezone.h \
+		../include/glib-2.0/glib/gdir.h \
+		../include/glib-2.0/glib/genviron.h \
+		../include/glib-2.0/glib/gfileutils.h \
+		../include/glib-2.0/glib/ggettext.h \
+		../include/glib-2.0/glib/ghash.h \
+		../include/glib-2.0/glib/glist.h \
+		../include/glib-2.0/glib/gmem.h \
+		../include/glib-2.0/glib/gnode.h \
+		../include/glib-2.0/glib/ghmac.h \
+		../include/glib-2.0/glib/ghook.h \
+		../include/glib-2.0/glib/ghostutils.h \
+		../include/glib-2.0/glib/giochannel.h \
+		../include/glib-2.0/glib/gmain.h \
+		../include/glib-2.0/glib/gpoll.h \
+		../include/glib-2.0/glib/gslist.h \
+		../include/glib-2.0/glib/gstring.h \
+		../include/glib-2.0/glib/gunicode.h \
+		../include/glib-2.0/glib/gkeyfile.h \
+		../include/glib-2.0/glib/gmappedfile.h \
+		../include/glib-2.0/glib/gmarkup.h \
+		../include/glib-2.0/glib/gmessages.h \
+		../include/glib-2.0/glib/gvariant.h \
+		../include/glib-2.0/glib/gvarianttype.h \
+		../include/glib-2.0/glib/goption.h \
+		../include/glib-2.0/glib/gpattern.h \
+		../include/glib-2.0/glib/gprimes.h \
+		../include/glib-2.0/glib/gqsort.h \
+		../include/glib-2.0/glib/gqueue.h \
+		../include/glib-2.0/glib/grand.h \
+		../include/glib-2.0/glib/gregex.h \
+		../include/glib-2.0/glib/gscanner.h \
+		../include/glib-2.0/glib/gsequence.h \
+		../include/glib-2.0/glib/gshell.h \
+		../include/glib-2.0/glib/gslice.h \
+		../include/glib-2.0/glib/gspawn.h \
+		../include/glib-2.0/glib/gstrfuncs.h \
+		../include/glib-2.0/glib/gstringchunk.h \
+		../include/glib-2.0/glib/gtestutils.h \
+		../include/glib-2.0/glib/gthreadpool.h \
+		../include/glib-2.0/glib/gtimer.h \
+		../include/glib-2.0/glib/gtrashstack.h \
+		../include/glib-2.0/glib/gtree.h \
+		../include/glib-2.0/glib/gurifuncs.h \
+		../include/glib-2.0/glib/guuid.h \
+		../include/glib-2.0/glib/gversion.h \
+		../include/glib-2.0/glib/gwin32.h \
+		../include/glib-2.0/glib/deprecated/gallocator.h \
+		../include/glib-2.0/glib/deprecated/gcache.h \
+		../include/glib-2.0/glib/deprecated/gcompletion.h \
+		../include/glib-2.0/glib/deprecated/gmain.h \
+		../include/glib-2.0/glib/deprecated/grel.h \
+		../include/glib-2.0/glib/deprecated/gthread.h \
+		../include/glib-2.0/glib/glib-autocleanups.h \
+		../include/gstreamer-1.0/gst/glib-compat.h \
+		../include/gstreamer-1.0/gst/gstenumtypes.h \
+		../include/glib-2.0/glib-object.h \
+		../include/glib-2.0/gobject/gbinding.h \
+		../include/glib-2.0/gobject/gobject.h \
+		../include/glib-2.0/gobject/gtype.h \
+		../include/glib-2.0/gobject/gvalue.h \
+		../include/glib-2.0/gobject/gparam.h \
+		../include/glib-2.0/gobject/gclosure.h \
+		../include/glib-2.0/gobject/gsignal.h \
+		../include/glib-2.0/gobject/gmarshal.h \
+		../include/glib-2.0/gobject/gboxed.h \
+		../include/glib-2.0/gobject/glib-types.h \
+		../include/glib-2.0/gobject/genums.h \
+		../include/glib-2.0/gobject/gparamspecs.h \
+		../include/glib-2.0/gobject/gsourceclosure.h \
+		../include/glib-2.0/gobject/gtypemodule.h \
+		../include/glib-2.0/gobject/gtypeplugin.h \
+		../include/glib-2.0/gobject/gvaluearray.h \
+		../include/glib-2.0/gobject/gvaluetypes.h \
+		../include/glib-2.0/gobject/gobject-autocleanups.h \
+		../include/gstreamer-1.0/gst/gstconfig.h \
+		../include/gstreamer-1.0/gst/gstversion.h \
+		../include/gstreamer-1.0/gst/gstatomicqueue.h \
+		../include/gstreamer-1.0/gst/gstbin.h \
+		../include/gstreamer-1.0/gst/gstelement.h \
+		../include/gstreamer-1.0/gst/gstobject.h \
+		../include/gstreamer-1.0/gst/gstcontrolbinding.h \
+		../include/gstreamer-1.0/gst/gstcontrolsource.h \
+		../include/gstreamer-1.0/gst/gstclock.h \
+		../include/gstreamer-1.0/gst/gstpad.h \
+		../include/gstreamer-1.0/gst/gstbuffer.h \
+		../include/gstreamer-1.0/gst/gstminiobject.h \
+		../include/gstreamer-1.0/gst/gstallocator.h \
+		../include/gstreamer-1.0/gst/gstmemory.h \
+		../include/gstreamer-1.0/gst/gstcaps.h \
+		../include/gstreamer-1.0/gst/gststructure.h \
+		../include/gstreamer-1.0/gst/gstdatetime.h \
+		../include/gstreamer-1.0/gst/gstcapsfeatures.h \
+		../include/gstreamer-1.0/gst/gstmeta.h \
+		../include/gstreamer-1.0/gst/gstbufferlist.h \
+		../include/gstreamer-1.0/gst/gstpadtemplate.h \
+		../include/gstreamer-1.0/gst/gstevent.h \
+		../include/gstreamer-1.0/gst/gstformat.h \
+		../include/gstreamer-1.0/gst/gstiterator.h \
+		../include/gstreamer-1.0/gst/gsttaglist.h \
+		../include/gstreamer-1.0/gst/gstsample.h \
+		../include/gstreamer-1.0/gst/gstsegment.h \
+		../include/gstreamer-1.0/gst/gstmessage.h \
+		../include/gstreamer-1.0/gst/gstquery.h \
+		../include/gstreamer-1.0/gst/gsttoc.h \
+		../include/gstreamer-1.0/gst/gstcontext.h \
+		../include/gstreamer-1.0/gst/gstdevice.h \
+		../include/gstreamer-1.0/gst/gststreams.h \
+		../include/gstreamer-1.0/gst/gststreamcollection.h \
+		../include/gstreamer-1.0/gst/gsttask.h \
+		../include/gstreamer-1.0/gst/gsttaskpool.h \
+		../include/gstreamer-1.0/gst/gstbus.h \
+		../include/gstreamer-1.0/gst/gstelementfactory.h \
+		../include/gstreamer-1.0/gst/gstplugin.h \
+		../include/gstreamer-1.0/gst/gstmacros.h \
+		../include/gstreamer-1.0/gst/gstpluginfeature.h \
+		../include/gstreamer-1.0/gst/gsturi.h \
+		../include/gstreamer-1.0/gst/gstbufferpool.h \
+		../include/gstreamer-1.0/gst/gstchildproxy.h \
+		../include/gstreamer-1.0/gst/gstdebugutils.h \
+		../include/gstreamer-1.0/gst/gstdevicemonitor.h \
+		../include/gstreamer-1.0/gst/gstdeviceprovider.h \
+		../include/gstreamer-1.0/gst/gstdeviceproviderfactory.h \
+		../include/gstreamer-1.0/gst/gstdynamictypefactory.h \
+		../include/gstreamer-1.0/gst/gstelementmetadata.h \
+		../include/gstreamer-1.0/gst/gsterror.h \
+		../include/gstreamer-1.0/gst/gstghostpad.h \
+		../include/gstreamer-1.0/gst/gstinfo.h \
+		../include/gstreamer-1.0/gst/gstparamspecs.h \
+		../include/gstreamer-1.0/gst/gstvalue.h \
+		../include/gstreamer-1.0/gst/gstpipeline.h \
+		../include/gstreamer-1.0/gst/gstpoll.h \
+		../include/gstreamer-1.0/gst/gstpreset.h \
+		../include/gstreamer-1.0/gst/gstprotection.h \
+		../include/gstreamer-1.0/gst/gstregistry.h \
+		../include/gstreamer-1.0/gst/gstpromise.h \
+		../include/gstreamer-1.0/gst/gstsystemclock.h \
+		../include/gstreamer-1.0/gst/gsttagsetter.h \
+		../include/gstreamer-1.0/gst/gsttocsetter.h \
+		../include/gstreamer-1.0/gst/gsttracer.h \
+		../include/gstreamer-1.0/gst/gsttracerfactory.h \
+		../include/gstreamer-1.0/gst/gsttracerrecord.h \
+		../include/gstreamer-1.0/gst/gsttypefind.h \
+		../include/gstreamer-1.0/gst/gsttypefindfactory.h \
+		../include/gstreamer-1.0/gst/gstutils.h \
+		../include/gstreamer-1.0/gst/gstparse.h \
+		../include/gstreamer-1.0/gst/gstcompat.h \
+		../include/gstreamer-1.0/gst/video/videooverlay.h \
+		../include/gstreamer-1.0/gst/video/gstvideosink.h \
+		../include/gstreamer-1.0/gst/base/gstbasesink.h \
+		../include/gstreamer-1.0/gst/base/base-prelude.h \
+		../include/gstreamer-1.0/gst/video/video-prelude.h \
 		recordplaywidget.h \
 		myslider.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/QMouseEvent \
@@ -4286,6 +5356,8 @@ pvmsmenuwidget.o: pvmsmenuwidget.cpp pvmsmenuwidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qdatetime.h \
 		alarmwidget.h \
 		rs485serv.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QStackedWidget \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qstackedwidget.h \
 		ui_pvmsmenuwidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QLocale \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QApplication \
@@ -4473,6 +5545,191 @@ pvmsmonitorwidget.o: pvmsmonitorwidget.cpp pvmsmonitorwidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QSlider \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qslider.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qabstractslider.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/QPainter \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpainter.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextoption.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpen.h \
+		cmplayer.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QHBoxLayout \
+		log.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QFile \
+		../include/gstreamer-1.0/gst/gst.h \
+		../include/glib-2.0/glib.h \
+		../include/glib-2.0/glib/galloca.h \
+		../include/glib-2.0/glib/gtypes.h \
+		../include/glib-2.0/glibconfig.h \
+		../include/glib-2.0/glib/gmacros.h \
+		../include/glib-2.0/glib/gversionmacros.h \
+		../include/glib-2.0/glib/garray.h \
+		../include/glib-2.0/glib/gasyncqueue.h \
+		../include/glib-2.0/glib/gthread.h \
+		../include/glib-2.0/glib/gatomic.h \
+		../include/glib-2.0/glib/gerror.h \
+		../include/glib-2.0/glib/gquark.h \
+		../include/glib-2.0/glib/gutils.h \
+		../include/glib-2.0/glib/gbacktrace.h \
+		../include/glib-2.0/glib/gbase64.h \
+		../include/glib-2.0/glib/gbitlock.h \
+		../include/glib-2.0/glib/gbookmarkfile.h \
+		../include/glib-2.0/glib/gbytes.h \
+		../include/glib-2.0/glib/gcharset.h \
+		../include/glib-2.0/glib/gchecksum.h \
+		../include/glib-2.0/glib/gconvert.h \
+		../include/glib-2.0/glib/gdataset.h \
+		../include/glib-2.0/glib/gdate.h \
+		../include/glib-2.0/glib/gdatetime.h \
+		../include/glib-2.0/glib/gtimezone.h \
+		../include/glib-2.0/glib/gdir.h \
+		../include/glib-2.0/glib/genviron.h \
+		../include/glib-2.0/glib/gfileutils.h \
+		../include/glib-2.0/glib/ggettext.h \
+		../include/glib-2.0/glib/ghash.h \
+		../include/glib-2.0/glib/glist.h \
+		../include/glib-2.0/glib/gmem.h \
+		../include/glib-2.0/glib/gnode.h \
+		../include/glib-2.0/glib/ghmac.h \
+		../include/glib-2.0/glib/ghook.h \
+		../include/glib-2.0/glib/ghostutils.h \
+		../include/glib-2.0/glib/giochannel.h \
+		../include/glib-2.0/glib/gmain.h \
+		../include/glib-2.0/glib/gpoll.h \
+		../include/glib-2.0/glib/gslist.h \
+		../include/glib-2.0/glib/gstring.h \
+		../include/glib-2.0/glib/gunicode.h \
+		../include/glib-2.0/glib/gkeyfile.h \
+		../include/glib-2.0/glib/gmappedfile.h \
+		../include/glib-2.0/glib/gmarkup.h \
+		../include/glib-2.0/glib/gmessages.h \
+		../include/glib-2.0/glib/gvariant.h \
+		../include/glib-2.0/glib/gvarianttype.h \
+		../include/glib-2.0/glib/goption.h \
+		../include/glib-2.0/glib/gpattern.h \
+		../include/glib-2.0/glib/gprimes.h \
+		../include/glib-2.0/glib/gqsort.h \
+		../include/glib-2.0/glib/gqueue.h \
+		../include/glib-2.0/glib/grand.h \
+		../include/glib-2.0/glib/gregex.h \
+		../include/glib-2.0/glib/gscanner.h \
+		../include/glib-2.0/glib/gsequence.h \
+		../include/glib-2.0/glib/gshell.h \
+		../include/glib-2.0/glib/gslice.h \
+		../include/glib-2.0/glib/gspawn.h \
+		../include/glib-2.0/glib/gstrfuncs.h \
+		../include/glib-2.0/glib/gstringchunk.h \
+		../include/glib-2.0/glib/gtestutils.h \
+		../include/glib-2.0/glib/gthreadpool.h \
+		../include/glib-2.0/glib/gtimer.h \
+		../include/glib-2.0/glib/gtrashstack.h \
+		../include/glib-2.0/glib/gtree.h \
+		../include/glib-2.0/glib/gurifuncs.h \
+		../include/glib-2.0/glib/guuid.h \
+		../include/glib-2.0/glib/gversion.h \
+		../include/glib-2.0/glib/gwin32.h \
+		../include/glib-2.0/glib/deprecated/gallocator.h \
+		../include/glib-2.0/glib/deprecated/gcache.h \
+		../include/glib-2.0/glib/deprecated/gcompletion.h \
+		../include/glib-2.0/glib/deprecated/gmain.h \
+		../include/glib-2.0/glib/deprecated/grel.h \
+		../include/glib-2.0/glib/deprecated/gthread.h \
+		../include/glib-2.0/glib/glib-autocleanups.h \
+		../include/gstreamer-1.0/gst/glib-compat.h \
+		../include/gstreamer-1.0/gst/gstenumtypes.h \
+		../include/glib-2.0/glib-object.h \
+		../include/glib-2.0/gobject/gbinding.h \
+		../include/glib-2.0/gobject/gobject.h \
+		../include/glib-2.0/gobject/gtype.h \
+		../include/glib-2.0/gobject/gvalue.h \
+		../include/glib-2.0/gobject/gparam.h \
+		../include/glib-2.0/gobject/gclosure.h \
+		../include/glib-2.0/gobject/gsignal.h \
+		../include/glib-2.0/gobject/gmarshal.h \
+		../include/glib-2.0/gobject/gboxed.h \
+		../include/glib-2.0/gobject/glib-types.h \
+		../include/glib-2.0/gobject/genums.h \
+		../include/glib-2.0/gobject/gparamspecs.h \
+		../include/glib-2.0/gobject/gsourceclosure.h \
+		../include/glib-2.0/gobject/gtypemodule.h \
+		../include/glib-2.0/gobject/gtypeplugin.h \
+		../include/glib-2.0/gobject/gvaluearray.h \
+		../include/glib-2.0/gobject/gvaluetypes.h \
+		../include/glib-2.0/gobject/gobject-autocleanups.h \
+		../include/gstreamer-1.0/gst/gstconfig.h \
+		../include/gstreamer-1.0/gst/gstversion.h \
+		../include/gstreamer-1.0/gst/gstatomicqueue.h \
+		../include/gstreamer-1.0/gst/gstbin.h \
+		../include/gstreamer-1.0/gst/gstelement.h \
+		../include/gstreamer-1.0/gst/gstobject.h \
+		../include/gstreamer-1.0/gst/gstcontrolbinding.h \
+		../include/gstreamer-1.0/gst/gstcontrolsource.h \
+		../include/gstreamer-1.0/gst/gstclock.h \
+		../include/gstreamer-1.0/gst/gstpad.h \
+		../include/gstreamer-1.0/gst/gstbuffer.h \
+		../include/gstreamer-1.0/gst/gstminiobject.h \
+		../include/gstreamer-1.0/gst/gstallocator.h \
+		../include/gstreamer-1.0/gst/gstmemory.h \
+		../include/gstreamer-1.0/gst/gstcaps.h \
+		../include/gstreamer-1.0/gst/gststructure.h \
+		../include/gstreamer-1.0/gst/gstdatetime.h \
+		../include/gstreamer-1.0/gst/gstcapsfeatures.h \
+		../include/gstreamer-1.0/gst/gstmeta.h \
+		../include/gstreamer-1.0/gst/gstbufferlist.h \
+		../include/gstreamer-1.0/gst/gstpadtemplate.h \
+		../include/gstreamer-1.0/gst/gstevent.h \
+		../include/gstreamer-1.0/gst/gstformat.h \
+		../include/gstreamer-1.0/gst/gstiterator.h \
+		../include/gstreamer-1.0/gst/gsttaglist.h \
+		../include/gstreamer-1.0/gst/gstsample.h \
+		../include/gstreamer-1.0/gst/gstsegment.h \
+		../include/gstreamer-1.0/gst/gstmessage.h \
+		../include/gstreamer-1.0/gst/gstquery.h \
+		../include/gstreamer-1.0/gst/gsttoc.h \
+		../include/gstreamer-1.0/gst/gstcontext.h \
+		../include/gstreamer-1.0/gst/gstdevice.h \
+		../include/gstreamer-1.0/gst/gststreams.h \
+		../include/gstreamer-1.0/gst/gststreamcollection.h \
+		../include/gstreamer-1.0/gst/gsttask.h \
+		../include/gstreamer-1.0/gst/gsttaskpool.h \
+		../include/gstreamer-1.0/gst/gstbus.h \
+		../include/gstreamer-1.0/gst/gstelementfactory.h \
+		../include/gstreamer-1.0/gst/gstplugin.h \
+		../include/gstreamer-1.0/gst/gstmacros.h \
+		../include/gstreamer-1.0/gst/gstpluginfeature.h \
+		../include/gstreamer-1.0/gst/gsturi.h \
+		../include/gstreamer-1.0/gst/gstbufferpool.h \
+		../include/gstreamer-1.0/gst/gstchildproxy.h \
+		../include/gstreamer-1.0/gst/gstdebugutils.h \
+		../include/gstreamer-1.0/gst/gstdevicemonitor.h \
+		../include/gstreamer-1.0/gst/gstdeviceprovider.h \
+		../include/gstreamer-1.0/gst/gstdeviceproviderfactory.h \
+		../include/gstreamer-1.0/gst/gstdynamictypefactory.h \
+		../include/gstreamer-1.0/gst/gstelementmetadata.h \
+		../include/gstreamer-1.0/gst/gsterror.h \
+		../include/gstreamer-1.0/gst/gstghostpad.h \
+		../include/gstreamer-1.0/gst/gstinfo.h \
+		../include/gstreamer-1.0/gst/gstparamspecs.h \
+		../include/gstreamer-1.0/gst/gstvalue.h \
+		../include/gstreamer-1.0/gst/gstpipeline.h \
+		../include/gstreamer-1.0/gst/gstpoll.h \
+		../include/gstreamer-1.0/gst/gstpreset.h \
+		../include/gstreamer-1.0/gst/gstprotection.h \
+		../include/gstreamer-1.0/gst/gstregistry.h \
+		../include/gstreamer-1.0/gst/gstpromise.h \
+		../include/gstreamer-1.0/gst/gstsystemclock.h \
+		../include/gstreamer-1.0/gst/gsttagsetter.h \
+		../include/gstreamer-1.0/gst/gsttocsetter.h \
+		../include/gstreamer-1.0/gst/gsttracer.h \
+		../include/gstreamer-1.0/gst/gsttracerfactory.h \
+		../include/gstreamer-1.0/gst/gsttracerrecord.h \
+		../include/gstreamer-1.0/gst/gsttypefind.h \
+		../include/gstreamer-1.0/gst/gsttypefindfactory.h \
+		../include/gstreamer-1.0/gst/gstutils.h \
+		../include/gstreamer-1.0/gst/gstparse.h \
+		../include/gstreamer-1.0/gst/gstcompat.h \
+		../include/gstreamer-1.0/gst/video/videooverlay.h \
+		../include/gstreamer-1.0/gst/video/gstvideosink.h \
+		../include/gstreamer-1.0/gst/base/gstbasesink.h \
+		../include/gstreamer-1.0/gst/base/base-prelude.h \
+		../include/gstreamer-1.0/gst/video/video-prelude.h \
 		ui_pvmsmonitorwidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QApplication \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qapplication.h \
@@ -4483,7 +5740,6 @@ pvmsmonitorwidget.o: pvmsmonitorwidget.cpp pvmsmonitorwidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QMessageBox \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qmessagebox.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qdialog.h \
-		log.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QEvent \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/QMouseEvent
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o pvmsmonitorwidget.o pvmsmonitorwidget.cpp
@@ -4678,6 +5934,191 @@ recordplaywidget.o: recordplaywidget.cpp recordplaywidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qjsonobject.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qjsonvalue.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qfactoryinterface.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/QPainter \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpainter.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextoption.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpen.h \
+		cmplayer.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QHBoxLayout \
+		log.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QFile \
+		../include/gstreamer-1.0/gst/gst.h \
+		../include/glib-2.0/glib.h \
+		../include/glib-2.0/glib/galloca.h \
+		../include/glib-2.0/glib/gtypes.h \
+		../include/glib-2.0/glibconfig.h \
+		../include/glib-2.0/glib/gmacros.h \
+		../include/glib-2.0/glib/gversionmacros.h \
+		../include/glib-2.0/glib/garray.h \
+		../include/glib-2.0/glib/gasyncqueue.h \
+		../include/glib-2.0/glib/gthread.h \
+		../include/glib-2.0/glib/gatomic.h \
+		../include/glib-2.0/glib/gerror.h \
+		../include/glib-2.0/glib/gquark.h \
+		../include/glib-2.0/glib/gutils.h \
+		../include/glib-2.0/glib/gbacktrace.h \
+		../include/glib-2.0/glib/gbase64.h \
+		../include/glib-2.0/glib/gbitlock.h \
+		../include/glib-2.0/glib/gbookmarkfile.h \
+		../include/glib-2.0/glib/gbytes.h \
+		../include/glib-2.0/glib/gcharset.h \
+		../include/glib-2.0/glib/gchecksum.h \
+		../include/glib-2.0/glib/gconvert.h \
+		../include/glib-2.0/glib/gdataset.h \
+		../include/glib-2.0/glib/gdate.h \
+		../include/glib-2.0/glib/gdatetime.h \
+		../include/glib-2.0/glib/gtimezone.h \
+		../include/glib-2.0/glib/gdir.h \
+		../include/glib-2.0/glib/genviron.h \
+		../include/glib-2.0/glib/gfileutils.h \
+		../include/glib-2.0/glib/ggettext.h \
+		../include/glib-2.0/glib/ghash.h \
+		../include/glib-2.0/glib/glist.h \
+		../include/glib-2.0/glib/gmem.h \
+		../include/glib-2.0/glib/gnode.h \
+		../include/glib-2.0/glib/ghmac.h \
+		../include/glib-2.0/glib/ghook.h \
+		../include/glib-2.0/glib/ghostutils.h \
+		../include/glib-2.0/glib/giochannel.h \
+		../include/glib-2.0/glib/gmain.h \
+		../include/glib-2.0/glib/gpoll.h \
+		../include/glib-2.0/glib/gslist.h \
+		../include/glib-2.0/glib/gstring.h \
+		../include/glib-2.0/glib/gunicode.h \
+		../include/glib-2.0/glib/gkeyfile.h \
+		../include/glib-2.0/glib/gmappedfile.h \
+		../include/glib-2.0/glib/gmarkup.h \
+		../include/glib-2.0/glib/gmessages.h \
+		../include/glib-2.0/glib/gvariant.h \
+		../include/glib-2.0/glib/gvarianttype.h \
+		../include/glib-2.0/glib/goption.h \
+		../include/glib-2.0/glib/gpattern.h \
+		../include/glib-2.0/glib/gprimes.h \
+		../include/glib-2.0/glib/gqsort.h \
+		../include/glib-2.0/glib/gqueue.h \
+		../include/glib-2.0/glib/grand.h \
+		../include/glib-2.0/glib/gregex.h \
+		../include/glib-2.0/glib/gscanner.h \
+		../include/glib-2.0/glib/gsequence.h \
+		../include/glib-2.0/glib/gshell.h \
+		../include/glib-2.0/glib/gslice.h \
+		../include/glib-2.0/glib/gspawn.h \
+		../include/glib-2.0/glib/gstrfuncs.h \
+		../include/glib-2.0/glib/gstringchunk.h \
+		../include/glib-2.0/glib/gtestutils.h \
+		../include/glib-2.0/glib/gthreadpool.h \
+		../include/glib-2.0/glib/gtimer.h \
+		../include/glib-2.0/glib/gtrashstack.h \
+		../include/glib-2.0/glib/gtree.h \
+		../include/glib-2.0/glib/gurifuncs.h \
+		../include/glib-2.0/glib/guuid.h \
+		../include/glib-2.0/glib/gversion.h \
+		../include/glib-2.0/glib/gwin32.h \
+		../include/glib-2.0/glib/deprecated/gallocator.h \
+		../include/glib-2.0/glib/deprecated/gcache.h \
+		../include/glib-2.0/glib/deprecated/gcompletion.h \
+		../include/glib-2.0/glib/deprecated/gmain.h \
+		../include/glib-2.0/glib/deprecated/grel.h \
+		../include/glib-2.0/glib/deprecated/gthread.h \
+		../include/glib-2.0/glib/glib-autocleanups.h \
+		../include/gstreamer-1.0/gst/glib-compat.h \
+		../include/gstreamer-1.0/gst/gstenumtypes.h \
+		../include/glib-2.0/glib-object.h \
+		../include/glib-2.0/gobject/gbinding.h \
+		../include/glib-2.0/gobject/gobject.h \
+		../include/glib-2.0/gobject/gtype.h \
+		../include/glib-2.0/gobject/gvalue.h \
+		../include/glib-2.0/gobject/gparam.h \
+		../include/glib-2.0/gobject/gclosure.h \
+		../include/glib-2.0/gobject/gsignal.h \
+		../include/glib-2.0/gobject/gmarshal.h \
+		../include/glib-2.0/gobject/gboxed.h \
+		../include/glib-2.0/gobject/glib-types.h \
+		../include/glib-2.0/gobject/genums.h \
+		../include/glib-2.0/gobject/gparamspecs.h \
+		../include/glib-2.0/gobject/gsourceclosure.h \
+		../include/glib-2.0/gobject/gtypemodule.h \
+		../include/glib-2.0/gobject/gtypeplugin.h \
+		../include/glib-2.0/gobject/gvaluearray.h \
+		../include/glib-2.0/gobject/gvaluetypes.h \
+		../include/glib-2.0/gobject/gobject-autocleanups.h \
+		../include/gstreamer-1.0/gst/gstconfig.h \
+		../include/gstreamer-1.0/gst/gstversion.h \
+		../include/gstreamer-1.0/gst/gstatomicqueue.h \
+		../include/gstreamer-1.0/gst/gstbin.h \
+		../include/gstreamer-1.0/gst/gstelement.h \
+		../include/gstreamer-1.0/gst/gstobject.h \
+		../include/gstreamer-1.0/gst/gstcontrolbinding.h \
+		../include/gstreamer-1.0/gst/gstcontrolsource.h \
+		../include/gstreamer-1.0/gst/gstclock.h \
+		../include/gstreamer-1.0/gst/gstpad.h \
+		../include/gstreamer-1.0/gst/gstbuffer.h \
+		../include/gstreamer-1.0/gst/gstminiobject.h \
+		../include/gstreamer-1.0/gst/gstallocator.h \
+		../include/gstreamer-1.0/gst/gstmemory.h \
+		../include/gstreamer-1.0/gst/gstcaps.h \
+		../include/gstreamer-1.0/gst/gststructure.h \
+		../include/gstreamer-1.0/gst/gstdatetime.h \
+		../include/gstreamer-1.0/gst/gstcapsfeatures.h \
+		../include/gstreamer-1.0/gst/gstmeta.h \
+		../include/gstreamer-1.0/gst/gstbufferlist.h \
+		../include/gstreamer-1.0/gst/gstpadtemplate.h \
+		../include/gstreamer-1.0/gst/gstevent.h \
+		../include/gstreamer-1.0/gst/gstformat.h \
+		../include/gstreamer-1.0/gst/gstiterator.h \
+		../include/gstreamer-1.0/gst/gsttaglist.h \
+		../include/gstreamer-1.0/gst/gstsample.h \
+		../include/gstreamer-1.0/gst/gstsegment.h \
+		../include/gstreamer-1.0/gst/gstmessage.h \
+		../include/gstreamer-1.0/gst/gstquery.h \
+		../include/gstreamer-1.0/gst/gsttoc.h \
+		../include/gstreamer-1.0/gst/gstcontext.h \
+		../include/gstreamer-1.0/gst/gstdevice.h \
+		../include/gstreamer-1.0/gst/gststreams.h \
+		../include/gstreamer-1.0/gst/gststreamcollection.h \
+		../include/gstreamer-1.0/gst/gsttask.h \
+		../include/gstreamer-1.0/gst/gsttaskpool.h \
+		../include/gstreamer-1.0/gst/gstbus.h \
+		../include/gstreamer-1.0/gst/gstelementfactory.h \
+		../include/gstreamer-1.0/gst/gstplugin.h \
+		../include/gstreamer-1.0/gst/gstmacros.h \
+		../include/gstreamer-1.0/gst/gstpluginfeature.h \
+		../include/gstreamer-1.0/gst/gsturi.h \
+		../include/gstreamer-1.0/gst/gstbufferpool.h \
+		../include/gstreamer-1.0/gst/gstchildproxy.h \
+		../include/gstreamer-1.0/gst/gstdebugutils.h \
+		../include/gstreamer-1.0/gst/gstdevicemonitor.h \
+		../include/gstreamer-1.0/gst/gstdeviceprovider.h \
+		../include/gstreamer-1.0/gst/gstdeviceproviderfactory.h \
+		../include/gstreamer-1.0/gst/gstdynamictypefactory.h \
+		../include/gstreamer-1.0/gst/gstelementmetadata.h \
+		../include/gstreamer-1.0/gst/gsterror.h \
+		../include/gstreamer-1.0/gst/gstghostpad.h \
+		../include/gstreamer-1.0/gst/gstinfo.h \
+		../include/gstreamer-1.0/gst/gstparamspecs.h \
+		../include/gstreamer-1.0/gst/gstvalue.h \
+		../include/gstreamer-1.0/gst/gstpipeline.h \
+		../include/gstreamer-1.0/gst/gstpoll.h \
+		../include/gstreamer-1.0/gst/gstpreset.h \
+		../include/gstreamer-1.0/gst/gstprotection.h \
+		../include/gstreamer-1.0/gst/gstregistry.h \
+		../include/gstreamer-1.0/gst/gstpromise.h \
+		../include/gstreamer-1.0/gst/gstsystemclock.h \
+		../include/gstreamer-1.0/gst/gsttagsetter.h \
+		../include/gstreamer-1.0/gst/gsttocsetter.h \
+		../include/gstreamer-1.0/gst/gsttracer.h \
+		../include/gstreamer-1.0/gst/gsttracerfactory.h \
+		../include/gstreamer-1.0/gst/gsttracerrecord.h \
+		../include/gstreamer-1.0/gst/gsttypefind.h \
+		../include/gstreamer-1.0/gst/gsttypefindfactory.h \
+		../include/gstreamer-1.0/gst/gstutils.h \
+		../include/gstreamer-1.0/gst/gstparse.h \
+		../include/gstreamer-1.0/gst/gstcompat.h \
+		../include/gstreamer-1.0/gst/video/videooverlay.h \
+		../include/gstreamer-1.0/gst/video/gstvideosink.h \
+		../include/gstreamer-1.0/gst/base/gstbasesink.h \
+		../include/gstreamer-1.0/gst/base/base-prelude.h \
+		../include/gstreamer-1.0/gst/video/video-prelude.h \
 		ftpApi.h \
 		ui_recordplaywidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QDate \
@@ -4702,7 +6143,6 @@ recordplaywidget.o: recordplaywidget.cpp recordplaywidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qstylefactory.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QDateTime \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/QKeyEvent \
-		log.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QDebug \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QMessageBox \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qmessagebox.h \
@@ -4881,6 +6321,191 @@ inteanalywidget.o: inteanalywidget.cpp inteanalywidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QSlider \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qslider.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qabstractslider.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/QPainter \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpainter.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextoption.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpen.h \
+		cmplayer.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QHBoxLayout \
+		log.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QFile \
+		../include/gstreamer-1.0/gst/gst.h \
+		../include/glib-2.0/glib.h \
+		../include/glib-2.0/glib/galloca.h \
+		../include/glib-2.0/glib/gtypes.h \
+		../include/glib-2.0/glibconfig.h \
+		../include/glib-2.0/glib/gmacros.h \
+		../include/glib-2.0/glib/gversionmacros.h \
+		../include/glib-2.0/glib/garray.h \
+		../include/glib-2.0/glib/gasyncqueue.h \
+		../include/glib-2.0/glib/gthread.h \
+		../include/glib-2.0/glib/gatomic.h \
+		../include/glib-2.0/glib/gerror.h \
+		../include/glib-2.0/glib/gquark.h \
+		../include/glib-2.0/glib/gutils.h \
+		../include/glib-2.0/glib/gbacktrace.h \
+		../include/glib-2.0/glib/gbase64.h \
+		../include/glib-2.0/glib/gbitlock.h \
+		../include/glib-2.0/glib/gbookmarkfile.h \
+		../include/glib-2.0/glib/gbytes.h \
+		../include/glib-2.0/glib/gcharset.h \
+		../include/glib-2.0/glib/gchecksum.h \
+		../include/glib-2.0/glib/gconvert.h \
+		../include/glib-2.0/glib/gdataset.h \
+		../include/glib-2.0/glib/gdate.h \
+		../include/glib-2.0/glib/gdatetime.h \
+		../include/glib-2.0/glib/gtimezone.h \
+		../include/glib-2.0/glib/gdir.h \
+		../include/glib-2.0/glib/genviron.h \
+		../include/glib-2.0/glib/gfileutils.h \
+		../include/glib-2.0/glib/ggettext.h \
+		../include/glib-2.0/glib/ghash.h \
+		../include/glib-2.0/glib/glist.h \
+		../include/glib-2.0/glib/gmem.h \
+		../include/glib-2.0/glib/gnode.h \
+		../include/glib-2.0/glib/ghmac.h \
+		../include/glib-2.0/glib/ghook.h \
+		../include/glib-2.0/glib/ghostutils.h \
+		../include/glib-2.0/glib/giochannel.h \
+		../include/glib-2.0/glib/gmain.h \
+		../include/glib-2.0/glib/gpoll.h \
+		../include/glib-2.0/glib/gslist.h \
+		../include/glib-2.0/glib/gstring.h \
+		../include/glib-2.0/glib/gunicode.h \
+		../include/glib-2.0/glib/gkeyfile.h \
+		../include/glib-2.0/glib/gmappedfile.h \
+		../include/glib-2.0/glib/gmarkup.h \
+		../include/glib-2.0/glib/gmessages.h \
+		../include/glib-2.0/glib/gvariant.h \
+		../include/glib-2.0/glib/gvarianttype.h \
+		../include/glib-2.0/glib/goption.h \
+		../include/glib-2.0/glib/gpattern.h \
+		../include/glib-2.0/glib/gprimes.h \
+		../include/glib-2.0/glib/gqsort.h \
+		../include/glib-2.0/glib/gqueue.h \
+		../include/glib-2.0/glib/grand.h \
+		../include/glib-2.0/glib/gregex.h \
+		../include/glib-2.0/glib/gscanner.h \
+		../include/glib-2.0/glib/gsequence.h \
+		../include/glib-2.0/glib/gshell.h \
+		../include/glib-2.0/glib/gslice.h \
+		../include/glib-2.0/glib/gspawn.h \
+		../include/glib-2.0/glib/gstrfuncs.h \
+		../include/glib-2.0/glib/gstringchunk.h \
+		../include/glib-2.0/glib/gtestutils.h \
+		../include/glib-2.0/glib/gthreadpool.h \
+		../include/glib-2.0/glib/gtimer.h \
+		../include/glib-2.0/glib/gtrashstack.h \
+		../include/glib-2.0/glib/gtree.h \
+		../include/glib-2.0/glib/gurifuncs.h \
+		../include/glib-2.0/glib/guuid.h \
+		../include/glib-2.0/glib/gversion.h \
+		../include/glib-2.0/glib/gwin32.h \
+		../include/glib-2.0/glib/deprecated/gallocator.h \
+		../include/glib-2.0/glib/deprecated/gcache.h \
+		../include/glib-2.0/glib/deprecated/gcompletion.h \
+		../include/glib-2.0/glib/deprecated/gmain.h \
+		../include/glib-2.0/glib/deprecated/grel.h \
+		../include/glib-2.0/glib/deprecated/gthread.h \
+		../include/glib-2.0/glib/glib-autocleanups.h \
+		../include/gstreamer-1.0/gst/glib-compat.h \
+		../include/gstreamer-1.0/gst/gstenumtypes.h \
+		../include/glib-2.0/glib-object.h \
+		../include/glib-2.0/gobject/gbinding.h \
+		../include/glib-2.0/gobject/gobject.h \
+		../include/glib-2.0/gobject/gtype.h \
+		../include/glib-2.0/gobject/gvalue.h \
+		../include/glib-2.0/gobject/gparam.h \
+		../include/glib-2.0/gobject/gclosure.h \
+		../include/glib-2.0/gobject/gsignal.h \
+		../include/glib-2.0/gobject/gmarshal.h \
+		../include/glib-2.0/gobject/gboxed.h \
+		../include/glib-2.0/gobject/glib-types.h \
+		../include/glib-2.0/gobject/genums.h \
+		../include/glib-2.0/gobject/gparamspecs.h \
+		../include/glib-2.0/gobject/gsourceclosure.h \
+		../include/glib-2.0/gobject/gtypemodule.h \
+		../include/glib-2.0/gobject/gtypeplugin.h \
+		../include/glib-2.0/gobject/gvaluearray.h \
+		../include/glib-2.0/gobject/gvaluetypes.h \
+		../include/glib-2.0/gobject/gobject-autocleanups.h \
+		../include/gstreamer-1.0/gst/gstconfig.h \
+		../include/gstreamer-1.0/gst/gstversion.h \
+		../include/gstreamer-1.0/gst/gstatomicqueue.h \
+		../include/gstreamer-1.0/gst/gstbin.h \
+		../include/gstreamer-1.0/gst/gstelement.h \
+		../include/gstreamer-1.0/gst/gstobject.h \
+		../include/gstreamer-1.0/gst/gstcontrolbinding.h \
+		../include/gstreamer-1.0/gst/gstcontrolsource.h \
+		../include/gstreamer-1.0/gst/gstclock.h \
+		../include/gstreamer-1.0/gst/gstpad.h \
+		../include/gstreamer-1.0/gst/gstbuffer.h \
+		../include/gstreamer-1.0/gst/gstminiobject.h \
+		../include/gstreamer-1.0/gst/gstallocator.h \
+		../include/gstreamer-1.0/gst/gstmemory.h \
+		../include/gstreamer-1.0/gst/gstcaps.h \
+		../include/gstreamer-1.0/gst/gststructure.h \
+		../include/gstreamer-1.0/gst/gstdatetime.h \
+		../include/gstreamer-1.0/gst/gstcapsfeatures.h \
+		../include/gstreamer-1.0/gst/gstmeta.h \
+		../include/gstreamer-1.0/gst/gstbufferlist.h \
+		../include/gstreamer-1.0/gst/gstpadtemplate.h \
+		../include/gstreamer-1.0/gst/gstevent.h \
+		../include/gstreamer-1.0/gst/gstformat.h \
+		../include/gstreamer-1.0/gst/gstiterator.h \
+		../include/gstreamer-1.0/gst/gsttaglist.h \
+		../include/gstreamer-1.0/gst/gstsample.h \
+		../include/gstreamer-1.0/gst/gstsegment.h \
+		../include/gstreamer-1.0/gst/gstmessage.h \
+		../include/gstreamer-1.0/gst/gstquery.h \
+		../include/gstreamer-1.0/gst/gsttoc.h \
+		../include/gstreamer-1.0/gst/gstcontext.h \
+		../include/gstreamer-1.0/gst/gstdevice.h \
+		../include/gstreamer-1.0/gst/gststreams.h \
+		../include/gstreamer-1.0/gst/gststreamcollection.h \
+		../include/gstreamer-1.0/gst/gsttask.h \
+		../include/gstreamer-1.0/gst/gsttaskpool.h \
+		../include/gstreamer-1.0/gst/gstbus.h \
+		../include/gstreamer-1.0/gst/gstelementfactory.h \
+		../include/gstreamer-1.0/gst/gstplugin.h \
+		../include/gstreamer-1.0/gst/gstmacros.h \
+		../include/gstreamer-1.0/gst/gstpluginfeature.h \
+		../include/gstreamer-1.0/gst/gsturi.h \
+		../include/gstreamer-1.0/gst/gstbufferpool.h \
+		../include/gstreamer-1.0/gst/gstchildproxy.h \
+		../include/gstreamer-1.0/gst/gstdebugutils.h \
+		../include/gstreamer-1.0/gst/gstdevicemonitor.h \
+		../include/gstreamer-1.0/gst/gstdeviceprovider.h \
+		../include/gstreamer-1.0/gst/gstdeviceproviderfactory.h \
+		../include/gstreamer-1.0/gst/gstdynamictypefactory.h \
+		../include/gstreamer-1.0/gst/gstelementmetadata.h \
+		../include/gstreamer-1.0/gst/gsterror.h \
+		../include/gstreamer-1.0/gst/gstghostpad.h \
+		../include/gstreamer-1.0/gst/gstinfo.h \
+		../include/gstreamer-1.0/gst/gstparamspecs.h \
+		../include/gstreamer-1.0/gst/gstvalue.h \
+		../include/gstreamer-1.0/gst/gstpipeline.h \
+		../include/gstreamer-1.0/gst/gstpoll.h \
+		../include/gstreamer-1.0/gst/gstpreset.h \
+		../include/gstreamer-1.0/gst/gstprotection.h \
+		../include/gstreamer-1.0/gst/gstregistry.h \
+		../include/gstreamer-1.0/gst/gstpromise.h \
+		../include/gstreamer-1.0/gst/gstsystemclock.h \
+		../include/gstreamer-1.0/gst/gsttagsetter.h \
+		../include/gstreamer-1.0/gst/gsttocsetter.h \
+		../include/gstreamer-1.0/gst/gsttracer.h \
+		../include/gstreamer-1.0/gst/gsttracerfactory.h \
+		../include/gstreamer-1.0/gst/gsttracerrecord.h \
+		../include/gstreamer-1.0/gst/gsttypefind.h \
+		../include/gstreamer-1.0/gst/gsttypefindfactory.h \
+		../include/gstreamer-1.0/gst/gstutils.h \
+		../include/gstreamer-1.0/gst/gstparse.h \
+		../include/gstreamer-1.0/gst/gstcompat.h \
+		../include/gstreamer-1.0/gst/video/videooverlay.h \
+		../include/gstreamer-1.0/gst/video/gstvideosink.h \
+		../include/gstreamer-1.0/gst/base/gstbasesink.h \
+		../include/gstreamer-1.0/gst/base/base-prelude.h \
+		../include/gstreamer-1.0/gst/video/video-prelude.h \
 		ui_inteanalywidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QDate \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qdatetime.h \
@@ -5260,6 +6885,191 @@ devupdatewidget.o: devupdatewidget.cpp devupdatewidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QSlider \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qslider.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qabstractslider.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/QPainter \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpainter.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextoption.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpen.h \
+		cmplayer.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QHBoxLayout \
+		log.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QFile \
+		../include/gstreamer-1.0/gst/gst.h \
+		../include/glib-2.0/glib.h \
+		../include/glib-2.0/glib/galloca.h \
+		../include/glib-2.0/glib/gtypes.h \
+		../include/glib-2.0/glibconfig.h \
+		../include/glib-2.0/glib/gmacros.h \
+		../include/glib-2.0/glib/gversionmacros.h \
+		../include/glib-2.0/glib/garray.h \
+		../include/glib-2.0/glib/gasyncqueue.h \
+		../include/glib-2.0/glib/gthread.h \
+		../include/glib-2.0/glib/gatomic.h \
+		../include/glib-2.0/glib/gerror.h \
+		../include/glib-2.0/glib/gquark.h \
+		../include/glib-2.0/glib/gutils.h \
+		../include/glib-2.0/glib/gbacktrace.h \
+		../include/glib-2.0/glib/gbase64.h \
+		../include/glib-2.0/glib/gbitlock.h \
+		../include/glib-2.0/glib/gbookmarkfile.h \
+		../include/glib-2.0/glib/gbytes.h \
+		../include/glib-2.0/glib/gcharset.h \
+		../include/glib-2.0/glib/gchecksum.h \
+		../include/glib-2.0/glib/gconvert.h \
+		../include/glib-2.0/glib/gdataset.h \
+		../include/glib-2.0/glib/gdate.h \
+		../include/glib-2.0/glib/gdatetime.h \
+		../include/glib-2.0/glib/gtimezone.h \
+		../include/glib-2.0/glib/gdir.h \
+		../include/glib-2.0/glib/genviron.h \
+		../include/glib-2.0/glib/gfileutils.h \
+		../include/glib-2.0/glib/ggettext.h \
+		../include/glib-2.0/glib/ghash.h \
+		../include/glib-2.0/glib/glist.h \
+		../include/glib-2.0/glib/gmem.h \
+		../include/glib-2.0/glib/gnode.h \
+		../include/glib-2.0/glib/ghmac.h \
+		../include/glib-2.0/glib/ghook.h \
+		../include/glib-2.0/glib/ghostutils.h \
+		../include/glib-2.0/glib/giochannel.h \
+		../include/glib-2.0/glib/gmain.h \
+		../include/glib-2.0/glib/gpoll.h \
+		../include/glib-2.0/glib/gslist.h \
+		../include/glib-2.0/glib/gstring.h \
+		../include/glib-2.0/glib/gunicode.h \
+		../include/glib-2.0/glib/gkeyfile.h \
+		../include/glib-2.0/glib/gmappedfile.h \
+		../include/glib-2.0/glib/gmarkup.h \
+		../include/glib-2.0/glib/gmessages.h \
+		../include/glib-2.0/glib/gvariant.h \
+		../include/glib-2.0/glib/gvarianttype.h \
+		../include/glib-2.0/glib/goption.h \
+		../include/glib-2.0/glib/gpattern.h \
+		../include/glib-2.0/glib/gprimes.h \
+		../include/glib-2.0/glib/gqsort.h \
+		../include/glib-2.0/glib/gqueue.h \
+		../include/glib-2.0/glib/grand.h \
+		../include/glib-2.0/glib/gregex.h \
+		../include/glib-2.0/glib/gscanner.h \
+		../include/glib-2.0/glib/gsequence.h \
+		../include/glib-2.0/glib/gshell.h \
+		../include/glib-2.0/glib/gslice.h \
+		../include/glib-2.0/glib/gspawn.h \
+		../include/glib-2.0/glib/gstrfuncs.h \
+		../include/glib-2.0/glib/gstringchunk.h \
+		../include/glib-2.0/glib/gtestutils.h \
+		../include/glib-2.0/glib/gthreadpool.h \
+		../include/glib-2.0/glib/gtimer.h \
+		../include/glib-2.0/glib/gtrashstack.h \
+		../include/glib-2.0/glib/gtree.h \
+		../include/glib-2.0/glib/gurifuncs.h \
+		../include/glib-2.0/glib/guuid.h \
+		../include/glib-2.0/glib/gversion.h \
+		../include/glib-2.0/glib/gwin32.h \
+		../include/glib-2.0/glib/deprecated/gallocator.h \
+		../include/glib-2.0/glib/deprecated/gcache.h \
+		../include/glib-2.0/glib/deprecated/gcompletion.h \
+		../include/glib-2.0/glib/deprecated/gmain.h \
+		../include/glib-2.0/glib/deprecated/grel.h \
+		../include/glib-2.0/glib/deprecated/gthread.h \
+		../include/glib-2.0/glib/glib-autocleanups.h \
+		../include/gstreamer-1.0/gst/glib-compat.h \
+		../include/gstreamer-1.0/gst/gstenumtypes.h \
+		../include/glib-2.0/glib-object.h \
+		../include/glib-2.0/gobject/gbinding.h \
+		../include/glib-2.0/gobject/gobject.h \
+		../include/glib-2.0/gobject/gtype.h \
+		../include/glib-2.0/gobject/gvalue.h \
+		../include/glib-2.0/gobject/gparam.h \
+		../include/glib-2.0/gobject/gclosure.h \
+		../include/glib-2.0/gobject/gsignal.h \
+		../include/glib-2.0/gobject/gmarshal.h \
+		../include/glib-2.0/gobject/gboxed.h \
+		../include/glib-2.0/gobject/glib-types.h \
+		../include/glib-2.0/gobject/genums.h \
+		../include/glib-2.0/gobject/gparamspecs.h \
+		../include/glib-2.0/gobject/gsourceclosure.h \
+		../include/glib-2.0/gobject/gtypemodule.h \
+		../include/glib-2.0/gobject/gtypeplugin.h \
+		../include/glib-2.0/gobject/gvaluearray.h \
+		../include/glib-2.0/gobject/gvaluetypes.h \
+		../include/glib-2.0/gobject/gobject-autocleanups.h \
+		../include/gstreamer-1.0/gst/gstconfig.h \
+		../include/gstreamer-1.0/gst/gstversion.h \
+		../include/gstreamer-1.0/gst/gstatomicqueue.h \
+		../include/gstreamer-1.0/gst/gstbin.h \
+		../include/gstreamer-1.0/gst/gstelement.h \
+		../include/gstreamer-1.0/gst/gstobject.h \
+		../include/gstreamer-1.0/gst/gstcontrolbinding.h \
+		../include/gstreamer-1.0/gst/gstcontrolsource.h \
+		../include/gstreamer-1.0/gst/gstclock.h \
+		../include/gstreamer-1.0/gst/gstpad.h \
+		../include/gstreamer-1.0/gst/gstbuffer.h \
+		../include/gstreamer-1.0/gst/gstminiobject.h \
+		../include/gstreamer-1.0/gst/gstallocator.h \
+		../include/gstreamer-1.0/gst/gstmemory.h \
+		../include/gstreamer-1.0/gst/gstcaps.h \
+		../include/gstreamer-1.0/gst/gststructure.h \
+		../include/gstreamer-1.0/gst/gstdatetime.h \
+		../include/gstreamer-1.0/gst/gstcapsfeatures.h \
+		../include/gstreamer-1.0/gst/gstmeta.h \
+		../include/gstreamer-1.0/gst/gstbufferlist.h \
+		../include/gstreamer-1.0/gst/gstpadtemplate.h \
+		../include/gstreamer-1.0/gst/gstevent.h \
+		../include/gstreamer-1.0/gst/gstformat.h \
+		../include/gstreamer-1.0/gst/gstiterator.h \
+		../include/gstreamer-1.0/gst/gsttaglist.h \
+		../include/gstreamer-1.0/gst/gstsample.h \
+		../include/gstreamer-1.0/gst/gstsegment.h \
+		../include/gstreamer-1.0/gst/gstmessage.h \
+		../include/gstreamer-1.0/gst/gstquery.h \
+		../include/gstreamer-1.0/gst/gsttoc.h \
+		../include/gstreamer-1.0/gst/gstcontext.h \
+		../include/gstreamer-1.0/gst/gstdevice.h \
+		../include/gstreamer-1.0/gst/gststreams.h \
+		../include/gstreamer-1.0/gst/gststreamcollection.h \
+		../include/gstreamer-1.0/gst/gsttask.h \
+		../include/gstreamer-1.0/gst/gsttaskpool.h \
+		../include/gstreamer-1.0/gst/gstbus.h \
+		../include/gstreamer-1.0/gst/gstelementfactory.h \
+		../include/gstreamer-1.0/gst/gstplugin.h \
+		../include/gstreamer-1.0/gst/gstmacros.h \
+		../include/gstreamer-1.0/gst/gstpluginfeature.h \
+		../include/gstreamer-1.0/gst/gsturi.h \
+		../include/gstreamer-1.0/gst/gstbufferpool.h \
+		../include/gstreamer-1.0/gst/gstchildproxy.h \
+		../include/gstreamer-1.0/gst/gstdebugutils.h \
+		../include/gstreamer-1.0/gst/gstdevicemonitor.h \
+		../include/gstreamer-1.0/gst/gstdeviceprovider.h \
+		../include/gstreamer-1.0/gst/gstdeviceproviderfactory.h \
+		../include/gstreamer-1.0/gst/gstdynamictypefactory.h \
+		../include/gstreamer-1.0/gst/gstelementmetadata.h \
+		../include/gstreamer-1.0/gst/gsterror.h \
+		../include/gstreamer-1.0/gst/gstghostpad.h \
+		../include/gstreamer-1.0/gst/gstinfo.h \
+		../include/gstreamer-1.0/gst/gstparamspecs.h \
+		../include/gstreamer-1.0/gst/gstvalue.h \
+		../include/gstreamer-1.0/gst/gstpipeline.h \
+		../include/gstreamer-1.0/gst/gstpoll.h \
+		../include/gstreamer-1.0/gst/gstpreset.h \
+		../include/gstreamer-1.0/gst/gstprotection.h \
+		../include/gstreamer-1.0/gst/gstregistry.h \
+		../include/gstreamer-1.0/gst/gstpromise.h \
+		../include/gstreamer-1.0/gst/gstsystemclock.h \
+		../include/gstreamer-1.0/gst/gsttagsetter.h \
+		../include/gstreamer-1.0/gst/gsttocsetter.h \
+		../include/gstreamer-1.0/gst/gsttracer.h \
+		../include/gstreamer-1.0/gst/gsttracerfactory.h \
+		../include/gstreamer-1.0/gst/gsttracerrecord.h \
+		../include/gstreamer-1.0/gst/gsttypefind.h \
+		../include/gstreamer-1.0/gst/gsttypefindfactory.h \
+		../include/gstreamer-1.0/gst/gstutils.h \
+		../include/gstreamer-1.0/gst/gstparse.h \
+		../include/gstreamer-1.0/gst/gstcompat.h \
+		../include/gstreamer-1.0/gst/video/videooverlay.h \
+		../include/gstreamer-1.0/gst/video/gstvideosink.h \
+		../include/gstreamer-1.0/gst/base/gstbasesink.h \
+		../include/gstreamer-1.0/gst/base/base-prelude.h \
+		../include/gstreamer-1.0/gst/video/video-prelude.h \
 		usergroupmanage.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QTableWidgetItem \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qtablewidget.h \
@@ -5289,8 +7099,6 @@ devupdatewidget.o: devupdatewidget.cpp devupdatewidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qlineedit.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextcursor.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextformat.h \
-		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpen.h \
-		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextoption.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QRadioButton \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qradiobutton.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QTextEdit \
@@ -5308,7 +7116,6 @@ devupdatewidget.o: devupdatewidget.cpp devupdatewidget.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qdir.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qfileinfo.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QDir \
-		log.h \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QProcess \
 		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qprocess.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o devupdatewidget.o devupdatewidget.cpp
@@ -6107,6 +7914,148 @@ usergroupmanage.o: usergroupmanage.cpp usergroupmanage.h \
 		pmsgcli.h \
 		types.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o usergroupmanage.o usergroupmanage.cpp
+
+cmplayer.o: cmplayer.cpp cmplayer.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia/QMediaPlayer \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia/qmediaplayer.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia/qmediaobject.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qobject.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qobjectdefs.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qnamespace.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qglobal.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qconfig-bootstrapped.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qconfig.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qtcore-config.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qsystemdetection.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qprocessordetection.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qcompilerdetection.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qtypeinfo.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qsysinfo.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qlogging.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qflags.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qatomic.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qbasicatomic.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qatomic_bootstrap.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qgenericatomic.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qatomic_cxx11.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qatomic_msvc.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qglobalstatic.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qmutex.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qnumeric.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qversiontagging.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qobjectdefs_impl.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qstring.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qchar.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qbytearray.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qrefcount.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qarraydata.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qstringliteral.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qstringalgorithms.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qstringview.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qstringbuilder.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qlist.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qalgorithms.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qiterator.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qhashfunctions.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qpair.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qvector.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qcontainertools_impl.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qpoint.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qbytearraylist.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qstringlist.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qregexp.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qstringmatcher.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qcoreevent.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qscopedpointer.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qmetatype.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qvarlengtharray.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qcontainerfwd.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qobject_impl.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia/qtmultimediaglobal.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtguiglobal.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtgui-config.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia/qtmultimedia-config.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia/qmultimedia.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia/qmediacontent.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qshareddata.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qhash.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia/qmediaresource.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qmap.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qdebug.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qtextstream.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qiodevice.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qlocale.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qvariant.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qset.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qcontiguouscache.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qsharedpointer.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qsharedpointer_impl.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork/qnetworkrequest.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork/qtnetworkglobal.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork/qtnetwork-config.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QSharedDataPointer \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QString \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QUrl \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qurl.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qurlquery.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QVariant \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia/qmediaenumdebug.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qmetaobject.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia/qaudio.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork/qnetworkconfiguration.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets/QVideoWidget \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets/qvideowidget.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qwidget.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qtwidgetsglobal.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qtwidgets-config.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qwindowdefs.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qwindowdefs_win.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qmargins.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpaintdevice.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qrect.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qsize.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpalette.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qcolor.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qrgb.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qrgba64.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qbrush.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qmatrix.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpolygon.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qregion.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qdatastream.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qline.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtransform.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpainterpath.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qimage.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpixelformat.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpixmap.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qfont.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qfontmetrics.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qfontinfo.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qsizepolicy.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qcursor.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qkeysequence.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qevent.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qfile.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qfiledevice.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qvector2d.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtouchdevice.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets/qtmultimediawidgetdefs.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia/qmediabindableinterface.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia/QMediaPlaylist \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia/qmediaplaylist.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QHBoxLayout \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qboxlayout.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qlayout.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qlayoutitem.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qgridlayout.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QWidget \
+		state.h \
+		pmsgcli.h \
+		types.h \
+		log.h \
+		../rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QFile
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cmplayer.o cmplayer.cpp
 
 qrc_res.o: qrc_res.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_res.o qrc_res.cpp

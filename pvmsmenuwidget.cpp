@@ -7,7 +7,6 @@
 #include <QMessageBox>
 
 
-
 #define PVMSPAGETYPE  2    //此页面类型，2表示受电弓监控页面
 #define PAGENONE    0
 #define PAGEMONITOR 1
@@ -462,51 +461,48 @@ void pvmsMenuWidget::showPageSlot()
 {
     this->show();
     m_pvmsMonitorPage->startVideoPolling();   //启动视频轮询
-//    m_pvmsMonitorPage->createMedia();
-
     m_pvmsMonitorPage->enableVideoPlay(1);   //运行受电弓监控页面解码的显示
+
     m_pvmsMonitorPage->pageType = g_ipageValue;
-#if 1
     if(g_ipageValue == PAGENONE){
         m_pvmsMonitorPage->show();
         m_recordPlayPage->hide();
         m_devManagePage->hide();
         m_devUpdatePage->hide();
+        m_pvmsMonitorPage->m_playWin->show();
     }
     else if (g_ipageValue == PAGEMONITOR) {
         m_pvmsMonitorPage->show();
         m_recordPlayPage->hide();
         m_devManagePage->hide();
         m_devUpdatePage->hide();
+        m_pvmsMonitorPage->m_playWin->show();
     }
     else if (g_ipageValue == PAGERCORDE) {
         m_pvmsMonitorPage->hide();
         m_recordPlayPage->show();
-#ifdef mplaybin
+
         m_pvmsMonitorPage->m_playWin->hide();
-#endif
         m_devManagePage->hide();
         m_devUpdatePage->hide();
     }
     else if (g_ipageValue == PAGEMANAGE) {
         m_pvmsMonitorPage->hide();
         m_recordPlayPage->hide();
-#ifdef mplaybin
+
         m_pvmsMonitorPage->m_playWin->hide();
-#endif
         m_devManagePage->show();
         m_devUpdatePage->hide();
     }
     else if (g_ipageValue == PAGEUPDATE) {
         m_pvmsMonitorPage->hide();
         m_recordPlayPage->hide();
-#ifdef mplaybin
+
         m_pvmsMonitorPage->m_playWin->hide();
-#endif
         m_devManagePage->hide();
         m_devUpdatePage->show();
     }
-#endif
+
     if(g_ipageValue > 1)
     {
         m_pvmsMonitorPage->m_channelStateLabel->hide();
@@ -652,19 +648,16 @@ void pvmsMenuWidget::menuButtonClick()
     }
     if (Sender->objectName() == "pvmsMonitorMenuPushButton")     //受电弓监控按钮被按，则切换到受电弓监控页面
     {
-//        m_pvmsMonitorPage->playwidget->show();
-#ifdef mplaybin
-        m_pvmsMonitorPage->m_playWin->show();
-#endif
-        m_pvmsMonitorPage->showMedia(m_pvmsMonitorPage->m_iCameraPlayNo);
+
         m_recordPlayPage->hide();
         m_devManagePage->hide();
         m_devUpdatePage->hide();
         m_pvmsMonitorPage->show();
 
+
+        m_pvmsMonitorPage->m_playWin->show();
         m_recordPlayPage->closePlayWin();   //关闭录像回放界面的播放窗口
 
-        m_pvmsMonitorPage->showMaximized();
         m_pvmsMonitorPage->enableVideoPlay(1);   //运行受电弓监控页面解码的显示
 
 
@@ -680,15 +673,13 @@ void pvmsMenuWidget::menuButtonClick()
     else if (Sender->objectName() == "recordPlayMenuPushButton")     //录像回放按钮被按，则切换到录像回放页面
     {
         m_pvmsMonitorPage->hide();
-        m_pvmsMonitorPage->enableVideoPlay(0);   //禁止受电弓监控页面解码显示
         m_devManagePage->hide();
         m_devUpdatePage->hide();
         m_recordPlayPage->show();
-#ifdef mplaybin
-        m_pvmsMonitorPage->m_playWin->hide();
-#endif
-//        m_pvmsMonitorPage->playwidget->hide();
 
+        m_pvmsMonitorPage->enableVideoPlay(0);   //禁止受电弓监控页面解码显示
+
+        m_pvmsMonitorPage->m_playWin->hide();
 
         m_pvmsMonitorPage->m_channelStateLabel->hide();
         m_pvmsMonitorPage->m_channelNoLabel->hide();
@@ -712,16 +703,13 @@ void pvmsMenuWidget::menuButtonClick()
         m_pvmsMonitorPage->m_channelStateLabel->hide();
         m_pvmsMonitorPage->m_channelNoLabel->hide();
         m_pvmsMonitorPage->hide();
-        m_pvmsMonitorPage->enableVideoPlay(0);   //禁止受电弓监控页面解码显示
         m_recordPlayPage->hide();
         m_devUpdatePage->hide();
         m_devManagePage->show();
-#ifdef mplaybin
+
+        m_pvmsMonitorPage->enableVideoPlay(0);   //禁止受电弓监控页面解码显示
+
         m_pvmsMonitorPage->m_playWin->hide();
-#endif
-//        m_pvmsMonitorPage->playwidget->hide();
-
-
         m_recordPlayPage->closePlayWin();   //关闭录像回放界面的播放窗口
 
 
@@ -745,19 +733,14 @@ void pvmsMenuWidget::menuButtonClick()
         m_pvmsMonitorPage->m_channelStateLabel->hide();
         m_pvmsMonitorPage->m_channelNoLabel->hide();
         m_pvmsMonitorPage->hide();
-        m_pvmsMonitorPage->enableVideoPlay(0);   //禁止受电弓监控页面解码显示
         m_recordPlayPage->hide();
         m_devManagePage->hide();
         m_devUpdatePage->show();
-#ifdef mplaybin
+
+        m_pvmsMonitorPage->enableVideoPlay(0);   //禁止受电弓监控页面解码显示
+
         m_pvmsMonitorPage->m_playWin->hide();
-#endif
-//        m_pvmsMonitorPage->playwidget->hide();
-
-
         m_recordPlayPage->closePlayWin();   //关闭录像回放界面的播放窗口
-
-
 
         ui->pvmsMonitorMenuPushButton->setChecked(false);
         ui->recordPlayMenuPushButton->setChecked(false);

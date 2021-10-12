@@ -50,7 +50,8 @@ SOURCES += \
     ftpApi.c \
     rs485serv.c \
     waitloginwidget.cpp \
-    usergroupmanage.cpp
+    usergroupmanage.cpp \
+    cmplayer.cpp
 #    usermanageconfig.cpp
 
 HEADERS += \
@@ -81,7 +82,8 @@ HEADERS += \
     ftpApi.h \
     rs485serv.h \
     waitloginwidget.h \
-    usergroupmanage.h
+    usergroupmanage.h \
+    cmplayer.h
 #    usermanageconfig.h
 
 # Default rules for deployment.
@@ -90,7 +92,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    res.qrc \
+#    res.qrc \
     res.qrc
 
 FORMS += \
@@ -112,3 +114,10 @@ FORMS += \
     usermanageconfig.ui \
     devupdatewidget_base.ui
 
+LIBS += -Wl,-dn -L../lib -Wl,-dy -ldl -rdynamic
+LIBS += -L ../lib -lgobject-2.0 -lglib-2.0 -lgstreamer-1.0 -lgstvideo-1.0
+
+
+INCLUDEPATH += ../include/
+INCLUDEPATH += ../include/gstreamer-1.0/
+INCLUDEPATH += ../include/glib-2.0/

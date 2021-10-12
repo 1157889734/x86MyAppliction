@@ -11,9 +11,9 @@
 #include <sys/sysinfo.h>
 #include <QFile>
 
-#ifdef __cplusplus
-extern "C"{
-#endif /* End of #ifdef __cplusplus */
+//#ifdef __cplusplus
+//extern "C"{
+//#endif /* End of #ifdef __cplusplus */
 
 typedef void* CMPHandle;
 
@@ -62,6 +62,18 @@ int CMP_UnInit(void);
 CMPHandle CMP_CreateMedia(QWidget *palywidget);
 
 
+
+/*************************************************
+  函数功能:     CMP_SetWnd
+  函数描述:     改变播放窗口
+  输入参数:     hPlay：媒体句柄 tWnd 改变后的目标窗口
+  输出参数:     无
+  返回值:
+*************************************************/
+int CMP_ChangeWnd(CMPHandle hPlay, WId QWnd);
+
+
+
 /*************************************************
   函数功能:     CMP_DestroyMedia
   函数描述:     销毁媒体句柄
@@ -79,7 +91,7 @@ int CMP_DestroyMedia(CMPHandle hPlay);
   输出参数:     无
   返回值:       0：成功， -1:未找到相应媒体句柄
 *************************************************/
-int CMP_OpenMediaPreview(CMPHandle hPlay, const char *pcRtspUrl,int iTcpFlag);
+int CMP_OpenMediaPreview(CMPHandle hPlay,const char *pcRtspFile,int iTcpFlag);
 
 /*************************************************
   函数功能:     CMP_OpenMediaFile
@@ -112,7 +124,6 @@ int CMP_CloseMedia(CMPHandle hPlay);
 int CMP_SetWndDisplayEnable(CMPHandle hPlay, int iEnable);
 
 
-
 /*************************************************
   函数功能:     CMP_PlayMedia
   函数描述:     开始播放媒体流
@@ -133,6 +144,16 @@ int CMP_PlayMedia(CMPHandle hPlay);
 *************************************************/
 int CMP_PauseMedia(CMPHandle hPlay);
 
+
+/*************************************************
+  函数功能:     CMP_PauseMedia
+  函数描述:     获取媒体播放状态
+  输入参数:     hPlay：媒体句柄
+  输出参数:     无
+  返回值:
+*************************************************/
+
+int CMP_GetPlayStatus(CMPHandle hPlay);
 
 
 /*************************************************
@@ -176,8 +197,20 @@ int CMP_GetPlayRange(CMPHandle hPlay);
 *************************************************/
 int CMP_GetCurrentPlayTime(CMPHandle hPlay);
 
-#ifdef __cplusplus
-}
+
+/*************************************************
+  函数功能:     CMP_GetPlayRange
+  函数描述:     获取当前播放速度
+  输入参数:     hPlay：媒体句柄
+  输出参数:     无
+  返回值:       0
+*************************************************/
+
+int CMP_SetPlayRate(CMPHandle hPlay,qreal rate);
+
+//#endif
+
+//#ifdef __cplusplus
+//}
 #endif /* End of #ifdef __cplusplus */
 
-#endif // CMPLAYER_H

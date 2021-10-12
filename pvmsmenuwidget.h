@@ -56,6 +56,7 @@ signals:
     void blackScreenSignal();
     void blackScreenExitSignal();
 
+
 private:
     Ui::pvmsMenuWidget *ui;
     pvmsMonitorWidget *m_pvmsMonitorPage;
