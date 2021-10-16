@@ -37,31 +37,31 @@ CMPHandle CMP_CreateMedia(QWidget *palywidget)
 
     ptCmpInfo->pQqlayer = new QMediaPlayer(palywidget,QMediaPlayer::LowLatency);
     ptCmpInfo->pQVideo= new QVideoWidget(palywidget);
-    if(palywidget->winId() != 6)
-        ptCmpInfo->pQVideo->setGeometry(0,0,730,555);
-    else
-        ptCmpInfo->pQVideo->setGeometry(0,0,782,630);
+
+    ptCmpInfo->pQVideo->setGeometry(0,0,palywidget->width(),palywidget->height());
 
     ptCmpInfo->pQVideo->setStyleSheet("QWidget{background-color: rgb(0, 0, 0);}");     //设置播放窗口背景色为黑色
     ptCmpInfo->pQVideo->setObjectName("playbin");
-    ptCmpInfo->pQqlayer->setVideoOutput(ptCmpInfo->pQVideo);
 
     return (CMPHandle)ptCmpInfo;
 
 }
 
 
-int CMP_ChangeWnd(CMPHandle hPlay, WId QWnd)
+int CMP_ChangeWnd(CMPHandle hPlay,QWidget *palywidget)
 {
-    T_CMP_INFO *ptCmpInfo = (T_CMP_INFO *)hPlay;
-
+    T_CMP_INFO *ptCmpInfo = (T_CMP_INFO*)hPlay;
     if (NULL == ptCmpInfo)
     {
         qDebug()<<"****error****"<<__FUNCTION__<<__LINE__<<endl;
         return 0;
     }
-    ptCmpInfo->pQVideo->setGeometry(0,0,1024,768);
 
+
+    ptCmpInfo->pQVideo->setGeometry(0,0,palywidget->width(),palywidget->height());
+
+//    ptCmpInfo->pQVideo->show();
+    return 0;
 
 }
 int CMP_DestroyMedia(CMPHandle hPlay)
@@ -70,11 +70,13 @@ int CMP_DestroyMedia(CMPHandle hPlay)
 
     if (ptCmpInfo)
     {
+
         delete ptCmpInfo->pQqlayer;
         ptCmpInfo->pQqlayer = NULL;
 
         delete ptCmpInfo->pQVideo;
         ptCmpInfo->pQVideo = NULL;
+
 
         free(ptCmpInfo);
         ptCmpInfo = NULL;
@@ -96,8 +98,10 @@ int CMP_OpenMediaPreview(CMPHandle hPlay,const char *pcRtspFile,int iTcpFlag)
     QUrl url(str);
 
     ptCmpInfo->pQqlayer->setMedia(url);
-    ptCmpInfo->pQqlayer->play();
+    ptCmpInfo->pQqlayer->setVideoOutput(ptCmpInfo->pQVideo);
+
     ptCmpInfo->pQVideo->show();
+    ptCmpInfo->pQqlayer->play();
 
     return 0;
 
@@ -121,7 +125,7 @@ int CMP_OpenMediaFile(CMPHandle hPlay, const char *pcRtspFile,int iTcpFlag)
 
 }
 
-int CMP_SetWndDisplayEnable(CMPHandle hPlay, int iEnable)
+int CMP_SetWndDisplayEnable(CMPHandle hPlay, int iEnable,QWidget *palywidget)
 {
     T_CMP_INFO *ptCmpInfo = (T_CMP_INFO *)hPlay;
     if (NULL == ptCmpInfo)
@@ -130,11 +134,23 @@ int CMP_SetWndDisplayEnable(CMPHandle hPlay, int iEnable)
         return 0;
     }
     if(1 == iEnable)
-        ptCmpInfo->pQVideo->show();
+    {
+
+//            ptCmpInfo->pQVideo->show();
+        ptCmpInfo->pQVideo->setGeometry(palywidget->x(),palywidget->y(),palywidget->width(),palywidget->height());
+
+    }
     else
-        ptCmpInfo->pQVideo->hide();
+    {
+
+//             ptCmpInfo->pQVideo->hide();
+         ptCmpInfo->pQVideo->setGeometry(palywidget->x()+1300,palywidget->y()+800,palywidget->width(),palywidget->height());
+
+    }
+    return 0;
 
 }
+
 int CMP_CloseMedia(CMPHandle hPlay)
 {
     T_CMP_INFO *ptCmpInfo = (T_CMP_INFO *)hPlay;
@@ -144,7 +160,6 @@ int CMP_CloseMedia(CMPHandle hPlay)
         return 0;
     }
     ptCmpInfo->pQqlayer->stop();
-
     return 0;
 
 }
@@ -197,18 +212,7 @@ int CMP_SetPosition(CMPHandle hPlay, int nPosTime)
      return 0;
 
 }
-int CMP_SetPlaySpeed(CMPHandle hPlay, double dSpeed)
-{
-    T_CMP_INFO *ptCmpInfo = (T_CMP_INFO *)hPlay;
-    if (NULL == ptCmpInfo)
-    {
-        qDebug()<<"****error****"<<__FUNCTION__<<__LINE__<<endl;
-        return 0;
-    }
-    ptCmpInfo->pQqlayer->setMuted(dSpeed);
-    return 0;
 
-}
 int CMP_GetPlayRange(CMPHandle hPlay)
 {
     T_CMP_INFO *ptCmpInfo = (T_CMP_INFO *)hPlay;
@@ -238,7 +242,47 @@ int CMP_SetPlayRate(CMPHandle hPlay,qreal rate)
         qDebug()<<"****error****"<<__FUNCTION__<<__LINE__<<endl;
         return 0;
     }
+
     ptCmpInfo->pQqlayer->setPlaybackRate(rate);
 
     return 0;
 }
+
+int CMP_GetStreamState(CMPHandle hPlay)
+{
+
+    T_CMP_INFO *ptCmpInfo = (T_CMP_INFO *)hPlay;
+    if (NULL == ptCmpInfo)
+    {
+        qDebug()<<"****error****"<<__FUNCTION__<<__LINE__<<endl;
+        return 0;
+    }
+    ptCmpInfo->pQqlayer->mediaStatus();
+    return 0;
+}
+
+
+int CMP_GetPlayState(CMPHandle hPlay)
+{
+    T_CMP_INFO *ptCmpInfo = (T_CMP_INFO *)hPlay;
+    if (NULL == ptCmpInfo)
+    {
+        qDebug()<<"****error****"<<__FUNCTION__<<__LINE__<<endl;
+        return 0;
+    }
+    return  ptCmpInfo->pQqlayer->state();
+
+}
+
+int CMP_GetStreamError(CMPHandle hPlay)
+{
+    T_CMP_INFO *ptCmpInfo = (T_CMP_INFO *)hPlay;
+    if (NULL == ptCmpInfo)
+    {
+        qDebug()<<"****error****"<<__FUNCTION__<<__LINE__<<endl;
+        return 0;
+    }
+    return  ptCmpInfo->pQqlayer->error();
+
+}
+

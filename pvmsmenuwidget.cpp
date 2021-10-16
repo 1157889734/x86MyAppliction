@@ -655,7 +655,9 @@ void pvmsMenuWidget::menuButtonClick()
         m_pvmsMonitorPage->show();
 
 
-        m_pvmsMonitorPage->m_playWin->show();
+//        m_pvmsMonitorPage->m_playWin->show();
+        m_pvmsMonitorPage->m_playWin->setGeometry(0,138,m_pvmsMonitorPage->m_playWin->width(),m_pvmsMonitorPage->m_playWin->height());
+
         m_recordPlayPage->closePlayWin();   //关闭录像回放界面的播放窗口
 
         m_pvmsMonitorPage->enableVideoPlay(1);   //运行受电弓监控页面解码的显示
@@ -679,7 +681,8 @@ void pvmsMenuWidget::menuButtonClick()
 
         m_pvmsMonitorPage->enableVideoPlay(0);   //禁止受电弓监控页面解码显示
 
-        m_pvmsMonitorPage->m_playWin->hide();
+//        m_pvmsMonitorPage->m_playWin->hide();
+        m_pvmsMonitorPage->m_playWin->setGeometry(1300,800,m_pvmsMonitorPage->m_playWin->width(),m_pvmsMonitorPage->m_playWin->height());
 
         m_pvmsMonitorPage->m_channelStateLabel->hide();
         m_pvmsMonitorPage->m_channelNoLabel->hide();
@@ -709,7 +712,9 @@ void pvmsMenuWidget::menuButtonClick()
 
         m_pvmsMonitorPage->enableVideoPlay(0);   //禁止受电弓监控页面解码显示
 
-        m_pvmsMonitorPage->m_playWin->hide();
+//        m_pvmsMonitorPage->m_playWin->hide();
+        m_pvmsMonitorPage->m_playWin->setGeometry(1300,800,m_pvmsMonitorPage->m_playWin->width(),m_pvmsMonitorPage->m_playWin->height());
+
         m_recordPlayPage->closePlayWin();   //关闭录像回放界面的播放窗口
 
 
@@ -739,7 +744,9 @@ void pvmsMenuWidget::menuButtonClick()
 
         m_pvmsMonitorPage->enableVideoPlay(0);   //禁止受电弓监控页面解码显示
 
-        m_pvmsMonitorPage->m_playWin->hide();
+//        m_pvmsMonitorPage->m_playWin->hide();
+        m_pvmsMonitorPage->m_playWin->setGeometry(1300,800,m_pvmsMonitorPage->m_playWin->width(),m_pvmsMonitorPage->m_playWin->height());
+
         m_recordPlayPage->closePlayWin();   //关闭录像回放界面的播放窗口
 
         ui->pvmsMonitorMenuPushButton->setChecked(false);

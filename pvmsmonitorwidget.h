@@ -21,9 +21,6 @@ namespace Ui {
 class pvmsMonitorWidget;
 }
 
-typedef void* CMPHandle;
-
-#define mplaybin
 
 typedef enum _E_CAMERA_STATE    //摄像机状态
 {
@@ -85,6 +82,7 @@ typedef struct _T_CAMERA_INFO
     int iCmpOpenFlag;    //摄像头打开标志
     int iManualFillLightCtrlFlag;   //手动操作补光灯标志
     int iStreamState;
+    int playstate;
     time_t tPtzOprateTime;    //云台操作时间
     PMSG_HANDLE phandle;   //所属服务器的通信句柄
     CMPHandle cmpHandle;    //客户端媒体播放句柄
@@ -109,6 +107,7 @@ public:
     QLabel *m_channelStateLabel;
     QLabel *m_channelNoLabel;
     int pageType;
+    int changePageFlag;
 
     int m_iSelectPresetNo;   //保存选中的预置点编号
     int m_iAlarmNotCtrlFlag;   //有报警信息未处理标志
@@ -232,17 +231,6 @@ private:
     QTimer *m_fillLightSwitchTimer;
     QTimer *m_cameraSwitchTimer;
 
-    QVideoWidget *video;
-    QMediaPlayer player;
-    QMediaPlayer *mplayer;
-
-    QMediaPlaylist *list;
-    QList<QMediaPlaylist*> *multiPlayList;
-    QList<QMediaPlayer*> *playerlist;
-    QList<QVideoWidget*> *videoList;
-    QList<QHBoxLayout*> *hLayoutList;
-
-    QStringList mlist;
 
 
 };

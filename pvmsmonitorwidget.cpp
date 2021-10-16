@@ -319,12 +319,6 @@ pvmsMonitorWidget::pvmsMonitorWidget(QWidget *parent) :
     connect(this, SIGNAL(fillLightSwitchButtonTextCtrlSignal(int)), this, SLOT(fillLightSwitchButtonTextCtrlSlot(int)));
 
 
-    playerlist = new QList<QMediaPlayer*>();
-    videoList = new QList<QVideoWidget*>();
-    multiPlayList = new QList<QMediaPlaylist*>();
-    hLayoutList = new QList<QHBoxLayout*>();
-
-//    player = new QMediaPlayer(this, QMediaPlayer::StreamPlayback);
     //参数初始化
     m_channelStateLabel = NULL;
     m_channelNoLabel = NULL;
@@ -349,6 +343,7 @@ pvmsMonitorWidget::pvmsMonitorWidget(QWidget *parent) :
     m_iOldRecordPlayFlag = 0;
     m_playWin = NULL;
     memset(m_tCameraInfo, 0, sizeof(T_CAMERA_INFO)*MAX_SERVER_NUM*MAX_CAMERA_OFSERVER);
+
 
     pthread_mutexattr_init(&mutexattr);
     pthread_mutexattr_settype(&mutexattr,PTHREAD_MUTEX_TIMED_NP);
@@ -569,7 +564,6 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
     m_playWin->setStyleSheet("QWidget{background-color: rgb(0, 0, 0);}");     //设置播放窗口背景色为黑色
     m_playWin->installEventFilter(this);     //播放窗体注册进事件过滤器
     m_playWin->setMouseTracking(true);
-//    m_playWin->setAttribute(Qt::WA_TranslucentBackground,true);
 
     m_channelStateLabel = new QLabel(this->parentWidget());
     m_channelStateLabel->setGeometry(452, 360, 130, 50);
@@ -587,18 +581,30 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
 
     for (i = 0; i < tTrainConfigInfo.iNvrServerCount; i++)
     {
-        memset(acRtspUrl, 0, sizeof(acRtspUrl));
-        snprintf(acRtspUrl, sizeof(acRtspUrl), "rtsp://192.168.%d.81", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO);
+//        memset(acRtspUrl, 0, sizeof(acRtspUrl));
+//        snprintf(acRtspUrl, sizeof(acRtspUrl), "rtsp://192.168.%d.81", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO);
 
         m_NvrServerPhandle[i] = STATE_GetNvrServerPmsgHandle(i);
 
         for (j = 0; j < tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum; j++)
         {
-
+#if 1  //test
+            memset(acRtspUrl, 0, sizeof(acRtspUrl));
+            if(j == 1)
+                snprintf(acRtspUrl, sizeof(acRtspUrl), "rtsp://admin:admin123@192.168.%d.%d", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO,200+j);
+            else
+                snprintf(acRtspUrl, sizeof(acRtspUrl), "rtsp://192.168.%d.%d", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO,200+j);
+#endif
             /*保存所有摄像机的信息*/
             m_tCameraInfo[m_iCameraNum].phandle = STATE_GetNvrServerPmsgHandle(i);
             m_tCameraInfo[m_iCameraNum].iPosNO = 8+j;
-            snprintf(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl, sizeof(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl), "%s:554/%d",acRtspUrl, 8+j);
+//            snprintf(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl, sizeof(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl), "%s:554/%d",acRtspUrl, 8+j);
+#if 1  //test
+            if(j == 1)
+                snprintf(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl, sizeof(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl), "%s:554",acRtspUrl);
+            else
+                snprintf(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl, sizeof(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl), "%s:554/%d",acRtspUrl, 8+j);
+#endif
 
 //            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] camer %d rtspUrl=%s\n",__FUNCTION__,m_iCameraNum, m_tCameraInfo[m_iCameraNum].acCameraRtspUrl);
             tPkt.iCh = m_iCameraNum;
@@ -1312,8 +1318,7 @@ void pvmsMonitorWidget::getChStreamState(int iCh)
         return;
     }
     pthread_mutex_lock(&g_tCmpCtrlMutex);
-//    m_tCameraInfo[iCh].iStreamState = CMP_GetStreamState(m_tCameraInfo[iCh].cmpHandle);     ????????
-//     m_tCameraInfo[iCh].iStreamState ;
+    m_tCameraInfo[iCh].iStreamState = CMP_GetStreamState(m_tCameraInfo[iCh].cmpHandle);
     pthread_mutex_unlock(&g_tCmpCtrlMutex);
 }
 
@@ -1488,9 +1493,9 @@ void pvmsMonitorWidget::noPollingChOption()
     if ((1 == m_iDisplayEnable) && (CAMERA_ON == m_tCameraInfo[m_iCameraPlayNo].iCameraSwitchState))
     {
 
-        tPkt.iMsgCmd = CMP_CMD_GET_STREAM_STATE;
-        tPkt.iCh = m_iCameraPlayNo;
-        PutNodeToCmpQueue(m_ptQueue, &tPkt);
+//        tPkt.iMsgCmd = CMP_CMD_GET_STREAM_STATE;
+//        tPkt.iCh = m_iCameraPlayNo;
+//        PutNodeToCmpQueue(m_ptQueue, &tPkt);
 
         getChStreamState(m_iCameraPlayNo);
 
@@ -1575,95 +1580,102 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
 
     CMPHandle cmpHandle = NULL;
 
+
     if (iCh > (MAX_SERVER_NUM*MAX_CAMERA_OFSERVER - 1))
     {
         return;
     }
     if (CMP_CMD_CREATE_CH == iType)
     {
-
-        cmpHandle = CMP_CreateMedia(m_playWin);
-        if (NULL ==cmpHandle)
+        if( NULL == m_tCameraInfo[iCh].cmpHandle)
         {
-            printf("CMP_CreateMedia error\n");
-            return;
-        }
+            cmpHandle = CMP_CreateMedia(m_playWin);
+            if (NULL ==cmpHandle)
+            {
+                printf("CMP_CreateMedia error\n");
+                return;
+            }
 
-        iRet = CMP_OpenMediaPreview(cmpHandle, m_tCameraInfo[iCh].acCameraRtspUrl, CMP_TCP);
-        if (iRet != 0)
-        {
-            printf("CMP_OpenMediaPreview error\n");
-            return;
+            iRet = CMP_OpenMediaPreview(cmpHandle, m_tCameraInfo[iCh].acCameraRtspUrl, CMP_TCP);
+            if (iRet != 0)
+            {
+                printf("CMP_OpenMediaPreview error\n");
+                return;
+            }
+            m_tCameraInfo[iCh].iCmpOpenFlag = 1;
+            m_tCameraInfo[iCh].cmpHandle = cmpHandle;
+            qDebug()<<"************create***********ch="<<iCh<<m_tCameraInfo[iCh].cmpHandle<<endl;
         }
-        m_tCameraInfo[iCh].iCmpOpenFlag = 1;
-        m_tCameraInfo[iCh].cmpHandle = cmpHandle;
-
 
     }
     else if (CMP_CMD_DESTORY_CH == iType)
     {
-        iRet = CMP_CloseMedia(m_tCameraInfo[iCh].cmpHandle);
-        if (iRet != 0)
-        {
-            printf("[%s] CMP_CloseMedia error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, iCh);
-            return;
-        }
+//        iRet = CMP_CloseMedia(m_tCameraInfo[iCh].cmpHandle);
+//        if (iRet != 0)
+//        {
+//            printf("[%s] CMP_CloseMedia error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, iCh);
+//            return;
+//        }
 
-        m_tCameraInfo[iCh].iCmpOpenFlag = 0;
-        pthread_mutex_lock(&g_tCmpCtrlMutex);
-        CMP_DestroyMedia(m_tCameraInfo[iCh].cmpHandle);
-        m_tCameraInfo[iCh].cmpHandle = NULL;
-        pthread_mutex_unlock(&g_tCmpCtrlMutex);
+//        m_tCameraInfo[iCh].iCmpOpenFlag = 0;
+//        pthread_mutex_lock(&g_tCmpCtrlMutex);
+//        CMP_DestroyMedia(m_tCameraInfo[iCh].cmpHandle);
+//        m_tCameraInfo[iCh].cmpHandle = NULL;
+//        pthread_mutex_unlock(&g_tCmpCtrlMutex);
+//        qDebug()<<"************destroy***********ch="<<iCh<<m_tCameraInfo[iCh].cmpHandle<<endl;
+
 
     }
     else if(CMP_CMD_ENABLE_CH == iType)
     {
 
-//        iRet = CMP_SetWndDisplayEnable(m_tCameraInfo[iCh].cmpHandle,1);
-//        if (iRet != 0)
-//        {
-//            printf("[%s] CMP_SetWndDisplayEnable on error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, iCh);
-//            return;
-//        }
-
+        iRet = CMP_SetWndDisplayEnable(m_tCameraInfo[iCh].cmpHandle,SHOW_VIDEO,m_playWin);
+        if (iRet != 0)
+        {
+            printf("[%s] CMP_SetWndDisplayEnable on error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, iCh);
+            return;
+        }
 
     }
     else if(CMP_CMD_DISABLE_CH == iType)
     {
-
-//        iRet = CMP_SetWndDisplayEnable(m_tCameraInfo[iCh].cmpHandle,0);
-//        if (iRet != 0)
-//        {
-//            printf("[%s] CMP_SetWndDisplayEnable on error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, iCh);
-//            return;
-//        }
+        iRet = CMP_SetWndDisplayEnable(m_tCameraInfo[iCh].cmpHandle,HIDE_VIDEO,m_playWin);
+        if (iRet != 0)
+        {
+            printf("[%s] CMP_SetWndDisplayEnable on error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, iCh);
+            return;
+        }
 
     }
     else if (CMP_CMD_CHG_ALL_VIDEOWIN == iType)
     {
+        return;
         for (i = 0; i <m_iCameraNum; i++)
         {
             if (1 == m_tCameraInfo[i].iCmpOpenFlag)
             {
-                CMP_ChangeWnd(m_tCameraInfo[i].cmpHandle, m_playWin->winId());
+                CMP_ChangeWnd(m_tCameraInfo[i].cmpHandle,m_playWin);
             }
         }
-
+    }
+    else if (CMP_CMD_GET_STREAM_STATE == iType)
+    {
+//        if(NULL != m_tCameraInfo[iCh].cmpHandle)
+//           m_tCameraInfo[iCh].iStreamState = CMP_GetStreamState(m_tCameraInfo[iCh].cmpHandle);
     }
 
 }
 
 void pvmsMonitorWidget::chLabelDisplayCtrlSlot()   //通道状态和通道号标签是否显示的处理函数
 {
-#if 1
     T_CMP_PACKET tPkt;
 
     if (1 == m_iDisplayEnable)
     {
 
-        tPkt.iMsgCmd = CMP_CMD_GET_STREAM_STATE;
-        tPkt.iCh = m_iCameraPlayNo;
-        PutNodeToCmpQueue(m_ptQueue, &tPkt);
+//        tPkt.iMsgCmd = CMP_CMD_GET_STREAM_STATE;
+//        tPkt.iCh = m_iCameraPlayNo;
+//        PutNodeToCmpQueue(m_ptQueue, &tPkt);
 
         getChStreamState(m_iCameraPlayNo);
 
@@ -1697,9 +1709,7 @@ void pvmsMonitorWidget::chLabelDisplayCtrlSlot()   //通道状态和通道号标
         m_channelStateLabel->hide();
         m_channelNoLabel->hide();
     }
-//    qDebug()<<"********m_iCameraPlayNo**********"<<m_iCameraPlayNo<<__FUNCTION__<<__LINE__<<endl;
 
-#endif
 }
 
 void pvmsMonitorWidget::chStateLabelTextCtrlSlot(int iFlag)   //通道状态标签文本显示的处理函数，0-显示关闭，1-显示开启
@@ -1848,6 +1858,12 @@ void pvmsMonitorWidget::closePlayWin()
     {
         delete m_channelNoLabel;
         m_channelNoLabel = NULL;
+    }
+
+    if(m_playWin != NULL)
+    {
+        delete m_playWin;
+        m_playWin = NULL;
     }
 
 }
@@ -2539,17 +2555,6 @@ pvmsMonitorWidget::~pvmsMonitorWidget()
     delete m_playWin;
     m_playWin = NULL;
 
-    delete  playerlist;
-    playerlist = NULL;
-
-    delete videoList;
-    videoList = NULL;
-
-    delete multiPlayList;
-    multiPlayList = NULL;
-
-    delete hLayoutList;
-    hLayoutList = NULL;
 
     delete ui;
 }

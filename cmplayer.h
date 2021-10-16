@@ -23,6 +23,12 @@ enum STREAM_TYPE
     CMP_UDP
 };
 
+enum SHOW_HIDE
+{
+    HIDE_VIDEO = 0,
+    SHOW_VIDEO
+};
+
 enum CMPPLAY_STATE
 {
     CMP_STATE_IDLE = 0,        // 空闲
@@ -70,7 +76,7 @@ CMPHandle CMP_CreateMedia(QWidget *palywidget);
   输出参数:     无
   返回值:
 *************************************************/
-int CMP_ChangeWnd(CMPHandle hPlay, WId QWnd);
+int CMP_ChangeWnd(CMPHandle hPlay,QWidget *palywidget);
 
 
 
@@ -121,7 +127,7 @@ int CMP_CloseMedia(CMPHandle hPlay);
   输出参数:     无
   返回值:
 *************************************************/
-int CMP_SetWndDisplayEnable(CMPHandle hPlay, int iEnable);
+int CMP_SetWndDisplayEnable(CMPHandle hPlay, int iEnable,QWidget *palywidget);
 
 
 /*************************************************
@@ -166,19 +172,6 @@ int CMP_GetPlayStatus(CMPHandle hPlay);
 int CMP_SetPosition(CMPHandle hPlay, int nPosTime);
 
 
-
-/*************************************************
-  函数功能:     CMP_SetPlaySpeed
-  函数描述:     设置播放速度
-  输入参数:     hPlay：媒体句柄
-                dSpeed: 速度值
-  输出参数:     无
-*************************************************/
-int CMP_SetPlaySpeed(CMPHandle hPlay, double dSpeed);
-
-
-
-
 /*************************************************
   函数功能:     CMP_GetPlayRange
   函数描述:     获取播放时长
@@ -207,6 +200,38 @@ int CMP_GetCurrentPlayTime(CMPHandle hPlay);
 *************************************************/
 
 int CMP_SetPlayRate(CMPHandle hPlay,qreal rate);
+
+/*************************************************
+  函数功能:     CMP_GetPlayRange
+  函数描述:     获取当前媒体状态
+  输入参数:     hPlay：媒体句柄
+  输出参数:     无
+  返回值:       0
+*************************************************/
+int  CMP_GetStreamState(CMPHandle hPlay);
+
+
+
+/*************************************************
+  函数功能:     CMP_GetPlayRange
+  函数描述:     获取当前播放状态
+  输入参数:     hPlay：媒体句柄
+  输出参数:     无
+  返回值:       0
+*************************************************/
+int CMP_GetPlayState(CMPHandle hPlay);
+
+
+/*************************************************
+  函数功能:     CMP_GetPlayRange
+  函数描述:     获取当前播放错误状态
+  输入参数:     hPlay：媒体句柄
+  输出参数:     无
+  返回值:       0
+*************************************************/
+
+int CMP_GetStreamError(CMPHandle hPlay);
+
 
 //#endif
 
