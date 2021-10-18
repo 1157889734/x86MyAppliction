@@ -132,17 +132,11 @@ int CMP_SetWndDisplayEnable(CMPHandle hPlay, int iEnable,QWidget *palywidget)
     }
     if(1 == iEnable)
     {
-
-//            ptCmpInfo->pQVideo->show();
-        ptCmpInfo->pQVideo->setGeometry(0,0,palywidget->width(),palywidget->height());
-
+            ptCmpInfo->pQVideo->show();
     }
     else
     {
-
-//             ptCmpInfo->pQVideo->hide();
-         ptCmpInfo->pQVideo->setGeometry(palywidget->x()+1300,palywidget->y()+800,palywidget->width(),palywidget->height());
-
+             ptCmpInfo->pQVideo->hide();
     }
     return 0;
 

@@ -443,7 +443,6 @@ void *monitorThread(void *param)     //实时监控线程，对通道轮询、�
             iCameraIdex = pvmsMonitorPage->m_iCameraNum - 1;
         }
 //        DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread polling to last camera no=%d !\n",iCameraIdex);
-        qDebug()<<"**********************LASTONE"<<iCameraIdex<<__FUNCTION__<<__LINE__<<endl;
         pvmsMonitorPage->m_iCameraSwitchState = NORMAL;   //摄像头切换状态恢复到正常不切换状态
         iPollingFlag = 1;
     }
@@ -454,7 +453,6 @@ void *monitorThread(void *param)     //实时监控线程，对通道轮询、�
         {
             iCameraIdex = 0;
         }
-        qDebug()<<"**********************NEXTONE"<<iCameraIdex<<__FUNCTION__<<__LINE__<<endl;
 
 //        DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread polling to next camera, no=%d !\n",iCameraIdex);
 
@@ -554,10 +552,14 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
 
     m_iFullScreenFlag = 1;
 
-    memset(m_tCameraInfo, 0, sizeof(T_CAMERA_INFO)*MAX_SERVER_NUM*MAX_CAMERA_OFSERVER);
+//    memset(m_tCameraInfo, 0, sizeof(T_CAMERA_INFO)*MAX_SERVER_NUM*MAX_CAMERA_OFSERVER);//zhanshi
 
-    m_playWin = new QWidget(this->parentWidget());   //新建一个与目前窗体同属一个父窗体的播放子窗体，方便实现全屏
-//    m_playWin->setGeometry(0, 0, 1024, 768);      //设置窗体在父窗体中的位置，默认一开始为全屏
+
+    if(NULL == m_playWin)
+    {
+        m_playWin = new QWidget(this->parentWidget());   //新建一个与目前窗体同属一个父窗体的播放子窗体，方便实现全屏
+    }
+    //    m_playWin->setGeometry(0, 0, 1024, 768);      //设置窗体在父窗体中的位置，默认一开始为全屏
     m_playWin->setGeometry(0, 138, 782, 630);
     m_playWin->show();  //默认显示
     m_playWin->setObjectName("m_playWin");
@@ -565,13 +567,19 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
     m_playWin->installEventFilter(this);     //播放窗体注册进事件过滤器
     m_playWin->setMouseTracking(true);
 
-    m_channelStateLabel = new QLabel(this->parentWidget());
+    if(NULL == m_channelStateLabel)
+    {
+        m_channelStateLabel = new QLabel(this->parentWidget());
+    }
     m_channelStateLabel->setGeometry(452, 360, 130, 50);
     m_channelStateLabel->setStyleSheet("QLabel{color:rgb(55, 82, 103);font: 24pt;background-color: rgb(0, 0, 0);}");
     m_channelStateLabel->setAttribute(Qt::WA_TranslucentBackground, true); //设置控件背景透明
     m_channelStateLabel->show();
 
-    m_channelNoLabel = new QLabel(this->parentWidget());
+    if(NULL == m_channelNoLabel)
+    {
+        m_channelNoLabel = new QLabel(this->parentWidget());
+    }
     m_channelNoLabel->setGeometry(20, 690, 100, 50);
     m_channelNoLabel->setStyleSheet("QLabel{color:rgb(55, 82, 103);font: 24pt;background-color: rgb(0, 0, 0);}");
     m_channelNoLabel->setAttribute(Qt::WA_TranslucentBackground, true);
@@ -1563,7 +1571,6 @@ void pvmsMonitorWidget::setPlayButtonStyleSheet()
 
     }
 
-
 }
 
 
@@ -1575,7 +1582,6 @@ void pvmsMonitorWidget::recordPlayCtrlSlot()
 void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
 {
     int iRet = 0, i = 0;
-    char rtspStr[128]={0};
     QStringList list;
 
     CMPHandle cmpHandle = NULL;
@@ -1587,23 +1593,27 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
     }
     if (CMP_CMD_CREATE_CH == iType)
     {
+
         if( NULL == m_tCameraInfo[iCh].cmpHandle)
         {
-            cmpHandle = CMP_CreateMedia(m_playWin);
-            if (NULL ==cmpHandle)
+            if(pageType == 0)
             {
-                printf("CMP_CreateMedia error\n");
-                return;
-            }
+                cmpHandle = CMP_CreateMedia(m_playWin);
+                if (NULL ==cmpHandle)
+                {
+                    printf("CMP_CreateMedia error\n");
+                    return;
+                }
 
-            iRet = CMP_OpenMediaPreview(cmpHandle, m_tCameraInfo[iCh].acCameraRtspUrl, CMP_TCP);
-            if (iRet != 0)
-            {
-                printf("CMP_OpenMediaPreview error\n");
-                return;
+                iRet = CMP_OpenMediaPreview(cmpHandle, m_tCameraInfo[iCh].acCameraRtspUrl, CMP_TCP);
+                if (iRet != 0)
+                {
+                    printf("CMP_OpenMediaPreview error\n");
+                    return;
+                }
+                m_tCameraInfo[iCh].iCmpOpenFlag = 1;
+                m_tCameraInfo[iCh].cmpHandle = cmpHandle;
             }
-            m_tCameraInfo[iCh].iCmpOpenFlag = 1;
-            m_tCameraInfo[iCh].cmpHandle = cmpHandle;
         }
 
     }
@@ -1847,22 +1857,22 @@ void pvmsMonitorWidget::closePlayWin()
     }
     m_iCameraNum = 0;
 
-    if (m_channelStateLabel != NULL)
-    {
-        delete m_channelStateLabel;
-        m_channelStateLabel = NULL;
-    }
-    if (m_channelNoLabel != NULL)
-    {
-        delete m_channelNoLabel;
-        m_channelNoLabel = NULL;
-    }
+//    if (m_channelStateLabel != NULL)
+//    {
+//        delete m_channelStateLabel;
+//        m_channelStateLabel = NULL;
+//    }
+//    if (m_channelNoLabel != NULL)
+//    {
+//        delete m_channelNoLabel;
+//        m_channelNoLabel = NULL;
+//    }
 
-    if(m_playWin != NULL)
-    {
-        delete m_playWin;
-        m_playWin = NULL;
-    }
+//    if(m_playWin != NULL)
+//    {
+//        delete m_playWin;
+//        m_playWin = NULL;
+//    }
 
 }
 
