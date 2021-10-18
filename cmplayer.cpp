@@ -57,10 +57,7 @@ int CMP_ChangeWnd(CMPHandle hPlay,QWidget *palywidget)
         return 0;
     }
 
-
     ptCmpInfo->pQVideo->setGeometry(0,0,palywidget->width(),palywidget->height());
-
-//    ptCmpInfo->pQVideo->show();
     return 0;
 
 }
@@ -137,7 +134,7 @@ int CMP_SetWndDisplayEnable(CMPHandle hPlay, int iEnable,QWidget *palywidget)
     {
 
 //            ptCmpInfo->pQVideo->show();
-        ptCmpInfo->pQVideo->setGeometry(palywidget->x(),palywidget->y(),palywidget->width(),palywidget->height());
+        ptCmpInfo->pQVideo->setGeometry(0,0,palywidget->width(),palywidget->height());
 
     }
     else

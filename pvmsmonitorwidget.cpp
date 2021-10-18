@@ -1318,7 +1318,7 @@ void pvmsMonitorWidget::getChStreamState(int iCh)
         return;
     }
     pthread_mutex_lock(&g_tCmpCtrlMutex);
-    m_tCameraInfo[iCh].iStreamState = CMP_GetStreamState(m_tCameraInfo[iCh].cmpHandle);
+//    m_tCameraInfo[iCh].iStreamState = CMP_GetStreamState(m_tCameraInfo[iCh].cmpHandle);
     pthread_mutex_unlock(&g_tCmpCtrlMutex);
 }
 
@@ -1604,7 +1604,6 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
             }
             m_tCameraInfo[iCh].iCmpOpenFlag = 1;
             m_tCameraInfo[iCh].cmpHandle = cmpHandle;
-            qDebug()<<"************create***********ch="<<iCh<<m_tCameraInfo[iCh].cmpHandle<<endl;
         }
 
     }
@@ -1649,7 +1648,6 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
     }
     else if (CMP_CMD_CHG_ALL_VIDEOWIN == iType)
     {
-        return;
         for (i = 0; i <m_iCameraNum; i++)
         {
             if (1 == m_tCameraInfo[i].iCmpOpenFlag)
