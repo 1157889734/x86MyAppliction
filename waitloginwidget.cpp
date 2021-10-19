@@ -27,6 +27,7 @@ void *pageCountDownBrushThread(void *param)      //页面倒计时刷新线程
         waitLoginPage->triggerSetCountDownValueSignal(str);  //更新倒计时显示控件的内容
         usleep(1*1000*1000);
         iCountDownValue--;
+        waitLoginPage->chage_label_function();
 
     }
 
@@ -42,10 +43,8 @@ void *pageCountDownBrushThread(void *param)      //页面倒计时刷新线程
 
 void waitLoginWidget::pageRedirect()
 {
-//    DebugPrint(DEBUG_UI_NOMAL_PRINT, "waitLogin Widget jump to choiceLoginDev Widget!\n");
     this->hide();   //隐藏当前页面
     emit pageRedirectSignal();    //触发页面跳转信号
-    readyTimer->stop();
 
 }
 
@@ -87,9 +86,6 @@ waitLoginWidget::waitLoginWidget(QWidget *parent) :
         ui->versionLabel->setText(QString(QLatin1String(acVersion)));
     }
 
-    readyTimer = new QTimer(this);
-    connect(readyTimer,SIGNAL(timeout()),this,SLOT(chage_label_function()));
-    readyTimer->start(1000);
 
 }
 
@@ -108,10 +104,13 @@ void waitLoginWidget::chage_label_function()
 waitLoginWidget::~waitLoginWidget()
 {
     delete ui;
-    if(readyTimer !=NULL)
+    if (m_threadId != 0)
     {
-        delete  readyTimer;
+        m_iThreadRunFlag = 0;
+        pthread_join(m_threadId, NULL);
+        m_threadId = 0;
     }
+
 }
 
 void waitLoginWidget::triggerSetCountDownValueSignal(QString timeStr)

@@ -54,6 +54,15 @@ usergroupManage::usergroupManage(QWidget *parent) :
 
 
 }
+
+usergroupManage::~usergroupManage()
+{
+    delete g_buttonGroup;
+    g_buttonGroup = NULL;
+
+    delete ui;
+}
+
 void usergroupManage::init_datavase()
 {
     QSqlDatabase db;
@@ -232,14 +241,6 @@ void usergroupManage::on_savepushButton_clicked()
 }
 
 
-
-usergroupManage::~usergroupManage()
-{
-    delete g_buttonGroup;
-    g_buttonGroup = NULL;
-
-    delete ui;
-}
 
 void usergroupManage::on_deletepushButton_clicked()
 {

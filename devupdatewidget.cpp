@@ -887,6 +887,78 @@ void devUpdateWidget::pollingTimeChange(int iComboBoxId)
 
 }
 
+void devUpdateWidget::configFileImportSlot()
+{
+
+    int iRet = 0;
+    char *pcfileName = NULL;
+    char acUserType[64] = {0};
+
+//    DebugPrint(DEBUG_UI_OPTION_PRINT, "devUpdateWidget configFileImport button pressed!\n");
+
+    STATE_GetCurrentUserType(acUserType, sizeof(acUserType));
+    if (!strcmp(acUserType, "operator"))	 //操作员无权校时
+    {
+//        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget this user type has no right to import config file!\n");
+        QMessageBox box(QMessageBox::Warning,tr("提示"),tr("无权限设置!"));	  //新建消息提示框，提示错误信息
+        box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
+        box.setButtonText (QMessageBox::Ok,tr("确 定")); 	//将按钮显示改成"确 定"
+        box.exec();
+    }
+    else
+    {
+        if (0 == strlen(ui->configFileDisplayLineEdit->text().toLatin1().data()))
+        {
+//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget not select any config file!\n");
+            QMessageBox msgBox(QMessageBox::Question,QString(tr("注意")),QString(tr("请选择配置文件")));
+            msgBox.setStandardButtons(QMessageBox::Yes);
+            msgBox.button(QMessageBox::Yes)->setText("确 定");
+            msgBox.exec();
+            return;
+        }
+
+        pcfileName = parseFileNameFromPath(ui->configFileDisplayLineEdit->text().toLatin1().data());
+        if (NULL == pcfileName)
+        {
+            return;
+        }
+
+        if (strncmp(pcfileName, "Station.ini", strlen(pcfileName)) != 0)
+        {
+//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget select error config file!\n");
+            QMessageBox msgBox(QMessageBox::Question,QString(tr("注意")),QString(tr("配置文件选择错误")));
+            msgBox.setStandardButtons(QMessageBox::Yes);
+            msgBox.button(QMessageBox::Yes)->setText("确 定");
+            msgBox.exec();
+            return;
+        }
+
+        QMessageBox msgBox(QMessageBox::Question,QString(tr("提示")),QString(tr("确认导入配置文件？")));
+        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        msgBox.button(QMessageBox::Yes)->setText("确 定");
+        msgBox.button(QMessageBox::No)->setText("取 消");
+        iRet=msgBox.exec();
+        if(iRet != QMessageBox::Yes)
+        {
+            return;
+        }
+
+//        system("cp /mnt/usb/u/Station.ini /home/data/emuVideoMornitorClient/Station.ini");
+        system("cp /media/usb0/Station.ini /home/data/Station.ini");
+
+        system("sync");
+
+        QMessageBox msgBox2(QMessageBox::Information,QString(tr("注意")),QString(tr("导入成功，请拔出U盘!")));
+        msgBox2.setStandardButtons(QMessageBox::Yes);
+        msgBox2.button(QMessageBox::Yes)->setText("确 定");
+        msgBox2.exec();
+        return;
+    }
+
+
+}
+
+
 void devUpdateWidget::presetReturnTimeChange(int iComboBoxId)
 {
     static int iOldId = 0;

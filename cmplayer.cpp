@@ -45,6 +45,8 @@ CMPHandle CMP_CreateMedia(QWidget *palywidget)
 
     ptCmpInfo->pQVideo->setStyleSheet("QWidget{background-color: rgb(0, 0, 0);}");     //设置播放窗口背景色为黑色
     ptCmpInfo->pQVideo->setObjectName("playbin");
+    ptCmpInfo->pQqlayer->setVideoOutput(ptCmpInfo->pQVideo);
+
 
     return (CMPHandle)ptCmpInfo;
 
@@ -106,7 +108,6 @@ int CMP_OpenMediaPreview(CMPHandle hPlay,const char *pcRtspFile,int iTcpFlag)
     ptCmpInfo->pQqlayer->setPlaylist(ptCmpInfo->playerList);
 
 //    ptCmpInfo->pQqlayer->setMedia(url);
-    ptCmpInfo->pQqlayer->setVideoOutput(ptCmpInfo->pQVideo);
 
     ptCmpInfo->pQVideo->show();
     ptCmpInfo->pQqlayer->play();
@@ -126,6 +127,7 @@ int CMP_OpenMediaFile(CMPHandle hPlay, const char *pcRtspFile,int iTcpFlag)
     const QString str = QString::fromUtf8(pcRtspFile);
     QUrl url(str);
     ptCmpInfo->pQqlayer->setMedia(url);
+
     ptCmpInfo->pQqlayer->play();
     ptCmpInfo->pQVideo->show();
 
