@@ -6,6 +6,8 @@ typedef struct _T_CMP_INFO
 {
     QMediaPlayer* pQqlayer;
     QVideoWidget* pQVideo;
+    QMediaPlaylist* playerList;
+
 
 } T_CMP_INFO;
 
@@ -37,6 +39,7 @@ CMPHandle CMP_CreateMedia(QWidget *palywidget)
 
     ptCmpInfo->pQqlayer = new QMediaPlayer(palywidget,QMediaPlayer::LowLatency);
     ptCmpInfo->pQVideo= new QVideoWidget(palywidget);
+    ptCmpInfo->playerList = new QMediaPlaylist(palywidget);
 
     ptCmpInfo->pQVideo->setGeometry(0,0,palywidget->width(),palywidget->height());
 
@@ -74,6 +77,9 @@ int CMP_DestroyMedia(CMPHandle hPlay)
         delete ptCmpInfo->pQVideo;
         ptCmpInfo->pQVideo = NULL;
 
+        delete ptCmpInfo->playerList;
+        ptCmpInfo->playerList = NULL;
+
 
         free(ptCmpInfo);
         ptCmpInfo = NULL;
@@ -94,7 +100,12 @@ int CMP_OpenMediaPreview(CMPHandle hPlay,const char *pcRtspFile,int iTcpFlag)
     const QString str = QString::fromUtf8(pcRtspFile);
     QUrl url(str);
 
-    ptCmpInfo->pQqlayer->setMedia(url);
+    ptCmpInfo->playerList->addMedia(url);
+    ptCmpInfo->playerList->setCurrentIndex(1);
+    ptCmpInfo->playerList->setPlaybackMode(QMediaPlaylist::Loop);
+    ptCmpInfo->pQqlayer->setPlaylist(ptCmpInfo->playerList);
+
+//    ptCmpInfo->pQqlayer->setMedia(url);
     ptCmpInfo->pQqlayer->setVideoOutput(ptCmpInfo->pQVideo);
 
     ptCmpInfo->pQVideo->show();

@@ -471,6 +471,7 @@ void pvmsMenuWidget::showPageSlot()
         m_devManagePage->hide();
         m_devUpdatePage->hide();
         m_pvmsMonitorPage->m_playWin->show();
+        m_pvmsMonitorPage->m_playWin->update();
 
     }
     else if (g_ipageValue == PAGEMONITOR) {
@@ -479,6 +480,8 @@ void pvmsMenuWidget::showPageSlot()
         m_devManagePage->hide();
         m_devUpdatePage->hide();
         m_pvmsMonitorPage->m_playWin->show();
+        m_pvmsMonitorPage->m_playWin->update();
+
 
     }
     else if (g_ipageValue == PAGERCORDE) {
@@ -660,7 +663,7 @@ void pvmsMenuWidget::menuButtonClick()
 
 
         m_pvmsMonitorPage->m_playWin->show();
-
+        m_pvmsMonitorPage->m_playWin->update();
         m_recordPlayPage->closePlayWin();   //关闭录像回放界面的播放窗口
 
         m_pvmsMonitorPage->enableVideoPlay(1);   //运行受电弓监控页面解码的显示

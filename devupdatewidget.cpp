@@ -21,7 +21,7 @@ static int g_iVNum = 0;
 #define PVMSPAGETYPE  2    //此页面类型，2表示受电弓监控页面
 
 #define NVR_RESTART_PORT 11001
-QButtonGroup *g_buttonGroup1 = NULL, *g_buttonGroup2 = NULL, *g_buttonGroup3 = NULL;
+QButtonGroup *g_buttonGroup1 = NULL, *g_buttonGroup2 = NULL;
 devUpdateWidget *g_devUpdateThis = nullptr;
 
 char *parseFileNameFromPath(char *pcSrcStr)     //根据导入文件路径全名解析得到单纯的导入文件名
@@ -69,17 +69,15 @@ devUpdateWidget::devUpdateWidget(QWidget *parent) :
 
     connect(ui->configFilelookPushButton,   SIGNAL(clicked(bool)),   this, SLOT(configFileSelectionSlot()));
 
-//    connect(ui->configFilelookPushButton_2, SIGNAL(clicked(bool)), this, SLOT(configUpdateFileSLOT()));
 
     connect(ui->configFileImportPushButton, SIGNAL(clicked(bool)), this, SLOT(configFileImportSlot()));
-
-
-//    connect(ui->configFileIOutPushButton, SIGNAL(clicked(bool)), this, SLOT(configFileImportSlot()));
 
 
     connect(ui->updateBeginPushButton, SIGNAL(clicked(bool)), this, SLOT(devUpdateSlot()));
 
     connect(ui->clientRebootPushButton, SIGNAL(clicked(bool)), this, SLOT(devRebootSlot()));
+    connect(ui->clientRebootPushButton_2, SIGNAL(clicked(bool)), this, SLOT(devRebootSlot()));
+
 
     g_buttonGroup1 = new QButtonGroup();      //轮询时间设置单选按钮组成一组，以保证改组中的单选框同时只能选一个，同时与以下其他类别的单选框之间互不影响
     g_buttonGroup1->addButton(ui->pollingTimeSetRadioButton,1);
@@ -93,9 +91,7 @@ devUpdateWidget::devUpdateWidget(QWidget *parent) :
     g_buttonGroup2->addButton(ui->presetReturnTimeSetRadioButton_3,3);
     g_buttonGroup2->addButton(ui->presetReturnTimeSetRadioButton_4,4);
 
-//    g_buttonGroup3 = new QButtonGroup();
-//    g_buttonGroup3->addButton(ui->setManalTimeRadioButton,0);
-//    g_buttonGroup3->addButton(ui->setSysTimeRadioButton,1);
+
     connect(ui->canselPushButton, SIGNAL(clicked()), this, SLOT(registOutButtonClick()));
 
     connect(g_buttonGroup1, SIGNAL(buttonClicked(int)), this, SLOT(pollingTimeChange(int)));     //单选按钮组按键信号连接响应槽函数
@@ -143,10 +139,9 @@ devUpdateWidget::~devUpdateWidget()
 
     delete g_buttonGroup1;
     g_buttonGroup1 = NULL;
+
     delete g_buttonGroup2;
     g_buttonGroup2 = NULL;
-    delete g_buttonGroup3;
-    g_buttonGroup3 = NULL;
 
     delete m_sys_timer;
     m_sys_timer = NULL;
@@ -555,7 +550,7 @@ void devUpdateWidget::configFileSelectionSlot()
         }
         else
         {
-            if (access("/mnt/usb/u/", F_OK) < 0)
+            if (access("/media/usb0/", F_OK) < 0)
             {
 //                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget::%s %d not get USB device!\n",__FUNCTION__,__LINE__);
                 QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
@@ -589,7 +584,7 @@ void devUpdateWidget::configFileSelectionSlot()
                 return;
             }
 #endif
-            filename = QFileDialog::getOpenFileName(this, "打开文件", "/mnt/sdcard/", "ini文件(*.ini)");
+            filename = QFileDialog::getOpenFileName(this, "打开文件", "/media/usb0/", "ini文件(*.ini)");
             if (!filename.isNull())
             {
                 //QMessageBox::information(this, "Document", "Has document", QMessageBox::Ok | QMessageBox::Cancel);
@@ -599,71 +594,6 @@ void devUpdateWidget::configFileSelectionSlot()
 
 }
 
-#if 0
-void devUpdateWidget::configUpdateFileSLOT()
-{
-
-
-    QString filename = "";
-    char acUserType[64] = {0};
-
-//    DebugPrint(DEBUG_UI_OPTION_PRINT, "devUpdateWidget configFileSelection button pressed!\n");
-
-        STATE_GetCurrentUserType(acUserType, sizeof(acUserType));
-        if (!strcmp(acUserType, "operator"))	 //操作员无权校时
-        {
-//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget this user type has no right to select config file!\n");
-            QMessageBox box(QMessageBox::Warning,tr("提示"),tr("无权限设置!"));	  //新建消息提示框，提示错误信息
-            box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
-            box.setButtonText (QMessageBox::Ok,tr("确 定")); 	//将按钮显示改成"确 定"
-            box.exec();
-        }
-        else
-        {
-            if (access("//mnt/sdcard/", F_OK) < 0)
-            {
-//                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget::%s %d not get USB device!\n",__FUNCTION__,__LINE__);
-                QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
-                msgBox.setStandardButtons(QMessageBox::Yes);
-                msgBox.button(QMessageBox::Yes)->setText("确 定");
-                msgBox.exec();
-                ui->clientRebootPushButton->setEnabled(true);
-                return;
-            }
-            else
-            {
-                if (0 == STATE_FindUsbDev())   //这里处理一个特殊情况:U盘拔掉时umount失败，/mnt/usb/u/路径还存在，但是实际U盘是没有再插上的
-                {
-//                    DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget::%s %d not get USB device!\n",__FUNCTION__,__LINE__);
-                    QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
-                    msgBox.setStandardButtons(QMessageBox::Yes);
-                    msgBox.button(QMessageBox::Yes)->setText("确 定");
-                    msgBox.exec();
-                    ui->clientRebootPushButton->setEnabled(true);
-                    return;
-                }
-            }
-
-            if (STATE_ParseUsbLicense("/mnt/sdcard/") < 0)
-            {
-//                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget configFileSelection check License error!\n");
-                QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("授权失败!"));
-                box.setStandardButtons (QMessageBox::Ok);
-                box.setButtonText (QMessageBox::Ok,QString::fromUtf8("确 定"));
-                box.exec();
-                return;
-            }
-
-            filename = QFileDialog::getOpenFileName(this, "打开文件", "/mnt/sdcard/", "ini文件(*.bin)");
-            if (!filename.isNull())
-            {
-                //QMessageBox::information(this, "Document", "Has document", QMessageBox::Ok | QMessageBox::Cancel);
-                ui->configFileDisplayLineEdit_2->setText(filename);
-            }
-        }
-
-}
-#endif
 
 void devUpdateWidget::devUpdateSlot()
 {
@@ -689,7 +619,7 @@ void devUpdateWidget::devUpdateSlot()
         ui->updateStatueTextEdit->clear();
         ui->clientRebootPushButton->setEnabled(false);    //更新开始，设置重启按钮不可操作
 
-        if (access("/mnt/usb/u/", F_OK) < 0)
+        if (access("/media/usb0/", F_OK) < 0)
         {
 //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget::%s %d not get USB device!\n",__FUNCTION__,__LINE__);
             QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
@@ -802,7 +732,7 @@ void devUpdateWidget::devUpdateSlot()
 
         system("cp /home/data/x86MyApplication /home/data/backup/");
         system("rm /home/data/x86MyApplication");
-        system("cp /mnt/usb/u/x86MyApplication /home/data/x86MyApplication");
+        system("cp /media/usb0/x86MyApplication /home/data/x86MyApplication");
         system("sync");
 
         ui->updateStatueTextEdit->append(tr("复制文件完成"));
@@ -851,110 +781,7 @@ void devUpdateWidget::devRebootSlot()
 
 
 }
-#if 0
-void devUpdateWidget::configFileOutSLot()
-{
-    int iRet = 0;
-    char *pcfileName = NULL;
-    char acUserType[64] = {0};
 
-//    DebugPrint(DEBUG_UI_OPTION_PRINT, "devUpdateWidget configFileImport button pressed!\n");
-
-    STATE_GetCurrentUserType(acUserType, sizeof(acUserType));
-    if (!strcmp(acUserType, "operator"))	 //操作员无权校时
-    {
-//        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget this user type has no right to import config file!\n");
-        QMessageBox box(QMessageBox::Warning,tr("提示"),tr("无权限设置!"));	  //新建消息提示框，提示错误信息
-        box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
-        box.setButtonText (QMessageBox::Ok,tr("确 定")); 	//将按钮显示改成"确 定"
-        box.exec();
-    }
-    else
-    {
-
-
-
-
-
-    }
-
-
-
-
-}
-
-#endif
-
-void devUpdateWidget::configFileImportSlot()
-{
-
-    int iRet = 0;
-    char *pcfileName = NULL;
-    char acUserType[64] = {0};
-
-//    DebugPrint(DEBUG_UI_OPTION_PRINT, "devUpdateWidget configFileImport button pressed!\n");
-
-    STATE_GetCurrentUserType(acUserType, sizeof(acUserType));
-    if (!strcmp(acUserType, "operator"))	 //操作员无权校时
-    {
-//        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget this user type has no right to import config file!\n");
-        QMessageBox box(QMessageBox::Warning,tr("提示"),tr("无权限设置!"));	  //新建消息提示框，提示错误信息
-        box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
-        box.setButtonText (QMessageBox::Ok,tr("确 定")); 	//将按钮显示改成"确 定"
-        box.exec();
-    }
-    else
-    {
-        if (0 == strlen(ui->configFileDisplayLineEdit->text().toLatin1().data()))
-        {
-//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget not select any config file!\n");
-            QMessageBox msgBox(QMessageBox::Question,QString(tr("注意")),QString(tr("请选择配置文件")));
-            msgBox.setStandardButtons(QMessageBox::Yes);
-            msgBox.button(QMessageBox::Yes)->setText("确 定");
-            msgBox.exec();
-            return;
-        }
-
-        pcfileName = parseFileNameFromPath(ui->configFileDisplayLineEdit->text().toLatin1().data());
-        if (NULL == pcfileName)
-        {
-            return;
-        }
-
-        if (strncmp(pcfileName, "Station.ini", strlen(pcfileName)) != 0)
-        {
-//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget select error config file!\n");
-            QMessageBox msgBox(QMessageBox::Question,QString(tr("注意")),QString(tr("配置文件选择错误")));
-            msgBox.setStandardButtons(QMessageBox::Yes);
-            msgBox.button(QMessageBox::Yes)->setText("确 定");
-            msgBox.exec();
-            return;
-        }
-
-        QMessageBox msgBox(QMessageBox::Question,QString(tr("提示")),QString(tr("确认导入配置文件？")));
-        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-        msgBox.button(QMessageBox::Yes)->setText("确 定");
-        msgBox.button(QMessageBox::No)->setText("取 消");
-        iRet=msgBox.exec();
-        if(iRet != QMessageBox::Yes)
-        {
-            return;
-        }
-
-//        system("cp /mnt/usb/u/Station.ini /home/data/emuVideoMornitorClient/Station.ini");
-        system("cp /mnt/usb/u/Station.ini /home/data/Station.ini");
-
-        system("sync");
-
-        QMessageBox msgBox2(QMessageBox::Information,QString(tr("注意")),QString(tr("导入成功，请拔出U盘!")));
-        msgBox2.setStandardButtons(QMessageBox::Yes);
-        msgBox2.button(QMessageBox::Yes)->setText("确 定");
-        msgBox2.exec();
-        return;
-    }
-
-
-}
 
 void devUpdateWidget::alarmPushButoonClickSlot()  //点击报警按钮的响应函数，删除报警定时器并恢复按钮为正常不闪烁样式
 {

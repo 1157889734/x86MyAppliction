@@ -31,9 +31,6 @@ public slots:
 
     void userManageSlot();
     void configFileSelectionSlot();
-//    void configUpdateFileSLOT();
-    void configFileImportSlot();
-//    void configFileOutSLot();
     void devUpdateSlot();
     void devRebootSlot();
     void alarmPushButoonClickSlot();

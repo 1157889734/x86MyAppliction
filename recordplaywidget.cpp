@@ -752,7 +752,7 @@ void recordPlayWidget::recordDownloadSlot()
 {
     int iRet = 0, idex = 0, row = 0;
     QString filename = "";
-    QString fileSavePath = "/mnt/usb/u/";
+    QString fileSavePath = "/media/usb0/";
     char acSaveFileName[128] = {0};
     char acIpAddr[32] = {0};
     T_TRAIN_CONFIG tTrainConfigInfo;
@@ -790,7 +790,7 @@ void recordPlayWidget::recordDownloadSlot()
             msgBox.exec();
             return;
         }
-        if (access("/mnt/usb/u/", F_OK) < 0)
+        if (access("/media/usb0/", F_OK) < 0)
         {
 //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not get USB device!\n");
             QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
