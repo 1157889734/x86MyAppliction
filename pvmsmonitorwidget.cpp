@@ -552,38 +552,40 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
 
     m_iFullScreenFlag = 1;
 
-//    memset(m_tCameraInfo, 0, sizeof(T_CAMERA_INFO)*MAX_SERVER_NUM*MAX_CAMERA_OFSERVER);//zhanshi
-
-
     if(NULL == m_playWin)
     {
         m_playWin = new QWidget(this->parentWidget());   //新建一个与目前窗体同属一个父窗体的播放子窗体，方便实现全屏
+
+        //    m_playWin->setGeometry(0, 0, 1024, 768);      //设置窗体在父窗体中的位置，默认一开始为全屏
+        m_playWin->setGeometry(0, 138, 782, 630);
+        m_playWin->show();  //默认显示
+        m_playWin->setObjectName("m_playWin");
+        m_playWin->setStyleSheet("QWidget{background-color: rgb(0, 0, 0);}");     //设置播放窗口背景色为黑色
+        m_playWin->installEventFilter(this);     //播放窗体注册进事件过滤器
+        m_playWin->setMouseTracking(true);
     }
-    //    m_playWin->setGeometry(0, 0, 1024, 768);      //设置窗体在父窗体中的位置，默认一开始为全屏
-    m_playWin->setGeometry(0, 138, 782, 630);
-    m_playWin->show();  //默认显示
-    m_playWin->setObjectName("m_playWin");
-    m_playWin->setStyleSheet("QWidget{background-color: rgb(0, 0, 0);}");     //设置播放窗口背景色为黑色
-    m_playWin->installEventFilter(this);     //播放窗体注册进事件过滤器
-    m_playWin->setMouseTracking(true);
 
     if(NULL == m_channelStateLabel)
     {
         m_channelStateLabel = new QLabel(this->parentWidget());
-    }
-    m_channelStateLabel->setGeometry(452, 360, 130, 50);
-    m_channelStateLabel->setStyleSheet("QLabel{color:rgb(55, 82, 103);font: 24pt;background-color: rgb(0, 0, 0);}");
-    m_channelStateLabel->setAttribute(Qt::WA_TranslucentBackground, true); //设置控件背景透明
-    m_channelStateLabel->show();
 
+        m_channelStateLabel->setGeometry(452, 360, 130, 50);
+        m_channelStateLabel->setStyleSheet("QLabel{color:rgb(55, 82, 103);font: 24pt;background-color: rgb(0, 0, 0);}");
+
+        m_channelStateLabel->setAttribute(Qt::WA_TranslucentBackground, true); //设置控件背景透明
+        m_channelStateLabel->show();
+    }
     if(NULL == m_channelNoLabel)
     {
         m_channelNoLabel = new QLabel(this->parentWidget());
+
+        m_channelNoLabel->setGeometry(20, 690, 100, 50);
+        m_channelNoLabel->setStyleSheet("QLabel{color:rgb(55, 82, 103);font: 24pt;background-color: rgb(0, 0, 0);}");
+
+        m_channelNoLabel->setAttribute(Qt::WA_TranslucentBackground, true);
+        m_channelNoLabel->show();
     }
-    m_channelNoLabel->setGeometry(20, 690, 100, 50);
-    m_channelNoLabel->setStyleSheet("QLabel{color:rgb(55, 82, 103);font: 24pt;background-color: rgb(0, 0, 0);}");
-    m_channelNoLabel->setAttribute(Qt::WA_TranslucentBackground, true);
-    m_channelNoLabel->show();
+
     memset(&tTrainConfigInfo, 0, sizeof(T_TRAIN_CONFIG));
     STATE_GetCurrentTrainConfigInfo(&tTrainConfigInfo);
 
