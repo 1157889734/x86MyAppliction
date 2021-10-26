@@ -190,10 +190,9 @@ void devManageWidget::pisMsgCtrl(char *pcMsgData)
     pisTime = mktime(&tmVal);
     if (abs(localTime - pisTime) > 3)
     {
-//        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] set local time(%4d-%02d-%02d %02d:%02d:%02d)\n", __FUNCTION__, iYear, ptPisMsgInfo->i8Mon, ptPisMsgInfo->i8day, ptPisMsgInfo->i8Hour, ptPisMsgInfo->i8Min, ptPisMsgInfo->i8Sec);
-        snprintf(acStr, sizeof(acStr), "rtc.exe -s \"%4d-%02d-%02d %02d:%02d:%02d\"", iYear, ptPisMsgInfo->i8Mon, ptPisMsgInfo->i8day, ptPisMsgInfo->i8Hour, ptPisMsgInfo->i8Min, ptPisMsgInfo->i8Sec);
+        snprintf(acStr, sizeof(acStr), "date %02d%02d%02d%02d%4d.%02d", ptPisMsgInfo->i8Mon, ptPisMsgInfo->i8day, ptPisMsgInfo->i8Hour, ptPisMsgInfo->i8Sec,iYear, ptPisMsgInfo->i8Min);
         system(acStr);
-        system("rtc.exe -i");
+        system("hwclock -w");
 
         /*系统校时记录日志*/
         memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
@@ -544,8 +543,6 @@ void devManageWidget::trainNumberButtonClickSlot()
 
 void devManageWidget::registOutButtonClick()
 {
-
-//    m_pvmsMonitorPage->m_iPresetPasswdOkFlag = 0;
     int manage_page = 3;
     this->hide();
     emit registOutSignal(manage_page);    //触发注销信号，带上当前设备类型

@@ -79,16 +79,6 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
     connect(m_playSlider, SIGNAL(presliderMoveSianal(int)), this, SLOT(playSliderMoveSlot(int)));   //拖动进度条信号响应
 
 
-
-//    connect(m_playSlider, SIGNAL(sliderMoved(int position)), this, SLOT(setPosition(int position)));
-//    connect(m_playSlider, SIGNAL(sliderReleased()), this, SLOT(unMute()));
-
-
-
-//    connect(ui->alarmPushButton, SIGNAL(clicked(bool)), this, SLOT(alarmPushButoonClickSlot()));   //报警按钮按键信号响应打开报警信息界面
-
-
-
     m_tableWidgetStyle = QStyleFactory::create("windows");
     ui->recordFileTableWidget->setStyle(m_tableWidgetStyle);   //设置tablewidget显示风格为windows风格，否则里面的checkbox选中默认显示叉而不是勾
     ui->recordFileTableWidget->setFocusPolicy(Qt::NoFocus);
@@ -128,7 +118,6 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
 
     m_iPlayRange = 0;
 
-    posTimer = NULL;
     m_iPlayFlag = 0;
     m_iRecordIdex = -1;
     m_iSliderValue = 0;
@@ -597,11 +586,6 @@ void recordPlayWidget::setPosition(int position)
 
 }
 
-void recordPlayWidget::unMute()
-{
-    player.setMuted(false);
-}
-
 
 void recordPlayWidget::recordQuerySlot()
 {
@@ -983,7 +967,7 @@ void recordPlayWidget::recordPlayStopSlot()
     }
 }
 
-void recordPlayWidget::closePlayWin()
+void recordPlayWidget::closePlayWin()  ///////////??????????????
 {
     if (m_threadId != 0)
     {
@@ -1072,7 +1056,7 @@ void recordPlayWidget::recordPlaySlowForwardSlot()
     {
         return;
     }
-    if (m_dPlaySpeed <= 1.25)
+    if (m_dPlaySpeed <= 0.25)
     {
         return;
     }
@@ -1084,13 +1068,32 @@ void recordPlayWidget::recordPlaySlowForwardSlot()
     setPlayButtonStyleSheet();
 }
 
+void recordPlayWidget::manualSwitchVideoEndSlot()
+{
+
+    ui->playLastOnePushButton->setEnabled(true);
+    ui->playNextOnePushButton->setEnabled(true);
+
+    if (m_VideoSwitchTimer != NULL)
+    {
+        if (m_VideoSwitchTimer->isActive())
+        {
+            m_VideoSwitchTimer->stop();
+        }
+        delete m_VideoSwitchTimer;
+        m_VideoSwitchTimer = NULL;
+    }
+
+
+}
+
 void recordPlayWidget::recordPlayLastOneSlot()
 {
     int iRow = 0, iDex = 0;
 
 //    DebugPrint(DEBUG_UI_OPTION_PRINT, "recordPlayWidget lastOne play PushButton pressed!\n");
 
-    if (ui->recordFileTableWidget->rowCount() <= 0 /*|| NULL == m_cmpHandle*/)
+    if (ui->recordFileTableWidget->rowCount() <= 0 || NULL == m_cmpHandle)
     {
         return;
     }
@@ -1109,9 +1112,20 @@ void recordPlayWidget::recordPlayLastOneSlot()
 
     closePlayWin();   //先关闭之前的
     setPlayButtonStyleSheet();
-
     emit setRecordPlayFlagSignal(1);
+
     recordPlayCtrl(iRow, iDex);
+    ui->playNextOnePushButton->setEnabled(false);
+    ui->playLastOnePushButton->setEnabled(false);
+
+    if(m_VideoSwitchTimer == NULL)
+    {
+        m_VideoSwitchTimer = new QTimer(this);
+        m_VideoSwitchTimer->start(1*1000);
+        connect(m_VideoSwitchTimer,SIGNAL(timeout()), this,SLOT(manualSwitchVideoEndSlot()));
+    }
+
+
 }
 void recordPlayWidget::recordPlayNextOneSlot()
 {
@@ -1137,12 +1151,23 @@ void recordPlayWidget::recordPlayNextOneSlot()
         return;
     }
 
-    closePlayWin();  //先关闭之前的
-    setPlayButtonStyleSheet();
 
+    closePlayWin();   //先关闭之前的
+    setPlayButtonStyleSheet();
     emit setRecordPlayFlagSignal(1);
 
+
     recordPlayCtrl(iRow, iDex);
+
+    ui->playNextOnePushButton->setEnabled(false);
+    ui->playLastOnePushButton->setEnabled(false);
+
+    if(m_VideoSwitchTimer == NULL)
+    {
+        m_VideoSwitchTimer = new QTimer(this);
+        m_VideoSwitchTimer->start(1*1000);
+        connect(m_VideoSwitchTimer,SIGNAL(timeout()), this,SLOT(manualSwitchVideoEndSlot()));
+    }
 
 
 }
@@ -1209,12 +1234,9 @@ void recordPlayWidget::recordPlaySlot(QTableWidgetItem *item)    //录像文件�
 
     setPlayButtonStyleSheet();
 
-    if (m_cmpHandle != NULL)    //如果播放窗口已经有打开了码流播放，关闭码流播放
-    {
-        closePlayWin();
-        setPlayButtonStyleSheet();
-    }
-    emit setRecordPlayFlagSignal(1);  //触发设置回放标志信号
+    closePlayWin();   //先关闭之前的
+    setPlayButtonStyleSheet();
+    emit setRecordPlayFlagSignal(1);
 
     iRow = item->row();
     iDex = ui->carSeletionComboBox->currentIndex();
@@ -1242,10 +1264,13 @@ void recordPlayWidget::alarmHappenCtrlSlot()
         if (0 == g_iRNum%2)
         {
             ui->alarmPushButton->setChecked(true);
+            ui->alarmPushButton->setStyleSheet("QPushButton{border-image: url(:/monres/alerton.bmp);background-color: rgb(255, 255, 255);}");
         }
         else
         {
             ui->alarmPushButton->setChecked(false);
+            ui->alarmPushButton->setStyleSheet("QPushButton{border-image: url(:/monres/alertoff.bmp);background-color: rgb(255, 255, 255);}");
+
         }
         g_iRNum++;
     }
@@ -1268,6 +1293,7 @@ void recordPlayWidget::alarmClearSlot()
         m_alarmHappenTimer = NULL;
     }
     ui->alarmPushButton->setChecked(false);
+    ui->alarmPushButton->setStyleSheet("QPushButton{border-image: url(:/monres/alertoff.bmp);background-color: rgb(255, 255, 255);}");
 
     g_iRNum = 0;
 }
@@ -1338,9 +1364,6 @@ void *slideValueSetThread(void *param)    //播放进度条刷新线程
           usleep(500*1000);
       }
       return NULL;
-
-
-
 
 }
 void recordPlayWidget::recordPlayCtrl(int iRow, int iDex)

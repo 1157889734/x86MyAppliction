@@ -22,7 +22,7 @@ static int g_iVNum = 0;
 
 #define NVR_RESTART_PORT 11001
 QButtonGroup *g_buttonGroup1 = NULL, *g_buttonGroup2 = NULL;
-devUpdateWidget *g_devUpdateThis = nullptr;
+devUpdateWidget *g_devUpdateThis = NULL;
 
 char *parseFileNameFromPath(char *pcSrcStr)     //根据导入文件路径全名解析得到单纯的导入文件名
 {
@@ -668,7 +668,7 @@ void devUpdateWidget::devUpdateSlot()
             return;
         }
 
-        fp = fopen("/mnt/usb/u/version.ini","rb");
+        fp = fopen("/media/usb0/version.ini","rb");
         if (NULL == fp)
         {
 //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget open update file fail in USB device!\n");

@@ -73,6 +73,7 @@ waitLoginWidget::waitLoginWidget(QWidget *parent) :
     connect(this, SIGNAL(setCountDownValueSignal(QString)), this, SLOT(setCountDownValueSlot(QString)));
 
     m_iThreadRunFlag = 1;
+    m_threadId = 0;
     int iRet = pthread_create(&m_threadId, NULL, pageCountDownBrushThread, (void *)this);    //启动页面倒计时刷新线程，得到线程ID
     if (iRet != 0)
     {

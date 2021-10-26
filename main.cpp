@@ -30,7 +30,8 @@ int main(int argc, char *argv[])
 {
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
 
-    QApplication a(argc, argv);
+    MyApplication app(argc, argv);
+
 
     char acNvrServerIp[128] = {0}, acClientVersion[64] = {0};
     short sYear = 0;
@@ -64,9 +65,6 @@ int main(int argc, char *argv[])
         memset(acNvrServerIp, 0, sizeof(acNvrServerIp));
         snprintf(acNvrServerIp, sizeof(acNvrServerIp), "192.168.%d.81", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO);
         iRet = PMSG_CreateConnect(acNvrServerIp, 10100);
-//        qDebug()<<"********PMSG_CreateConnect--:"<<iRet<<endl;
-//        qDebug()<<"********PMSG_CreateConnect--acNvrServerIp:"<<acNvrServerIp;
-//        printf("********PMSG_CreateConnect--%d\n",iRet);
         if (0 == iRet)
         {
 //            DebugPrint(DEBUG_UI_ERROR_PRINT, "create connection to server:%s error!\n",acNvrServerIp);
@@ -145,22 +143,10 @@ int main(int argc, char *argv[])
         }
     }
 
-//    MyApplication app(argc, argv);  //创建QT运行主应用程序
-
-    a.setWindowIcon(QIcon(":/res/info.png"));   //设置窗口图标，这里主要是messagebox窗体会显示，而避免出现QT图标
+  //创建QT运行主应用程序
+    app.setWindowIcon(QIcon(":/res/info.png"));   //设置窗口图标，这里主要是messagebox窗体会显示，而避免出现QT图标
 //    qDebug() << "drivers------------------------"<< QSqlDatabase::drivers();
 
-
-//    QTextCodec *codec = QTextCodec::codecForName("System");
-//    QTextCodec::setCodecForLocale(codec);
-//    QTextCodec::setCodecForCStrings(codec);
-//    QTextCodec::setCodecForTr(codec);
-
-//    QPixmap pixmap(":/res/background.png");
-//    QSplashScreen splash(pixmap);
-//    splash.showFullScreen();
-//    splash.show();
-//    a.processEvents();
 
     g_waitLoginPage = new waitLoginWidget();
     g_choiceLoginDevPage = new choiceLoginDevWidget();
@@ -177,12 +163,12 @@ int main(int argc, char *argv[])
 
 //    MyApplication app;
 
-//    QObject::connect(&a, SIGNAL(blackScreenSignal()), g_pvmsMenuPage, SLOT(blackScreenCtrlSlot()));
-//    QObject::connect(&a, SIGNAL(blackScreenExitSignal()), g_pvmsMenuPage, SLOT(blackScreenExitCtrlSlot()));
+    QObject::connect(&app, SIGNAL(blackScreenSignal()), g_pvmsMenuPage, SLOT(blackScreenCtrlSlot()));
+    QObject::connect(&app, SIGNAL(blackScreenExitSignal()), g_pvmsMenuPage, SLOT(blackScreenExitCtrlSlot()));
 
 	
-//    QObject::connect(g_pvmsMenuPage, SIGNAL(alarmHappenSignal()), &a, SLOT(alarmHappenSignalCtrl()));
-//    QObject::connect(g_pvmsMenuPage, SIGNAL(alarmClearSignal()), &a, SLOT(alarmClearSignalCtrl()));
+    QObject::connect(g_pvmsMenuPage, SIGNAL(alarmHappenSignal()), &app, SLOT(alarmHappenSignalCtrl()));
+    QObject::connect(g_pvmsMenuPage, SIGNAL(alarmClearSignal()), &app, SLOT(alarmClearSignalCtrl()));
 
 
 	
@@ -196,7 +182,10 @@ int main(int argc, char *argv[])
 
     QObject::connect(g_pvmsMenuPage, SIGNAL(registOutSignal()), g_loginPage, SLOT(showPageSlot()));       //受电弓监控主菜单页面的注销信号连接登录页面的页面显示槽
 
-    a.exec();
+
+
+
+    app.exec();
 
 
 //    usleep(1*1000*1000);

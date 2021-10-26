@@ -13,6 +13,8 @@
 #define PAGERCORDE  2
 #define PAGEMANAGE  3
 #define PAGEUPDATE  4
+#define PAGEALAGE   5
+
 static int g_ipageValue = 0;
 
 pvmsMenuWidget::pvmsMenuWidget(QWidget *parent) :
@@ -146,13 +148,6 @@ pvmsMenuWidget::pvmsMenuWidget(QWidget *parent) :
 }
 
 
-void pvmsMenuWidget::showEvent(QShowEvent *event)
-{
-    this->setAttribute(Qt::WA_Mapped);
-    QWidget::showEvent(event);
-
-}
-
 pvmsMenuWidget::~pvmsMenuWidget()
 {
 
@@ -205,7 +200,6 @@ void pvmsMenuWidget::recvRs485Ctrl(char *pcData, int iDataLen)
 
 void pvmsMenuWidget::rs485TimerFunc()
 {
-#if 1
     int iRet = 0;
      T_RS485_PACKET tPkt;
 
@@ -228,7 +222,6 @@ void pvmsMenuWidget::rs485TimerFunc()
          free(tPkt.pcData);
          tPkt.pcData = NULL;
      }
-#endif
 
 }
 void pvmsMenuWidget::pmsgTimerFunc()

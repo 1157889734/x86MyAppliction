@@ -62,8 +62,6 @@ public:
     void triggerDownloadProcessBarDisplaySignal(int iEnableFlag);   //触发是否显示文件下载进度条的信号，iEnableFlag为1，显示，为0不显示
     void triggerSetDownloadProcessBarValueSignal(int iValue);   //触发设置文件下载进度条的值的信号
 
-    void unMute();
-
 
 public slots:
     void alarmPushButoonClickSlot();
@@ -84,6 +82,9 @@ public slots:
     void playPlusStepSlot();
     void playMinusStepSlot();
     void carNoChangeSlot();
+
+    void manualSwitchVideoEndSlot();
+
 
     void recordSelectionSlot(QTableWidgetItem *item);
     void recordPlaySlot(QTableWidgetItem *item);
@@ -132,14 +133,8 @@ private:
     void setPlayButtonStyleSheet();
     void getTrainConfig();     //获取车型配置信息
 
+    QTimer *m_VideoSwitchTimer;
 
-    QMediaPlayer player;
-    QMediaPlaylist *list;
-
-    QStringList mVideoList;
-    QString mVideoNmae;
-    QTimer *posTimer;
-    int maxValue = 1000;
     int m_iRecordIdex;
     QTimer *m_recordTabelWidgetFillTimer;
 

@@ -600,10 +600,12 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
         {
 #if 1  //test
             memset(acRtspUrl, 0, sizeof(acRtspUrl));
-            if(j == 1)
-                snprintf(acRtspUrl, sizeof(acRtspUrl), "rtsp://admin:admin123@192.168.%d.%d", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO,200+j);
+
+            if(j == 0)
+                snprintf(acRtspUrl, sizeof(acRtspUrl), "rtsp://192.168.104.%d",200+j);
             else
-                snprintf(acRtspUrl, sizeof(acRtspUrl), "rtsp://192.168.%d.%d", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO,200+j);
+                snprintf(acRtspUrl, sizeof(acRtspUrl), "rtsp://admin:admin123@192.168.104.%d", 200+j);
+
 #endif
             /*保存所有摄像机的信息*/
             m_tCameraInfo[m_iCameraNum].phandle = STATE_GetNvrServerPmsgHandle(i);
@@ -1366,12 +1368,9 @@ void pvmsMonitorWidget::videoPollingSignalCtrl()
     /*只有全局使能情况下的当前摄像头使能显示，其他摄像头全部禁止显示*/
     for (i = 0; i < m_iCameraNum; i++)
     {
-        if(i != m_iCameraPlayNo)
-        {
-            tPkt.iCh = i;
-            tPkt.iMsgCmd = CMP_CMD_DISABLE_CH;
-            PutNodeToCmpQueue(m_ptQueue, &tPkt);
-        }
+        tPkt.iCh = i;
+        tPkt.iMsgCmd = CMP_CMD_DISABLE_CH;
+        PutNodeToCmpQueue(m_ptQueue, &tPkt);
     }
     for (i = 0; i < m_iCameraNum; i++)
     {
@@ -1598,7 +1597,7 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
 
         if( NULL == m_tCameraInfo[iCh].cmpHandle)
         {
-            if(pageType == 0)
+//            if(pageType == 0)
             {
                 cmpHandle = CMP_CreateMedia(m_playWin);
                 if (NULL ==cmpHandle)
@@ -1619,22 +1618,21 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
         }
 
     }
-    else if (CMP_CMD_DESTORY_CH == iType)
+    else if (CMP_CMD_CLOSE_DESTORY_CH == iType)
     {
-//        iRet = CMP_CloseMedia(m_tCameraInfo[iCh].cmpHandle);
-//        if (iRet != 0)
-//        {
-//            printf("[%s] CMP_CloseMedia error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, iCh);
-//            return;
-//        }
+        iRet = CMP_CloseMedia(m_tCameraInfo[iCh].cmpHandle);
+        if (iRet != 0)
+        {
+            printf("[%s] CMP_CloseMedia error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, iCh);
+            return;
+        }
 
-//        m_tCameraInfo[iCh].iCmpOpenFlag = 0;
-//        pthread_mutex_lock(&g_tCmpCtrlMutex);
-//        CMP_DestroyMedia(m_tCameraInfo[iCh].cmpHandle);
-//        m_tCameraInfo[iCh].cmpHandle = NULL;
-//        pthread_mutex_unlock(&g_tCmpCtrlMutex);
-//        qDebug()<<"************destroy***********ch="<<iCh<<m_tCameraInfo[iCh].cmpHandle<<endl;
-
+        m_tCameraInfo[iCh].iCmpOpenFlag = 0;
+        pthread_mutex_lock(&g_tCmpCtrlMutex);
+        CMP_DestroyMedia(m_tCameraInfo[iCh].cmpHandle);
+        m_tCameraInfo[iCh].cmpHandle = NULL;
+        pthread_mutex_unlock(&g_tCmpCtrlMutex);
+        qDebug()<<"**********close**destroy***********ch="<<iCh<<m_tCameraInfo[iCh].cmpHandle<<endl;
 
     }
     else if(CMP_CMD_ENABLE_CH == iType)
@@ -1852,7 +1850,7 @@ void pvmsMonitorWidget::closePlayWin()
     {
         if (1 == m_tCameraInfo[i].iCmpOpenFlag)
         {
-            tPkt.iMsgCmd = CMP_CMD_DESTORY_CH;
+            tPkt.iMsgCmd = CMP_CMD_CLOSE_DESTORY_CH;
             tPkt.iCh = i;
             PutNodeToCmpQueue(m_ptQueue, &tPkt);
         }

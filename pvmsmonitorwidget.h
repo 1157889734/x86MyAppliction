@@ -47,7 +47,8 @@ typedef enum _E_CMP_CMD
     CMP_CMD_ENABLE_CH,
     CMP_CMD_DISABLE_CH,
     CMP_CMD_CHG_ALL_VIDEOWIN,
-    CMP_CMD_GET_STREAM_STATE
+    CMP_CMD_GET_STREAM_STATE,
+    CMP_CMD_CLOSE_DESTORY_CH
 } E_CMP_CMD;
 
 typedef struct _T_CMP_PACKET
@@ -72,7 +73,7 @@ typedef struct _T_CMP_QUEUE
 
 typedef struct _T_CAMERA_INFO
 {
-    char acCameraRtspUrl[256];    //保存rtsp地址
+    char acCameraRtspUrl[128];    //保存rtsp地址
     int iPosNO;    //位置号
     int iCameraSwitchState;    //摄像头开关状态，E_CAMERA_STATUE
     int iFillLightSwitchState;   //补光灯开关状态，E_FILLLIGHT_STATUE
@@ -82,7 +83,6 @@ typedef struct _T_CAMERA_INFO
     int iCmpOpenFlag;    //摄像头打开标志
     int iManualFillLightCtrlFlag;   //手动操作补光灯标志
     int iStreamState;
-    int playstate;
     time_t tPtzOprateTime;    //云台操作时间
     PMSG_HANDLE phandle;   //所属服务器的通信句柄
     CMPHandle cmpHandle;    //客户端媒体播放句柄
@@ -107,7 +107,6 @@ public:
     QLabel *m_channelStateLabel;
     QLabel *m_channelNoLabel;
     int pageType;
-    int changePageFlag;
 
     int m_iSelectPresetNo;   //保存选中的预置点编号
     int m_iAlarmNotCtrlFlag;   //有报警信息未处理标志
