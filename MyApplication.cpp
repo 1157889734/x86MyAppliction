@@ -5,7 +5,7 @@
 #include "log.h"
 #include <QMouseEvent>
 #include <QDebug>
-#define BLACKSCREN_MONITOR_TIME 1*30    //黑屏监控时间5分钟
+#define BLACKSCREN_MONITOR_TIME 5*60    //黑屏监控时间5分钟
 #define MOUSE_MONITOR_TIME 10    //鼠标监控时间10秒
 
 static int g_iMonitorNum = 0;  //黑屏监控计数，每秒加1

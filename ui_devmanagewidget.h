@@ -40,7 +40,7 @@ public:
     {
         if (devManageWidget->objectName().isEmpty())
             devManageWidget->setObjectName(QString::fromUtf8("devManageWidget"));
-        devManageWidget->resize(1024, 630);
+        devManageWidget->resize(1024, 620);
         TrainNumberLineEdit = new QLineEdit(devManageWidget);
         TrainNumberLineEdit->setObjectName(QString::fromUtf8("TrainNumberLineEdit"));
         TrainNumberLineEdit->setGeometry(QRect(680, 10, 113, 27));
@@ -66,7 +66,7 @@ public:
 "{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}"));
         alarmPushButton = new QPushButton(devManageWidget);
         alarmPushButton->setObjectName(QString::fromUtf8("alarmPushButton"));
-        alarmPushButton->setGeometry(QRect(480, 590, 82, 36));
+        alarmPushButton->setGeometry(QRect(480, 580, 82, 36));
         alarmPushButton->setFont(font);
         alarmPushButton->setStyleSheet(QString::fromUtf8("QPushButton{\n"
 "background-image: url(:/monres/alertoff.bmp);\n"
@@ -80,7 +80,7 @@ public:
         alarmPushButton->setCheckable(true);
         canselPushButton = new QPushButton(devManageWidget);
         canselPushButton->setObjectName(QString::fromUtf8("canselPushButton"));
-        canselPushButton->setGeometry(QRect(720, 590, 82, 36));
+        canselPushButton->setGeometry(QRect(720, 580, 82, 36));
         canselPushButton->setStyleSheet(QString::fromUtf8("QPushButton{\n"
 "background-image: url(:/monres/cancel.bmp);\n"
 "border-color: rgb(255, 255, 255);\n"
@@ -91,7 +91,7 @@ public:
 "{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}"));
         devStorageTableWidget = new QTableWidget(devManageWidget);
         devStorageTableWidget->setObjectName(QString::fromUtf8("devStorageTableWidget"));
-        devStorageTableWidget->setGeometry(QRect(30, 360, 964, 211));
+        devStorageTableWidget->setGeometry(QRect(30, 355, 964, 211));
         devStorageTableWidget->setFont(font);
         devStorageTableWidget->setStyleSheet(QString::fromUtf8("border-style: none;\n"
 "background-color: rgb(204, 232, 207);\n"
@@ -112,7 +112,7 @@ public:
         devStorageTableWidget->verticalHeader()->setHighlightSections(false);
         devStatusTableWidget = new QTableWidget(devManageWidget);
         devStatusTableWidget->setObjectName(QString::fromUtf8("devStatusTableWidget"));
-        devStatusTableWidget->setGeometry(QRect(30, 80, 964, 231));
+        devStatusTableWidget->setGeometry(QRect(30, 80, 964, 225));
         devStatusTableWidget->setFont(font);
         devStatusTableWidget->setStyleSheet(QString::fromUtf8("border-style: none;\n"
 "background-color: rgb(204, 232, 207);\n"
@@ -129,22 +129,22 @@ public:
         devStatusLabel->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 0);"));
         devStorageLabel = new QLabel(devManageWidget);
         devStorageLabel->setObjectName(QString::fromUtf8("devStorageLabel"));
-        devStorageLabel->setGeometry(QRect(30, 335, 81, 21));
+        devStorageLabel->setGeometry(QRect(30, 330, 81, 21));
         devStorageLabel->setFont(font);
         devStorageLabel->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 0);"));
         label_2 = new QLabel(devManageWidget);
         label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setGeometry(QRect(0, 0, 1024, 630));
+        label_2->setGeometry(QRect(0, 0, 1024, 620));
         label_2->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         lineEdit = new QLineEdit(devManageWidget);
         lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
         lineEdit->setEnabled(false);
-        lineEdit->setGeometry(QRect(12, 50, 1000, 271));
+        lineEdit->setGeometry(QRect(12, 50, 1000, 265));
         lineEdit->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         lineEdit_2 = new QLineEdit(devManageWidget);
         lineEdit_2->setObjectName(QString::fromUtf8("lineEdit_2"));
         lineEdit_2->setEnabled(false);
-        lineEdit_2->setGeometry(QRect(12, 330, 1000, 251));
+        lineEdit_2->setGeometry(QRect(12, 325, 1000, 250));
         lineEdit_2->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 0);\n"
 "background-color: rgb(255, 255, 255);"));
         label_2->raise();

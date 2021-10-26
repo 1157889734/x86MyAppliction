@@ -101,7 +101,7 @@ devUpdateWidget::devUpdateWidget(QWidget *parent) :
     connect(ui->presetReturnTimeSetLineEdit,SIGNAL(textChanged(const QString &)),this,SLOT(lineEditpresetReturnTimeChange(const QString &)));
 
 //    connect(ui->timeSetPushButton,SIGNAL(clicked()),this,SLOT(monitorSysTime()));
-    connect(ui->timeAdjustPushButton,SIGNAL(clicked()),this,SLOT(systimeSlot()));
+    connect(ui->timeAdjustPushButton,SIGNAL(clicked(bool)),this,SLOT(systimeSlot()));
     connect(ui->imageParamSetPushButton, SIGNAL(clicked(bool)), this, SLOT(setCameraImageParamSlot()));     //图像参数设置
 
     ui->pollingTimeSetLineEdit->setValidator(new QIntValidator(1,24*3600,this));   //只能输入1-24*3600的整数，不能输入字母或其他数字
@@ -186,7 +186,6 @@ void devUpdateWidget::systimeSlot()
     char acUserType[64] = {0};
     int year = 0, month = 0, day = 0, hour = 0, minute = 0, second = 0, i = 0, iRet = 0;
     short yr = 0;
-    char acTimeStr[256] = {0};
     T_TIME_INFO tTimeInfo;
     T_TRAIN_CONFIG tTrainConfigInfo;
     T_LOG_INFO tLogInfo;
@@ -212,22 +211,6 @@ void devUpdateWidget::systimeSlot()
         minute = time_t.minute();
         second = time_t.second();
 
-#if 0  //////add
-        if (strlen(ui->dateEdit->text().toLatin1().data()) > 0)
-        {
-            sscanf(ui->dateEdit->text().toLatin1().data(), "%4d-%02d-%02d", &year, &month, &day);
-        }
-        if (strlen(ui->timeEdit->text().toLatin1().data()) > 0)
-        {
-            sscanf(ui->timeEdit->text().toLatin1().data(), "%2d:%02d:%02d", &hour, &minute, &second);
-        }
-#endif
-
-#if 0
-//        snprintf(acTimeStr, sizeof(acTimeStr), "rtc.exe -s \"%4d-%02d-%02d %02d:%02d:%02d\"", year, month, day, hour, minute, second);
-//        system(acTimeStr);
-//        system("rtc.exe -i");
-#endif
         /*系统校时记录日志*/
         memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
         tLogInfo.iLogType = 0;

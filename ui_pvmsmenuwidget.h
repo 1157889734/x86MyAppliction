@@ -50,12 +50,9 @@ public:
         pvmsMonitorMenuPushButton->setFont(font);
         pvmsMonitorMenuPushButton->setAutoFillBackground(false);
         pvmsMonitorMenuPushButton->setStyleSheet(QString::fromUtf8("QPushButton{\n"
-"background-color: rgb(34, 172, 211);}\n"
+"background-color: rgb(29, 145, 177);}\n"
 "\n"
-"#QPushButton:hover{border-color: rgb(255, 255, 255);border-width: 2px;border-style: solid;}\n"
 "\n"
-"QPushButton:pressed\n"
-"{border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}\n"
 "\n"
 "\n"
 "\n"
@@ -69,52 +66,46 @@ public:
         pvmsMonitorMenuPushButton->setFlat(false);
         recordPlayMenuPushButton = new QPushButton(pvmsMenuWidget);
         recordPlayMenuPushButton->setObjectName(QString::fromUtf8("recordPlayMenuPushButton"));
-        recordPlayMenuPushButton->setGeometry(QRect(256, 35, 255, 102));
+        recordPlayMenuPushButton->setGeometry(QRect(255, 35, 255, 102));
         QFont font1;
         font1.setPointSize(18);
         recordPlayMenuPushButton->setFont(font1);
         recordPlayMenuPushButton->setStyleSheet(QString::fromUtf8("QPushButton{\n"
-"background-color: rgb(34, 172, 211);}\n"
-"\n"
-"#QPushButton:hover{border-color: rgb(255, 255, 255);border-width: 2px;border-style: solid;}\n"
-"\n"
-"QPushButton:pressed\n"
-"{border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}"));
+"background-color: rgb(29, 145, 177);}\n"
+""));
         recordPlayMenuPushButton->setCheckable(true);
         recordPlayMenuPushButton->setFlat(false);
         devManageMenuPushButton = new QPushButton(pvmsMenuWidget);
         devManageMenuPushButton->setObjectName(QString::fromUtf8("devManageMenuPushButton"));
-        devManageMenuPushButton->setGeometry(QRect(511, 35, 255, 102));
+        devManageMenuPushButton->setGeometry(QRect(510, 35, 255, 102));
         devManageMenuPushButton->setFont(font1);
         devManageMenuPushButton->setStyleSheet(QString::fromUtf8("QPushButton{\n"
-"background-color: rgb(34, 172, 211);}\n"
-"\n"
-"#QPushButton:hover{border-color: rgb(255, 255, 255);border-width: 2px;border-style: solid;}\n"
-"\n"
-"QPushButton:pressed\n"
-"{border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}"));
+"background-color: rgb(29, 145, 177);}"));
         devManageMenuPushButton->setCheckable(true);
         devManageMenuPushButton->setFlat(false);
         devUpdateMenuPushButton = new QPushButton(pvmsMenuWidget);
         devUpdateMenuPushButton->setObjectName(QString::fromUtf8("devUpdateMenuPushButton"));
         devUpdateMenuPushButton->setEnabled(true);
-        devUpdateMenuPushButton->setGeometry(QRect(766, 35, 257, 102));
+        devUpdateMenuPushButton->setGeometry(QRect(765, 35, 257, 102));
         devUpdateMenuPushButton->setFont(font1);
         devUpdateMenuPushButton->setCursor(QCursor(Qt::ArrowCursor));
         devUpdateMenuPushButton->setStyleSheet(QString::fromUtf8("QPushButton{\n"
-"background-color: rgb(34, 172, 211);}\n"
+"background-color: rgb(29, 145, 177);}\n"
 "\n"
-"#QPushButton:hover{border-color: rgb(255, 255, 255);border-width: 2px;border-style: solid;}\n"
-"\n"
-"QPushButton:pressed\n"
-"{border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}"));
+""));
         devUpdateMenuPushButton->setIconSize(QSize(203, 102));
         devUpdateMenuPushButton->setCheckable(true);
         devUpdateMenuPushButton->setFlat(false);
         label = new QLabel(pvmsMenuWidget);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(0, 0, 1024, 768));
-        label->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
+        label->setStyleSheet(QString::fromUtf8("#pvmsMenuWidget { \n"
+"border-image: url(:/monres/Pantobg.bmp); \n"
+"} \n"
+"#pvmsMenuWidget * { \n"
+"border-image:url(); \n"
+"}\n"
+""));
         label->raise();
         pvmsMonitorMenuPushButton->raise();
         recordPlayMenuPushButton->raise();

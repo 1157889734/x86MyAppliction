@@ -51,12 +51,9 @@ border-image:url();
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
-background-color: rgb(34, 172, 211);}
+background-color: rgb(29, 145, 177);}
 
-#QPushButton:hover{border-color: rgb(255, 255, 255);border-width: 2px;border-style: solid;}
 
-QPushButton:pressed
-{border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}
 
 
 
@@ -93,7 +90,7 @@ QPushButton:pressed
   <widget class="QPushButton" name="recordPlayMenuPushButton">
    <property name="geometry">
     <rect>
-     <x>256</x>
+     <x>255</x>
      <y>35</y>
      <width>255</width>
      <height>102</height>
@@ -106,12 +103,8 @@ QPushButton:pressed
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
-background-color: rgb(34, 172, 211);}
-
-#QPushButton:hover{border-color: rgb(255, 255, 255);border-width: 2px;border-style: solid;}
-
-QPushButton:pressed
-{border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
+background-color: rgb(29, 145, 177);}
+</string>
    </property>
    <property name="text">
     <string/>
@@ -126,7 +119,7 @@ QPushButton:pressed
   <widget class="QPushButton" name="devManageMenuPushButton">
    <property name="geometry">
     <rect>
-     <x>511</x>
+     <x>510</x>
      <y>35</y>
      <width>255</width>
      <height>102</height>
@@ -139,12 +132,7 @@ QPushButton:pressed
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
-background-color: rgb(34, 172, 211);}
-
-#QPushButton:hover{border-color: rgb(255, 255, 255);border-width: 2px;border-style: solid;}
-
-QPushButton:pressed
-{border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
+background-color: rgb(29, 145, 177);}</string>
    </property>
    <property name="text">
     <string/>
@@ -162,7 +150,7 @@ QPushButton:pressed
    </property>
    <property name="geometry">
     <rect>
-     <x>766</x>
+     <x>765</x>
      <y>35</y>
      <width>257</width>
      <height>102</height>
@@ -178,12 +166,9 @@ QPushButton:pressed
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
-background-color: rgb(34, 172, 211);}
+background-color: rgb(29, 145, 177);}
 
-#QPushButton:hover{border-color: rgb(255, 255, 255);border-width: 2px;border-style: solid;}
-
-QPushButton:pressed
-{border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}</string>
+</string>
    </property>
    <property name="text">
     <string/>
@@ -211,7 +196,13 @@ QPushButton:pressed
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);</string>
+    <string notr="true">#pvmsMenuWidget { 
+border-image: url(:/monres/Pantobg.bmp); 
+} 
+#pvmsMenuWidget * { 
+border-image:url(); 
+}
+</string>
    </property>
    <property name="text">
     <string/>

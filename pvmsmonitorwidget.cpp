@@ -556,7 +556,7 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
     {
         m_playWin = new QWidget(this->parentWidget());   //新建一个与目前窗体同属一个父窗体的播放子窗体，方便实现全屏
 
-        //    m_playWin->setGeometry(0, 0, 1024, 768);      //设置窗体在父窗体中的位置，默认一开始为全屏
+//        m_playWin->setGeometry(0, 0, 1024, 768);      //设置窗体在父窗体中的位置，默认一开始为全屏
         m_playWin->setGeometry(0, 138, 782, 630);
         m_playWin->show();  //默认显示
         m_playWin->setObjectName("m_playWin");
@@ -1885,7 +1885,7 @@ void pvmsMonitorWidget::alarmHappenSlot()
         sysinfo(&s_info);
         m_lastActionTime = s_info.uptime;  //更新最后一次操作计时
         m_playWin->move(0, 138);
-        m_playWin->resize(782, 630);
+        m_playWin->resize(782, 620);
         m_iFullScreenFlag = 0;
 
         tPkt.iMsgCmd = CMP_CMD_CHG_ALL_VIDEOWIN;
@@ -1986,7 +1986,7 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
 
                 m_iFullScreenFlag = 0;
                 m_playWin->move(0, 138);
-                m_playWin->resize(782, 630);
+                m_playWin->resize(782, 620);
 
                 tPkt.iMsgCmd = CMP_CMD_CHG_ALL_VIDEOWIN;
                 tPkt.iCh = 0;
@@ -2323,7 +2323,7 @@ void pvmsMonitorWidget::blackScreenCtrlSlot()     //黑屏触发信号处理，�
         sysinfo(&s_info);
         m_lastActionTime = s_info.uptime;  //更新最后一次操作计时
         m_playWin->move(0, 138);
-        m_playWin->resize(782, 630);
+        m_playWin->resize(782, 620);
         m_iFullScreenFlag = 0;
 
         tPkt.iMsgCmd = CMP_CMD_CHG_ALL_VIDEOWIN;

@@ -26,7 +26,7 @@ pvmsMenuWidget::pvmsMenuWidget(QWidget *parent) :
 //    this->setGeometry(0,0,1024,768);
 //    this->setWindowFlags(this->windowFlags()&~Qt::WindowCloseButtonHint);
 
-    this->setWindowFlags(Qt::FramelessWindowHint);
+//    this->setWindowFlags(Qt::FramelessWindowHint);
     this->showFullScreen();
 
     this->setAutoFillBackground(true);
