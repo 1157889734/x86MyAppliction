@@ -55,8 +55,6 @@ void *blackScreenMonitorThread(void *param)
     return NULL;
 }
 
-//MyApplication::MyApplication(QWidget *parent)
-//    : QWidget(parent)
 MyApplication::MyApplication(int & argc,char **argv) :
     QApplication(argc, argv)
 {

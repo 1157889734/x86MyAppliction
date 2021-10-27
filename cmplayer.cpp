@@ -14,14 +14,11 @@ typedef struct _T_CMP_INFO
 
 int CMP_Init(void)
 {
-
-
-
+    return 0;
 }
 int CMP_UnInit(void)
 {
-
-
+    return 0;
 }
 
 
@@ -135,7 +132,7 @@ int CMP_OpenMediaFile(CMPHandle hPlay, const char *pcRtspFile,int iTcpFlag)
 
 }
 
-int CMP_SetWndDisplayEnable(CMPHandle hPlay, int iEnable,QWidget *palywidget)
+int CMP_SetWndDisplayEnable(CMPHandle hPlay, int iEnable)
 {
     T_CMP_INFO *ptCmpInfo = (T_CMP_INFO *)hPlay;
     if (NULL == ptCmpInfo)

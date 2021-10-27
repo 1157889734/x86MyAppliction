@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_devUpdateWidget_t {
-    QByteArrayData data[28];
-    char stringdata0[493];
+    QByteArrayData data[27];
+    char stringdata0[478];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -53,13 +53,12 @@ QT_MOC_LITERAL(17, 281, 30), // "lineEditpresetReturnTimeChange"
 QT_MOC_LITERAL(18, 312, 17), // "pollingTimeChange"
 QT_MOC_LITERAL(19, 330, 25), // "lineEditpollingTimeChange"
 QT_MOC_LITERAL(20, 356, 11), // "showSysTime"
-QT_MOC_LITERAL(21, 368, 14), // "monitorSysTime"
-QT_MOC_LITERAL(22, 383, 11), // "systimeSlot"
-QT_MOC_LITERAL(23, 395, 20), // "registOutButtonClick"
-QT_MOC_LITERAL(24, 416, 21), // "closeUserManageWidget"
-QT_MOC_LITERAL(25, 438, 23), // "setCameraImageParamSlot"
-QT_MOC_LITERAL(26, 462, 12), // "setTrainType"
-QT_MOC_LITERAL(27, 475, 17) // "setTimeSignalCtrl"
+QT_MOC_LITERAL(21, 368, 11), // "systimeSlot"
+QT_MOC_LITERAL(22, 380, 20), // "registOutButtonClick"
+QT_MOC_LITERAL(23, 401, 21), // "closeUserManageWidget"
+QT_MOC_LITERAL(24, 423, 23), // "setCameraImageParamSlot"
+QT_MOC_LITERAL(25, 447, 12), // "setTrainType"
+QT_MOC_LITERAL(26, 460, 17) // "setTimeSignalCtrl"
 
     },
     "devUpdateWidget\0alarmPushButoonClickSignal\0"
@@ -71,10 +70,9 @@ QT_MOC_LITERAL(27, 475, 17) // "setTimeSignalCtrl"
     "alarmClearSlot\0presetReturnTimeChange\0"
     "iComboBoxId\0lineEditpresetReturnTimeChange\0"
     "pollingTimeChange\0lineEditpollingTimeChange\0"
-    "showSysTime\0monitorSysTime\0systimeSlot\0"
-    "registOutButtonClick\0closeUserManageWidget\0"
-    "setCameraImageParamSlot\0setTrainType\0"
-    "setTimeSignalCtrl"
+    "showSysTime\0systimeSlot\0registOutButtonClick\0"
+    "closeUserManageWidget\0setCameraImageParamSlot\0"
+    "setTrainType\0setTimeSignalCtrl"
 };
 #undef QT_MOC_LITERAL
 
@@ -84,7 +82,7 @@ static const uint qt_meta_data_devUpdateWidget[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      24,   14, // methods
+      23,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -92,32 +90,31 @@ static const uint qt_meta_data_devUpdateWidget[] = {
        3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  134,    2, 0x06 /* Public */,
-       3,    1,  135,    2, 0x06 /* Public */,
-       5,    0,  138,    2, 0x06 /* Public */,
+       1,    0,  129,    2, 0x06 /* Public */,
+       3,    1,  130,    2, 0x06 /* Public */,
+       5,    0,  133,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       6,    0,  139,    2, 0x0a /* Public */,
-       7,    0,  140,    2, 0x0a /* Public */,
-       8,    0,  141,    2, 0x0a /* Public */,
-       9,    0,  142,    2, 0x0a /* Public */,
-      10,    0,  143,    2, 0x0a /* Public */,
-      11,    0,  144,    2, 0x0a /* Public */,
-      12,    0,  145,    2, 0x0a /* Public */,
-      13,    0,  146,    2, 0x0a /* Public */,
-      14,    0,  147,    2, 0x0a /* Public */,
-      15,    1,  148,    2, 0x0a /* Public */,
-      17,    1,  151,    2, 0x0a /* Public */,
-      18,    1,  154,    2, 0x0a /* Public */,
-      19,    1,  157,    2, 0x0a /* Public */,
-      20,    0,  160,    2, 0x0a /* Public */,
-      21,    0,  161,    2, 0x0a /* Public */,
-      22,    0,  162,    2, 0x0a /* Public */,
-      23,    0,  163,    2, 0x0a /* Public */,
-      24,    0,  164,    2, 0x0a /* Public */,
-      25,    0,  165,    2, 0x0a /* Public */,
-      26,    0,  166,    2, 0x0a /* Public */,
-      27,    0,  167,    2, 0x0a /* Public */,
+       6,    0,  134,    2, 0x0a /* Public */,
+       7,    0,  135,    2, 0x0a /* Public */,
+       8,    0,  136,    2, 0x0a /* Public */,
+       9,    0,  137,    2, 0x0a /* Public */,
+      10,    0,  138,    2, 0x0a /* Public */,
+      11,    0,  139,    2, 0x0a /* Public */,
+      12,    0,  140,    2, 0x0a /* Public */,
+      13,    0,  141,    2, 0x0a /* Public */,
+      14,    0,  142,    2, 0x0a /* Public */,
+      15,    1,  143,    2, 0x0a /* Public */,
+      17,    1,  146,    2, 0x0a /* Public */,
+      18,    1,  149,    2, 0x0a /* Public */,
+      19,    1,  152,    2, 0x0a /* Public */,
+      20,    0,  155,    2, 0x0a /* Public */,
+      21,    0,  156,    2, 0x0a /* Public */,
+      22,    0,  157,    2, 0x0a /* Public */,
+      23,    0,  158,    2, 0x0a /* Public */,
+      24,    0,  159,    2, 0x0a /* Public */,
+      25,    0,  160,    2, 0x0a /* Public */,
+      26,    0,  161,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -138,7 +135,6 @@ static const uint qt_meta_data_devUpdateWidget[] = {
     QMetaType::Void, QMetaType::QString,    2,
     QMetaType::Void, QMetaType::Int,   16,
     QMetaType::Void, QMetaType::QString,    2,
-    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -173,13 +169,12 @@ void devUpdateWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 14: _t->pollingTimeChange((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 15: _t->lineEditpollingTimeChange((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 16: _t->showSysTime(); break;
-        case 17: _t->monitorSysTime(); break;
-        case 18: _t->systimeSlot(); break;
-        case 19: _t->registOutButtonClick(); break;
-        case 20: _t->closeUserManageWidget(); break;
-        case 21: _t->setCameraImageParamSlot(); break;
-        case 22: _t->setTrainType(); break;
-        case 23: _t->setTimeSignalCtrl(); break;
+        case 17: _t->systimeSlot(); break;
+        case 18: _t->registOutButtonClick(); break;
+        case 19: _t->closeUserManageWidget(); break;
+        case 20: _t->setCameraImageParamSlot(); break;
+        case 21: _t->setTrainType(); break;
+        case 22: _t->setTimeSignalCtrl(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -237,13 +232,13 @@ int devUpdateWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 24)
+        if (_id < 23)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 24;
+        _id -= 23;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 24)
+        if (_id < 23)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 24;
+        _id -= 23;
     }
     return _id;
 }

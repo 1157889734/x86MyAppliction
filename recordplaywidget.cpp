@@ -47,9 +47,9 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::recordPlayWidget)
 {
-    char timestr[128] = {0};
+//    char timestr[128] = {0};
     int i = 0;
-    int iYear = 0, iMonth= 0, iDay = 0;
+//    int iYear = 0, iMonth= 0, iDay = 0;
     QString string = "";
     ui->setupUi(this);
     this->setWindowFlags(Qt::FramelessWindowHint);
@@ -189,7 +189,6 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
 
     g_recordPlayThis = this;
 
-//    QObject::connect(m_playSlider,SIGNAL(QSlider::sliderMoved()),this,SLOT(setpostion()));
 }
 
 recordPlayWidget::~recordPlayWidget()
@@ -1386,7 +1385,6 @@ void recordPlayWidget::recordPlayCtrl(int iRow, int iDex)
     m_iPlayFlag = 1;
     m_dPlaySpeed = 1.00;
     playSpeedStr = "1.00x";
-//    ui->playSpeedLineEdit->setText(playSpeedStr);
     setPlayButtonStyleSheet();
 
     snprintf(acRtspAddr, sizeof(acRtspAddr), "rtsp://192.168.%d.81:554%s",tTrainConfigInfo.tNvrServerInfo[iDex].iCarriageNO+100, m_acFilePath[iRow]);

@@ -22,13 +22,8 @@ pvmsMenuWidget::pvmsMenuWidget(QWidget *parent) :
     ui(new Ui::pvmsMenuWidget)
 {
     ui->setupUi(this);
-//    this->setWindowFlags(this->windowFlags() | Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint);  //设置窗体属性，无标题栏，总是在最上端
-//    this->setGeometry(0,0,1024,768);
-//    this->setWindowFlags(this->windowFlags()&~Qt::WindowCloseButtonHint);
 
-//    this->setWindowFlags(Qt::FramelessWindowHint);
     this->showFullScreen();
-
     this->setAutoFillBackground(true);
     QPalette palette;
     palette.setBrush(QPalette::Background,QBrush(QPixmap(":/monres/Pantobg.bmp")));
@@ -37,8 +32,6 @@ pvmsMenuWidget::pvmsMenuWidget(QWidget *parent) :
 
     g_ipageValue = 0;
 
-//    ui->pvmsMonitorMenuPushButton->setStyleSheet("QPushButton{border-image: url(:/monres/PantoMonitor.bmp)}"
-//                                                 "QPushButton:pressed{border-image: url(:/monres/PantoMonitor1.bmp)}");
 
     icon.addFile(QString::fromUtf8(":/monres/PantoMonitor1.bmp"),QSize(),QIcon::Normal,QIcon::Off);
     ui->pvmsMonitorMenuPushButton->setIcon(icon);

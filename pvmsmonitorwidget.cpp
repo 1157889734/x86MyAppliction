@@ -1497,7 +1497,7 @@ void pvmsMonitorWidget::presetReturnSignalCtrl(int iCameraNO)
 void pvmsMonitorWidget::noPollingChOption()
 {
     static int iDecOldState = 0;
-    T_CMP_PACKET tPkt;
+//    T_CMP_PACKET tPkt;
     /*非轮询状态下也要实时监控摄像头码流状态的，如果有变换需进行通道状态和通道号的处理，如果状态变成1(有流)则需要隐藏通道状态和通道号，变成0需要显示*/
     if ((1 == m_iDisplayEnable) && (CAMERA_ON == m_tCameraInfo[m_iCameraPlayNo].iCameraSwitchState))
     {
@@ -1638,7 +1638,7 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
     else if(CMP_CMD_ENABLE_CH == iType)
     {
 
-        iRet = CMP_SetWndDisplayEnable(m_tCameraInfo[iCh].cmpHandle,SHOW_VIDEO,m_playWin);
+        iRet = CMP_SetWndDisplayEnable(m_tCameraInfo[iCh].cmpHandle,SHOW_VIDEO);
         if (iRet != 0)
         {
             printf("[%s] CMP_SetWndDisplayEnable on error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, iCh);
@@ -1648,7 +1648,7 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
     }
     else if(CMP_CMD_DISABLE_CH == iType)
     {
-        iRet = CMP_SetWndDisplayEnable(m_tCameraInfo[iCh].cmpHandle,HIDE_VIDEO,m_playWin);
+        iRet = CMP_SetWndDisplayEnable(m_tCameraInfo[iCh].cmpHandle,HIDE_VIDEO);
         if (iRet != 0)
         {
             printf("[%s] CMP_SetWndDisplayEnable on error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, iCh);
@@ -1676,7 +1676,7 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
 
 void pvmsMonitorWidget::chLabelDisplayCtrlSlot()   //通道状态和通道号标签是否显示的处理函数
 {
-    T_CMP_PACKET tPkt;
+//    T_CMP_PACKET tPkt;
 
     if (1 == m_iDisplayEnable)
     {

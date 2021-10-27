@@ -24,7 +24,6 @@ class devUpdateWidget : public QWidget
 public:
     explicit devUpdateWidget(QWidget *parent = 0);
     ~devUpdateWidget();
-    QDateTime timeTd;
 
 
 public slots:
@@ -43,7 +42,6 @@ public slots:
     void pollingTimeChange(int iComboBoxId);
     void lineEditpollingTimeChange(const QString &);
     void showSysTime();
-    void monitorSysTime();
     void systimeSlot();
     void registOutButtonClick();
     void closeUserManageWidget();
@@ -64,6 +62,8 @@ private:
     Ui::devUpdateWidget *ui;
     QTimer *m_alarmHappenTimer;
     QTimer *m_sys_timer;
+    QDateTime timeTd;
+
     PMSG_HANDLE m_Phandle[MAX_SERVER_NUM];    //服务器PMSG通信句柄
     pvmsMonitorWidget *m_pvmsMonitorPage;
     void getTrainConfig();     //获取车型配置信息
