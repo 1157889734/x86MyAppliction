@@ -20,7 +20,6 @@
 #include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QTableWidget>
-#include <QtWidgets/QTimeEdit>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -52,15 +51,15 @@ public:
     QComboBox *carSeletionComboBox;
     QPushButton *plusStepPushButton;
     QDateEdit *StartdateEdit;
-    QTimeEdit *StarttimeEdit;
     QDateEdit *EnddateEdit;
-    QTimeEdit *EndtimeEdit;
     QLabel *label;
     QLabel *label_14;
     QPushButton *canselPushButton;
     QPushButton *pushButton;
     QLabel *label_12;
     QProgressBar *fileDownloadProgressBar;
+    QComboBox *StartcomboBox;
+    QComboBox *EndcomboBox;
 
     void setupUi(QWidget *recordPlayWidget)
     {
@@ -390,9 +389,6 @@ public:
         StartdateEdit->setCalendarPopup(false);
         StartdateEdit->setTimeSpec(Qt::LocalTime);
         StartdateEdit->setDate(QDate(2000, 2, 2));
-        StarttimeEdit = new QTimeEdit(recordPlayWidget);
-        StarttimeEdit->setObjectName(QString::fromUtf8("StarttimeEdit"));
-        StarttimeEdit->setGeometry(QRect(230, 40, 51, 31));
         EnddateEdit = new QDateEdit(recordPlayWidget);
         EnddateEdit->setObjectName(QString::fromUtf8("EnddateEdit"));
         EnddateEdit->setGeometry(QRect(70, 80, 101, 31));
@@ -402,15 +398,12 @@ public:
         EnddateEdit->setCurrentSectionIndex(0);
         EnddateEdit->setTimeSpec(Qt::LocalTime);
         EnddateEdit->setDate(QDate(2000, 2, 2));
-        EndtimeEdit = new QTimeEdit(recordPlayWidget);
-        EndtimeEdit->setObjectName(QString::fromUtf8("EndtimeEdit"));
-        EndtimeEdit->setGeometry(QRect(230, 80, 51, 31));
         label = new QLabel(recordPlayWidget);
         label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(190, 45, 31, 21));
+        label->setGeometry(QRect(180, 45, 31, 21));
         label_14 = new QLabel(recordPlayWidget);
         label_14->setObjectName(QString::fromUtf8("label_14"));
-        label_14->setGeometry(QRect(190, 85, 31, 21));
+        label_14->setGeometry(QRect(180, 85, 31, 21));
         canselPushButton = new QPushButton(recordPlayWidget);
         canselPushButton->setObjectName(QString::fromUtf8("canselPushButton"));
         canselPushButton->setGeometry(QRect(800, 575, 82, 36));
@@ -464,6 +457,60 @@ public:
 "   text-align: center;\n"
 "}"));
         fileDownloadProgressBar->setValue(0);
+        StartcomboBox = new QComboBox(recordPlayWidget);
+        StartcomboBox->addItem(QString());
+        StartcomboBox->addItem(QString());
+        StartcomboBox->addItem(QString());
+        StartcomboBox->addItem(QString());
+        StartcomboBox->addItem(QString());
+        StartcomboBox->addItem(QString());
+        StartcomboBox->addItem(QString());
+        StartcomboBox->addItem(QString());
+        StartcomboBox->addItem(QString());
+        StartcomboBox->addItem(QString());
+        StartcomboBox->addItem(QString());
+        StartcomboBox->addItem(QString());
+        StartcomboBox->addItem(QString());
+        StartcomboBox->addItem(QString());
+        StartcomboBox->addItem(QString());
+        StartcomboBox->addItem(QString());
+        StartcomboBox->addItem(QString());
+        StartcomboBox->addItem(QString());
+        StartcomboBox->addItem(QString());
+        StartcomboBox->addItem(QString());
+        StartcomboBox->addItem(QString());
+        StartcomboBox->addItem(QString());
+        StartcomboBox->addItem(QString());
+        StartcomboBox->addItem(QString());
+        StartcomboBox->setObjectName(QString::fromUtf8("StartcomboBox"));
+        StartcomboBox->setGeometry(QRect(210, 40, 71, 25));
+        EndcomboBox = new QComboBox(recordPlayWidget);
+        EndcomboBox->addItem(QString());
+        EndcomboBox->addItem(QString());
+        EndcomboBox->addItem(QString());
+        EndcomboBox->addItem(QString());
+        EndcomboBox->addItem(QString());
+        EndcomboBox->addItem(QString());
+        EndcomboBox->addItem(QString());
+        EndcomboBox->addItem(QString());
+        EndcomboBox->addItem(QString());
+        EndcomboBox->addItem(QString());
+        EndcomboBox->addItem(QString());
+        EndcomboBox->addItem(QString());
+        EndcomboBox->addItem(QString());
+        EndcomboBox->addItem(QString());
+        EndcomboBox->addItem(QString());
+        EndcomboBox->addItem(QString());
+        EndcomboBox->addItem(QString());
+        EndcomboBox->addItem(QString());
+        EndcomboBox->addItem(QString());
+        EndcomboBox->addItem(QString());
+        EndcomboBox->addItem(QString());
+        EndcomboBox->addItem(QString());
+        EndcomboBox->addItem(QString());
+        EndcomboBox->addItem(QString());
+        EndcomboBox->setObjectName(QString::fromUtf8("EndcomboBox"));
+        EndcomboBox->setGeometry(QRect(210, 80, 71, 25));
         label_12->raise();
         label_5->raise();
         stopPushButton->raise();
@@ -488,15 +535,15 @@ public:
         downLoadPushButton->raise();
         playNextOnePushButton->raise();
         StartdateEdit->raise();
-        StarttimeEdit->raise();
         EnddateEdit->raise();
-        EndtimeEdit->raise();
         label->raise();
         label_14->raise();
         canselPushButton->raise();
         pushButton->raise();
         queryPushButton->raise();
         fileDownloadProgressBar->raise();
+        StartcomboBox->raise();
+        EndcomboBox->raise();
 
         retranslateUi(recordPlayWidget);
 
@@ -532,15 +579,63 @@ public:
         slowForwardPushButton->setText(QString());
         label_3->setText(QCoreApplication::translate("recordPlayWidget", " \350\265\267\345\247\213\346\227\266\351\227\264", nullptr));
         plusStepPushButton->setText(QString());
-        StartdateEdit->setDisplayFormat(QCoreApplication::translate("recordPlayWidget", "yyyy/MM/dd", nullptr));
-        StarttimeEdit->setDisplayFormat(QCoreApplication::translate("recordPlayWidget", "h\346\227\266", nullptr));
+        StartdateEdit->setDisplayFormat(QCoreApplication::translate("recordPlayWidget", "yyyy/M/dd ", nullptr));
         EnddateEdit->setDisplayFormat(QCoreApplication::translate("recordPlayWidget", "yyyy/MM/dd", nullptr));
-        EndtimeEdit->setDisplayFormat(QCoreApplication::translate("recordPlayWidget", "h\346\227\266", nullptr));
         label->setText(QCoreApplication::translate("recordPlayWidget", "\346\227\266\351\227\264", nullptr));
         label_14->setText(QCoreApplication::translate("recordPlayWidget", "\346\227\266\351\227\264", nullptr));
         canselPushButton->setText(QString());
         pushButton->setText(QString());
         label_12->setText(QString());
+        StartcomboBox->setItemText(0, QCoreApplication::translate("recordPlayWidget", "0\346\227\266", nullptr));
+        StartcomboBox->setItemText(1, QCoreApplication::translate("recordPlayWidget", "1\346\227\266", nullptr));
+        StartcomboBox->setItemText(2, QCoreApplication::translate("recordPlayWidget", "2\346\227\266", nullptr));
+        StartcomboBox->setItemText(3, QCoreApplication::translate("recordPlayWidget", "3\346\227\266", nullptr));
+        StartcomboBox->setItemText(4, QCoreApplication::translate("recordPlayWidget", "4\346\227\266", nullptr));
+        StartcomboBox->setItemText(5, QCoreApplication::translate("recordPlayWidget", "5\346\227\266", nullptr));
+        StartcomboBox->setItemText(6, QCoreApplication::translate("recordPlayWidget", "6\346\227\266", nullptr));
+        StartcomboBox->setItemText(7, QCoreApplication::translate("recordPlayWidget", "7\346\227\266", nullptr));
+        StartcomboBox->setItemText(8, QCoreApplication::translate("recordPlayWidget", "8\346\227\266", nullptr));
+        StartcomboBox->setItemText(9, QCoreApplication::translate("recordPlayWidget", "9\346\227\266", nullptr));
+        StartcomboBox->setItemText(10, QCoreApplication::translate("recordPlayWidget", "10\346\227\266", nullptr));
+        StartcomboBox->setItemText(11, QCoreApplication::translate("recordPlayWidget", "11\346\227\266", nullptr));
+        StartcomboBox->setItemText(12, QCoreApplication::translate("recordPlayWidget", "12\346\227\266", nullptr));
+        StartcomboBox->setItemText(13, QCoreApplication::translate("recordPlayWidget", "13\346\227\266", nullptr));
+        StartcomboBox->setItemText(14, QCoreApplication::translate("recordPlayWidget", "14\346\227\266", nullptr));
+        StartcomboBox->setItemText(15, QCoreApplication::translate("recordPlayWidget", "15\346\227\266", nullptr));
+        StartcomboBox->setItemText(16, QCoreApplication::translate("recordPlayWidget", "16\346\227\266", nullptr));
+        StartcomboBox->setItemText(17, QCoreApplication::translate("recordPlayWidget", "17\346\227\266", nullptr));
+        StartcomboBox->setItemText(18, QCoreApplication::translate("recordPlayWidget", "18\346\227\266", nullptr));
+        StartcomboBox->setItemText(19, QCoreApplication::translate("recordPlayWidget", "19\346\227\266", nullptr));
+        StartcomboBox->setItemText(20, QCoreApplication::translate("recordPlayWidget", "20\346\227\266", nullptr));
+        StartcomboBox->setItemText(21, QCoreApplication::translate("recordPlayWidget", "21\346\227\266", nullptr));
+        StartcomboBox->setItemText(22, QCoreApplication::translate("recordPlayWidget", "22\346\227\266", nullptr));
+        StartcomboBox->setItemText(23, QCoreApplication::translate("recordPlayWidget", "23\346\227\266", nullptr));
+
+        EndcomboBox->setItemText(0, QCoreApplication::translate("recordPlayWidget", "0\346\227\266", nullptr));
+        EndcomboBox->setItemText(1, QCoreApplication::translate("recordPlayWidget", "1\346\227\266", nullptr));
+        EndcomboBox->setItemText(2, QCoreApplication::translate("recordPlayWidget", "2\346\227\266", nullptr));
+        EndcomboBox->setItemText(3, QCoreApplication::translate("recordPlayWidget", "3\346\227\266", nullptr));
+        EndcomboBox->setItemText(4, QCoreApplication::translate("recordPlayWidget", "4\346\227\266", nullptr));
+        EndcomboBox->setItemText(5, QCoreApplication::translate("recordPlayWidget", "5\346\227\266", nullptr));
+        EndcomboBox->setItemText(6, QCoreApplication::translate("recordPlayWidget", "6\346\227\266", nullptr));
+        EndcomboBox->setItemText(7, QCoreApplication::translate("recordPlayWidget", "7\346\227\266", nullptr));
+        EndcomboBox->setItemText(8, QCoreApplication::translate("recordPlayWidget", "8\346\227\266", nullptr));
+        EndcomboBox->setItemText(9, QCoreApplication::translate("recordPlayWidget", "9\346\227\266", nullptr));
+        EndcomboBox->setItemText(10, QCoreApplication::translate("recordPlayWidget", "10\346\227\266", nullptr));
+        EndcomboBox->setItemText(11, QCoreApplication::translate("recordPlayWidget", "11\346\227\266", nullptr));
+        EndcomboBox->setItemText(12, QCoreApplication::translate("recordPlayWidget", "12\346\227\266", nullptr));
+        EndcomboBox->setItemText(13, QCoreApplication::translate("recordPlayWidget", "13\346\227\266", nullptr));
+        EndcomboBox->setItemText(14, QCoreApplication::translate("recordPlayWidget", "14\346\227\266", nullptr));
+        EndcomboBox->setItemText(15, QCoreApplication::translate("recordPlayWidget", "15\346\227\266", nullptr));
+        EndcomboBox->setItemText(16, QCoreApplication::translate("recordPlayWidget", "16\346\227\266", nullptr));
+        EndcomboBox->setItemText(17, QCoreApplication::translate("recordPlayWidget", "17\346\227\266", nullptr));
+        EndcomboBox->setItemText(18, QCoreApplication::translate("recordPlayWidget", "18\346\227\266", nullptr));
+        EndcomboBox->setItemText(19, QCoreApplication::translate("recordPlayWidget", "19\346\227\266", nullptr));
+        EndcomboBox->setItemText(20, QCoreApplication::translate("recordPlayWidget", "20\346\227\266", nullptr));
+        EndcomboBox->setItemText(21, QCoreApplication::translate("recordPlayWidget", "21\346\227\266", nullptr));
+        EndcomboBox->setItemText(22, QCoreApplication::translate("recordPlayWidget", "22\346\227\266", nullptr));
+        EndcomboBox->setItemText(23, QCoreApplication::translate("recordPlayWidget", "23\346\227\266", nullptr));
+
     } // retranslateUi
 
 };

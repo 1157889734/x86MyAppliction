@@ -13,6 +13,7 @@
 #include <QSlider>
 #include <QMessageBox>
 #include <QDebug>
+#include <QLineEdit>
 int g_iDateEditNo = 0;      //要显示时间的不同控件的编号
 static int g_iRNum = 0;
 #define PVMSPAGETYPE  2    //此页面类型，2表示受电弓监控页面
@@ -141,20 +142,29 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
 
 //    Mouseflag = true;
     ui->StartdateEdit->setCalendarPopup(true);
+    ui->StartdateEdit->setDate(QDate::currentDate());
+
 
     ui->EnddateEdit->setCalendarPopup(true);
-//    ui->StartdateEdit->setAttribute(Qt::WA_TransparentForMouseEvents,Mouseflag);
-
     ui->EnddateEdit->setDate(QDate::currentDate());
 
-    ui->EndtimeEdit->setDateTime(QDateTime::currentDateTime());
+    ui->StartdateEdit->dumpObjectTree();
+    QLineEdit* lEdit = ui->StartdateEdit->findChild<QLineEdit*>();
+    if(lEdit)
+        lEdit->setReadOnly(true);
 
 
+    ui->EnddateEdit->dumpObjectTree();
+    QLineEdit* lEdit2 = ui->EnddateEdit->findChild<QLineEdit*>();
+    if(lEdit2)
+        lEdit2->setReadOnly(true);
 
 
+    int value = QTime::currentTime().hour();
+    ui->EndcomboBox->setCurrentIndex(value);
+    ui->StartcomboBox->setCurrentIndex(0);
 
-    ui->StartdateEdit->setDate(QDate::currentDate());
-//    ui->StarttimeEdit->setDateTime(QDateTime::currentDateTime());
+
 
     connect(ui->alarmPushButton, SIGNAL(clicked(bool)), this, SLOT(alarmPushButoonClickSlot()));   //报警按钮按键信号响应打开报警信息界面
     connect(ui->canselPushButton, SIGNAL(clicked()), this, SLOT(registOutButtonClick()));
@@ -615,6 +625,9 @@ void recordPlayWidget::recordQuerySlot()
     iServerIdex = ui->carSeletionComboBox->currentIndex();
     iCameraIdex = ui->cameraSelectionComboBox->currentIndex();
 
+    int start = ui->StartcomboBox->currentIndex();
+    int end = ui->EndcomboBox->currentIndex();
+
     if (m_Phandle[iServerIdex])
     {
         T_NVR_SEARCH_RECORD tRecordSeach;
@@ -623,7 +636,9 @@ void recordPlayWidget::recordQuerySlot()
 //            sscanf(ui->startTimeLabel->text().toLatin1().data(), "%4d-%2d-%2d %2d:%2d:%2d", &year, &mon, &day, &hour, &min, &sec);
 
         sscanf(ui->StartdateEdit->text().toLatin1().data(),"%4d/%2d/%2d", &year, &mon, &day);
-        sscanf(ui->StarttimeEdit->text().toLatin1().data(),"%2d:%2d:%2d", &hour, &min, &sec);
+        hour =  start;
+
+//        sscanf(ui->StarttimeEdit->text().toLatin1().data(),"%2d:%2d:%2d", &hour, &min, &sec);
 //            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] get query start time:%d-%d-%d %d:%d:%d!\n", __FUNCTION__, year, mon, day, hour, min, sec);
 
         yr = year;
@@ -637,7 +652,8 @@ void recordPlayWidget::recordQuerySlot()
 //            sscanf(ui->endTimeLabel->text().toLatin1().data(), "%4d-%2d-%2d %2d:%2d:%2d", &year, &mon, &day, &hour, &min, &sec);
 //            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] get query stop time:%d-%d-%d %d:%d:%d!\n", __FUNCTION__, year, mon, day, hour, min, sec);
         sscanf(ui->EnddateEdit->text().toLatin1().data(),"%4d/%2d/%2d", &year, &mon, &day);
-        sscanf(ui->EndtimeEdit->text().toLatin1().data(),"%2d:%2d:%2d", &hour, &min, &sec);
+//        sscanf(ui->EndtimeEdit->text().toLatin1().data(),"%2d:%2d:%2d", &hour, &min, &sec);
+        hour =  end;
 
         yr = year;
         tRecordSeach.tEndTime.i16Year = htons(yr);
@@ -654,6 +670,7 @@ void recordPlayWidget::recordQuerySlot()
         iRet = PMSG_SendPmsgData(m_Phandle[iServerIdex], CLI_SERV_MSG_TYPE_GET_RECORD_FILE, (char *)&tRecordSeach, sizeof(T_NVR_SEARCH_RECORD));
         if (iRet < 0)
         {
+            qDebug()<<"PMSG_SendPmsgData CLI_SERV_MSG_TYPE_GET_RECORD_FILE error!"<<__FUNCTION__<<__LINE__<<endl;
 //                DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_GET_RECORD_FILE error!iRet=%d\n",__FUNCTION__, iRet);
         }
         else
@@ -662,9 +679,13 @@ void recordPlayWidget::recordQuerySlot()
             tLogInfo.iLogType = 0;
 //                snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "Req camera %d.%d record in %s to %s",
 //                    100+tTrainConfigInfo.tNvrServerInfo[iServerIdex].iCarriageNO, 200+iCameraIdex, ui->startTimeLabel->text().toLatin1().data(), ui->endTimeLabel->text().toLatin1().data());
-            snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "Req camera %d.%d record in %s %s to %s %s",
-                  100+tTrainConfigInfo.tNvrServerInfo[iServerIdex].iCarriageNO, 200+iCameraIdex, ui->StartdateEdit->text().toLatin1().data(),ui->StarttimeEdit->text().toLatin1().data(),
-                  ui->EnddateEdit->text().toLatin1().data(),ui->EndtimeEdit->text().toLatin1().data());
+//            snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "Req camera %d.%d record in %s %s to %s %s",
+//                  100+tTrainConfigInfo.tNvrServerInfo[iServerIdex].iCarriageNO, 200+iCameraIdex, ui->StartdateEdit->text().toLatin1().data(),ui->StarttimeEdit->text().toLatin1().data(),
+//                  ui->EnddateEdit->text().toLatin1().data(),ui->EndtimeEdit->text().toLatin1().data());
+            snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "Req camera %d.%d record in %s %2d:%2d%2d  to %s %2d:%2d%2d",
+                  100+tTrainConfigInfo.tNvrServerInfo[iServerIdex].iCarriageNO, 200+iCameraIdex, ui->StartdateEdit->text().toLatin1().data(),tRecordSeach.tStartTime.i8Hour,min,sec,
+                  ui->EnddateEdit->text().toLatin1().data(),tRecordSeach.tEndTime.i8Hour,min,sec);
+
             LOG_WriteLog(&tLogInfo);
         }
 
