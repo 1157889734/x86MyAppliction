@@ -255,7 +255,7 @@ void pvmsMenuWidget::recvPmsgCtrl(PMSG_HANDLE pHandle, unsigned char ucMsgCmd, c
 {
     int iAlarmType = 0, iDevPos = 0, iShadeAlarmEnableFlag = 0, i = 0;
     T_TRAIN_CONFIG tTrainConfigInfo;
-//    qDebug()<<"**************recvPmsgCtrl------"<<ucMsgCmd<<endl;
+    int iCarriageNO;
     switch(ucMsgCmd)    //不同的应答消息类型分发给不同的页面处理
     {
         case SERV_CLI_MSG_TYPE_SET_PTZ_RESP:
@@ -318,11 +318,15 @@ void pvmsMenuWidget::recvPmsgCtrl(PMSG_HANDLE pHandle, unsigned char ucMsgCmd, c
                             if (1 == m_iCheckDiskErrFlag[i])
                             {
                                 iAlarmType = ALARM_HDISK_ERR;
+                                m_pvmsMonitorPage->HDiskState = ALARM_HDISK_ERR;
+
                             }
                         }
                         else
                         {
                             iAlarmType = ALARM_HDISK_CLEAR;
+                            m_pvmsMonitorPage->HDiskState = ALARM_HDISK_CLEAR;
+
                         }
 
                         if (tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO <= 0)
@@ -408,6 +412,57 @@ void pvmsMenuWidget::recvPmsgCtrl(PMSG_HANDLE pHandle, unsigned char ucMsgCmd, c
                 break;
             }
         }
+        #if 1
+        case SERV_CLI_MSG_TYPE_HDISK_ALARM_REPORT:
+        {
+//            DebugPrint(DEBUG_PMSG_DATA_PRINT, "pvmsMenu Widget get pmsg message data:\n%s\n",pcMsgData);
+
+            if (pcMsgData == NULL || iMsgDataLen != 2)
+            {
+                break;
+            }
+            else
+            {
+                if (m_devManagePage != NULL)
+                {
+                    m_devManagePage->pmsgCtrl(pHandle, ucMsgCmd, pcMsgData, iMsgDataLen);
+                }
+
+                T_HDISK_ALARM_STATUS *ptHdiskAlarmStatus = (T_HDISK_ALARM_STATUS *)pcMsgData;
+
+                if (1 == ptHdiskAlarmStatus->i8HdiskLost)
+                {
+                    iAlarmType = ALARM_HDISK_LOST;
+                }
+                else if (1 == ptHdiskAlarmStatus->i8HdiskBad)
+                {
+                    iAlarmType = ALARM_HDISK_ERR;
+                }
+                else
+                {
+                    iAlarmType = ALARM_HDISK_CLEAR;
+                }
+
+                memset(&tTrainConfigInfo, 0, sizeof(T_TRAIN_CONFIG));
+                STATE_GetCurrentTrainConfigInfo(&tTrainConfigInfo);
+                for (i = 0; i < tTrainConfigInfo.iNvrServerCount; i++)
+                {
+                    if (pHandle == STATE_GetNvrServerPmsgHandle(i))
+                    {
+                        iCarriageNO = tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO;
+                        break;
+                    }
+                }
+                if (iCarriageNO <= 0)
+                {
+                    break;
+                }
+
+                emit reflushAlarmPageSignal(iAlarmType, iCarriageNO, 0);
+            }
+            break;
+        }
+        #endif
         default:
             break;
     }

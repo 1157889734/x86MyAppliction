@@ -543,17 +543,7 @@ void devUpdateWidget::configFileSelectionSlot()
                     return;
                 }
             }
-#if 0  //test ?????
-            if (STATE_ParseUsbLicense("//mnt/sdcard/") < 0)
-            {
-//                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget configFileSelection check License error!\n");
-                QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("授权失败!"));
-                box.setStandardButtons (QMessageBox::Ok);
-                box.setButtonText (QMessageBox::Ok,QString::fromUtf8("确 定"));
-                box.exec();
-                return;
-            }
-#endif
+
             filename = QFileDialog::getOpenFileName(this, "打开文件", "/media/usb0/", "ini文件(*.ini)");
             if (!filename.isNull())
             {
@@ -567,13 +557,8 @@ void devUpdateWidget::configFileSelectionSlot()
 
 void devUpdateWidget::devUpdateSlot()
 {
-    int iRet = 0;
-    char acLocalVersion[32] = {0}, acUpdateVersion[32] = {0};
-    FILE *fp = NULL;
     char acUserType[64] = {0};
-    T_LOG_INFO tLogInfo;
 
-//    DebugPrint(DEBUG_UI_OPTION_PRINT, "devUpdateWidget update device!\n");
 
     STATE_GetCurrentUserType(acUserType, sizeof(acUserType));
     if (!strcmp(acUserType, "operator"))	 //操作员无权校时
@@ -612,22 +597,10 @@ void devUpdateWidget::devUpdateSlot()
                 return;
             }
         }
-#if 0  //test ?????
-        if (STATE_ParseUsbLicense("/mnt/usb/u/") < 0)
-        {
-//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget update check License error!\n");
-            QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("授权失败!"));
-            box.setStandardButtons (QMessageBox::Ok);
-            box.setButtonText (QMessageBox::Ok,QString::fromUtf8("确 定"));
-            box.exec();
-            return;
-        }
-#endif
+
         ui->updateStatueTextEdit->append(tr("发现USB，已准备好"));
 
-
-//        if ((access("/mnt/usb/u/mornitorapp.exe", F_OK) < 0) || (access("/mnt/usb/u/version.ini", F_OK) < 0))
-        if ((access("/mnt/usb/u/x86MyApplication", F_OK) < 0) || (access("/mnt/usb/u/version.ini", F_OK) < 0))
+        if (access("/mnt/usb/u/monitor_ytj", F_OK) < 0)
         {
 //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget not find update file in USB device!\n");
             QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("U盘中未检测更新文件!")));
@@ -638,71 +611,15 @@ void devUpdateWidget::devUpdateSlot()
             return;
         }
 
-        fp = fopen("/media/usb0/version.ini","rb");
-        if (NULL == fp)
-        {
-//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget open update file fail in USB device!\n");
-            QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("U盘文件读取出错!")));
-            msgBox.setStandardButtons(QMessageBox::Yes);
-            msgBox.button(QMessageBox::Yes)->setText("确 定");
-            msgBox.exec();
-            ui->clientRebootPushButton->setEnabled(true);
-            return;
-        }
-        iRet = fread(acUpdateVersion, 1, sizeof(acUpdateVersion), fp);
-        if (iRet <= 0)
-        {
-//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget read update file fail in USB device!\n");
-            QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("U盘文件读取出错!")));
-            msgBox.setStandardButtons(QMessageBox::Yes);
-            msgBox.button(QMessageBox::Yes)->setText("确 定");
-            msgBox.exec();
-            fclose(fp);
-            ui->clientRebootPushButton->setEnabled(true);
-            return;        QApplication *app;
-            app->exit();
-        }
-        fclose(fp);
-
-        STATE_GetSysVersion(acLocalVersion, sizeof(acLocalVersion));
-        if (strlen(acLocalVersion) <= 0)
-        {
-//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget update file fail, can't get app version!\n");
-            QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("升级失败，本地版本号获取失败!")));
-            msgBox.setStandardButtons(QMessageBox::Yes);
-            msgBox.button(QMessageBox::Yes)->setText("确 定");
-            msgBox.exec();
-        }
-
-        if (!strcmp(acLocalVersion, acUpdateVersion))
-        {
-//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget update file fail,update version is the same as the running app version!\n");
-            QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到版本更新!")));
-            msgBox.setStandardButtons(QMessageBox::Yes);
-            msgBox.button(QMessageBox::Yes)->setText("确 定");
-            msgBox.exec();
-            ui->clientRebootPushButton->setEnabled(true);
-            return;
-        }
-
-        memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
-        tLogInfo.iLogType = 0;
-        snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "Update: old version:%s new version:%s", acLocalVersion, acUpdateVersion);
-        LOG_WriteLog(&tLogInfo);
-
-//        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] update device from version:%s to version:%s\n", __FUNCTION__, acLocalVersion, acUpdateVersion);
-
         ui->updateStatueTextEdit->append(tr("正在复制文件..."));
         if (access("/home/data/backup",F_OK) < 0)
         {
             system("mkdir /home/data/backup");
         }
 
-//        system("cp /mnt/usb/u/mornitorapp.exe /home/data/emuVideoMornitorClient/mornitorapp.exe");
-
-        system("cp /home/data/x86MyApplication /home/data/backup/");
-        system("rm /home/data/x86MyApplication");
-        system("cp /media/usb0/x86MyApplication /home/data/x86MyApplication");
+        system("cp /home/data/monitor_ytj /home/data/backup/");
+        system("rm /home/data/monitor_ytj");
+        system("cp /media/usb0/monitor_ytj /home/data/monitor_ytj");
         system("sync");
 
         ui->updateStatueTextEdit->append(tr("复制文件完成"));
@@ -715,8 +632,6 @@ void devUpdateWidget::devRebootSlot()
 {
     char acUserType[64] = {0};
     T_LOG_INFO tLogInfo;
-
-//    DebugPrint(DEBUG_UI_OPTION_PRINT, "devUpdateWidget client reboot!\n");
 
     STATE_GetCurrentUserType(acUserType, sizeof(acUserType));
     if (!strcmp(acUserType, "operator"))
@@ -738,10 +653,10 @@ void devUpdateWidget::devRebootSlot()
         QString program = QApplication::applicationFilePath();
         QStringList arguments = QApplication::arguments();
         QString workingDirectory = QDir::currentPath();
-        if("/home/data/x86MyApplication" != program)
+        if("/home/data/monitor_ytj" != program)
         {
-            system("cp /home/data/backup/x86MyApplication /home/data/ ");
-            program = "/home/data/x86MyApplication";
+            system("cp /home/data/backup/monitor_ytj /home/data/ ");
+            program = "/home/data/monitor_ytj";
         }
 
         QProcess::startDetached(program, arguments, workingDirectory);
@@ -913,7 +828,6 @@ void devUpdateWidget::configFileImportSlot()
             return;
         }
 
-//        system("cp /mnt/usb/u/Station.ini /home/data/emuVideoMornitorClient/Station.ini");
         system("cp /media/usb0/Station.ini /home/data/Station.ini");
 
         system("sync");

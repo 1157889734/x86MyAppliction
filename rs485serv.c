@@ -13,7 +13,7 @@
 #include "debug.h"
 #include "types.h"
 
-#define UART_DEV_NAME  "/dev/ttyAMA2"
+#define UART_DEV_NAME  "/dev/ttyS7"
 #define RECV_BUF_SIZE  1400
 
 typedef struct _T_RS485_PACKET_LIST

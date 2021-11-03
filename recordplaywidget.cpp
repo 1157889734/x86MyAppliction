@@ -632,14 +632,10 @@ void recordPlayWidget::recordQuerySlot()
     {
         T_NVR_SEARCH_RECORD tRecordSeach;
         memset(&tRecordSeach, 0, sizeof(T_NVR_SEARCH_RECORD));
-//            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] query  start timeStr:%s!\n", __FUNCTION__, ui->startTimeLabel->text().toLatin1().data());
-//            sscanf(ui->startTimeLabel->text().toLatin1().data(), "%4d-%2d-%2d %2d:%2d:%2d", &year, &mon, &day, &hour, &min, &sec);
 
         sscanf(ui->StartdateEdit->text().toLatin1().data(),"%4d/%2d/%2d", &year, &mon, &day);
         hour =  start;
 
-//        sscanf(ui->StarttimeEdit->text().toLatin1().data(),"%2d:%2d:%2d", &hour, &min, &sec);
-//            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] get query start time:%d-%d-%d %d:%d:%d!\n", __FUNCTION__, year, mon, day, hour, min, sec);
 
         yr = year;
         tRecordSeach.tStartTime.i16Year = htons(yr);
@@ -648,11 +644,7 @@ void recordPlayWidget::recordQuerySlot()
         tRecordSeach.tStartTime.i8Hour = hour;
         tRecordSeach.tStartTime.i8Min = min;
         tRecordSeach.tStartTime.i8Sec = sec;
-//            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] query  stop timeStr:%s!\n", __FUNCTION__, ui->endTimeLabel->text().toLatin1().data());
-//            sscanf(ui->endTimeLabel->text().toLatin1().data(), "%4d-%2d-%2d %2d:%2d:%2d", &year, &mon, &day, &hour, &min, &sec);
-//            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] get query stop time:%d-%d-%d %d:%d:%d!\n", __FUNCTION__, year, mon, day, hour, min, sec);
         sscanf(ui->EnddateEdit->text().toLatin1().data(),"%4d/%2d/%2d", &year, &mon, &day);
-//        sscanf(ui->EndtimeEdit->text().toLatin1().data(),"%2d:%2d:%2d", &hour, &min, &sec);
         hour =  end;
 
         yr = year;
@@ -666,22 +658,15 @@ void recordPlayWidget::recordQuerySlot()
         tRecordSeach.iCarriageNo = tTrainConfigInfo.tNvrServerInfo[iServerIdex].iCarriageNO;
         tRecordSeach.iIpcPos = 8+iCameraIdex;
 
-//            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] query  iCarriageNo=%d, iIpcPos=%d!\n", __FUNCTION__, tRecordSeach.iCarriageNo, tRecordSeach.iIpcPos);
         iRet = PMSG_SendPmsgData(m_Phandle[iServerIdex], CLI_SERV_MSG_TYPE_GET_RECORD_FILE, (char *)&tRecordSeach, sizeof(T_NVR_SEARCH_RECORD));
         if (iRet < 0)
         {
             qDebug()<<"PMSG_SendPmsgData CLI_SERV_MSG_TYPE_GET_RECORD_FILE error!"<<__FUNCTION__<<__LINE__<<endl;
-//                DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_GET_RECORD_FILE error!iRet=%d\n",__FUNCTION__, iRet);
         }
         else
         {
             memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
             tLogInfo.iLogType = 0;
-//                snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "Req camera %d.%d record in %s to %s",
-//                    100+tTrainConfigInfo.tNvrServerInfo[iServerIdex].iCarriageNO, 200+iCameraIdex, ui->startTimeLabel->text().toLatin1().data(), ui->endTimeLabel->text().toLatin1().data());
-//            snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "Req camera %d.%d record in %s %s to %s %s",
-//                  100+tTrainConfigInfo.tNvrServerInfo[iServerIdex].iCarriageNO, 200+iCameraIdex, ui->StartdateEdit->text().toLatin1().data(),ui->StarttimeEdit->text().toLatin1().data(),
-//                  ui->EnddateEdit->text().toLatin1().data(),ui->EndtimeEdit->text().toLatin1().data());
             snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "Req camera %d.%d record in %s %2d:%2d%2d  to %s %2d:%2d%2d",
                   100+tTrainConfigInfo.tNvrServerInfo[iServerIdex].iCarriageNO, 200+iCameraIdex, ui->StartdateEdit->text().toLatin1().data(),tRecordSeach.tStartTime.i8Hour,min,sec,
                   ui->EnddateEdit->text().toLatin1().data(),tRecordSeach.tEndTime.i8Hour,min,sec);
@@ -762,7 +747,6 @@ void recordPlayWidget::recordDownloadSlot()
     T_TRAIN_CONFIG tTrainConfigInfo;
     char acUserType[16] = {0};
 
-//    DebugPrint(DEBUG_UI_OPTION_PRINT, "recordPlayWidget record download PushButton pressed!\n");
 
     STATE_GetCurrentUserType(acUserType, sizeof(acUserType));
 
@@ -815,18 +799,7 @@ void recordPlayWidget::recordDownloadSlot()
                 return;
             }
         }
-#if 0//test ?????
-        iRet = STATE_ParseUsbLicense(fileSavePath.toLatin1().data());
-        if (iRet < 0)
-        {
-//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget download check License error!\n");
-            QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("授权失败!"));
-            box.setStandardButtons (QMessageBox::Ok);
-            box.setButtonText (QMessageBox::Ok,QString::fromUtf8("确 定"));
-            box.exec();
-            return;
-        }
-#endif
+
         idex = ui->carSeletionComboBox->currentIndex();
 
         if (idex < 0)
@@ -837,7 +810,9 @@ void recordPlayWidget::recordDownloadSlot()
 
         memset(&tTrainConfigInfo, 0, sizeof(T_TRAIN_CONFIG));
         STATE_GetCurrentTrainConfigInfo(&tTrainConfigInfo);
-        snprintf(acIpAddr, sizeof(acIpAddr), "192.168.%d.81", 100+tTrainConfigInfo.tNvrServerInfo[idex].iCarriageNO);
+//        snprintf(acIpAddr, sizeof(acIpAddr), "192.168.%d.81", 100+tTrainConfigInfo.tNvrServerInfo[idex].iCarriageNO);
+        snprintf(acIpAddr, sizeof(acIpAddr), "rtsp://127.0.0.%d", 1);
+
         m_tFtpHandle[idex] = FTP_CreateConnect(acIpAddr, FTP_SERVER_PORT, PftpProc);
         if (0 == m_tFtpHandle[idex])
         {
@@ -851,7 +826,7 @@ void recordPlayWidget::recordDownloadSlot()
             {
                 if (parseFileName(m_acFilePath[row]) != NULL)
                 {
-                    snprintf(acSaveFileName, sizeof(acSaveFileName), "%s%s", "/mnt/usb/u/", parseFileName(m_acFilePath[row]));
+                    snprintf(acSaveFileName, sizeof(acSaveFileName), "%s%s", "/media/usb0/", parseFileName(m_acFilePath[row]));
                 }
 
 //                DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] add download file:%s!\n", __FUNCTION__, m_acFilePath[row]);
@@ -1408,7 +1383,7 @@ void recordPlayWidget::recordPlayCtrl(int iRow, int iDex)
     playSpeedStr = "1.00x";
     setPlayButtonStyleSheet();
 
-    snprintf(acRtspAddr, sizeof(acRtspAddr), "rtsp://192.168.%d.81:554%s",tTrainConfigInfo.tNvrServerInfo[iDex].iCarriageNO+100, m_acFilePath[iRow]);
+    snprintf(acRtspAddr, sizeof(acRtspAddr), "rtsp://127.0.0.%d:554/%s",1, m_acFilePath[iRow]);
     printf("************----recordPlayCtrl---%s\n",acRtspAddr);
     if (NULL == m_cmpHandle)
     {

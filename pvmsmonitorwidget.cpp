@@ -557,7 +557,7 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
         m_playWin = new QWidget(this->parentWidget());   //新建一个与目前窗体同属一个父窗体的播放子窗体，方便实现全屏
 
 //        m_playWin->setGeometry(0, 0, 1024, 768);      //设置窗体在父窗体中的位置，默认一开始为全屏
-        m_playWin->setGeometry(0, 138, 782, 630);
+        m_playWin->setGeometry(0, 138, 782, 620);
         m_playWin->show();  //默认显示
         m_playWin->setObjectName("m_playWin");
         m_playWin->setStyleSheet("QWidget{background-color: rgb(0, 0, 0);}");     //设置播放窗口背景色为黑色
@@ -593,12 +593,14 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
     {
 //        memset(acRtspUrl, 0, sizeof(acRtspUrl));
 //        snprintf(acRtspUrl, sizeof(acRtspUrl), "rtsp://192.168.%d.81", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO);
+        snprintf(acRtspUrl, sizeof(acRtspUrl), "rtsp://127.0.0.%d", 1);
+
 
         m_NvrServerPhandle[i] = STATE_GetNvrServerPmsgHandle(i);
 
         for (j = 0; j < tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum; j++)
         {
-#if 1  //test
+#if 0  //test
             memset(acRtspUrl, 0, sizeof(acRtspUrl));
 
             if(j == 0)
@@ -610,8 +612,9 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
             /*保存所有摄像机的信息*/
             m_tCameraInfo[m_iCameraNum].phandle = STATE_GetNvrServerPmsgHandle(i);
             m_tCameraInfo[m_iCameraNum].iPosNO = 8+j;
-//            snprintf(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl, sizeof(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl), "%s:554/%d",acRtspUrl, 8+j);
-#if 1  //test
+
+            snprintf(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl, sizeof(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl), "%s:554/%d",acRtspUrl, 8+j);
+#if 0  //test
             if(j == 1)
                 snprintf(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl, sizeof(m_tCameraInfo[m_iCameraNum].acCameraRtspUrl), "%s:554",acRtspUrl);
             else

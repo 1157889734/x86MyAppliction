@@ -7,7 +7,7 @@
 QT       += core gui widgets virtualkeyboard multimedia multimediawidgets sql
 
 
-TARGET = x86MyApplication
+TARGET = monitor_ytj
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -24,6 +24,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+    led.c \
         main.cpp \
     MyApplication.cpp \
     choicelogindevwidget.cpp \
@@ -31,7 +32,7 @@ SOURCES += \
     pvmsmenuwidget.cpp \
     pvmsmonitorwidget.cpp \
     recordplaywidget.cpp \
-    inteanalywidget.cpp \
+#    inteanalywidget.cpp \
     devmanagewidget.cpp \
     devupdatewidget.cpp \
     alarmwidget.cpp \
@@ -57,11 +58,12 @@ SOURCES += \
 HEADERS += \
     MyApplication.h \
     choicelogindevwidget.h \
+    led.h \
     loginwidget.h \
     pvmsmenuwidget.h \
     pvmsmonitorwidget.h \
     recordplaywidget.h \
-    inteanalywidget.h \
+#    inteanalywidget.h \
     devmanagewidget.h \
     devupdatewidget.h \
     alarmwidget.h \
@@ -101,7 +103,7 @@ FORMS += \
     pvmsmenuwidget.ui \
     pvmsmonitorwidget.ui \
     recordplaywidget.ui \
-    inteanalywidget.ui \
+#    inteanalywidget.ui \
     devmanagewidget.ui \
     devupdatewidget.ui \
     alarmwidget.ui \
@@ -114,10 +116,3 @@ FORMS += \
     usermanageconfig.ui \
     devupdatewidget_base.ui
 
-LIBS += -Wl,-dn -L../lib -Wl,-dy -ldl -rdynamic
-LIBS += -L ../lib -lgobject-2.0 -lglib-2.0 -lgstreamer-1.0 -lgstvideo-1.0
-
-
-INCLUDEPATH += ../include/
-INCLUDEPATH += ../include/gstreamer-1.0/
-INCLUDEPATH += ../include/glib-2.0/

@@ -72,7 +72,7 @@ void usergroupManage::init_datavase()
     else
         db=QSqlDatabase::addDatabase("QSQLITE");
 
-    db.setDatabaseName("data.db");
+    db.setDatabaseName("/home/data/data.db");
     query_OK=db.open();
     if(query_OK)
     {
@@ -255,7 +255,11 @@ void usergroupManage::on_deletepushButton_clicked()
         qDebug() << "open";
 
     QList<QTableWidgetItem*>items=ui->tableWidget->selectedItems();
-//    int cout = items.count();
+    int cout = items.count();
+    if(!cout)
+    {
+        return;
+    }
     QTableWidgetItem *item = items.at(0);
     QString text = item->text(); //获取内容
     QSqlQuery query;
@@ -336,7 +340,11 @@ void usergroupManage::table_choose_fuction(QTableWidgetItem *item)
 {
     g_curTextState = 1;
     QList<QTableWidgetItem*>items=ui->tableWidget->selectedItems();
-//    int cout = items.count();
+    int cout = items.count();
+    if(!cout)
+    {
+        return;
+    }
     QTableWidgetItem *mitem = items.at(0);
     QString text = mitem->text(); //获取内容
     ui->usernamelineEdit->setText(text);

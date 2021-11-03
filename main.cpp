@@ -23,8 +23,7 @@ waitLoginWidget *g_waitLoginPage = NULL;  //等待登录页面
 choiceLoginDevWidget *g_choiceLoginDevPage = NULL;    //选择登录设备页面
 loginWidget *g_loginPage = NULL;   //登录页面
 pvmsMenuWidget *g_pvmsMenuPage = NULL;   //受电弓监控主菜单页面
-recordPlayWidget *g_recordPage = NULL;
-pvmsMonitorWidget *g_monitorPage = NULL;
+
 
 int main(int argc, char *argv[])
 {
@@ -64,6 +63,7 @@ int main(int argc, char *argv[])
     {
         memset(acNvrServerIp, 0, sizeof(acNvrServerIp));
         snprintf(acNvrServerIp, sizeof(acNvrServerIp), "192.168.%d.81", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO);
+//        snprintf(acNvrServerIp, sizeof(acNvrServerIp), "127.0.0.%d", 1);
         iRet = PMSG_CreateConnect(acNvrServerIp, 10100);
         if (0 == iRet)
         {
@@ -188,9 +188,6 @@ int main(int argc, char *argv[])
     app.exec();
 
 
-//    usleep(1*1000*1000);
-
-//    splash.finish(g_choiceLoginDevPage);
 
 
     RS485_DestroyConnect(pRs485Handle);

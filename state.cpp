@@ -7,7 +7,7 @@
 
 #define SYSCONFIGFILEPATH "/home/data/C3SysConfig.ini"
 #define DATACONFIGFILEPATH "/home/data/C3DataConfig.ini"
-#define CFGCONFIGFILEPATH "/home/data/cfg"
+#define CFGCONFIGFILEPATH "/home/data"
 #define STATIONCONFIGFILEPATH "/home/data/Station.ini"
 #define NETCONFIGFILEPATH "/home/data/netconf.ini"
 

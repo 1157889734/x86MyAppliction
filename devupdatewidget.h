@@ -65,7 +65,6 @@ private:
     QDateTime timeTd;
 
     PMSG_HANDLE m_Phandle[MAX_SERVER_NUM];    //服务器PMSG通信句柄
-    pvmsMonitorWidget *m_pvmsMonitorPage;
     void getTrainConfig();     //获取车型配置信息
     void setTrainTypeCombox();
     void setPollingTimeRadioButton();	  //设置轮询时间单选按钮组的样式
