@@ -719,14 +719,16 @@ int GetSpsPpsData(PT_RTSP_CONN ptRtspConn, T_SDP_INFO *ptSdpInfo)
 
         }
 
+        printf("ssssssssssssssssssssssssss 123 %s\n",ptSdpInfo->ResMsgSdpHeaders[indexCnt].pHeaderValue);
         if(!strncmp(ptSdpInfo->ResMsgSdpHeaders[indexCnt].pHeaderValue, pRanageTag,strlen(pRanageTag)))
         {
             ptr = strstr(ptSdpInfo->ResMsgSdpHeaders[indexCnt].pHeaderValue, "-");
+            printf("ssssssssssssssssssssssssss 66 \n");
             if (ptr)
             {
                 char *pcStartPos = ptr + 1;
-
                 ptRtspConn->iPlayRange = atoi(pcStartPos);
+                printf("ssssssssssssssssssssssssss 333 \n");
             }
         }
 
@@ -794,6 +796,7 @@ INT32 AddRequestHeader (T_RTSP_REQUEST_MSG *ptRequestMsg, char *HeaderName, char
     if (ptRequestMsg->ReqHeadersCount == MAX_HEADER_NUMBER)
     {
         RTSP_DEBUG(DEBUG_RTSP_LEVEL, "Invalid header count of response message\n");
+        printf("Invalid header count of response message\n");
         return RET_ERROR;
     }
 
@@ -804,6 +807,8 @@ INT32 AddRequestHeader (T_RTSP_REQUEST_MSG *ptRequestMsg, char *HeaderName, char
     if( ptRequestMsg->ReqMsgHeaders[ptRequestMsg->ReqHeadersCount].pHeaderName == NULL )
     {
         RTSP_DEBUG(DEBUG_RTSP_LEVEL, "Can not allocate memory for response header name\n");
+        printf("Can not allocate memory for response header name\n");
+
         return RET_ERROR;
     }
     memset(ptRequestMsg->ReqMsgHeaders[ptRequestMsg->ReqHeadersCount].pHeaderName, 0x00,
@@ -818,6 +823,8 @@ INT32 AddRequestHeader (T_RTSP_REQUEST_MSG *ptRequestMsg, char *HeaderName, char
     if( ptRequestMsg->ReqMsgHeaders[ptRequestMsg->ReqHeadersCount].pHeaderValue == NULL )
     {
         RTSP_DEBUG(DEBUG_RTSP_LEVEL, "Can not allocate memory for response header value\n");
+        printf("Can not allocate memory for response header value\n\n");
+
         free(ptRequestMsg->ReqMsgHeaders[ptRequestMsg->ReqHeadersCount].pHeaderName);
         ptRequestMsg->ReqMsgHeaders[ptRequestMsg->ReqHeadersCount].pHeaderName = NULL;
         return RET_ERROR;
@@ -829,6 +836,8 @@ INT32 AddRequestHeader (T_RTSP_REQUEST_MSG *ptRequestMsg, char *HeaderName, char
 
     /* Increment the Message Header Count                                     */
     ptRequestMsg->ReqHeadersCount++;
+
+//    printf("Return Successfully==%d\n\n",ptRequestMsg->ReqHeadersCount);
 
     RTSP_DEBUG(DEBUG_RTSP_LEVEL,  "\nEXIT : \n\tReturn Successfully\n");
 

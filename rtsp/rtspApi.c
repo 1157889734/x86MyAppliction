@@ -811,6 +811,7 @@ int RTSP_PlayControl(RTSP_HANDLE RHandle, int iCmd, double dValue)
     {
 	    sprintf(acBuf, "%f", dValue);
 		DebugPrint(DEBUG_LEVEL_14, "RTSP_PlayControl forward speed %lf\n", dValue);
+        printf("RTSP_PlayControl forward speed %lf\n", dValue);
         AddRequestHeader(&ptRtspConn->tRequestMsg, "Scale", acBuf);
         iRet = RtspRequestPlay(ptRtspConn);
         if (iRet < 0)
@@ -931,6 +932,7 @@ int RTSP_GetParam(RTSP_HANDLE RHandle, int iType, void *pValue)
 		int *piRangeValue = (int *)pValue;
 
 		*piRangeValue = ptRtspConn->iPlayRange;
+        printf("********RTSP_GetParam***line----934=%d\n",*piRangeValue);
     }
 
     return 0;

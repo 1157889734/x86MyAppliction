@@ -45,6 +45,7 @@ public:
     int m_iPlayRange;    //录像文件总播放时长
     int playingTime;
     CMPHandle m_cmpHandle;   //客户端媒体播放句柄
+    QWidget *m_playWin;     //播放窗体
 
     int m_iSliderValue;     //进度条当前值
     pthread_t m_threadId;      //刷新进度条线程ID
@@ -123,7 +124,6 @@ private:
     QTimer *m_alarmHappenTimer;
     QTimer *m_recorQueryTimer;
     QStyle *m_tableWidgetStyle;
-    QWidget *m_playWin;     //播放窗体
     char *m_pcRecordFileBuf;
     int m_iTotalLen;
     char m_acFilePath[MAX_RECORD_SEACH_NUM][MAX_RECFILE_PATH_LEN];   //记录查询到的录像文件路径全名

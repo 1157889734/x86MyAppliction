@@ -1589,6 +1589,7 @@ void pvmsMonitorWidget::recordPlayCtrlSlot()
 
 void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
 {
+#if 1
     int iRet = 0, i = 0;
 //    QStringList list;
     const char * rtsp_url[] = {
@@ -1628,7 +1629,11 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
     }
     else if (CMP_CMD_CLOSE_DESTORY_CH == iType)
     {
-        CMP_CloseMedia(m_tCameraInfo[iCh].cmpHandle);
+        qDebug()<<"**************iCh="<<iCh<<endl;
+//        CMP_CloseMedia(m_tCameraInfo[iCh].cmpHandle);
+//        CMP_UnInit(m_tCameraInfo[iCh].cmpHandle);
+//        CMP_SetPlayEnnable(m_tCameraInfo[iCh].cmpHandle, 0);
+//        DRM_Show(0);
 
     }
     else if(CMP_CMD_ENABLE_CH == iType)
@@ -1663,7 +1668,7 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
     {
 
     }
-
+#endif
 }
 
 void pvmsMonitorWidget::chLabelDisplayCtrlSlot()   //通道状态和通道号标签是否显示的处理函数
@@ -1848,6 +1853,8 @@ void pvmsMonitorWidget::closePlayWin()
         }
     }
     m_iCameraNum = 0;
+
+    DRM_Show(0);
 
 //    if (m_channelStateLabel != NULL)
 //    {

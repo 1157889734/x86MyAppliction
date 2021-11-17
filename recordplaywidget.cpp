@@ -239,9 +239,7 @@ recordPlayWidget::~recordPlayWidget()
 
 void recordPlayWidget::playSliderMoveSlot(int iPosTime)
 {
-#if 0
     QString playSpeedStr = "";
-
 
     if (iPosTime < 0)
     {
@@ -259,28 +257,25 @@ void recordPlayWidget::playSliderMoveSlot(int iPosTime)
 
     if (m_cmpHandle != NULL)
     {
-        if (QMediaPlayer::PausedState == CMP_GetPlayStatus(m_cmpHandle))
+        if(CMP_STATE_PLAY != CMP_GetPlayStatus(m_cmpHandle))
         {
             return;
         }
-
         m_iPlayFlag = 1;
         m_dPlaySpeed = 1.00;
-        CMP_PauseMedia(m_cmpHandle);
+//        CMP_PauseMedia(m_cmpHandle);
         pthread_mutex_lock(&g_sliderValueSetMutex);
         m_playSlider->setValue(iPosTime);
         CMP_SetPosition(m_cmpHandle, iPosTime);
         playingTime = iPosTime;
         pthread_mutex_unlock(&g_sliderValueSetMutex);
-        CMP_PlayMedia(m_cmpHandle);
+//        CMP_PlayMedia(m_cmpHandle);
 
    }
-#endif
 }
 
 void recordPlayWidget::playSliderPressSlot(int iPosTime)
 {
-#if 0
     QString playSpeedStr = "";
 
     if (iPosTime < 0)
@@ -289,7 +284,6 @@ void recordPlayWidget::playSliderPressSlot(int iPosTime)
     }
     else if (iPosTime == m_playSlider->value())    //时间值没有变化不进行处理
     {
-//        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] value is not change, do not set!\n", __FUNCTION__);
         return;
     }
     else if (0 == iPosTime) //防止pos值为0而服务器不处理，所有值最小为1
@@ -298,28 +292,28 @@ void recordPlayWidget::playSliderPressSlot(int iPosTime)
     }
     if (m_cmpHandle != NULL)
     {
-        if (QMediaPlayer::PausedState == CMP_GetPlayStatus(m_cmpHandle))
+
+        if(CMP_STATE_PLAY != CMP_GetPlayStatus(m_cmpHandle))
         {
             return;
         }
 
         m_iPlayFlag = 1;
         m_dPlaySpeed = 1.00;
-        CMP_PauseMedia(m_cmpHandle);
+//        CMP_PauseMedia(m_cmpHandle);
         pthread_mutex_lock(&g_sliderValueSetMutex);
         m_playSlider->setValue(iPosTime);
         playingTime = iPosTime;
         CMP_SetPosition(m_cmpHandle, iPosTime);
         pthread_mutex_unlock(&g_sliderValueSetMutex);
-        CMP_PlayMedia(m_cmpHandle);
+//        CMP_PlayMedia(m_cmpHandle);
 
     }
-#endif
 }
 
 void recordPlayWidget::playPlusStepSlot()
 {
-#if 0
+#if 1
     qint64 iPosTime = 0;
     QString playSpeedStr;
 
@@ -328,7 +322,7 @@ void recordPlayWidget::playPlusStepSlot()
         return;
     }
 
-    if (QMediaPlayer::PausedState == CMP_GetPlayStatus(m_cmpHandle))
+    if(CMP_STATE_PLAY != CMP_GetPlayStatus(m_cmpHandle))
     {
         return;
     }
@@ -337,8 +331,10 @@ void recordPlayWidget::playPlusStepSlot()
     m_dPlaySpeed = 1.00;
     setPlayButtonStyleSheet();
 
-    iPosTime = CMP_GetCurrentPlayTime(m_cmpHandle) + 60000;
-    CMP_PauseMedia(m_cmpHandle);
+//    iPosTime = CMP_GetCurrentPlayTime(m_cmpHandle) + 60000;
+//    CMP_PauseMedia(m_cmpHandle);
+    iPosTime = CMP_GetPlayTime(m_cmpHandle);
+    qDebug()<<"**********iPosTime="<<iPosTime<<endl;
     if (m_iPlayRange != 0)
     {
         if (iPosTime <= m_iPlayRange)
@@ -354,28 +350,34 @@ void recordPlayWidget::playPlusStepSlot()
         closePlayWin();
         setPlayButtonStyleSheet();
     }
-    CMP_PlayMedia(m_cmpHandle);
+//    CMP_PlayMedia(m_cmpHandle);
 
 #endif
 }
 
 void recordPlayWidget::playMinusStepSlot()
 {
-#if 0
+#if 1
     qint64 iPosTime = 0;
     QString playSpeedStr;
 
-    if (QMediaPlayer::PausedState == CMP_GetPlayStatus(m_cmpHandle))
+    if (NULL == m_cmpHandle)
     {
         return;
     }
 
+    if(CMP_STATE_PLAY != CMP_GetPlayStatus(m_cmpHandle))
+    {
+        return;
+    }
     m_iPlayFlag = 1;
     m_dPlaySpeed = 1.00;
     setPlayButtonStyleSheet();
 
-    iPosTime = CMP_GetCurrentPlayTime(m_cmpHandle) - 60000;
-    CMP_PauseMedia(m_cmpHandle);
+//    iPosTime = CMP_GetCurrentPlayTime(m_cmpHandle) - 60000;
+    iPosTime = CMP_GetPlayTime(m_cmpHandle);
+
+//    CMP_PauseMedia(m_cmpHandle);
 
     if (iPosTime > 0)
     {
@@ -394,7 +396,7 @@ void recordPlayWidget::playMinusStepSlot()
         pthread_mutex_unlock(&g_sliderValueSetMutex);
 
     }
-    CMP_PlayMedia(m_cmpHandle);
+//    CMP_PlayMedia(m_cmpHandle);
 
 #endif
 }
@@ -420,58 +422,56 @@ void recordPlayWidget::downloadProcessBarDisplaySlot(int iEnableFlag)   //是否
 void recordPlayWidget::setDownloadProcessBarValueSlot(int iValue)   //设置文件下载进度条的值
 {
     if (-1 == iValue) //iValue=-1时,表示被告知U盘已拔出,销毁FTP连接并弹框提示
-        {
-            FTP_DestoryConnect(m_tFtpHandle[m_iFtpServerIdex]);
+    {
+        FTP_DestoryConnect(m_tFtpHandle[m_iFtpServerIdex]);
 
-            m_tFtpHandle[m_iFtpServerIdex] = 0;
+        m_tFtpHandle[m_iFtpServerIdex] = 0;
 //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordfile downLoad failed!USB device is out\n");
-            QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("下载失败，U盘已被拔出!"));
-            box.setStandardButtons (QMessageBox::Ok);
-            box.setButtonText (QMessageBox::Ok,QString::fromUtf8("确 定"));
-            box.exec();
-            return;
-        }
+        QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("下载失败，U盘已被拔出!"));
+        box.setStandardButtons (QMessageBox::Ok);
+        box.setButtonText (QMessageBox::Ok,QString::fromUtf8("确 定"));
+        box.exec();
+        return;
+    }
 
-        if (-2 == iValue) //iValue=-2时,表示被告知U盘写入失败,销毁FTP连接并弹框提示
-        {
-            FTP_DestoryConnect(m_tFtpHandle[m_iFtpServerIdex]);
+    if (-2 == iValue) //iValue=-2时,表示被告知U盘写入失败,销毁FTP连接并弹框提示
+    {
+        FTP_DestoryConnect(m_tFtpHandle[m_iFtpServerIdex]);
 
 //            DebugPrint(DEBUG_UI_ERROR_PRINT, "recordPlayWidget recordfile downLoad failed!USB device write error\n");
-            m_tFtpHandle[m_iFtpServerIdex] = 0;
+        m_tFtpHandle[m_iFtpServerIdex] = 0;
 
 //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordfile downLoad failed!USB device write error\n");
-            QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("下载失败，U盘写入失败!"));
-            box.setStandardButtons (QMessageBox::Ok);
-            box.setButtonText (QMessageBox::Ok,QString::fromUtf8("确 定"));
-            box.exec();
-            return;
-        }
+        QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("下载失败，U盘写入失败!"));
+        box.setStandardButtons (QMessageBox::Ok);
+        box.setButtonText (QMessageBox::Ok,QString::fromUtf8("确 定"));
+        box.exec();
+        return;
+    }
 
-        if (-3 == iValue) //iValue=-3时,表示被告知数据接收失败,销毁FTP连接并弹框提示
-        {
-            FTP_DestoryConnect2(m_tFtpHandle[m_iFtpServerIdex]);
+    if (-3 == iValue) //iValue=-3时,表示被告知数据接收失败,销毁FTP连接并弹框提示
+    {
+        FTP_DestoryConnect2(m_tFtpHandle[m_iFtpServerIdex]);
 
 //            DebugPrint(DEBUG_UI_ERROR_PRINT, "recordPlayWidget recordfile downLoad failed!data recv\n");
-            m_tFtpHandle[m_iFtpServerIdex] = 0;
+        m_tFtpHandle[m_iFtpServerIdex] = 0;
 
 //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordfile downLoad failed!data recv error\n");
-            QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("下载失败，数据接收失败!"));
-            box.setStandardButtons (QMessageBox::Ok);
-            box.setButtonText (QMessageBox::Ok,QString::fromUtf8("确 定"));
-            box.exec();
-            return;
-        }
+        QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("下载失败，数据接收失败!"));
+        box.setStandardButtons (QMessageBox::Ok);
+        box.setButtonText (QMessageBox::Ok,QString::fromUtf8("确 定"));
+        box.exec();
+        return;
+    }
 
-        ui->fileDownloadProgressBar->setValue(iValue);
+    ui->fileDownloadProgressBar->setValue(iValue);
 
-        if (100 == iValue)   //iValue=100,下载结束，销毁ftp连接
-        {
-            FTP_DestoryConnect(m_tFtpHandle[m_iFtpServerIdex]);
+    if (100 == iValue)   //iValue=100,下载结束，销毁ftp连接
+    {
+        FTP_DestoryConnect(m_tFtpHandle[m_iFtpServerIdex]);
 //            DebugPrint(DEBUG_UI_NOMAL_PRINT, "recordPlayWidget recordfile downLoad end!Destory this ftp connect\n");
-            m_tFtpHandle[m_iFtpServerIdex] = 0;
-        }
-
-
+        m_tFtpHandle[m_iFtpServerIdex] = 0;
+    }
 
 }
 
@@ -596,7 +596,7 @@ void recordPlayWidget::setPlaySliderValueSlot(int iValue)    //实时刷新播�
 
 void recordPlayWidget::setPosition(int position)
 {
-#if 0
+#if 1
     if (m_cmpHandle != NULL)
     {
         CMP_SetPosition(m_cmpHandle,position);
@@ -924,7 +924,7 @@ void recordPlayWidget::getTrainConfig()    	//获取车型配置文件，初始�
 
 void recordPlayWidget::recordPlayStartSlot()
 {
-#if 0
+#if 1
     if (m_cmpHandle != NULL)
     {
         if (0 == m_iPlayFlag)
@@ -933,7 +933,7 @@ void recordPlayWidget::recordPlayStartSlot()
             m_dPlaySpeed = 1.00;
 
             CMP_PlayMedia(m_cmpHandle);
-            CMP_SetPlayRate(m_cmpHandle,m_dPlaySpeed);
+//            CMP_SetPlayRate(m_cmpHandle,m_dPlaySpeed);
         }
         else
         {
@@ -955,7 +955,7 @@ void recordPlayWidget::recordPlayStartSlot()
 
 void recordPlayWidget::recordPauseSlot()
 {
-#if 0
+#if 1
     m_iPlayFlag = 0;
     if (m_cmpHandle != NULL)    //如果播放窗口已经有打开了码流播放，关闭码流播放
     {
@@ -975,7 +975,9 @@ void recordPlayWidget::recordPlayStopSlot()
 
 void recordPlayWidget::closePlayWin()  ///////////??????????????
 {
-#if 0
+#if 1
+    qDebug()<<"**********closePlayWin == NULL"<<__LINE__<<endl;
+
     if (m_threadId != 0)
     {
         m_iThreadRunFlag = 0;
@@ -988,10 +990,16 @@ void recordPlayWidget::closePlayWin()  ///////////??????????????
 
     if (m_cmpHandle != NULL)    //关闭已打开的回放
     {
+        CMP_SetPlayEnnable(m_cmpHandle, 0);
+        DRM_Show(0);
         CMP_CloseMedia(m_cmpHandle);
-        CMP_DestroyMedia(m_cmpHandle);
+        CMP_UnInit(m_cmpHandle);
+
+
+//        CMP_DestroyMedia(m_cmpHandle);
         m_cmpHandle= NULL;
         emit setRecordPlayFlagSignal(0);
+        qDebug()<<"**********m_cmpHandle == NULL"<<__LINE__<<endl;
     }
 
     if (m_iRecordIdex >= 0 && ui->recordFileTableWidget->item(m_iRecordIdex, 2) != NULL && 0 == ui->recordFileTableWidget->item(m_iRecordIdex, 2)->text().contains("tmp"))
@@ -1029,16 +1037,18 @@ void recordPlayWidget::triggerSetDownloadProcessBarValueSignal(int iValue)	//触
 
 void recordPlayWidget::recordPlayFastForwardSlot()
 {
-#if 0
+#if 1
 
+    qDebug()<<"******recordPlayFastForwardSlot**m_cmpHandle="<<m_cmpHandle<<__LINE__<<endl;
     if (NULL == m_cmpHandle)
     {
+        printf("*****NULL == m_cmpHandle****line1036\n");
         return;
     }
-
-    if (QMediaPlayer::PlayingState != CMP_GetPlayStatus(m_cmpHandle))
+    qDebug()<<"********play-state"<<CMP_GetPlayStatus(m_cmpHandle)<<__LINE__<<endl;
+    if(CMP_STATE_PLAY != CMP_GetPlayStatus(m_cmpHandle))
     {
-        return;
+         return;
     }
 
     if (m_dPlaySpeed >= 4.00)
@@ -1047,32 +1057,34 @@ void recordPlayWidget::recordPlayFastForwardSlot()
     }
     m_iPlayFlag = 1;
     m_dPlaySpeed = m_dPlaySpeed*2;
-
-    CMP_SetPlayRate(m_cmpHandle,m_dPlaySpeed);
+    CMP_SetPlaySpeed(m_cmpHandle,m_dPlaySpeed);
     setPlayButtonStyleSheet();
 #endif
 
 }
 void recordPlayWidget::recordPlaySlowForwardSlot()
 {
-#if 0
+#if 1
+    qDebug()<<"******recordPlaySlowForwardSlot**m_cmpHandle="<<m_cmpHandle<<__LINE__<<endl;
+
     if (NULL == m_cmpHandle)
     {
         return;
     }
 
-    if (QMediaPlayer::PlayingState != CMP_GetPlayStatus(m_cmpHandle))
+    qDebug()<<"********play-state"<<CMP_GetPlayStatus(m_cmpHandle)<<__LINE__<<endl;
+    if(CMP_STATE_PLAY != CMP_GetPlayStatus(m_cmpHandle))
     {
-        return;
+         return;
     }
+
     if (m_dPlaySpeed <= 0.25)
     {
         return;
     }
     m_iPlayFlag = 1;
     m_dPlaySpeed = m_dPlaySpeed/2;
-
-    CMP_SetPlayRate(m_cmpHandle,m_dPlaySpeed);
+    CMP_SetPlaySpeed(m_cmpHandle,m_dPlaySpeed);
 
     setPlayButtonStyleSheet();
 #endif
@@ -1181,8 +1193,6 @@ void recordPlayWidget::recordPlayNextOneSlot()
 
 
 }
-
-
 
 
 void recordPlayWidget::registOutButtonClick()
@@ -1339,7 +1349,7 @@ void *slideValueSetThread(void *param)    //播放进度条刷新线程
               {
 //                  iDuration = CMP_GetPlayRange(recordPlaypage->m_cmpHandle);
                   iDuration =  CMP_GetPlayRange(recordPlaypage->m_cmpHandle);
-                  qDebug()<<"**********iDuration="<<recordPlaypage->m_iSliderValue<<__LINE__<<endl;
+//                  qDebug()<<"****111******iDuration="<<iDuration<<__LINE__<<endl;
 
                   if (iDuration > 0)
                   {
@@ -1367,7 +1377,7 @@ void *slideValueSetThread(void *param)    //播放进度条刷新线程
               pthread_mutex_lock(&g_sliderValueSetMutex);
 //              recordPlaypage->m_iSliderValue = CMP_GetCurrentPlayTime(recordPlaypage->m_cmpHandle);
               recordPlaypage->m_iSliderValue = CMP_GetPlayTime(recordPlaypage->m_cmpHandle);
-              qDebug()<<"**********value="<<recordPlaypage->m_iSliderValue<<__LINE__<<endl;
+//              qDebug()<<"**********value="<<recordPlaypage->m_iSliderValue<<__LINE__<<endl;
               recordPlaypage->triggerSetSliderValueSignal(recordPlaypage->m_iSliderValue);
               pthread_mutex_unlock(&g_sliderValueSetMutex);
               if (recordPlaypage->m_iSliderValue >= recordPlaypage->m_iPlayRange)   //进度到100%，表示该段录像回放完毕，关闭播放窗口
@@ -1427,6 +1437,7 @@ void recordPlayWidget::recordPlayCtrl(int iRow, int iDex)
 
         m_cmpHandle = CMP_Init(&m_RealMonitorVideos, CMP_VDEC_NORMAL);
         CMP_OpenMediaFile(m_cmpHandle,acRtspAddr, CMP_TCP);
+//        CMP_OpenMediaPreview(m_cmpHandle,acRtspAddr, CMP_TCP);
         if(NULL == m_cmpHandle)
         {
             QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("录像窗口创建失败!"));
