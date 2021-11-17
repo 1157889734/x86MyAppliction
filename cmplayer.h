@@ -9,11 +9,14 @@
 #include "state.h"
 #include "log.h"
 #include <sys/sysinfo.h>
-#include <QFile>
+//#include <QFile>
 
-//#ifdef __cplusplus
-//extern "C"{
-//#endif /* End of #ifdef __cplusplus */
+//#include "vdec.h"
+
+#ifdef __cplusplus
+extern "C"{
+#endif /* End of #ifdef __cplusplus */
+#define  CMPPlayer_API
 
 typedef void* CMPHandle;
 
@@ -23,91 +26,81 @@ enum STREAM_TYPE
     CMP_UDP
 };
 
-enum SHOW_HIDE
-{
-    HIDE_VIDEO = 0,
-    SHOW_VIDEO
-};
-
 enum CMPPLAY_STATE
 {
-    CMP_STATE_IDLE = 0,        // 空闲
-    CMP_STATE_PLAY,            // 播放
-    CMP_STATE_FAST_FORWARD,    // 快进
-    CMP_STATE_SLOW_FORWARD,    // 慢放
-    CMP_STATE_PAUSE,           // 暂停
-    CMP_STATE_STOP             // 停止状态
+    CMP_STATE_IDLE = 0,         // 空闲
+    CMP_STATE_PLAY,             // 播放
+    CMP_STATE_FAST_FORWARD,     // 快进
+    CMP_STATE_PAUSE,            // 暂停
+    CMP_STATE_STOP,             // 停止状态
+    CMP_STATE_ERROR,            // 错误
+    CMP_STATE_SLOW_FORWARD      // 慢进
 };
+
+enum CMP_OPEN_MEDIA_STATE
+{
+    CMP_OPEN_MEDIA_UNKOWN = 0,
+    CMP_OPEN_MEDIA_FAIL,
+    CMP_OPEN_MEDIA_SUCC,
+    CMP_OPEN_MEDIA_LOGIN_FAIL,
+    CMP_OPEN_MEDIA_STREAM_FAIL,
+    CMP_OPEN_MEDIA_PLAYCONTRO_FAIL,
+};
+
+#ifdef  __cplusplus
+extern "C"
+{
+#endif
+
 
 /*************************************************
   函数功能:     CMP_Init
-  函数描述:     模块初使化
-  输入参数:     无
+  函数描述:     创建媒体句柄
+  输入参数:     HWND hWnd：媒体显示窗口INFO
+                iDecType：解码类型，enum CMP_VDEC_TYPE
   输出参数:     无
-  返回值:       0-成功，否则失败
+  返回值:       媒体句柄
+  作者：        lxy
+  日期:         2015-09-10
 *************************************************/
-int CMP_Init(void);
 
+CMPPlayer_API CMPHandle CMP_Init(T_WND_INFO *pWndInfo, CMP_VDEC_TYPE eDecType);
 
 /*************************************************
   函数功能:     CMP_UnInit
-  函数描述:     模块反初使化
-  输入参数:     无
-  输出参数:     无
-  返回值:       0：成功， <0:失败
-*************************************************/
-int CMP_UnInit(void);
-
-
-/*************************************************
-  函数功能:     CMP_CreateMedia
-  函数描述:     创建媒体句柄
-  输入参数:     tWinInfo：媒体显示窗口位置信息
-  返回值:       媒体句柄
-*************************************************/
-CMPHandle CMP_CreateMedia(QWidget *palywidget);
-
-
-
-/*************************************************
-  函数功能:     CMP_SetWnd
-  函数描述:     改变播放窗口
-  输入参数:     hPlay：媒体句柄 tWnd 改变后的目标窗口
-  输出参数:     无
-  返回值:
-*************************************************/
-int CMP_ChangeWnd(CMPHandle hPlay,QWidget *palywidget);
-
-
-
-/*************************************************
-  函数功能:     CMP_DestroyMedia
   函数描述:     销毁媒体句柄
   输入参数:     hPlay：媒体句柄
   输出参数:     无
-  返回值:       0：成功， <0:失败
+  返回值:       0：成功， -1:未找到相应媒体句柄
+  作者：        dingjq
+  日期:         2015-09-10
+  修改:
 *************************************************/
-int CMP_DestroyMedia(CMPHandle hPlay);
-
+CMPPlayer_API int CMP_UnInit(CMPHandle hPlay);
 
 /*************************************************
   函数功能:     CMP_OpenMediaPreview
   函数描述:     打开预览媒体
-  输入参数:     hPlay：媒体句柄， pcRtspUrl：rtsp地址 ,iTcpFlag：CMP_TCP or CMP_UDP
+  输入参数:     hPlay：媒体句柄， pcRtspUrl：rtsp地址， iTcpFlag：CMP_TCP or CMP_UDP
   输出参数:     无
   返回值:       0：成功， -1:未找到相应媒体句柄
+  作者：        dingjq
+  日期:         2015-09-10
+  修改:
 *************************************************/
-int CMP_OpenMediaPreview(CMPHandle hPlay,const char *pcRtspFile,int iTcpFlag);
+CMPPlayer_API int CMP_OpenMediaPreview(CMPHandle hPlay, const char *pcRtspUrl, int iTcpFlag);
 
 /*************************************************
   函数功能:     CMP_OpenMediaFile
   函数描述:     打开点播媒体
-  输入参数:     hPlay：媒体句柄， pcRtspFile:rtsp文件地址 ,iTcpFlag：CMP_TCP or CMP_UDP
+  输入参数:     hPlay：媒体句柄， pcRtspFile:rtsp文件地址 ， iTcpFlag：CMP_TCP or CMP_UDP
   输出参数:     无
   返回值:       0：成功， -1:未找到相应媒体句柄
-  *************************************************/
-int CMP_OpenMediaFile(CMPHandle hPlay, const char *pcRtspFile,int iTcpFlag);
-
+  作者：        dingjq
+  日期:         2015-09-10
+  修改:
+*************************************************/
+CMPPlayer_API int CMP_OpenMediaFile(CMPHandle hPlay, const char *pcRtspFile, int iTcpFlag);
 
 /*************************************************
   函数功能:     CMP_CloseMedia
@@ -115,20 +108,23 @@ int CMP_OpenMediaFile(CMPHandle hPlay, const char *pcRtspFile,int iTcpFlag);
   输入参数:     hPlay：媒体句柄
   输出参数:     无
   返回值:       0：成功， -1:未找到相应媒体句柄
+  作者：        dingjq
+  日期:         2015-09-10
+  修改:
 *************************************************/
-int CMP_CloseMedia(CMPHandle hPlay);
-
+CMPPlayer_API int CMP_CloseMedia(CMPHandle hPlay);
 
 /*************************************************
-  函数功能:     CMP_SetWndDisplayEnable
-  函数描述:     设置播放窗口显示使能
+  函数功能:     CMP_GetPlayStatus
+  函数描述:     获取播放状态
   输入参数:     hPlay：媒体句柄
-                iEnable: 使能标志，1-使能，0-不使能
   输出参数:     无
-  返回值:
+  返回值:       返回媒体播放状态
+  作者：        dingjq
+  日期:         2015-09-10
+  修改:
 *************************************************/
-int CMP_SetWndDisplayEnable(CMPHandle hPlay, int iEnable);
-
+CMPPlayer_API CMPPLAY_STATE CMP_GetPlayStatus(CMPHandle hPlay);
 
 /*************************************************
   函数功能:     CMP_PlayMedia
@@ -136,10 +132,11 @@ int CMP_SetWndDisplayEnable(CMPHandle hPlay, int iEnable);
   输入参数:     hPlay：媒体句柄
   输出参数:     无
   返回值:
+  作者：        dingjq
+  日期:         2015-09-10
+  修改:
 *************************************************/
-int CMP_PlayMedia(CMPHandle hPlay);
-
-
+CMPPlayer_API int CMP_PlayMedia(CMPHandle hPlay);
 
 /*************************************************
   函数功能:     CMP_PauseMedia
@@ -147,30 +144,58 @@ int CMP_PlayMedia(CMPHandle hPlay);
   输入参数:     hPlay：媒体句柄
   输出参数:     无
   返回值:
+  作者：        dingjq
+  日期:         2015-09-10
+  修改:
 *************************************************/
-int CMP_PauseMedia(CMPHandle hPlay);
-
-
-/*************************************************
-  函数功能:     CMP_PauseMedia
-  函数描述:     获取媒体播放状态
-  输入参数:     hPlay：媒体句柄
-  输出参数:     无
-  返回值:
-*************************************************/
-
-int CMP_GetPlayStatus(CMPHandle hPlay);
-
+CMPPlayer_API int CMP_PauseMedia(CMPHandle hPlay);
 
 /*************************************************
   函数功能:     CMP_SetPosition
-  函数描述:     设置播放位置（秒）
+  函数描述:     设置播放位置（毫秒）
   输入参数:     hPlay：媒体句柄
-                nPosTime: 跳转时间(单位S)
   输出参数:     无
+  返回值:
+  作者：        dingjq
+  日期:         2015-09-10
+  修改:
 *************************************************/
-int CMP_SetPosition(CMPHandle hPlay, int nPosTime);
+CMPPlayer_API int CMP_SetPosition(CMPHandle hPlay, int64_t nPosTime);
 
+/*************************************************
+  函数功能:     CMP_SetPlaySpeed
+  函数描述:     设置播放速度
+  输入参数:     hPlay：媒体句柄
+  输出参数:     无
+  返回值:
+  日期:         2015-09-10
+  修改:
+*************************************************/
+CMPPlayer_API int CMP_SetPlaySpeed(CMPHandle hPlay, double dSpeed);
+
+/*************************************************
+  函数功能:     CMP_SetVolume
+  函数描述:     设置播放音量
+  输入参数:     hPlay：媒体句柄
+  输出参数:     无
+  返回值:
+  作者：        dingjq
+  日期:         2015-09-10
+  修改:
+*************************************************/
+CMPPlayer_API int CMP_SetVolume(CMPHandle hPlay, int nVolume);
+
+/*************************************************
+  函数功能:     CMP_ChangeWnd
+  函数描述:     改变播放窗口 //只针对软解码
+  输入参数:     hPlay：媒体句柄 hWnd 改变后的目标窗口
+  输出参数:     无
+  返回值:
+  作者：        dingjq
+  日期:         2015-09-10
+  修改:
+*************************************************/
+CMPPlayer_API int CMP_ChangeWnd(CMPHandle hPlay,const T_WND_INFO *pWndInfo);
 
 /*************************************************
   函数功能:     CMP_GetPlayRange
@@ -178,64 +203,38 @@ int CMP_SetPosition(CMPHandle hPlay, int nPosTime);
   输入参数:     hPlay：媒体句柄
   输出参数:     无
   返回值:       文件播放总时长，以秒为单位
+  作者：        dingjq
+  日期:         2015-09-10
+  修改:
 *************************************************/
-int CMP_GetPlayRange(CMPHandle hPlay);
+CMPPlayer_API int CMP_GetPlayRange(CMPHandle hPlay);
 
 /*************************************************
-  函数功能:     CMP_GetPlayRange
+  函数功能:     CMP_GetPlayTime
   函数描述:     获取当前播放时间
   输入参数:     hPlay：媒体句柄
   输出参数:     无
-  返回值:       文件播当前播放时间，以秒为单位
-*************************************************/
-int CMP_GetCurrentPlayTime(CMPHandle hPlay);
-
-
-/*************************************************
-  函数功能:     CMP_GetPlayRange
-  函数描述:     获取当前播放速度
-  输入参数:     hPlay：媒体句柄
-  输出参数:     无
-  返回值:       0
+  返回值:       文件播放总时长，以秒为单位
+  作者：        dingjq
+  日期:         2015-09-10
+  修改:
 *************************************************/
 
-int CMP_SetPlayRate(CMPHandle hPlay,qreal rate);
 
-/*************************************************
-  函数功能:     CMP_GetPlayRange
-  函数描述:     获取当前媒体状态
-  输入参数:     hPlay：媒体句柄
-  输出参数:     无
-  返回值:       0
-*************************************************/
-int  CMP_GetStreamState(CMPHandle hPlay);
+CMPPlayer_API int CMP_SetPlayEnnable(CMPHandle hPlay, int enable);
 
+CMPPlayer_API int CMP_GetOpenMediaState(CMPHandle hPlay);
 
+CMPPlayer_API int CMP_GetStreamState(CMPHandle hPlay);
 
-/*************************************************
-  函数功能:     CMP_GetPlayRange
-  函数描述:     获取当前播放状态
-  输入参数:     hPlay：媒体句柄
-  输出参数:     无
-  返回值:       0
-*************************************************/
-int CMP_GetPlayState(CMPHandle hPlay);
+CMPPlayer_API int CMP_GetPlayTime(CMPHandle hPlay);
+
+#ifdef  __cplusplus
+}
+#endif
 
 
-/*************************************************
-  函数功能:     CMP_GetPlayRange
-  函数描述:     获取当前播放错误状态
-  输入参数:     hPlay：媒体句柄
-  输出参数:     无
-  返回值:       0
-*************************************************/
-
-int CMP_GetStreamError(CMPHandle hPlay);
-
-
-//#endif
-
-//#ifdef __cplusplus
-//}
+#ifdef __cplusplus
+}
 #endif /* End of #ifdef __cplusplus */
-
+#endif

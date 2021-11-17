@@ -14,6 +14,10 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QLineEdit>
+#include "types.h"
+#include "cmplayer.h"
+#include "vdec.h"
+
 int g_iDateEditNo = 0;      //要显示时间的不同控件的编号
 static int g_iRNum = 0;
 #define PVMSPAGETYPE  2    //此页面类型，2表示受电弓监控页面
@@ -235,6 +239,7 @@ recordPlayWidget::~recordPlayWidget()
 
 void recordPlayWidget::playSliderMoveSlot(int iPosTime)
 {
+#if 0
     QString playSpeedStr = "";
 
 
@@ -270,11 +275,12 @@ void recordPlayWidget::playSliderMoveSlot(int iPosTime)
         CMP_PlayMedia(m_cmpHandle);
 
    }
-
+#endif
 }
 
 void recordPlayWidget::playSliderPressSlot(int iPosTime)
 {
+#if 0
     QString playSpeedStr = "";
 
     if (iPosTime < 0)
@@ -308,11 +314,12 @@ void recordPlayWidget::playSliderPressSlot(int iPosTime)
         CMP_PlayMedia(m_cmpHandle);
 
     }
-
+#endif
 }
 
 void recordPlayWidget::playPlusStepSlot()
 {
+#if 0
     qint64 iPosTime = 0;
     QString playSpeedStr;
 
@@ -349,11 +356,12 @@ void recordPlayWidget::playPlusStepSlot()
     }
     CMP_PlayMedia(m_cmpHandle);
 
-
+#endif
 }
 
 void recordPlayWidget::playMinusStepSlot()
 {
+#if 0
     qint64 iPosTime = 0;
     QString playSpeedStr;
 
@@ -388,7 +396,7 @@ void recordPlayWidget::playMinusStepSlot()
     }
     CMP_PlayMedia(m_cmpHandle);
 
-
+#endif
 }
 
 
@@ -588,11 +596,12 @@ void recordPlayWidget::setPlaySliderValueSlot(int iValue)    //实时刷新播�
 
 void recordPlayWidget::setPosition(int position)
 {
+#if 0
     if (m_cmpHandle != NULL)
     {
         CMP_SetPosition(m_cmpHandle,position);
     }
-
+#endif
 }
 
 
@@ -915,6 +924,7 @@ void recordPlayWidget::getTrainConfig()    	//获取车型配置文件，初始�
 
 void recordPlayWidget::recordPlayStartSlot()
 {
+#if 0
     if (m_cmpHandle != NULL)
     {
         if (0 == m_iPlayFlag)
@@ -939,18 +949,19 @@ void recordPlayWidget::recordPlayStartSlot()
             emit recordSeletPlay(ui->recordFileTableWidget->currentItem());
         }
     }
-
+#endif
 }
 
 
 void recordPlayWidget::recordPauseSlot()
 {
+#if 0
     m_iPlayFlag = 0;
     if (m_cmpHandle != NULL)    //如果播放窗口已经有打开了码流播放，关闭码流播放
     {
         CMP_PauseMedia(m_cmpHandle);
     }
-
+#endif
 }
 
 void recordPlayWidget::recordPlayStopSlot()
@@ -964,6 +975,7 @@ void recordPlayWidget::recordPlayStopSlot()
 
 void recordPlayWidget::closePlayWin()  ///////////??????????????
 {
+#if 0
     if (m_threadId != 0)
     {
         m_iThreadRunFlag = 0;
@@ -989,7 +1001,7 @@ void recordPlayWidget::closePlayWin()  ///////////??????????????
     }
     m_iRecordIdex = -1;
     m_iPlayFlag = 0;
-
+#endif
 }
 
 void recordPlayWidget::triggerSetSliderValueSignal(int iValue)
@@ -1017,6 +1029,7 @@ void recordPlayWidget::triggerSetDownloadProcessBarValueSignal(int iValue)	//触
 
 void recordPlayWidget::recordPlayFastForwardSlot()
 {
+#if 0
 
     if (NULL == m_cmpHandle)
     {
@@ -1037,11 +1050,12 @@ void recordPlayWidget::recordPlayFastForwardSlot()
 
     CMP_SetPlayRate(m_cmpHandle,m_dPlaySpeed);
     setPlayButtonStyleSheet();
-
+#endif
 
 }
 void recordPlayWidget::recordPlaySlowForwardSlot()
 {
+#if 0
     if (NULL == m_cmpHandle)
     {
         return;
@@ -1061,6 +1075,7 @@ void recordPlayWidget::recordPlaySlowForwardSlot()
     CMP_SetPlayRate(m_cmpHandle,m_dPlaySpeed);
 
     setPlayButtonStyleSheet();
+#endif
 }
 
 void recordPlayWidget::manualSwitchVideoEndSlot()
@@ -1322,7 +1337,10 @@ void *slideValueSetThread(void *param)    //播放进度条刷新线程
           {
               while (1 == recordPlaypage->m_iThreadRunFlag && iTryGetPlayRangeNum > 0)     //尝试5次获取播放时长，每次间隔1000MS
               {
-                  iDuration = CMP_GetPlayRange(recordPlaypage->m_cmpHandle);
+//                  iDuration = CMP_GetPlayRange(recordPlaypage->m_cmpHandle);
+                  iDuration =  CMP_GetPlayRange(recordPlaypage->m_cmpHandle);
+                  qDebug()<<"**********iDuration="<<recordPlaypage->m_iSliderValue<<__LINE__<<endl;
+
                   if (iDuration > 0)
                   {
                       break;
@@ -1347,7 +1365,9 @@ void *slideValueSetThread(void *param)    //播放进度条刷新线程
           if ((recordPlaypage->m_iPlayRange > 0) && (recordPlaypage->m_iPlayFlag != 0))   //只有获取到了进度条范围值,并且不处于暂停状态才会刷新进度条，否则不做刷新处理
           {
               pthread_mutex_lock(&g_sliderValueSetMutex);
-              recordPlaypage->m_iSliderValue = CMP_GetCurrentPlayTime(recordPlaypage->m_cmpHandle);
+//              recordPlaypage->m_iSliderValue = CMP_GetCurrentPlayTime(recordPlaypage->m_cmpHandle);
+              recordPlaypage->m_iSliderValue = CMP_GetPlayTime(recordPlaypage->m_cmpHandle);
+              qDebug()<<"**********value="<<recordPlaypage->m_iSliderValue<<__LINE__<<endl;
               recordPlaypage->triggerSetSliderValueSignal(recordPlaypage->m_iSliderValue);
               pthread_mutex_unlock(&g_sliderValueSetMutex);
               if (recordPlaypage->m_iSliderValue >= recordPlaypage->m_iPlayRange)   //进度到100%，表示该段录像回放完毕，关闭播放窗口
@@ -1369,6 +1389,9 @@ void recordPlayWidget::recordPlayCtrl(int iRow, int iDex)
     T_TRAIN_CONFIG tTrainConfigInfo;
     T_LOG_INFO tLogInfo;
 
+    QRect rt;
+    QPoint pt;
+
     /*每次播放开始时播放时长清0，设置播放进度条范围值为0，使播放进度条复位*/
     m_iPlayRange = 0;
     m_playSlider->setRange(0, m_iPlayRange);
@@ -1383,11 +1406,27 @@ void recordPlayWidget::recordPlayCtrl(int iRow, int iDex)
     playSpeedStr = "1.00x";
     setPlayButtonStyleSheet();
 
-    snprintf(acRtspAddr, sizeof(acRtspAddr), "rtsp://127.0.0.%d:554/%s",1, m_acFilePath[iRow]);
+//    snprintf(acRtspAddr, sizeof(acRtspAddr), "rtsp://admin:admin123@127.0.0.%d:554/%s",1, m_acFilePath[iRow]);
+    snprintf(acRtspAddr, sizeof(acRtspAddr), "rtsp://admin:admin123@192.168.104.%d:554/%s",200, m_acFilePath[iRow]);
+
     printf("************----recordPlayCtrl---%s\n",acRtspAddr);
     if (NULL == m_cmpHandle)
     {
-        m_cmpHandle = CMP_CreateMedia(m_playWin);
+//        m_cmpHandle = CMP_CreateMedia(m_playWin);
+        rt = m_playWin->geometry();
+        pt = m_playWin->mapToGlobal(QPoint(0, 0));
+        m_RealMonitorVideos.nVideoWidth = 0;
+        m_RealMonitorVideos.nVideoHeight = 0;
+        m_RealMonitorVideos.nX = rt.x();
+        m_RealMonitorVideos.nY = rt.y();
+        m_RealMonitorVideos.nWidth = rt.width();
+        m_RealMonitorVideos.nHeight = rt.height();
+        m_RealMonitorVideos.hWnd = (HWND)m_playWin;
+
+        DRM_Init(pt.x(), pt.y(), rt.width(), rt.height());
+
+        m_cmpHandle = CMP_Init(&m_RealMonitorVideos, CMP_VDEC_NORMAL);
+        CMP_OpenMediaFile(m_cmpHandle,acRtspAddr, CMP_TCP);
         if(NULL == m_cmpHandle)
         {
             QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("录像窗口创建失败!"));
@@ -1397,11 +1436,15 @@ void recordPlayWidget::recordPlayCtrl(int iRow, int iDex)
             return;
         }
     }
-
-    iRet = CMP_OpenMediaFile(m_cmpHandle, acRtspAddr, CMP_TCP);
+    rt = m_playWin->geometry();
+    pt = m_playWin->mapToGlobal(QPoint(0, 0));
+    DRM_SetRect(pt.x(), pt.y(), rt.width(), rt.height());
+    DRM_Show(1);
+    iRet = CMP_PlayMedia(m_cmpHandle);
+//    iRet = CMP_OpenMediaFile(m_cmpHandle, acRtspAddr, CMP_TCP);
     if(iRet < 0)
     {
-        CMP_DestroyMedia(m_cmpHandle);
+//        CMP_DestroyMedia(m_cmpHandle);
         QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("录像播放失败!"));
         box.setStandardButtons (QMessageBox::Ok);
         box.setButtonText (QMessageBox::Ok,QString::fromUtf8("确 定"));

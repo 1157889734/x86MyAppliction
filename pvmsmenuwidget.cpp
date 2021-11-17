@@ -716,6 +716,7 @@ void pvmsMenuWidget::menuButtonClick()
         ui->devManageMenuPushButton->setChecked(false);
         ui->devUpdateMenuPushButton->setChecked(false);
 
+
     }
     else if (Sender->objectName() == "recordPlayMenuPushButton")     //录像回放按钮被按，则切换到录像回放页面
     {

@@ -23,12 +23,25 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 CONFIG += c++11
 
+
+INCLUDEPATH += $$PWD/include
+INCLUDEPATH += /home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/rockchip/
+INCLUDEPATH += /home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/libdrm
+LIBS += -L$$PWD/lib/  -ldl -lz -lbz2 -lrockchip_mpp -lvproc_rga -ldrm -lpthread
+
 SOURCES += \
+    cmplayer.cpp \
+    debugout/debug.c \
     led.c \
+    libdrm/bo.cpp \
+    libdrm/dev.cpp \
+    libdrm/modeset.cpp \
+    libdrm/planetest.cpp \
         main.cpp \
     MyApplication.cpp \
     choicelogindevwidget.cpp \
     loginwidget.cpp \
+    mutex.cpp \
     pvmsmenuwidget.cpp \
     pvmsmonitorwidget.cpp \
     recordplaywidget.cpp \
@@ -37,6 +50,15 @@ SOURCES += \
     devupdatewidget.cpp \
     alarmwidget.cpp \
     fileConfig.cpp \
+    rgaapi.cpp \
+    rtsp/Base64EncDec.c \
+    rtsp/md5.c \
+    rtsp/ourMD5.c \
+    rtsp/rtcp.c \
+    rtsp/rtp.c \
+    rtsp/rtsp.c \
+    rtsp/rtspApi.c \
+    rtsp/rtspComm.c \
     state.cpp \
 #    timeset.cpp \
     gb2312_utf8.c \
@@ -50,16 +72,23 @@ SOURCES += \
 #    usermanage.cpp \
     ftpApi.c \
     rs485serv.c \
+    vdec.cpp \
     waitloginwidget.cpp \
-    usergroupmanage.cpp \
-    cmplayer.cpp
+    usergroupmanage.cpp
 #    usermanageconfig.cpp
 
 HEADERS += \
     MyApplication.h \
     choicelogindevwidget.h \
+    cmplayer.h \
+    debugout/debug.h \
     led.h \
+    libdrm/bo.h \
+    libdrm/dev.h \
+    libdrm/modeset.h \
+    libdrm/planetest.h \
     loginwidget.h \
+    mutex.h \
     pvmsmenuwidget.h \
     pvmsmonitorwidget.h \
     recordplaywidget.h \
@@ -72,6 +101,17 @@ HEADERS += \
     gb2312_utf8.h \
     log.h \
     pmsgcli.h \
+    rgaapi.h \
+    rtsp/Base64EncDec.h \
+    rtsp/md5.h \
+    rtsp/mutex.h \
+    rtsp/ourMD5.h \
+    rtsp/rtcp.h \
+    rtsp/rtp.h \
+    rtsp/rtsp.h \
+    rtsp/rtspApi.h \
+    rtsp/rtspComm.h \
+    rtsp/types.h \
     state.h \
 #    timeset.h \
     types.h \
@@ -83,9 +123,9 @@ HEADERS += \
 #    usermanage.h \
     ftpApi.h \
     rs485serv.h \
+    vdec.h \
     waitloginwidget.h \
-    usergroupmanage.h \
-    cmplayer.h
+    usergroupmanage.h
 #    usermanageconfig.h
 
 # Default rules for deployment.

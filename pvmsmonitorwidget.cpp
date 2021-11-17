@@ -9,6 +9,9 @@
 #include <QMouseEvent>
 #include <qdebug.h>
 #include <QUrl>
+#include "libdrm/planetest.h"
+#include "cmplayer.h"
+#include "vdec.h"
 
 static pthread_mutex_t g_tCmpCtrlMutex;
 
@@ -343,6 +346,7 @@ pvmsMonitorWidget::pvmsMonitorWidget(QWidget *parent) :
     m_iOldRecordPlayFlag = 0;
     m_playWin = NULL;
     memset(m_tCameraInfo, 0, sizeof(T_CAMERA_INFO)*MAX_SERVER_NUM*MAX_CAMERA_OFSERVER);
+    memset(m_RealMonitorVideos, 0, sizeof(m_RealMonitorVideos));
 
 
     pthread_mutexattr_init(&mutexattr);
@@ -497,7 +501,7 @@ void *monitorThread(void *param)     //实时监控线程，对通道轮询、�
         //printf("tFullScreenCurTime=%d,pvmsMonitorPage->m_lastActionTime=%d\n",tFullScreenCurTime,pvmsMonitorPage->m_lastActionTime);
         if (pvmsMonitorPage->isHidden() != 1)   //只有当前处于受电弓监控界面时才做触发全屏处理
         {
-            pvmsMonitorPage->triggerFullScreenSignal();
+//            pvmsMonitorPage->triggerFullScreenSignal();
         }
         pvmsMonitorPage->m_lastActionTime = tFullScreenCurTime;
     }
@@ -1586,10 +1590,13 @@ void pvmsMonitorWidget::recordPlayCtrlSlot()
 void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
 {
     int iRet = 0, i = 0;
-    QStringList list;
-
-    CMPHandle cmpHandle = NULL;
-
+//    QStringList list;
+    const char * rtsp_url[] = {
+                "rtsp://admin:admin123@192.168.104.201", "rtsp://admin:admin123@192.168.104.200",
+                "rtsp://admin:admin123@192.168.104.201", "rtsp://admin:admin123@192.168.104.200"};
+//    void* cmpHandle = NULL;
+    QRect rt;
+    QPoint pt;
 
     if (iCh > (MAX_SERVER_NUM*MAX_CAMERA_OFSERVER - 1))
     {
@@ -1600,79 +1607,61 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
 
         if( NULL == m_tCameraInfo[iCh].cmpHandle)
         {
-//            if(pageType == 0)
-            {
-                cmpHandle = CMP_CreateMedia(m_playWin);
-                if (NULL ==cmpHandle)
-                {
-                    printf("CMP_CreateMedia error\n");
-                    return;
-                }
+            rt = m_playWin->geometry();
+            pt = m_playWin->mapToGlobal(QPoint(0, 0));
+            m_RealMonitorVideos[iCh].nVideoWidth = 0;
+            m_RealMonitorVideos[iCh].nVideoHeight = 0;
+            m_RealMonitorVideos[iCh].nX = rt.x();
+            m_RealMonitorVideos[iCh].nY = rt.y();
+            m_RealMonitorVideos[iCh].nWidth = rt.width();
+            m_RealMonitorVideos[iCh].nHeight = rt.height();
+            m_RealMonitorVideos[iCh].hWnd = (HWND)m_playWin;
 
-                iRet = CMP_OpenMediaPreview(cmpHandle, m_tCameraInfo[iCh].acCameraRtspUrl, CMP_TCP);
-                if (iRet != 0)
-                {
-                    printf("CMP_OpenMediaPreview error\n");
-                    return;
-                }
-                m_tCameraInfo[iCh].iCmpOpenFlag = 1;
-                m_tCameraInfo[iCh].cmpHandle = cmpHandle;
-            }
+            DRM_Init(pt.x(), pt.y(), rt.width(), rt.height());
+
+            m_tCameraInfo[iCh].cmpHandle = CMP_Init(&m_RealMonitorVideos[iCh], CMP_VDEC_NORMAL);
+            CMP_OpenMediaPreview(m_tCameraInfo[iCh].cmpHandle, rtsp_url[iCh], CMP_TCP);
+
         }
+
 
     }
     else if (CMP_CMD_CLOSE_DESTORY_CH == iType)
     {
-        iRet = CMP_CloseMedia(m_tCameraInfo[iCh].cmpHandle);
-        if (iRet != 0)
-        {
-            printf("[%s] CMP_CloseMedia error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, iCh);
-            return;
-        }
-
-        m_tCameraInfo[iCh].iCmpOpenFlag = 0;
-        pthread_mutex_lock(&g_tCmpCtrlMutex);
-        CMP_DestroyMedia(m_tCameraInfo[iCh].cmpHandle);
-        m_tCameraInfo[iCh].cmpHandle = NULL;
-        pthread_mutex_unlock(&g_tCmpCtrlMutex);
-        qDebug()<<"**********close**destroy***********ch="<<iCh<<m_tCameraInfo[iCh].cmpHandle<<endl;
+        CMP_CloseMedia(m_tCameraInfo[iCh].cmpHandle);
 
     }
     else if(CMP_CMD_ENABLE_CH == iType)
     {
 
-        iRet = CMP_SetWndDisplayEnable(m_tCameraInfo[iCh].cmpHandle,SHOW_VIDEO);
-        if (iRet != 0)
-        {
-            printf("[%s] CMP_SetWndDisplayEnable on error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, iCh);
-            return;
-        }
+
+        rt = m_playWin->geometry();
+        pt = m_playWin->mapToGlobal(QPoint(0, 0));
+        DRM_SetRect(pt.x(), pt.y(), rt.width(), rt.height());
+        DRM_Show(1);
+        CMP_PlayMedia(m_tCameraInfo[iCh].cmpHandle);
+        CMP_SetPlayEnnable(m_tCameraInfo[iCh].cmpHandle, 1);
 
     }
     else if(CMP_CMD_DISABLE_CH == iType)
     {
-        iRet = CMP_SetWndDisplayEnable(m_tCameraInfo[iCh].cmpHandle,HIDE_VIDEO);
-        if (iRet != 0)
-        {
-            printf("[%s] CMP_SetWndDisplayEnable on error!iRet=%d, cameraNo=%d\n",__FUNCTION__,iRet, iCh);
-            return;
-        }
+
+        CMP_SetPlayEnnable(m_tCameraInfo[iCh].cmpHandle, 0);
+        DRM_Show(0);
+
 
     }
     else if (CMP_CMD_CHG_ALL_VIDEOWIN == iType)
     {
-        for (i = 0; i <m_iCameraNum; i++)
-        {
-            if (1 == m_tCameraInfo[i].iCmpOpenFlag)
-            {
-                CMP_ChangeWnd(m_tCameraInfo[i].cmpHandle,m_playWin);
-            }
-        }
+        rt = m_playWin->geometry();
+        pt = m_playWin->mapToGlobal(QPoint(0, 0));
+        DRM_SetRect(pt.x(), pt.y(), rt.width(), rt.height());
+        DRM_Show(1);
+
     }
     else if (CMP_CMD_GET_STREAM_STATE == iType)
     {
-//        if(NULL != m_tCameraInfo[iCh].cmpHandle)
-//           m_tCameraInfo[iCh].iStreamState = CMP_GetStreamState(m_tCameraInfo[iCh].cmpHandle);
+
     }
 
 }

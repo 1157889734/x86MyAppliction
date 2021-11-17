@@ -1,6 +1,10 @@
 ﻿#ifndef	__COMMON_TYPES_H__
 #define	__COMMON_TYPES_H__
 
+#ifdef __cplusplus
+extern "C"{
+#endif /* End of #ifdef __cplusplus */
+
 #include	<stdio.h>
 #include	<stdlib.h>
 #include	<errno.h>
@@ -23,8 +27,29 @@
 
 
 
+typedef void* HWND;
+typedef struct _T_WND_INFO
+{
+    HWND hWnd;
+    int  nX;
+    int  nY;
+    int  nWidth;
+    int  nHeight;
+    int  nVideoWidth;
+    int  nVideoHeight;
+    void *pRenderHandle;
 
+}T_WND_INFO;
 
+#ifndef _CMP_VDEC_TYPE_
+#define _CMP_VDEC_TYPE_
+enum CMP_VDEC_TYPE
+{
+    CMP_VDEC_NORMAL = 0,       // 正常解码
+    CMP_VDEC_FISHEYE,          // 鱼眼校正
+    CMP_VDEC_DXVA,             // 硬件加速解码
+};
+#endif
 
 typedef unsigned char           BYTE;
 typedef unsigned short		WORD;
@@ -59,7 +84,7 @@ typedef unsigned short		UINT16;
 typedef unsigned short          USHORT;
 typedef	unsigned short		ushort_t;
 
-typedef int                     HANDLE;         // note that handle here is assumed to be
+//typedef int                     HANDLE;         // note that handle here is assumed to be
 typedef int                     BOOLEAN;
 typedef int			PT_FILEHANDLE;
 typedef int*                    PHANDLE;
@@ -87,7 +112,7 @@ typedef unsigned long long         UINT64;
 #endif
 
 
-#define	Sleep	sleep
+//#define	Sleep	sleep
 
 
 
@@ -110,6 +135,8 @@ typedef unsigned long long         UINT64;
 	#define FALSE		0
 #endif
 
-
+#ifdef __cplusplus
+}
+#endif /* End of #ifdef __cplusplus */
 
 #endif	//__COMMON_TYPES_H__

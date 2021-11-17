@@ -15,9 +15,11 @@
 #include <QMediaPlayer>
 #include "qplayer.h"
 #include <QPainter>
-#include "cmplayer.h"
 #include "alarmwidget.h"
+//#include "libdrm/bo.h"
+//#include "vdec.h"
 
+#include "types.h"
 namespace Ui {
 class pvmsMonitorWidget;
 }
@@ -86,7 +88,7 @@ typedef struct _T_CAMERA_INFO
     int iStreamState;
     time_t tPtzOprateTime;    //云台操作时间
     PMSG_HANDLE phandle;   //所属服务器的通信句柄
-    CMPHandle cmpHandle;    //客户端媒体播放句柄
+    void* cmpHandle;    //客户端媒体播放句柄
 } __attribute__((packed)) T_CAMERA_INFO, *PT_CAMERA_INFO;
 
 
@@ -232,6 +234,7 @@ private:
     QTimer *m_fillLightSwitchTimer;
     QTimer *m_cameraSwitchTimer;
 
+    T_WND_INFO                     m_RealMonitorVideos[4];
 
 
 };

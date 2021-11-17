@@ -19,7 +19,6 @@
 
 
 
-
 #define MAX_RECORD_SEACH_NUM 10000
 #define MAX_RECFILE_PATH_LEN 256
 
@@ -136,6 +135,8 @@ private:
 
     int m_iRecordIdex;
     QTimer *m_recordTabelWidgetFillTimer;
+    T_WND_INFO                     m_RealMonitorVideos;
+
 
 };
 
