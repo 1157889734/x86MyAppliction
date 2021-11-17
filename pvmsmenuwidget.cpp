@@ -597,7 +597,7 @@ void pvmsMenuWidget::registOutButtonClick(int page)
 {
     g_ipageValue = page;
     m_pvmsMonitorPage->closePlayWin();   //关闭受电弓监控界面的播放窗口
-    m_recordPlayPage->closePlayWin();   //关闭录像回放界面的播放窗口
+    m_recordPlayPage->closePlayWin(1);   //关闭录像回放界面的播放窗口
     m_pvmsMonitorPage->m_iPresetPasswdOkFlag = 0;
     m_pvmsMonitorPage->enableVideoPlay(0);   //禁止受电弓监控页面解码显示
 
@@ -696,14 +696,13 @@ void pvmsMenuWidget::menuButtonClick()
     }
     if (Sender->objectName() == "pvmsMonitorMenuPushButton")     //受电弓监控按钮被按，则切换到受电弓监控页面
     {
-
         m_recordPlayPage->hide();
         m_devManagePage->hide();
         m_devUpdatePage->hide();
         m_pvmsMonitorPage->show();
 
         m_pvmsMonitorPage->m_playWin->show();
-        m_recordPlayPage->closePlayWin();   //关闭录像回放界面的播放窗口
+        m_recordPlayPage->closePlayWin(0);   //关闭录像回放界面的播放窗口
 
         m_pvmsMonitorPage->enableVideoPlay(1);   //运行受电弓监控页面解码的显示
 
@@ -759,7 +758,7 @@ void pvmsMenuWidget::menuButtonClick()
 
         m_pvmsMonitorPage->m_playWin->hide();
 
-        m_recordPlayPage->closePlayWin();   //关闭录像回放界面的播放窗口
+        m_recordPlayPage->closePlayWin(0);   //关闭录像回放界面的播放窗口
 
 
         ui->pvmsMonitorMenuPushButton->setChecked(false);
@@ -790,7 +789,7 @@ void pvmsMenuWidget::menuButtonClick()
 
         m_pvmsMonitorPage->m_playWin->hide();
 
-        m_recordPlayPage->closePlayWin();   //关闭录像回放界面的播放窗口
+        m_recordPlayPage->closePlayWin(0);   //关闭录像回放界面的播放窗口
 
         ui->pvmsMonitorMenuPushButton->setChecked(false);
         ui->recordPlayMenuPushButton->setChecked(false);

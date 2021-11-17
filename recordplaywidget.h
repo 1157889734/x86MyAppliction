@@ -43,7 +43,6 @@ public:
     int m_iPlayFlag;   //播放标志，0-暂停状态，未播放，1-在播放
     double m_dPlaySpeed;   //播放速度
     int m_iPlayRange;    //录像文件总播放时长
-    int playingTime;
     CMPHandle m_cmpHandle;   //客户端媒体播放句柄
     QWidget *m_playWin;     //播放窗体
 
@@ -53,7 +52,7 @@ public:
     int m_iFtpServerIdex;    //当前ftp服务器索引编号
     PFTP_HANDLE m_tFtpHandle[MAX_SERVER_NUM];  //FTP句柄
 
-    void closePlayWin();
+    void closePlayWin(int value);
     void recordQueryCtrl(char *pcMsgData, int iMsgDataLen);
     void recordPlayCtrl(int iRow, int iDex);
     void triggerSetSliderValueSignal(int iValue);   //触发设置播放进度条值的信号

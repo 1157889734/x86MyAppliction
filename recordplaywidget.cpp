@@ -209,7 +209,7 @@ recordPlayWidget::~recordPlayWidget()
 {
 
     pthread_mutex_destroy(&g_sliderValueSetMutex);
-    closePlayWin();
+    closePlayWin(1);
 
     if (m_tableWidgetStyle != NULL)
     {
@@ -247,7 +247,6 @@ void recordPlayWidget::playSliderMoveSlot(int iPosTime)
     }
     else if (iPosTime == m_playSlider->value())    //时间值没有变化不进行处理
     {
-//        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] value is not change, do not set!\n", __FUNCTION__);
         return;
     }
     else if (0 == iPosTime) //防止pos值为0而服务器不处理，所有值最小为1
@@ -261,15 +260,13 @@ void recordPlayWidget::playSliderMoveSlot(int iPosTime)
         {
             return;
         }
+
         m_iPlayFlag = 1;
         m_dPlaySpeed = 1.00;
-//        CMP_PauseMedia(m_cmpHandle);
         pthread_mutex_lock(&g_sliderValueSetMutex);
         m_playSlider->setValue(iPosTime);
         CMP_SetPosition(m_cmpHandle, iPosTime);
-        playingTime = iPosTime;
         pthread_mutex_unlock(&g_sliderValueSetMutex);
-//        CMP_PlayMedia(m_cmpHandle);
 
    }
 }
@@ -300,20 +297,16 @@ void recordPlayWidget::playSliderPressSlot(int iPosTime)
 
         m_iPlayFlag = 1;
         m_dPlaySpeed = 1.00;
-//        CMP_PauseMedia(m_cmpHandle);
         pthread_mutex_lock(&g_sliderValueSetMutex);
         m_playSlider->setValue(iPosTime);
-        playingTime = iPosTime;
         CMP_SetPosition(m_cmpHandle, iPosTime);
         pthread_mutex_unlock(&g_sliderValueSetMutex);
-//        CMP_PlayMedia(m_cmpHandle);
 
     }
 }
 
 void recordPlayWidget::playPlusStepSlot()
 {
-#if 1
     qint64 iPosTime = 0;
     QString playSpeedStr;
 
@@ -331,10 +324,11 @@ void recordPlayWidget::playPlusStepSlot()
     m_dPlaySpeed = 1.00;
     setPlayButtonStyleSheet();
 
-//    iPosTime = CMP_GetCurrentPlayTime(m_cmpHandle) + 60000;
-//    CMP_PauseMedia(m_cmpHandle);
-    iPosTime = CMP_GetPlayTime(m_cmpHandle);
-    qDebug()<<"**********iPosTime="<<iPosTime<<endl;
+    iPosTime = CMP_GetPlayTime(m_cmpHandle) + 60;
+    if(iPosTime > CMP_GetPlayRange(m_cmpHandle))
+    {
+        iPosTime = CMP_GetPlayRange(m_cmpHandle);
+    }
     if (m_iPlayRange != 0)
     {
         if (iPosTime <= m_iPlayRange)
@@ -347,17 +341,14 @@ void recordPlayWidget::playPlusStepSlot()
     }
     else
     {
-        closePlayWin();
+        closePlayWin(1);
         setPlayButtonStyleSheet();
     }
-//    CMP_PlayMedia(m_cmpHandle);
 
-#endif
 }
 
 void recordPlayWidget::playMinusStepSlot()
 {
-#if 1
     qint64 iPosTime = 0;
     QString playSpeedStr;
 
@@ -374,10 +365,11 @@ void recordPlayWidget::playMinusStepSlot()
     m_dPlaySpeed = 1.00;
     setPlayButtonStyleSheet();
 
-//    iPosTime = CMP_GetCurrentPlayTime(m_cmpHandle) - 60000;
-    iPosTime = CMP_GetPlayTime(m_cmpHandle);
-
-//    CMP_PauseMedia(m_cmpHandle);
+    iPosTime = CMP_GetPlayTime(m_cmpHandle) - 60;
+    if(iPosTime < 60)
+    {
+        iPosTime = 0;
+    }
 
     if (iPosTime > 0)
     {
@@ -396,9 +388,7 @@ void recordPlayWidget::playMinusStepSlot()
         pthread_mutex_unlock(&g_sliderValueSetMutex);
 
     }
-//    CMP_PlayMedia(m_cmpHandle);
 
-#endif
 }
 
 
@@ -477,7 +467,7 @@ void recordPlayWidget::setDownloadProcessBarValueSlot(int iValue)   //设置文�
 
 void recordPlayWidget::closeRecordPlaySlot()
 {
-    closePlayWin();
+    closePlayWin(1);
     setPlayButtonStyleSheet();
 }
 
@@ -968,15 +958,13 @@ void recordPlayWidget::recordPlayStopSlot()
 {
     if (m_cmpHandle != NULL)    //如果播放窗口已经有打开了码流播放，关闭码流播放
     {
-        closePlayWin();
+        closePlayWin(1);
         setPlayButtonStyleSheet();
     }
 }
 
-void recordPlayWidget::closePlayWin()  ///////////??????????????
+void recordPlayWidget::closePlayWin(int value)  ///////////??????????????
 {
-#if 1
-    qDebug()<<"**********closePlayWin == NULL"<<__LINE__<<endl;
 
     if (m_threadId != 0)
     {
@@ -990,16 +978,20 @@ void recordPlayWidget::closePlayWin()  ///////////??????????????
 
     if (m_cmpHandle != NULL)    //关闭已打开的回放
     {
-        CMP_SetPlayEnnable(m_cmpHandle, 0);
-        DRM_Show(0);
-        CMP_CloseMedia(m_cmpHandle);
-        CMP_UnInit(m_cmpHandle);
-
-
-//        CMP_DestroyMedia(m_cmpHandle);
+        if(value == 0)
+        {
+            DRM_Show(0);
+            CMP_SetPlayEnnable(m_cmpHandle, 0);
+        }
+        else
+        {
+            DRM_Show(0);
+            CMP_SetPlayEnnable(m_cmpHandle, 0);
+            CMP_CloseMedia(m_cmpHandle);
+            CMP_UnInit(m_cmpHandle);
+        }
         m_cmpHandle= NULL;
         emit setRecordPlayFlagSignal(0);
-        qDebug()<<"**********m_cmpHandle == NULL"<<__LINE__<<endl;
     }
 
     if (m_iRecordIdex >= 0 && ui->recordFileTableWidget->item(m_iRecordIdex, 2) != NULL && 0 == ui->recordFileTableWidget->item(m_iRecordIdex, 2)->text().contains("tmp"))
@@ -1009,7 +1001,6 @@ void recordPlayWidget::closePlayWin()  ///////////??????????????
     }
     m_iRecordIdex = -1;
     m_iPlayFlag = 0;
-#endif
 }
 
 void recordPlayWidget::triggerSetSliderValueSignal(int iValue)
@@ -1132,7 +1123,7 @@ void recordPlayWidget::recordPlayLastOneSlot()
         return;
     }
 
-    closePlayWin();   //先关闭之前的
+    closePlayWin(1);   //先关闭之前的
     setPlayButtonStyleSheet();
     emit setRecordPlayFlagSignal(1);
 
@@ -1174,7 +1165,7 @@ void recordPlayWidget::recordPlayNextOneSlot()
     }
 
 
-    closePlayWin();   //先关闭之前的
+    closePlayWin(1);   //先关闭之前的
     setPlayButtonStyleSheet();
     emit setRecordPlayFlagSignal(1);
 
@@ -1254,7 +1245,7 @@ void recordPlayWidget::recordPlaySlot(QTableWidgetItem *item)    //录像文件�
 
     setPlayButtonStyleSheet();
 
-    closePlayWin();   //先关闭之前的
+    closePlayWin(1);   //先关闭之前的
     setPlayButtonStyleSheet();
     emit setRecordPlayFlagSignal(1);
 
@@ -1417,7 +1408,10 @@ void recordPlayWidget::recordPlayCtrl(int iRow, int iDex)
     setPlayButtonStyleSheet();
 
 //    snprintf(acRtspAddr, sizeof(acRtspAddr), "rtsp://admin:admin123@127.0.0.%d:554/%s",1, m_acFilePath[iRow]);
-    snprintf(acRtspAddr, sizeof(acRtspAddr), "rtsp://admin:admin123@192.168.104.%d:554/%s",200, m_acFilePath[iRow]);
+#if 1 //test
+    snprintf(acRtspAddr, sizeof(acRtspAddr), "rtsp://192.168.1.122:554/home/user/RECORD/hd00/part06/2021-10-27/ch9/12_03_01_20211027_1839.MP4");
+#endif
+//        snprintf(acRtspAddr, sizeof(acRtspAddr), "rtsp://192.168.104.%d:554/%s",201, m_acFilePath[iRow]);
 
     printf("************----recordPlayCtrl---%s\n",acRtspAddr);
     if (NULL == m_cmpHandle)
