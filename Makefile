@@ -40,7 +40,7 @@ DISTNAME      = monitor_ytj1.0.0
 DISTDIR = /home/cftc/project/x86MyAppliction/.tmp/monitor_ytj1.0.0
 LINK          = /home/cftc/toolchain/host/bin/aarch64-buildroot-linux-gnu-g++
 LFLAGS        = --sysroot=/home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot -Wl,-O1 -Wl,-rpath-link,/home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib
-LIBS          = $(SUBLIBS) -latomic -L/home/cftc/project/x86MyAppliction/lib/ -ldl -lz -lbz2 -lrockchip_mpp -lvproc_rga -ldrm /home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5MultimediaWidgets.so /home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Widgets.so /home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5VirtualKeyboard.so /home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Quick.so /home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Multimedia.so /home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Gui.so /home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5QmlModels.so /home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Qml.so /home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Network.so /home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Sql.so /home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Core.so -L/home/edgar/data/workspace/P77/trunk/M3/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib -lmali -lGLESv2 -lpthread  -lrt -lpthread -ldl 
+LIBS          = $(SUBLIBS) -latomic -L/home/cftc/project/x86MyAppliction/lib/ -ldl -lz -lbz2 -lrockchip_mpp -lvproc_rga -ldrm -lwayland-client /home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5MultimediaWidgets.so /home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Widgets.so /home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5VirtualKeyboard.so /home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Quick.so /home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Multimedia.so /home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Gui.so /home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5QmlModels.so /home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Qml.so /home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Network.so /home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Sql.so /home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib/libQt5Core.so -L/home/edgar/data/workspace/P77/trunk/M3/rk356x_linux/buildroot/output/rockchip_rk3568/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib -lmali -lGLESv2 -lpthread  -lrt -lpthread -ldl 
 AR            = /home/cftc/toolchain/host/bin/aarch64-buildroot-linux-gnu-ar cqs
 RANLIB        = 
 SED           = sed
@@ -80,6 +80,7 @@ SOURCES       = cmplayer.cpp \
 		rtsp/rtsp.c \
 		rtsp/rtspApi.c \
 		rtsp/rtspComm.c \
+		shm.cpp \
 		state.cpp \
 		gb2312_utf8.c \
 		log.c \
@@ -132,6 +133,7 @@ OBJECTS       = cmplayer.o \
 		rtsp.o \
 		rtspApi.o \
 		rtspComm.o \
+		shm.o \
 		state.o \
 		gb2312_utf8.o \
 		log.o \
@@ -342,6 +344,7 @@ DIST          = ../../toolchain/host/mkspecs/features/spec_pre.prf \
 		rtsp/rtspApi.h \
 		rtsp/rtspComm.h \
 		rtsp/types.h \
+		shm.h \
 		state.h \
 		types.h \
 		presetpasswdconfirm.h \
@@ -378,6 +381,7 @@ DIST          = ../../toolchain/host/mkspecs/features/spec_pre.prf \
 		rtsp/rtsp.c \
 		rtsp/rtspApi.c \
 		rtsp/rtspComm.c \
+		shm.cpp \
 		state.cpp \
 		gb2312_utf8.c \
 		log.c \
@@ -727,8 +731,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents res.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../toolchain/host/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents MyApplication.h choicelogindevwidget.h cmplayer.h debugout/debug.h led.h libdrm/bo.h libdrm/dev.h libdrm/modeset.h libdrm/planetest.h loginwidget.h mutex.h pvmsmenuwidget.h pvmsmonitorwidget.h recordplaywidget.h devmanagewidget.h devupdatewidget.h alarmwidget.h fileConfig.h gb2312_utf8.h log.h pmsgcli.h rgaapi.h rtsp/Base64EncDec.h rtsp/md5.h rtsp/mutex.h rtsp/ourMD5.h rtsp/rtcp.h rtsp/rtp.h rtsp/rtsp.h rtsp/rtspApi.h rtsp/rtspComm.h rtsp/types.h state.h types.h presetpasswdconfirm.h myslider.h ftpApi.h rs485serv.h vdec.h waitloginwidget.h usergroupmanage.h $(DISTDIR)/
-	$(COPY_FILE) --parents cmplayer.cpp debugout/debug.c led.c libdrm/bo.cpp libdrm/dev.cpp libdrm/modeset.cpp libdrm/planetest.cpp main.cpp MyApplication.cpp choicelogindevwidget.cpp loginwidget.cpp mutex.cpp pvmsmenuwidget.cpp pvmsmonitorwidget.cpp recordplaywidget.cpp devmanagewidget.cpp devupdatewidget.cpp alarmwidget.cpp fileConfig.cpp rgaapi.cpp rtsp/Base64EncDec.c rtsp/md5.c rtsp/ourMD5.c rtsp/rtcp.c rtsp/rtp.c rtsp/rtsp.c rtsp/rtspApi.c rtsp/rtspComm.c state.cpp gb2312_utf8.c log.c pmsgcli.c presetpasswdconfirm.cpp myslider.cpp ftpApi.c rs485serv.c vdec.cpp waitloginwidget.cpp usergroupmanage.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents MyApplication.h choicelogindevwidget.h cmplayer.h debugout/debug.h led.h libdrm/bo.h libdrm/dev.h libdrm/modeset.h libdrm/planetest.h loginwidget.h mutex.h pvmsmenuwidget.h pvmsmonitorwidget.h recordplaywidget.h devmanagewidget.h devupdatewidget.h alarmwidget.h fileConfig.h gb2312_utf8.h log.h pmsgcli.h rgaapi.h rtsp/Base64EncDec.h rtsp/md5.h rtsp/mutex.h rtsp/ourMD5.h rtsp/rtcp.h rtsp/rtp.h rtsp/rtsp.h rtsp/rtspApi.h rtsp/rtspComm.h rtsp/types.h shm.h state.h types.h presetpasswdconfirm.h myslider.h ftpApi.h rs485serv.h vdec.h waitloginwidget.h usergroupmanage.h $(DISTDIR)/
+	$(COPY_FILE) --parents cmplayer.cpp debugout/debug.c led.c libdrm/bo.cpp libdrm/dev.cpp libdrm/modeset.cpp libdrm/planetest.cpp main.cpp MyApplication.cpp choicelogindevwidget.cpp loginwidget.cpp mutex.cpp pvmsmenuwidget.cpp pvmsmonitorwidget.cpp recordplaywidget.cpp devmanagewidget.cpp devupdatewidget.cpp alarmwidget.cpp fileConfig.cpp rgaapi.cpp rtsp/Base64EncDec.c rtsp/md5.c rtsp/ourMD5.c rtsp/rtcp.c rtsp/rtp.c rtsp/rtsp.c rtsp/rtspApi.c rtsp/rtspComm.c shm.cpp state.cpp gb2312_utf8.c log.c pmsgcli.c presetpasswdconfirm.cpp myslider.cpp ftpApi.c rs485serv.c vdec.cpp waitloginwidget.cpp usergroupmanage.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents choicelogindevwidget.ui loginwidget.ui pvmsmenuwidget.ui pvmsmonitorwidget.ui recordplaywidget.ui devmanagewidget.ui devupdatewidget.ui alarmwidget.ui presetpasswdconfirm.ui useredit.ui useradd.ui usermanage.ui usergroupmanage.ui waitloginwidget.ui usermanageconfig.ui devupdatewidget_base.ui $(DISTDIR)/
 
 
@@ -3076,7 +3080,8 @@ cmplayer.o: cmplayer.cpp mutex.h \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QWidget \
 		state.h \
 		pmsgcli.h \
-		log.h
+		log.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cmplayer.o cmplayer.cpp
 
 debug.o: debugout/debug.c debugout/debug.h
@@ -4328,7 +4333,24 @@ pvmsmenuwidget.o: pvmsmenuwidget.cpp pvmsmenuwidget.h \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qtextcodec.h \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QMessageBox \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qmessagebox.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qdialog.h
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qdialog.h \
+		libdrm/planetest.h \
+		mutex.h \
+		libdrm/dev.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/libdrm/drm.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/libdrm/drm_mode.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/libdrm/drm_fourcc.h \
+		libdrm/bo.h \
+		libdrm/modeset.h \
+		rgaapi.h \
+		debugout/debug.h \
+		rga_api.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/rockchip/rk_type.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/rockchip/mpp_err.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/rockchip/mpp_frame.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/rockchip/mpp_buffer.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/rockchip/mpp_meta.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/rockchip/mpp_packet.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o pvmsmenuwidget.o pvmsmenuwidget.cpp
 
 pvmsmonitorwidget.o: pvmsmonitorwidget.cpp pvmsmonitorwidget.h \
@@ -4539,7 +4561,8 @@ pvmsmonitorwidget.o: pvmsmonitorwidget.cpp pvmsmonitorwidget.h \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/rockchip/mpp_packet.h \
 		cmplayer.h \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QHBoxLayout \
-		vdec.h
+		vdec.h \
+		shm.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o pvmsmonitorwidget.o pvmsmonitorwidget.cpp
 
 recordplaywidget.o: recordplaywidget.cpp recordplaywidget.h \
@@ -4770,7 +4793,25 @@ recordplaywidget.o: recordplaywidget.cpp recordplaywidget.h \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QLineEdit \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qlineedit.h \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextcursor.h \
-		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextformat.h
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtextformat.h \
+		vdec.h \
+		libdrm/planetest.h \
+		mutex.h \
+		libdrm/dev.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/libdrm/drm.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/libdrm/drm_mode.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/libdrm/drm_fourcc.h \
+		libdrm/bo.h \
+		libdrm/modeset.h \
+		rgaapi.h \
+		debugout/debug.h \
+		rga_api.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/rockchip/rk_type.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/rockchip/mpp_err.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/rockchip/mpp_frame.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/rockchip/mpp_buffer.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/rockchip/mpp_meta.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/rockchip/mpp_packet.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o recordplaywidget.o recordplaywidget.cpp
 
 devmanagewidget.o: devmanagewidget.cpp devmanagewidget.h \
@@ -5388,6 +5429,131 @@ rtspApi.o: rtsp/rtspApi.c rtsp/mutex.h \
 
 rtspComm.o: rtsp/rtspComm.c rtsp/rtspComm.h
 	$(CC) -c $(CFLAGS) $(INCPATH) -o rtspComm.o rtsp/rtspComm.c
+
+shm.o: shm.cpp shm.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QWidget \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qwidget.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qtwidgetsglobal.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtguiglobal.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qglobal.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qconfig-bootstrapped.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qconfig.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qtcore-config.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qsystemdetection.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qprocessordetection.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qcompilerdetection.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qtypeinfo.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qsysinfo.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qlogging.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qflags.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qatomic.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qbasicatomic.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qatomic_bootstrap.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qgenericatomic.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qatomic_cxx11.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qatomic_msvc.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qglobalstatic.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qmutex.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qnumeric.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qversiontagging.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtgui-config.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qtwidgets-config.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qwindowdefs.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qobjectdefs.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qnamespace.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qobjectdefs_impl.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qwindowdefs_win.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qobject.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qstring.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qchar.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qbytearray.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qrefcount.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qarraydata.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qstringliteral.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qstringalgorithms.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qstringview.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qstringbuilder.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qlist.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qalgorithms.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qiterator.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qhashfunctions.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qpair.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qvector.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qcontainertools_impl.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qpoint.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qbytearraylist.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qstringlist.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qregexp.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qstringmatcher.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qcoreevent.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qscopedpointer.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qmetatype.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qvarlengtharray.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qcontainerfwd.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qobject_impl.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qmargins.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpaintdevice.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qrect.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qsize.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpalette.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qcolor.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qrgb.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qrgba64.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qbrush.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qmatrix.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpolygon.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qregion.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qdatastream.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qiodevice.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qline.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtransform.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpainterpath.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qimage.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpixelformat.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qpixmap.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qsharedpointer.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qshareddata.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qhash.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qsharedpointer_impl.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qfont.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qfontmetrics.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qfontinfo.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qsizepolicy.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qcursor.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qkeysequence.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qevent.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qvariant.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qmap.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qdebug.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qtextstream.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qlocale.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qset.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qcontiguouscache.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qurl.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qurlquery.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qfile.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qfiledevice.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qvector2d.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qtouchdevice.h \
+		rgaapi.h \
+		mutex.h \
+		debugout/debug.h \
+		rga_api.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/rockchip/rk_type.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/rockchip/mpp_err.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/rockchip/mpp_frame.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/rockchip/mpp_buffer.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/rockchip/mpp_meta.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/rockchip/mpp_packet.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/QGuiApplication \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qguiapplication.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qcoreapplication.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qeventloop.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qinputmethod.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/5.14.2/QtGui/qpa/qplatformnativeinterface.h \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QObject \
+		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/QVariant
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o shm.o shm.cpp
 
 state.o: state.cpp state.h \
 		pmsgcli.h \

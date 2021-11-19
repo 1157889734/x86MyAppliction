@@ -10,6 +10,7 @@
 #include "rtsp/rtspComm.h"
 #include <stdarg.h>
 #include "cmplayer.h"
+#include <QDebug>
 
 struct SVideoCmdMessage{
     int  nType;//0 Play 1 Preview
@@ -442,7 +443,7 @@ void* MonitorPlayThread(void *arg)
         }
         else
         {
-            printf("--rtsp_login error!\n");
+//            printf("--rtsp_login error!\n");
             DebugPrint(DEBUG_CMPLAYER_ERROR_PRINT, "rtsp_login %s error!\n", ptCmpPlayer->acUrl);
             if (PLAY_STREAM_TYPE_PLAYBACK == ptCmpPlayer->iPlayStreamType)
             {
@@ -684,6 +685,7 @@ CMPPlayer_API int CMP_OpenMediaFile(CMPHandle hPlay, const char *pcRtspFile, int
     pthread_create(&ptCmpPlayer->hPlayThread, NULL, MonitorPlayThread, ptCmpPlayer);
 
 #endif
+    printf("CMP_OpenMediaFile = %s",ptCmpPlayer->acUrl);
 
     return 0;
 }
@@ -875,7 +877,7 @@ CMPPlayer_API int CMP_SetPlaySpeed(CMPHandle hPlay, double dSpeed)
         SetPlayState(ptCmpPlayer, CMP_STATE_PLAY);
         ptCmpPlayer->iPlaySpeed = 1;
     }
-
+    qDebug()<<"****CMP_SetPlaySpeed--end**ptCmpPlayer->iPlaySpeed ="<<ptCmpPlayer->iPlaySpeed<<endl;
     return 0;
 }
 
@@ -898,11 +900,14 @@ CMPPlayer_API int CMP_ChangeWnd(CMPHandle hPlay,const T_WND_INFO *pWndInfo)
 CMPPlayer_API int CMP_SetPlayEnnable(CMPHandle hPlay, int enable)
 {
     PT_CMP_PLAYER_INFO ptCmpPlayer = (PT_CMP_PLAYER_INFO)hPlay;
+    CMPPLAY_STATE ePlayState = CMP_STATE_IDLE;
+    ePlayState = CMP_GetPlayStatus(hPlay);
+
     if (NULL == ptCmpPlayer)
     {
         return -1;
     }
-    if(ptCmpPlayer->ePlayState == CMP_STATE_PLAY)
+    if(ptCmpPlayer->VHandle)
     {
         if(enable)
         {

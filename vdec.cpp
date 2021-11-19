@@ -1,4 +1,6 @@
 #include "vdec.h"
+#include "shm.h"
+
 #if 1
 #define MAX_DEC_RES_W           1920
 #define MAX_DEC_RES_H           1080
@@ -11,10 +13,10 @@ typedef struct{
     unsigned int type;
 }T_DEC_CMD;
 
-int dec_simple(void *pInfo, T_DATA_PACKET *ptPkt)
+int dec_simple(PT_VIDEO_DEC_INFO ptVideoInfo, T_DATA_PACKET *ptPkt)
 {
     int rt = 0;
-    T_VDEC_INFO *ptDecInfo = (T_VDEC_INFO *)pInfo;
+    T_VDEC_INFO *ptDecInfo = (T_VDEC_INFO *)ptVideoInfo->ptDecInfo;
     RK_U32 pkt_done = 0;
     RK_U32 pkt_eos  = 0;
     RK_U32 err_info = 0;
@@ -135,7 +137,11 @@ int dec_simple(void *pInfo, T_DATA_PACKET *ptPkt)
                     err_info = mpp_frame_get_errinfo(frame) | mpp_frame_get_discard(frame);
                     if (!err_info)
                     {
-                        DRM_Display(frame);
+                        //DRM_Display(frame);
+                        if(ptVideoInfo->iStartPlayFlag == START_STREAM_PLAY)
+                        {
+                            SHM_Display(ptVideoInfo->ptWndInfo->pRenderHandle, frame);
+                        }
                     }
 
                 }
@@ -503,7 +509,7 @@ void* DecodecVideoProc(void *argv)
         {
             continue;
         }
-        iRet = dec_simple(ptVideoInfo->ptDecInfo, &tPkt);
+        iRet = dec_simple(ptVideoInfo, &tPkt);
         free(tPkt.pcData);
         tPkt.pcData = NULL;
 

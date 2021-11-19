@@ -719,16 +719,13 @@ int GetSpsPpsData(PT_RTSP_CONN ptRtspConn, T_SDP_INFO *ptSdpInfo)
 
         }
 
-        printf("ssssssssssssssssssssssssss 123 %s\n",ptSdpInfo->ResMsgSdpHeaders[indexCnt].pHeaderValue);
         if(!strncmp(ptSdpInfo->ResMsgSdpHeaders[indexCnt].pHeaderValue, pRanageTag,strlen(pRanageTag)))
         {
             ptr = strstr(ptSdpInfo->ResMsgSdpHeaders[indexCnt].pHeaderValue, "-");
-            printf("ssssssssssssssssssssssssss 66 \n");
             if (ptr)
             {
                 char *pcStartPos = ptr + 1;
                 ptRtspConn->iPlayRange = atoi(pcStartPos);
-                printf("ssssssssssssssssssssssssss 333 \n");
             }
         }
 

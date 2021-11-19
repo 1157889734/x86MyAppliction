@@ -810,7 +810,7 @@ void recordPlayWidget::recordDownloadSlot()
         memset(&tTrainConfigInfo, 0, sizeof(T_TRAIN_CONFIG));
         STATE_GetCurrentTrainConfigInfo(&tTrainConfigInfo);
 //        snprintf(acIpAddr, sizeof(acIpAddr), "192.168.%d.81", 100+tTrainConfigInfo.tNvrServerInfo[idex].iCarriageNO);
-        snprintf(acIpAddr, sizeof(acIpAddr), "rtsp://127.0.0.%d", 1);
+        snprintf(acIpAddr, sizeof(acIpAddr), "rtsp://admin:admin123@127.0.0.%d", 1);
 
         m_tFtpHandle[idex] = FTP_CreateConnect(acIpAddr, FTP_SERVER_PORT, PftpProc);
         if (0 == m_tFtpHandle[idex])
@@ -980,12 +980,12 @@ void recordPlayWidget::closePlayWin(int value)  ///////////??????????????
     {
         if(value == 0)
         {
-            DRM_Show(0);
+
             CMP_SetPlayEnnable(m_cmpHandle, 0);
         }
         else
         {
-            DRM_Show(0);
+
             CMP_SetPlayEnnable(m_cmpHandle, 0);
             CMP_CloseMedia(m_cmpHandle);
             CMP_UnInit(m_cmpHandle);
@@ -1294,6 +1294,7 @@ void recordPlayWidget::alarmHappenSlot()
         connect(m_alarmHappenTimer,SIGNAL(timeout()), this,SLOT(alarmHappenCtrlSlot()));
         m_alarmHappenTimer->start(500);
     }
+
 }
 
 void recordPlayWidget::alarmClearSlot()
@@ -1407,8 +1408,8 @@ void recordPlayWidget::recordPlayCtrl(int iRow, int iDex)
     playSpeedStr = "1.00x";
     setPlayButtonStyleSheet();
 
-//    snprintf(acRtspAddr, sizeof(acRtspAddr), "rtsp://admin:admin123@127.0.0.%d:554/%s",1, m_acFilePath[iRow]);
-#if 1 //test
+    snprintf(acRtspAddr, sizeof(acRtspAddr), "rtsp://admin:admin123@127.0.0.%d:554/%s",1, m_acFilePath[iRow]);
+#if 0 //test
     snprintf(acRtspAddr, sizeof(acRtspAddr), "rtsp://192.168.1.122:554/home/user/RECORD/hd00/part06/2021-10-27/ch9/12_03_01_20211027_1839.MP4");
 #endif
 //        snprintf(acRtspAddr, sizeof(acRtspAddr), "rtsp://192.168.104.%d:554/%s",201, m_acFilePath[iRow]);
@@ -1427,7 +1428,7 @@ void recordPlayWidget::recordPlayCtrl(int iRow, int iDex)
         m_RealMonitorVideos.nHeight = rt.height();
         m_RealMonitorVideos.hWnd = (HWND)m_playWin;
 
-        DRM_Init(pt.x(), pt.y(), rt.width(), rt.height());
+//        DRM_Init(pt.x(), pt.y(), rt.width(), rt.height());
 
         m_cmpHandle = CMP_Init(&m_RealMonitorVideos, CMP_VDEC_NORMAL);
         CMP_OpenMediaFile(m_cmpHandle,acRtspAddr, CMP_TCP);
@@ -1444,7 +1445,7 @@ void recordPlayWidget::recordPlayCtrl(int iRow, int iDex)
     rt = m_playWin->geometry();
     pt = m_playWin->mapToGlobal(QPoint(0, 0));
     DRM_SetRect(pt.x(), pt.y(), rt.width(), rt.height());
-    DRM_Show(1);
+//    DRM_Show(1);
     iRet = CMP_PlayMedia(m_cmpHandle);
 //    iRet = CMP_OpenMediaFile(m_cmpHandle, acRtspAddr, CMP_TCP);
     if(iRet < 0)

@@ -26,6 +26,8 @@ typedef void* RGA_HANDLE;
 
 #define MAX_MPP_FRAME_NUM  10
 
+#define CODEC_ALIGN(x, a)   (((x)+(a)-1)&~((a)-1))
+
 inline void msleep(int x){
     usleep(x*1000);
 }

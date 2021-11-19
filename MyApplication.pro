@@ -27,7 +27,7 @@ CONFIG += c++11
 INCLUDEPATH += $$PWD/include
 INCLUDEPATH += /home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/rockchip/
 INCLUDEPATH += /home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/libdrm
-LIBS += -L$$PWD/lib/  -ldl -lz -lbz2 -lrockchip_mpp -lvproc_rga -ldrm -lpthread
+LIBS += -L$$PWD/lib/  -ldl -lz -lbz2 -lrockchip_mpp -lvproc_rga -ldrm -lpthread -lwayland-client
 
 SOURCES += \
     cmplayer.cpp \
@@ -59,6 +59,7 @@ SOURCES += \
     rtsp/rtsp.c \
     rtsp/rtspApi.c \
     rtsp/rtspComm.c \
+    shm.cpp \
     state.cpp \
 #    timeset.cpp \
     gb2312_utf8.c \
@@ -112,6 +113,7 @@ HEADERS += \
     rtsp/rtspApi.h \
     rtsp/rtspComm.h \
     rtsp/types.h \
+    shm.h \
     state.h \
 #    timeset.h \
     types.h \

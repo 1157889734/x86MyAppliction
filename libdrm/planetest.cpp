@@ -4,7 +4,6 @@
 static int s_drm_init_count = 0;
 static volatile PDRM_INFO s_drm_info = NULL;
 
-#define CODEC_ALIGN(x, a)   (((x)+(a)-1)&~((a)-1))
 
 PDRM_INFO DRM_Init(int x, int y, int w, int h)
 {
@@ -272,4 +271,20 @@ int DRM_Show(int iShow)
     pdrm_info->locker.Unlock();
 
     return 0;
+}
+
+int DRM_FillBcakColor(uint8_t a, uint8_t r, uint8_t g, uint8_t b)
+{
+    PDRM_INFO pdrm_info = s_drm_info;
+    if(pdrm_info == NULL)
+    {
+        return -1;
+    }
+    pdrm_info->locker.Lock();
+    s_drm_info = NULL;
+    struct sp_plane *plane = pdrm_info->plane;
+    struct sp_bo *bo = plane->bo[0];
+    fill_bo(bo, a, r, g, b);
+    s_drm_info = pdrm_info;
+    pdrm_info->locker.Unlock();
 }

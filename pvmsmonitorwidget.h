@@ -144,6 +144,7 @@ public:
     PT_CMP_QUEUE m_ptQueue;
     pthread_mutex_t tMutex;
 
+    void cmplayInit();
     void startVideoPolling();
     void enableVideoPlay(int iFlag);  //设置显示全局使能标识
 
@@ -234,7 +235,7 @@ private:
     QTimer *m_fillLightSwitchTimer;
     QTimer *m_cameraSwitchTimer;
 
-    T_WND_INFO                     m_RealMonitorVideos[4];
+    T_WND_INFO                     m_RealMonitorVideos;
 
 
 };

@@ -43,6 +43,7 @@ int DRM_UnInit(PDRM_INFO drm_info);
 int DRM_SetRect(int x, int y, int w, int h);
 int DRM_Display(MppFrame frame);
 int DRM_Show(int iShow);
+int DRM_FillBcakColor(uint8_t a=0, uint8_t r=0, uint8_t g=0, uint8_t b=0);
 
 #ifdef __cplusplus
 }
