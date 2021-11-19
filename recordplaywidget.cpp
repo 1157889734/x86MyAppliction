@@ -17,6 +17,7 @@
 #include "types.h"
 #include "cmplayer.h"
 #include "vdec.h"
+#include "shm.h"
 
 int g_iDateEditNo = 0;      //要显示时间的不同控件的编号
 static int g_iRNum = 0;
@@ -114,6 +115,9 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
     ui->minusStepPushButton->setFocusPolicy(Qt::NoFocus);
 //    ui->playSpeedLineEdit->setFocusPolicy(Qt::NoFocus);
 
+    memset(&m_RealMonitorVideos, 0, sizeof(m_RealMonitorVideos));
+    m_RealMonitorVideos.pRenderHandle = NULL;
+
     //参数初始化
     m_alarmHappenTimer = NULL;
     m_recorQueryTimer = NULL;
@@ -143,6 +147,8 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
     m_playWin->setGeometry(290, 0, 730, 540);
     m_playWin->show();
     m_playWin->setStyleSheet("QWidget{background-color: rgb(0, 0, 0);}");
+
+    cmplaybackInit();
 
 //    Mouseflag = true;
     ui->StartdateEdit->setCalendarPopup(true);
@@ -235,6 +241,49 @@ recordPlayWidget::~recordPlayWidget()
     m_pcRecordFileBuf = NULL;
 
     delete ui;
+}
+
+void recordPlayWidget::showPlayWindow(int enable)
+{
+    if( m_RealMonitorVideos.pRenderHandle)
+    {
+        if(enable)
+        {
+            m_playWin->show();
+            SHM_AttchWnd(m_RealMonitorVideos.pRenderHandle, (QWidget*)m_RealMonitorVideos.hWnd);
+            CMP_SetPlayEnnable(m_cmpHandle, 1);
+
+        }
+        else
+        {
+            CMP_SetPlayEnnable(m_cmpHandle, 0);
+            SHM_DetchWnd(m_RealMonitorVideos.pRenderHandle);
+            m_playWin->hide();
+        }
+    }
+}
+
+void recordPlayWidget::cmplaybackInit()
+{
+    if( m_RealMonitorVideos.pRenderHandle)
+        return;
+    QRect rt;
+    QPoint pt;
+    QWidget *pWnd = m_playWin; //
+    rt = pWnd->geometry();
+    pt = pWnd->mapToGlobal(QPoint(0, 0));
+    m_RealMonitorVideos.nVideoWidth = 0;
+    m_RealMonitorVideos.nVideoHeight = 0;
+    m_RealMonitorVideos.nX = rt.x();
+    m_RealMonitorVideos.nY = rt.y();
+    m_RealMonitorVideos.nWidth = rt.width();
+    m_RealMonitorVideos.nHeight = rt.height();
+    m_RealMonitorVideos.hWnd = (HWND)pWnd;
+    m_RealMonitorVideos.pRenderHandle = (void *)SHM_AddRect(pWnd);
+
+
+
+
 }
 
 void recordPlayWidget::playSliderMoveSlot(int iPosTime)
@@ -978,18 +1027,22 @@ void recordPlayWidget::closePlayWin(int value)  ///////////??????????????
 
     if (m_cmpHandle != NULL)    //关闭已打开的回放
     {
+
         if(value == 0)
         {
+            //CMP_SetPlayEnnable(m_cmpHandle, 0);
+            //SHM_DetchWnd(m_RealMonitorVideos.pRenderHandle);
 
-            CMP_SetPlayEnnable(m_cmpHandle, 0);
         }
         else
         {
-
+//            SHM_DetchWnd(m_RealMonitorVideos.pRenderHandle);
             CMP_SetPlayEnnable(m_cmpHandle, 0);
             CMP_CloseMedia(m_cmpHandle);
             CMP_UnInit(m_cmpHandle);
+
         }
+
         m_cmpHandle= NULL;
         emit setRecordPlayFlagSignal(0);
     }
@@ -1028,15 +1081,11 @@ void recordPlayWidget::triggerSetDownloadProcessBarValueSignal(int iValue)	//触
 
 void recordPlayWidget::recordPlayFastForwardSlot()
 {
-#if 1
-
-    qDebug()<<"******recordPlayFastForwardSlot**m_cmpHandle="<<m_cmpHandle<<__LINE__<<endl;
     if (NULL == m_cmpHandle)
     {
         printf("*****NULL == m_cmpHandle****line1036\n");
         return;
     }
-    qDebug()<<"********play-state"<<CMP_GetPlayStatus(m_cmpHandle)<<__LINE__<<endl;
     if(CMP_STATE_PLAY != CMP_GetPlayStatus(m_cmpHandle))
     {
          return;
@@ -1050,20 +1099,17 @@ void recordPlayWidget::recordPlayFastForwardSlot()
     m_dPlaySpeed = m_dPlaySpeed*2;
     CMP_SetPlaySpeed(m_cmpHandle,m_dPlaySpeed);
     setPlayButtonStyleSheet();
-#endif
+    qDebug()<<"******recordPlayFastForwardSlot**m_dPlaySpeed="<<m_dPlaySpeed<<__LINE__<<endl;
+
 
 }
 void recordPlayWidget::recordPlaySlowForwardSlot()
 {
-#if 1
-    qDebug()<<"******recordPlaySlowForwardSlot**m_cmpHandle="<<m_cmpHandle<<__LINE__<<endl;
-
     if (NULL == m_cmpHandle)
     {
         return;
     }
 
-    qDebug()<<"********play-state"<<CMP_GetPlayStatus(m_cmpHandle)<<__LINE__<<endl;
     if(CMP_STATE_PLAY != CMP_GetPlayStatus(m_cmpHandle))
     {
          return;
@@ -1078,7 +1124,8 @@ void recordPlayWidget::recordPlaySlowForwardSlot()
     CMP_SetPlaySpeed(m_cmpHandle,m_dPlaySpeed);
 
     setPlayButtonStyleSheet();
-#endif
+    qDebug()<<"******recordPlayFastForwardSlot**m_dPlaySpeed="<<m_dPlaySpeed<<__LINE__<<endl;
+
 }
 
 void recordPlayWidget::manualSwitchVideoEndSlot()
@@ -1391,8 +1438,6 @@ void recordPlayWidget::recordPlayCtrl(int iRow, int iDex)
     T_TRAIN_CONFIG tTrainConfigInfo;
     T_LOG_INFO tLogInfo;
 
-    QRect rt;
-    QPoint pt;
 
     /*每次播放开始时播放时长清0，设置播放进度条范围值为0，使播放进度条复位*/
     m_iPlayRange = 0;
@@ -1408,31 +1453,14 @@ void recordPlayWidget::recordPlayCtrl(int iRow, int iDex)
     playSpeedStr = "1.00x";
     setPlayButtonStyleSheet();
 
-    snprintf(acRtspAddr, sizeof(acRtspAddr), "rtsp://admin:admin123@127.0.0.%d:554/%s",1, m_acFilePath[iRow]);
-#if 0 //test
-    snprintf(acRtspAddr, sizeof(acRtspAddr), "rtsp://192.168.1.122:554/home/user/RECORD/hd00/part06/2021-10-27/ch9/12_03_01_20211027_1839.MP4");
-#endif
-//        snprintf(acRtspAddr, sizeof(acRtspAddr), "rtsp://192.168.104.%d:554/%s",201, m_acFilePath[iRow]);
+    snprintf(acRtspAddr, sizeof(acRtspAddr), "rtsp://admin:admin123@127.0.0.1:554/%s", m_acFilePath[iRow]);
 
     printf("************----recordPlayCtrl---%s\n",acRtspAddr);
     if (NULL == m_cmpHandle)
     {
-//        m_cmpHandle = CMP_CreateMedia(m_playWin);
-        rt = m_playWin->geometry();
-        pt = m_playWin->mapToGlobal(QPoint(0, 0));
-        m_RealMonitorVideos.nVideoWidth = 0;
-        m_RealMonitorVideos.nVideoHeight = 0;
-        m_RealMonitorVideos.nX = rt.x();
-        m_RealMonitorVideos.nY = rt.y();
-        m_RealMonitorVideos.nWidth = rt.width();
-        m_RealMonitorVideos.nHeight = rt.height();
-        m_RealMonitorVideos.hWnd = (HWND)m_playWin;
-
-//        DRM_Init(pt.x(), pt.y(), rt.width(), rt.height());
-
+        qDebug()<<"*************NULL == m_cmpHandle*******"<<__LINE__<<endl;
         m_cmpHandle = CMP_Init(&m_RealMonitorVideos, CMP_VDEC_NORMAL);
         CMP_OpenMediaFile(m_cmpHandle,acRtspAddr, CMP_TCP);
-//        CMP_OpenMediaPreview(m_cmpHandle,acRtspAddr, CMP_TCP);
         if(NULL == m_cmpHandle)
         {
             QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("录像窗口创建失败!"));
@@ -1441,16 +1469,14 @@ void recordPlayWidget::recordPlayCtrl(int iRow, int iDex)
             box.exec();
             return;
         }
+
     }
-    rt = m_playWin->geometry();
-    pt = m_playWin->mapToGlobal(QPoint(0, 0));
-    DRM_SetRect(pt.x(), pt.y(), rt.width(), rt.height());
-//    DRM_Show(1);
+    qDebug()<<"************CMP_PlayMedia"<<__LINE__;
     iRet = CMP_PlayMedia(m_cmpHandle);
-//    iRet = CMP_OpenMediaFile(m_cmpHandle, acRtspAddr, CMP_TCP);
+    CMP_SetPlayEnnable(m_cmpHandle, 1);
+
     if(iRet < 0)
     {
-//        CMP_DestroyMedia(m_cmpHandle);
         QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("录像播放失败!"));
         box.setStandardButtons (QMessageBox::Ok);
         box.setButtonText (QMessageBox::Ok,QString::fromUtf8("确 定"));

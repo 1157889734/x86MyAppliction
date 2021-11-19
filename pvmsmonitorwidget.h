@@ -136,6 +136,8 @@ public:
 
     PMSG_HANDLE m_PisServerPhandle;    //pis服务器PMSG通信句柄
     QWidget *m_playWin;    //播放窗体
+
+
     int m_iMousePosX;
     int m_iMousePosY;
 

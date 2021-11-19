@@ -206,6 +206,8 @@ pvmsMonitorWidget::pvmsMonitorWidget(QWidget *parent) :
     ui->label_3->setMouseTracking(true);   //设置鼠标移动能捕捉到
     ui->label_7->installEventFilter(this);
     ui->label_7->setMouseTracking(true);
+    ui->mplayLabel->installEventFilter(this);     //播放窗体注册进事件过滤器
+    ui->mplayLabel->setMouseTracking(true);
     ui->ptzUpPushButton->installEventFilter(this);
     ui->ptzUpPushButton->setMouseTracking(true);
     ui->ptzDownPushButton->installEventFilter(this);
@@ -563,19 +565,14 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
 
     if(NULL == m_playWin)
     {
-        m_playWin = ui->label;
-#if 0
         m_playWin = new QWidget(this->parentWidget());   //新建一个与目前窗体同属一个父窗体的播放子窗体，方便实现全屏
-
-//        m_playWin->setGeometry(0, 0, 1024, 768);      //设置窗体在父窗体中的位置，默认一开始为全屏
         m_playWin->setGeometry(0, 138, 782, 620);
-        //m_playWin->show();  //默认显示
+        m_playWin->show();  //默认显示
         m_playWin->hide();
         m_playWin->setObjectName("m_playWin");
         m_playWin->setStyleSheet("QWidget{background-color: rgb(0, 0, 0);}");     //设置播放窗口背景色为黑色
         m_playWin->installEventFilter(this);     //播放窗体注册进事件过滤器
         m_playWin->setMouseTracking(true);
-#endif
 
     }
 
@@ -754,8 +751,6 @@ void pvmsMonitorWidget::enableVideoPlay(int iFlag)    //对摄像头进行解码
                 break;
             }
         }
-
-        //SHM_DetchWnd(m_RealMonitorVideos.pRenderHandle);
         m_iDisplayEnable = 1;  //全局显示使能开启，使轮询线程正常轮询
 
         emit chLabelDisplayCtrlSignal();  //触发通道状态和通道号标签显示处理信号
@@ -1593,11 +1588,14 @@ void pvmsMonitorWidget::setPlayButtonStyleSheet()
 
 void pvmsMonitorWidget::cmplayInit()
 {
+
     if(m_RealMonitorVideos.pRenderHandle)
         return;
+
+
     QRect rt;
     QPoint pt;
-    QWidget *pWnd = ui->label_4; //
+    QWidget *pWnd = m_playWin; //
     rt = pWnd->geometry();
     pt = pWnd->mapToGlobal(QPoint(0, 0));
     m_RealMonitorVideos.nVideoWidth = 0;
@@ -1607,9 +1605,15 @@ void pvmsMonitorWidget::cmplayInit()
     m_RealMonitorVideos.nWidth = rt.width();
     m_RealMonitorVideos.nHeight = rt.height();
     m_RealMonitorVideos.hWnd = (HWND)pWnd;
+
     m_RealMonitorVideos.pRenderHandle = (void *)SHM_AddRect(pWnd);
 
+
 }
+
+
+
+
 
 
 void pvmsMonitorWidget::recordPlayCtrlSlot()
@@ -1635,11 +1639,11 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
         if( NULL == m_tCameraInfo[iCh].cmpHandle)
         {
             cmplayInit();
-
+//            cmplayInit_full();
             m_tCameraInfo[iCh].cmpHandle = CMP_Init(&m_RealMonitorVideos, CMP_VDEC_NORMAL);
             CMP_OpenMediaPreview(m_tCameraInfo[iCh].cmpHandle, rtsp_url[iCh]/*m_tCameraInfo[iCh].acCameraRtspUrl*/, CMP_TCP);
-            CMP_PlayMedia(m_tCameraInfo[iCh].cmpHandle);
-            CMP_SetPlayEnnable(m_tCameraInfo[iCh].cmpHandle, 1);
+            //CMP_PlayMedia(m_tCameraInfo[iCh].cmpHandle);
+            //CMP_SetPlayEnnable(m_tCameraInfo[iCh].cmpHandle, 1);
 
         }
 
@@ -1661,6 +1665,7 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
 //        }
 //        qDebug()<<"****CMP_CMD_ENABLE_CH*******iCh="<<iCh<<__LINE__<<endl;
         //SHM_AttchWnd(m_RealMonitorVideos.pRenderHandle, (QWidget*)m_RealMonitorVideos.hWnd);
+        CMP_PlayMedia(m_tCameraInfo[iCh].cmpHandle);
         CMP_SetPlayEnnable(m_tCameraInfo[iCh].cmpHandle, 1);
 
 
@@ -1680,6 +1685,32 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
     }
     else if (CMP_CMD_CHG_ALL_VIDEOWIN == iType)
     {
+
+//        SHM_FreeRect(m_RealMonitorVideos.pRenderHandle);
+//        m_RealMonitorVideos.pRenderHandle = (void *)SHM_AddRect(m_playWin);
+//        CMP_SetPlayEnnable(m_tCameraInfo[iCh].cmpHandle, 1);
+        if(m_iFullScreenFlag == 1)
+        {
+
+
+            qDebug()<<"**********m_iFullScreenFlag=1"<<__LINE__<<endl;
+//            SHM_FreeRect(m_RealMonitorVideos.pRenderHandle1);
+//            m_RealMonitorVideos.pRenderHandle1 = (void *)SHM_AddRect(m_playWin1);
+
+
+        }
+        else
+        {
+
+            qDebug()<<"**********m_iFullScreenFlag=0"<<__LINE__<<endl;
+
+//            SHM_FreeRect(m_RealMonitorVideos.pRenderHandle);
+//            m_RealMonitorVideos.pRenderHandle = (void *)SHM_AddRect(m_playWin);
+
+
+        }
+//        CMP_SetPlayEnnable(m_tCameraInfo[iCh].cmpHandle, 1);
+
 
 
     }
@@ -2002,9 +2033,20 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
                     return true;
                 }
 
+                for (int i = 0; i < m_iCameraNum; i++)
+                {
+                    CMP_SetPlayEnnable(m_tCameraInfo[i].cmpHandle, 0);
+                    usleep(1000*10);
+
+                }
+
                 m_iFullScreenFlag = 0;
                 m_playWin->move(0, 138);
                 m_playWin->resize(782, 620);
+
+                SHM_FreeRect(m_RealMonitorVideos.pRenderHandle);
+                m_RealMonitorVideos.pRenderHandle = (void *)SHM_AddRect(m_playWin);
+                CMP_SetPlayEnnable(m_tCameraInfo[m_iCameraPlayNo].cmpHandle, 1);
 
                 tPkt.iMsgCmd = CMP_CMD_CHG_ALL_VIDEOWIN;
                 tPkt.iCh = 0;
@@ -2022,13 +2064,26 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
         {
             if (0 == m_iFullScreenFlag)
             {
+
+                for (int i = 0; i < m_iCameraNum; i++)
+                {
+                    CMP_SetPlayEnnable(m_tCameraInfo[i].cmpHandle, 0);
+                    usleep(1000*10);
+                }
 //                DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget mouse double click to full screen!\n");
                 m_playWin->move(0, 0);
                 m_playWin->resize(1024, 768);
 
+
+                SHM_FreeRect(m_RealMonitorVideos.pRenderHandle);
+                m_RealMonitorVideos.pRenderHandle = (void *)SHM_AddRect(m_playWin);
+                CMP_SetPlayEnnable(m_tCameraInfo[m_iCameraPlayNo].cmpHandle, 1);
+
                 tPkt.iMsgCmd = CMP_CMD_CHG_ALL_VIDEOWIN;
                 tPkt.iCh = 0;
                 PutNodeToCmpQueue(m_ptQueue, &tPkt);
+
+
 
                 m_channelStateLabel->setGeometry(452, 360, 130, 50);
                 m_channelNoLabel->setGeometry(20, 690, 100, 50);

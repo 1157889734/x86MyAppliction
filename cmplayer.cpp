@@ -836,16 +836,21 @@ CMPPlayer_API int CMP_SetPlaySpeed(CMPHandle hPlay, double dSpeed)
     CMPPLAY_STATE ePlayState = CMP_STATE_IDLE;
     if (NULL == ptCmpPlayer)
     {
+        qDebug()<<"***********NULL == ptCmpPlayer*****"<<__LINE__<<endl;
         return -1;
     }
     ePlayState = CMP_GetPlayStatus(hPlay);
     if (ePlayState ==  CMP_STATE_ERROR)
     {
+        qDebug()<<"***********ePlayState ==  CMP_STATE_ERROR*****"<<__LINE__<<endl;
         return -1;
     }
 
     PushMessage(ptCmpPlayer, E_PLAY_STATE_FAST_FORWARD, dSpeed);
-    DebugPrint(DEBUG_CMPLAYER_ERROR_PRINT,"[%s %d] CMP_SetPlaySpeed dSpeed = %.2f",__FUNCTION__, __LINE__, dSpeed);
+
+    qDebug()<<"****CMP_SetPlaySpeed--end**ptCmpPlayer->dSpeed ="<<dSpeed<<__LINE__<<endl;
+
+//    DebugPrint(DEBUG_CMPLAYER_ERROR_PRINT,"[%s %d] CMP_SetPlaySpeed dSpeed = %.2f",__FUNCTION__, __LINE__, dSpeed);
 
     if (dSpeed > 0.11 && dSpeed < 0.13)
     {
@@ -877,7 +882,7 @@ CMPPlayer_API int CMP_SetPlaySpeed(CMPHandle hPlay, double dSpeed)
         SetPlayState(ptCmpPlayer, CMP_STATE_PLAY);
         ptCmpPlayer->iPlaySpeed = 1;
     }
-    qDebug()<<"****CMP_SetPlaySpeed--end**ptCmpPlayer->iPlaySpeed ="<<ptCmpPlayer->iPlaySpeed<<endl;
+    qDebug()<<"****CMP_SetPlaySpeed--end**ptCmpPlayer->iPlaySpeed ="<<ptCmpPlayer->iPlaySpeed<<__LINE__<<endl;
     return 0;
 }
 

@@ -978,7 +978,7 @@ QPushButton:pressed
     <string/>
    </property>
   </widget>
-  <widget class="QLabel" name="label_4">
+  <widget class="QLabel" name="mplayLabel">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -1027,7 +1027,7 @@ QPushButton:pressed
   <zorder>focusNearPushButton</zorder>
   <zorder>canselPushButton</zorder>
   <zorder>presetNoPushButton</zorder>
-  <zorder>label_4</zorder>
+  <zorder>mplayLabel</zorder>
  </widget>
  <resources/>
  <connections/>

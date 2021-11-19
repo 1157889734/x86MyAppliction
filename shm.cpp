@@ -23,6 +23,7 @@ typedef struct  T_SHM_RECT_INFO
 {
     int    w;
     int    h;
+    int   size;
     uchar *addr;
     RGA_HANDLE rgaHandle;
     struct wl_surface *window_handle;
@@ -36,6 +37,7 @@ typedef struct  T_SHM_RECT_INFO
         buffer = NULL;
         window_handle = NULL;
     }
+
 }*PT_SHM_RECT_INFO;
 
 
@@ -66,11 +68,8 @@ static PT_SHM_RECT_INFO create_rect_info(int w, int h)
         return NULL;
     }
 
-    printf("1 \n");
     fcntl(fd, F_SETFD, fcntl(fd, F_GETFD) | FD_CLOEXEC);
-    printf("2 \n");
     ftruncate(fd, size);
-    printf("3 \n");
 
     uchar *shm_data = (uchar*)mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     if (shm_data == MAP_FAILED) {
@@ -79,14 +78,13 @@ static PT_SHM_RECT_INFO create_rect_info(int w, int h)
         return NULL;
     }
 
-    printf("4 \n");
     unlink(filename);
 
     struct wl_shm_pool *pool = wl_shm_create_pool(s_shm, fd, size);
     struct wl_buffer   *buffer = wl_shm_pool_create_buffer(pool, 0, w, h, stride, WL_SHM_FORMAT_NV12);
     wl_shm_pool_destroy(pool);
 
-    memset(shm_data, 0x0, size);
+    //memset(shm_data, 0x0, size);
 
     PT_SHM_RECT_INFO pRectInfo = new T_SHM_RECT_INFO;
     pRectInfo->addr = shm_data;
@@ -137,6 +135,29 @@ int SHM_Uinit()
 {
     return 0;
 }
+
+int SHM_FreeRect(SHM_HANDLE hShmHandle)
+{
+    PT_SHM_RECT_INFO pShmRectInfo = (PT_SHM_RECT_INFO)hShmHandle;
+    if(pShmRectInfo == NULL)
+    {
+        return -1;
+    }
+    pShmRectInfo->lock.Lock();
+    if(pShmRectInfo->rgaHandle)
+    {
+        rga_destroy(pShmRectInfo->rgaHandle);
+        pShmRectInfo->rgaHandle = NULL;
+    }
+    munmap(pShmRectInfo->addr, pShmRectInfo->size);
+
+    pShmRectInfo->lock.Unlock();
+    delete pShmRectInfo;
+    pShmRectInfo = NULL;
+
+    return 0;
+}
+
 SHM_HANDLE SHM_AddRect(QWidget *pWnd)
 {
     pWnd->winId();
@@ -167,17 +188,15 @@ SHM_HANDLE SHM_AddRect(QWidget *pWnd)
     }
     pShmRectInfo->rgaHandle = rgaHandle;
 
-    //if(bo->format == DRM_FORMAT_NV12)
-    {
-        memset(pShmRectInfo->addr, 0x10, w * h);
-        memset(pShmRectInfo->addr + w * h, 0x80, w * h * 0.5);
-    }
+    memset(pShmRectInfo->addr, 0x10, w * h);
+    memset(pShmRectInfo->addr + w * h, 0x80, w * h * 0.5);
 
     pShmRectInfo->window_handle = window_handle;
     printf("wl_surface_attach, %0x \n", window_handle);
     wl_surface_attach(window_handle, pShmRectInfo->buffer, 0, 0);
     wl_surface_commit(window_handle);
     wl_display_flush(display_handle);
+
     return pShmRectInfo;
 }
 
@@ -192,7 +211,7 @@ int SHM_AttchWnd(SHM_HANDLE hShmHandle, QWidget *pWnd)
     if(pShmRectInfo->window_handle)
     {
         SHM_DetchWnd(hShmHandle);
-        return -1;
+//        return -1;
     }
 
     struct wl_surface *window_handle  = NULL;
@@ -207,11 +226,14 @@ int SHM_AttchWnd(SHM_HANDLE hShmHandle, QWidget *pWnd)
     printf("wl_surface_attach, %0x \n", window_handle);
     wl_surface_attach(window_handle, pShmRectInfo->buffer, 0, 0);
     wl_surface_commit(window_handle);
-    //wl_display_flush(display_handle);
+    wl_display_flush(display_handle);
     pShmRectInfo->window_handle = window_handle;
     pShmRectInfo->lock.Unlock();
     return 0;
 }
+
+
+
 
 int SHM_DetchWnd(SHM_HANDLE hShmHandle)
 {
@@ -225,12 +247,14 @@ int SHM_DetchWnd(SHM_HANDLE hShmHandle)
         return -1;
     }
     pShmRectInfo->lock.Lock();
-    printf("wl_surface_detach 111\n");
+
     wl_surface_attach(pShmRectInfo->window_handle, 0, 0, 0);
-    printf("wl_surface_detach 2222\n");
+
+
     wl_surface_commit(pShmRectInfo->window_handle);
-    printf("wl_surface_detach 333333\n");
-    //wl_display_flush(display_handle);
+
+
+    wl_display_flush(display_handle);
     pShmRectInfo->window_handle = NULL;
     pShmRectInfo->lock.Unlock();
 
@@ -298,16 +322,11 @@ int SHM_Display(SHM_HANDLE hPlaneHandle, MppFrame frame)
         chroma = (uint8_t *)pShmRectInfo->addr + (i+height)*pShmRectInfo->w;
         memcpy(chroma, base + (i+height)*h_stride, width);
     }
-    //printf("sss 1 \n");
     wl_surface_attach(pShmRectInfo->window_handle, pShmRectInfo->buffer, 0, 0);
-    //printf("sss 2 \n");
     wl_surface_damage (pShmRectInfo->window_handle, 0, 0,
         pShmRectInfo->w, pShmRectInfo->h);
-    //printf("sss 3 \n");
     wl_surface_commit(pShmRectInfo->window_handle);
-    //printf("sss 4 \n");
     //wl_display_flush(display_handle);
     pShmRectInfo->lock.Unlock();
-    //printf("sss 5 \n");
     return 0;
 }

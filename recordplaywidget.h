@@ -52,6 +52,8 @@ public:
     int m_iFtpServerIdex;    //当前ftp服务器索引编号
     PFTP_HANDLE m_tFtpHandle[MAX_SERVER_NUM];  //FTP句柄
 
+    void showPlayWindow(int enable);
+    void cmplaybackInit();
     void closePlayWin(int value);
     void recordQueryCtrl(char *pcMsgData, int iMsgDataLen);
     void recordPlayCtrl(int iRow, int iDex);

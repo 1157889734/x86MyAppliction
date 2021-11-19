@@ -53,7 +53,7 @@ public:
     QLabel *label_7;
     QPushButton *canselPushButton;
     QLabel *label_11;
-    QLabel *label_4;
+    QLabel *mplayLabel;
 
     void setupUi(QWidget *pvmsMonitorWidget)
     {
@@ -451,10 +451,10 @@ public:
         label_11->setGeometry(QRect(0, 0, 1024, 620));
         label_11->setToolTipDuration(0);
         label_11->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
-        label_4 = new QLabel(pvmsMonitorWidget);
-        label_4->setObjectName(QString::fromUtf8("label_4"));
-        label_4->setGeometry(QRect(0, 0, 782, 620));
-        label_4->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 0, 0);"));
+        mplayLabel = new QLabel(pvmsMonitorWidget);
+        mplayLabel->setObjectName(QString::fromUtf8("mplayLabel"));
+        mplayLabel->setGeometry(QRect(0, 0, 782, 620));
+        mplayLabel->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 0, 0);"));
         label_11->raise();
         label_2->raise();
         ptzDownPushButton->raise();
@@ -488,7 +488,7 @@ public:
         focusNearPushButton->raise();
         canselPushButton->raise();
         presetNoPushButton->raise();
-        label_4->raise();
+        mplayLabel->raise();
 
         retranslateUi(pvmsMonitorWidget);
 
@@ -531,7 +531,7 @@ public:
         label_7->setText(QCoreApplication::translate("pvmsMonitorWidget", "  \351\242\204\347\275\256\347\202\271", nullptr));
         canselPushButton->setText(QString());
         label_11->setText(QString());
-        label_4->setText(QString());
+        mplayLabel->setText(QString());
     } // retranslateUi
 
 };

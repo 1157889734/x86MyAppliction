@@ -31,6 +31,7 @@ typedef void* HWND;
 typedef struct _T_WND_INFO
 {
     HWND hWnd;
+
     int  nX;
     int  nY;
     int  nWidth;
