@@ -253,6 +253,7 @@ int SHM_DetchWnd(SHM_HANDLE hShmHandle)
 
     wl_surface_commit(pShmRectInfo->window_handle);
 
+    printf("wl_surface_DEttach %0x \n", pShmRectInfo->window_handle);
 
     wl_display_flush(display_handle);
     pShmRectInfo->window_handle = NULL;

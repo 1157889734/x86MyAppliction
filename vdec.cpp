@@ -303,6 +303,7 @@ MPP_TEST_OUT:
 
 int decoder_close(T_VDEC_INFO* ptDecInfo)
 {
+
     if (ptDecInfo->packet) {
         mpp_packet_deinit(&ptDecInfo->packet);
         ptDecInfo->packet = NULL;
@@ -314,6 +315,7 @@ int decoder_close(T_VDEC_INFO* ptDecInfo)
     }
 
     if (ptDecInfo->ctx) {
+        ptDecInfo->mpi->reset(ptDecInfo->ctx);
         mpp_destroy(ptDecInfo->ctx);
         ptDecInfo->ctx = NULL;
     }
@@ -327,6 +329,7 @@ int decoder_close(T_VDEC_INFO* ptDecInfo)
         mpp_buffer_group_put(ptDecInfo->frm_grp);
         ptDecInfo->frm_grp = NULL;
     }
+
     return 0;
 }
 
@@ -507,6 +510,8 @@ void* DecodecVideoProc(void *argv)
         }
         if(ptVideoInfo->iStartPlayFlag != START_STREAM_PLAY)
         {
+            free(tPkt.pcData);
+            tPkt.pcData = NULL;  //
             continue;
         }
         iRet = dec_simple(ptVideoInfo, &tPkt);

@@ -523,7 +523,6 @@ void pvmsMenuWidget::showPageSlot()
         m_pvmsMonitorPage->m_playWin->show();
         m_pvmsMonitorPage->enableVideoPlay(1);   //运行受电弓监控页面解码的显示
 
-
     }
     else if (g_ipageValue == PAGERCORDE) {
         m_pvmsMonitorPage->hide();
@@ -532,6 +531,9 @@ void pvmsMenuWidget::showPageSlot()
         m_pvmsMonitorPage->m_playWin->hide();
         m_devManagePage->hide();
         m_devUpdatePage->hide();
+        m_recordPlayPage->showPlayWindow(1);
+
+
     }
     else if (g_ipageValue == PAGEMANAGE) {
         m_pvmsMonitorPage->hide();
@@ -544,7 +546,6 @@ void pvmsMenuWidget::showPageSlot()
     else if (g_ipageValue == PAGEUPDATE) {
         m_pvmsMonitorPage->hide();
         m_recordPlayPage->hide();
-
         m_pvmsMonitorPage->m_playWin->hide();
 
         m_devManagePage->hide();
@@ -597,10 +598,14 @@ void pvmsMenuWidget::closeAlarmWidget()
 void pvmsMenuWidget::registOutButtonClick(int page)
 {
     g_ipageValue = page;
-    m_pvmsMonitorPage->enableVideoPlay(0);   //禁止受电弓监控页面解码显示
+//    m_pvmsMonitorPage->m_playWin->hide();
     m_pvmsMonitorPage->closePlayWin();   //关闭受电弓监控界面的播放窗口
     m_recordPlayPage->closePlayWin(1);   //关闭录像回放界面的播放窗口
+    m_recordPlayPage->showPlayWindow(0);
+
     m_pvmsMonitorPage->m_iPresetPasswdOkFlag = 0;
+    m_pvmsMonitorPage->enableVideoPlay(0);   //禁止受电弓监控页面解码显示
+
 
     this->hide();
     emit registOutSignal();    //触发注销信号，带上当前设备类型

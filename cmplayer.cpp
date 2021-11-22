@@ -11,6 +11,9 @@
 #include <stdarg.h>
 #include "cmplayer.h"
 #include <QDebug>
+#include "shm.h"
+typedef void* SHM_HANDLE;
+
 
 struct SVideoCmdMessage{
     int  nType;//0 Play 1 Preview
@@ -619,6 +622,7 @@ CMPPlayer_API int CMP_UnInit(CMPHandle hPlay)
     InitMessgeList(ptCmpPlayer);
     delete ptCmpPlayer;
     ptCmpPlayer=NULL;
+    qDebug()<<"*******CMP_UnInit*******"<<endl;
     return 0;
 }
 
@@ -641,11 +645,8 @@ CMPPlayer_API int CMP_OpenMediaPreview(CMPHandle hPlay, const char *pcRtspUrl, i
     ptCmpPlayer->iPlaySecs = 0;
     InitMessgeList(ptCmpPlayer);
     SetPlayState(ptCmpPlayer, CMP_STATE_IDLE);
-#ifdef _WIN32
-    ptCmpPlayer->hPlayThread = CreateThread(NULL, 0, MonitorPlayThread, ptCmpPlayer, 0, NULL);
-#else
+
     pthread_create(&ptCmpPlayer->hPlayThread, NULL, MonitorPlayThread, ptCmpPlayer);
-#endif //_WIN32
     printf("CMP_OpenMediaPreview = %s",ptCmpPlayer->acUrl);
 
     return 0;
@@ -672,19 +673,8 @@ CMPPlayer_API int CMP_OpenMediaFile(CMPHandle hPlay, const char *pcRtspFile, int
     InitMessgeList(ptCmpPlayer);
     SetPlayState(ptCmpPlayer, CMP_STATE_IDLE);
 
-#ifdef _WIN32
-    ptCmpPlayer->hOpenMediaEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
-    ptCmpPlayer->hPlayThread = CreateThread(NULL, 0, MonitorPlayThread, ptCmpPlayer, 0, NULL);
-    DWORD dwRet = WaitForSingleObject(ptCmpPlayer->hOpenMediaEvent, INFINITE);
-    if(CMP_OPEN_MEDIA_SUCC != ptCmpPlayer->iOpenMediaState)
-    {
-        DebugPrint(DEBUG_CMPLAYER_ERROR_PRINT,"CMP_OpenMediaFile = %s Fail",ptCmpPlayer->acUrl);
-        return -1;
-    }
-#else
     pthread_create(&ptCmpPlayer->hPlayThread, NULL, MonitorPlayThread, ptCmpPlayer);
 
-#endif
     printf("CMP_OpenMediaFile = %s",ptCmpPlayer->acUrl);
 
     return 0;
@@ -700,7 +690,7 @@ CMPPlayer_API int CMP_CloseMedia(CMPHandle hPlay)
     }
     VDEC_StopPlayStream(ptCmpPlayer->VHandle);
     ptCmpPlayer->iThreadRunFlag = 0;
-    RTSP_MSleep(1000);
+//    RTSP_MSleep(1000); //
 
     if (ptCmpPlayer->hPlayThread)
     {
@@ -948,3 +938,15 @@ CMPPlayer_API int CMP_GetStreamState(CMPHandle hPlay)
     }
     return ptCmpPlayer->iStreamState;
 }
+CMPPlayer_API int CMP_Window_show_hide(SHM_HANDLE hShmHandle, QWidget *pWnd)
+{
+    if(pWnd != NULL)
+    {
+        SHM_AttchWnd(hShmHandle, pWnd);
+    }
+    else
+    {
+        SHM_DetchWnd(hShmHandle);
+    }
+}
+

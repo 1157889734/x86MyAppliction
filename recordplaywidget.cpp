@@ -1028,13 +1028,13 @@ void recordPlayWidget::closePlayWin(int value)  ///////////??????????????
     if (m_cmpHandle != NULL)    //关闭已打开的回放
     {
 
-        if(value == 0)
+//        if(value == 0)
         {
             //CMP_SetPlayEnnable(m_cmpHandle, 0);
             //SHM_DetchWnd(m_RealMonitorVideos.pRenderHandle);
 
         }
-        else
+//        else
         {
 //            SHM_DetchWnd(m_RealMonitorVideos.pRenderHandle);
             CMP_SetPlayEnnable(m_cmpHandle, 0);
