@@ -140,7 +140,12 @@ int dec_simple(PT_VIDEO_DEC_INFO ptVideoInfo, T_DATA_PACKET *ptPkt)
                         //DRM_Display(frame);
                         if(ptVideoInfo->iStartPlayFlag == START_STREAM_PLAY)
                         {
-                            SHM_Display(ptVideoInfo->ptWndInfo->pRenderHandle, frame);
+                            rt = SHM_Display(ptVideoInfo->ptWndInfo->pRenderHandle, frame);
+                            if(rt < 0)
+                            {
+                                mpp_frame_deinit(&frame);
+                                return rt;
+                            }
                         }
                     }
 

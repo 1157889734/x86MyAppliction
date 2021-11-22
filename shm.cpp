@@ -24,6 +24,7 @@ typedef struct  T_SHM_RECT_INFO
     int    w;
     int    h;
     int   size;
+    int   fd;
     uchar *addr;
     RGA_HANDLE rgaHandle;
     struct wl_surface *window_handle;
@@ -31,6 +32,7 @@ typedef struct  T_SHM_RECT_INFO
     CMutexLock lock;
     T_SHM_RECT_INFO()
     {
+        fd = 0;
         w = h = 0;
         addr = NULL;
         rgaHandle = NULL;
@@ -86,11 +88,12 @@ static PT_SHM_RECT_INFO create_rect_info(int w, int h)
 
     //memset(shm_data, 0x0, size);
 
-    PT_SHM_RECT_INFO pRectInfo = new T_SHM_RECT_INFO;
+    PT_SHM_RECT_INFO pRectInfo = new T_SHM_RECT_INFO; //2021-1122
     pRectInfo->addr = shm_data;
     pRectInfo->buffer = buffer;
     pRectInfo->w = w;
     pRectInfo->h = h;
+    pRectInfo->fd = fd;
 
     return pRectInfo;
 }
@@ -150,6 +153,8 @@ int SHM_FreeRect(SHM_HANDLE hShmHandle)
         pShmRectInfo->rgaHandle = NULL;
     }
     munmap(pShmRectInfo->addr, pShmRectInfo->size);
+
+    close(pShmRectInfo->fd);
 
     pShmRectInfo->lock.Unlock();
     delete pShmRectInfo;
@@ -219,10 +224,12 @@ int SHM_AttchWnd(SHM_HANDLE hShmHandle, QWidget *pWnd)
                                   pWnd->windowHandle());
     if(window_handle == NULL)
     {
+
         printf("window_handle NULL \n");
         return NULL;
     }
     pShmRectInfo->lock.Lock();
+
     printf("wl_surface_attach, %0x \n", window_handle);
     wl_surface_attach(window_handle, pShmRectInfo->buffer, 0, 0);
     wl_surface_commit(window_handle);
@@ -258,6 +265,28 @@ int SHM_DetchWnd(SHM_HANDLE hShmHandle)
     wl_display_flush(display_handle);
     pShmRectInfo->window_handle = NULL;
     pShmRectInfo->lock.Unlock();
+
+    return 0;
+}
+
+int SHM_FillRect(SHM_HANDLE hShmHandle, uint32_t color)
+{
+    PT_SHM_RECT_INFO pShmRectInfo = (PT_SHM_RECT_INFO)hShmHandle;
+    if(pShmRectInfo == NULL)
+    {
+        return -1;
+    }
+    if(!pShmRectInfo->window_handle)
+    {
+        return -1;
+    }
+
+    memset(pShmRectInfo->addr, 0x10, pShmRectInfo->w * pShmRectInfo->h);
+    memset(pShmRectInfo->addr + pShmRectInfo->w * pShmRectInfo->h, 0x80, pShmRectInfo->w * pShmRectInfo->h * 0.5);
+
+    wl_surface_attach(pShmRectInfo->window_handle, pShmRectInfo->buffer, 0, 0);
+    wl_surface_commit(pShmRectInfo->window_handle);
+    wl_display_flush(display_handle);
 
     return 0;
 }

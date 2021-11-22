@@ -106,7 +106,7 @@ public:
     int pmsgCtrl(PMSG_HANDLE pHandle, unsigned char ucMsgCmd, char *pcMsgData, int iMsgDataLen);   //与服务器通信消息处理
     void pvmsUpdownCtrl(char *pcMsgData);
 
-
+    void showPlayWindow(int);
     QLabel *m_channelStateLabel;
     QLabel *m_channelNoLabel;
     int pageType;

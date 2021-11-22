@@ -14,7 +14,7 @@ int SHM_AttchWnd(SHM_HANDLE, QWidget *);
 int SHM_DetchWnd(SHM_HANDLE);
 int SHM_FreeRect(SHM_HANDLE hShmHandle);
 
-
+int SHM_FillRect(SHM_HANDLE hShmHandle, uint32_t color);
 int SHM_Display(SHM_HANDLE hPlaneHandle, MppFrame frame);
 
 

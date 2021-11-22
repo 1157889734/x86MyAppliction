@@ -256,8 +256,16 @@ void recordPlayWidget::showPlayWindow(int enable)
         }
         else
         {
+
             CMP_SetPlayEnnable(m_cmpHandle, 0);
+
+            qDebug()<<"*******showPlayWindow****111111111111";
+            SHM_FillRect(m_RealMonitorVideos.pRenderHandle, 0);
+            qDebug()<<"*******showPlayWindow****2222222222222222";
+
             SHM_DetchWnd(m_RealMonitorVideos.pRenderHandle);
+            qDebug()<<"*******showPlayWindow****333333333333";
+
             m_playWin->hide();
         }
     }
@@ -1037,6 +1045,7 @@ void recordPlayWidget::closePlayWin(int value)  ///////////??????????????
 //        else
         {
 //            SHM_DetchWnd(m_RealMonitorVideos.pRenderHandle);
+
             CMP_SetPlayEnnable(m_cmpHandle, 0);
             CMP_CloseMedia(m_cmpHandle);
             CMP_UnInit(m_cmpHandle);

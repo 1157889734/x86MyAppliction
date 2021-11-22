@@ -511,7 +511,10 @@ void pvmsMenuWidget::showPageSlot()
         m_recordPlayPage->hide();
         m_devManagePage->hide();
         m_devUpdatePage->hide();
-        m_pvmsMonitorPage->m_playWin->show();
+//        m_pvmsMonitorPage->m_playWin->show();
+        m_pvmsMonitorPage->showPlayWindow(1);
+        qDebug()<<"********************11111111";
+        //m_pvmsMonitorPage->showPlayWindow(1);
         m_pvmsMonitorPage->enableVideoPlay(1);   //运行受电弓监控页面解码的显示
 
     }
@@ -520,8 +523,10 @@ void pvmsMenuWidget::showPageSlot()
         m_recordPlayPage->hide();
         m_devManagePage->hide();
         m_devUpdatePage->hide();
-        m_pvmsMonitorPage->m_playWin->show();
+//        m_pvmsMonitorPage->m_playWin->show();
+        m_pvmsMonitorPage->showPlayWindow(1);
         m_pvmsMonitorPage->enableVideoPlay(1);   //运行受电弓监控页面解码的显示
+        qDebug()<<"********************22222222222";
 
     }
     else if (g_ipageValue == PAGERCORDE) {
@@ -600,15 +605,25 @@ void pvmsMenuWidget::registOutButtonClick(int page)
     g_ipageValue = page;
 //    m_pvmsMonitorPage->m_playWin->hide();
     m_pvmsMonitorPage->closePlayWin();   //关闭受电弓监控界面的播放窗口
+    qDebug()<<"***registOutButtonClick**111111111111111";
     m_recordPlayPage->closePlayWin(1);   //关闭录像回放界面的播放窗口
+    qDebug()<<"***registOutButtonClick**2222222222222";
+
     m_recordPlayPage->showPlayWindow(0);
+    qDebug()<<"***registOutButtonClick**3333333333333333";
+
+    m_pvmsMonitorPage->showPlayWindow(0);
+    qDebug()<<"***registOutButtonClick**44444444444444444444";
 
     m_pvmsMonitorPage->m_iPresetPasswdOkFlag = 0;
     m_pvmsMonitorPage->enableVideoPlay(0);   //禁止受电弓监控页面解码显示
+    qDebug()<<"***registOutButtonClick**55555555555555555555555";
 
 
     this->hide();
     emit registOutSignal();    //触发注销信号，带上当前设备类型
+    qDebug()<<"***registOutButtonClick**end";
+
 }
 
 void pvmsMenuWidget::serverOffLineSlot(int iDex)   //服务器离线后将服务器检测硬盘错误标志及不检测计数清0，使得再次连上服务器后头3分钟依然不处理硬盘报警
@@ -702,14 +717,17 @@ void pvmsMenuWidget::menuButtonClick()
     }
     if (Sender->objectName() == "pvmsMonitorMenuPushButton")     //受电弓监控按钮被按，则切换到受电弓监控页面
     {
+
+        m_recordPlayPage->closePlayWin(0);   //关闭录像回放界面的播放窗口
+
         m_recordPlayPage->showPlayWindow(0);
         m_recordPlayPage->hide();
         m_devManagePage->hide();
         m_devUpdatePage->hide();
         m_pvmsMonitorPage->show();
 
-        m_pvmsMonitorPage->m_playWin->show();
-        m_recordPlayPage->closePlayWin(0);   //关闭录像回放界面的播放窗口
+//        m_pvmsMonitorPage->m_playWin->show();
+        m_pvmsMonitorPage->showPlayWindow(1);
 
         m_pvmsMonitorPage->enableVideoPlay(1);   //运行受电弓监控页面解码的显示
 
@@ -726,13 +744,15 @@ void pvmsMenuWidget::menuButtonClick()
     }
     else if (Sender->objectName() == "recordPlayMenuPushButton")     //录像回放按钮被按，则切换到录像回放页面
     {
+
+        m_pvmsMonitorPage->showPlayWindow(0);
         m_pvmsMonitorPage->enableVideoPlay(0);   //禁止受电弓监控页面解码显示
         m_pvmsMonitorPage->hide();
         m_devManagePage->hide();
         m_devUpdatePage->hide();
 
 
-        m_pvmsMonitorPage->m_playWin->hide();
+//        m_pvmsMonitorPage->m_playWin->hide();
 
 
         m_pvmsMonitorPage->m_channelStateLabel->hide();
@@ -743,8 +763,12 @@ void pvmsMenuWidget::menuButtonClick()
         ui->devUpdateMenuPushButton->setChecked(false);
 
 
+        printf("ssss 444 %d ,%d \n",m_pvmsMonitorPage->isVisible(), m_pvmsMonitorPage->m_playWin->isVisible());
         m_recordPlayPage->show();
         m_recordPlayPage->showPlayWindow(1);
+
+
+        printf("ssss %d ,%d \n",m_pvmsMonitorPage->isVisible(), m_pvmsMonitorPage->m_playWin->isVisible());
 
 
     }
@@ -769,7 +793,8 @@ void pvmsMenuWidget::menuButtonClick()
         m_devManagePage->show();
 
 
-        m_pvmsMonitorPage->m_playWin->hide();
+//        m_pvmsMonitorPage->m_playWin->hide();
+        m_pvmsMonitorPage->showPlayWindow(0);
 
         m_recordPlayPage->closePlayWin(0);   //关闭录像回放界面的播放窗口
 
@@ -801,7 +826,8 @@ void pvmsMenuWidget::menuButtonClick()
         m_devUpdatePage->show();
 
 
-        m_pvmsMonitorPage->m_playWin->hide();
+//        m_pvmsMonitorPage->m_playWin->hide();
+        m_pvmsMonitorPage->showPlayWindow(0);
 
         m_recordPlayPage->closePlayWin(0);   //关闭录像回放界面的播放窗口
 
