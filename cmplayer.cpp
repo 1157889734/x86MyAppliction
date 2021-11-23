@@ -951,15 +951,14 @@ CMPPlayer_API int CMP_SetPlayEnnable(CMPHandle hPlay, int enable)
         }
         if(ptCmpPlayer->VHandle)
         {
-            VDEC_StartPlayStream(ptCmpPlayer->VHandle);
+            VDEC_DisplayEnable(ptCmpPlayer->VHandle, enable);
         }
     }
     else
     {
         if(ptCmpPlayer->VHandle)
         {
-            VDEC_PausePlayStream(ptCmpPlayer->VHandle);
-
+            VDEC_DisplayEnable(ptCmpPlayer->VHandle, enable);
         }
         if(ptCmpPlayer->pWidget->isVisible())
         {

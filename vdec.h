@@ -30,6 +30,8 @@ typedef struct
 
 }T_VDEC_INFO;
 
+#define DISPLAY_START    1
+#define DISPLAY_STOP     0
 
 
 #define STOP_STREAM_PLAY    0
@@ -64,6 +66,7 @@ typedef struct _T_VIDEO_DEC_INFO
     volatile int iVideoExitFlag;
     volatile int iVideoExitFlagOver;
     volatile int iStartPlayFlag;
+    volatile int iDisPlayFlag;
     int iDecType;  //CMP_VDEC_TYPE
     T_WND_INFO  *ptWndInfo;
     T_VDEC_INFO *ptDecInfo;
@@ -182,6 +185,18 @@ int VDEC_StopPlayStream(VDEC_HADNDLE VHandle);
   修改:   
 *************************************************/
 int VDEC_PausePlayStream(VDEC_HADNDLE VHandle);
+
+/*************************************************
+  函数功能:     VDEC_DisplayEnable
+  函数描述:     暂停 Display
+  输入参数:     无
+  输出参数:     无
+  返回值:       0:成功, 否则:失败
+  作者:
+  日期:
+  修改:
+*************************************************/
+int VDEC_DisplayEnable(VDEC_HADNDLE VHandle, int displayFlag);
 
 #endif
 #endif

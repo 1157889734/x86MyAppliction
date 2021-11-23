@@ -138,7 +138,7 @@ int dec_simple(PT_VIDEO_DEC_INFO ptVideoInfo, T_DATA_PACKET *ptPkt)
                     if (!err_info)
                     {
                         //DRM_Display(frame);
-                        if(ptVideoInfo->iStartPlayFlag == START_STREAM_PLAY)
+                        if(ptVideoInfo->iDisPlayFlag == DISPLAY_START)
                         {
                             rt = SHM_Display(ptVideoInfo->ptWndInfo->pRenderHandle, frame);
                             if(rt < 0)
@@ -524,6 +524,7 @@ VDEC_HADNDLE VDEC_CreateVideoDecCh(T_WND_INFO *pWndInfo, int iWidth, int iHeight
     ptVideoInfo->iVideoExitFlag = 0;
     ptVideoInfo->iVideoExitFlagOver = 0;
 
+    ptVideoInfo->iDisPlayFlag = DISPLAY_STOP;
     ptVideoInfo->iStartPlayFlag = STOP_STREAM_PLAY;
     ptVideoInfo->iDecType = iDecType;
     ptVideoInfo->ptWndInfo = pWndInfo;
@@ -747,4 +748,18 @@ int VDEC_PausePlayStream(VDEC_HADNDLE VHandle)
 
     return 0;
 }
+
+int VDEC_DisplayEnable(VDEC_HADNDLE VHandle, int displayFlag)
+{
+    PT_VIDEO_DEC_INFO ptVideoInfo = (PT_VIDEO_DEC_INFO)VHandle;
+
+    if (NULL == ptVideoInfo)
+    {
+        DebugPrint( DEBUG_VDEC_PRINT,"[%s %d] error",__FUNCTION__, __LINE__);
+        return -1;
+    }
+    ptVideoInfo->iDisPlayFlag = displayFlag;
+    return 0;
+}
+
 #endif

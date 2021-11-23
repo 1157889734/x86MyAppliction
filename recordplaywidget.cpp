@@ -963,7 +963,6 @@ void recordPlayWidget::getTrainConfig()    	//获取车型配置文件，初始�
 
 void recordPlayWidget::recordPlayStartSlot()
 {
-#if 1
     if (m_cmpHandle != NULL)
     {
         if (0 == m_iPlayFlag)
@@ -988,19 +987,16 @@ void recordPlayWidget::recordPlayStartSlot()
             emit recordSeletPlay(ui->recordFileTableWidget->currentItem());
         }
     }
-#endif
 }
 
 
 void recordPlayWidget::recordPauseSlot()
 {
-#if 1
     m_iPlayFlag = 0;
     if (m_cmpHandle != NULL)    //如果播放窗口已经有打开了码流播放，关闭码流播放
     {
         CMP_PauseMedia(m_cmpHandle);
     }
-#endif
 }
 
 void recordPlayWidget::recordPlayStopSlot()

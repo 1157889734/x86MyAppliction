@@ -2061,6 +2061,7 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
             sysinfo(&s_info);
             m_lastActionTime = s_info.uptime;  //更新最后一次操作计时  //更新最后一次操作计时
 
+
             /*当播放窗体处于全屏状态时，再次单击退出全屏,全屏标志清0，并恢复播放窗体原始播放状态*/
             if ((1 == m_iFullScreenFlag) && (target == m_playWin) && (event->type()==QEvent::MouseButtonPress))
             {
@@ -2086,16 +2087,15 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
                 tWndInfo.hWnd = NULL;
                 CMP_ChangeWnd(m_tCameraInfo[m_iCameraPlayNo].cmpHandle, &tWndInfo);
 
-                qDebug()<<"*********eventFilter************000000000000";
-
 
                 CMP_SetPlayEnnable(m_tCameraInfo[m_iCameraPlayNo].cmpHandle, 1);
                 m_iPollingFlag = 1;
-
-                qDebug()<<"*********eventFilter************333333333333333333";
-//                tPkt.iMsgCmd = CMP_CMD_CHG_ALL_VIDEOWIN;
-//                tPkt.iCh = 0;
-//                PutNodeToCmpQueue(m_ptQueue, &tPkt);
+                if(m_iPollingFlag ==1)
+                {
+                    struct sysinfo s_info;
+                    sysinfo(&s_info);
+                    tPollingOparateTime = s_info.uptime;
+                }
 
                 m_channelStateLabel->setGeometry(452, 360, 130, 50);
                 m_channelNoLabel->setGeometry(20, 690, 100, 50);
@@ -2110,8 +2110,13 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
             if (0 == m_iFullScreenFlag)
             {
                 m_iFullScreenFlag = 1;
-                qDebug()<<"*********eventFilter************m_iCameraNum";
                 m_iPollingFlag = 0;
+                if(m_iPollingFlag ==0)
+                {
+                    struct sysinfo s_info;
+                    sysinfo(&s_info);
+                    tPollingOparateTime = s_info.uptime;
+                }
                 for (int i = 0; i < m_iCameraNum; i++)
                 {
                     CMP_SetPlayEnnable(m_tCameraInfo[i].cmpHandle, 0);
@@ -2121,21 +2126,12 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
                 m_playWin->move(0, 0);
                 m_playWin->resize(1024, 768);
 
-                qDebug()<<"*********eventFilter************444444444444444";
-
 
                 T_WND_INFO tWndInfo;
                 tWndInfo.hWnd = m_playWin;
                 CMP_ChangeWnd(m_tCameraInfo[m_iCameraPlayNo].cmpHandle, &tWndInfo);
 
                 CMP_SetPlayEnnable(m_tCameraInfo[m_iCameraPlayNo].cmpHandle, 1);
-
-                qDebug()<<"*********eventFilter************777777777777777777";
-
-//                tPkt.iMsgCmd = CMP_CMD_CHG_ALL_VIDEOWIN;
-//                tPkt.iCh = 0;
-//                PutNodeToCmpQueue(m_ptQueue, &tPkt);
-
 
 
                 m_channelStateLabel->setGeometry(452, 360, 130, 50);

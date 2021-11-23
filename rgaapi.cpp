@@ -33,7 +33,6 @@ int addMppFrame(T_RGA_INFO *ptRgaInfo, int w, int h)
     //w = MPP_ALIGN(w, 16);
     //h = MPP_ALIGN(h, 16);
     idstSize = w * h * 3;
-    printf("***********addMppFrame******idstSize=%d\n",idstSize);
     for (i = 0; i < MAX_MPP_FRAME_NUM; i++)
     {
         if(ptRgaInfo->atMppBuffer[i] && ptRgaInfo->atMppFrame[i])
@@ -46,7 +45,6 @@ int addMppFrame(T_RGA_INFO *ptRgaInfo, int w, int h)
             printf("failed to get dst buffer %d with size %d\n", iRet, idstSize);
             return -1;
         }
-        printf("***********addMppFrame**11****iRet=%d\n",iRet);
 
 
         iRet = mpp_frame_init(&ptRgaInfo->atMppFrame[i]);
@@ -55,26 +53,14 @@ int addMppFrame(T_RGA_INFO *ptRgaInfo, int w, int h)
             printf("failed to init src frame\n");
             return -1;
         }
-        printf("***********addMppFrame**22****iRet=%d\n",iRet);
 
         
         mpp_frame_set_buffer(ptRgaInfo->atMppFrame[i], ptRgaInfo->atMppBuffer[i]);
-        printf("***********addMppFrame**333333333333****=\n");
-
         mpp_frame_set_width(ptRgaInfo->atMppFrame[i],  w);
-        printf("***********addMppFrame**4444444444444****=\n");
-
         mpp_frame_set_height(ptRgaInfo->atMppFrame[i], h);
-        printf("***********addMppFrame**555555555555****=\n");
-
         mpp_frame_set_hor_stride(ptRgaInfo->atMppFrame[i], w);
-        printf("***********addMppFrame**666666666666****=\n");
-
         mpp_frame_set_ver_stride(ptRgaInfo->atMppFrame[i], h);
-        printf("***********addMppFrame**77777777777777****=\n");
-
         mpp_frame_set_fmt(ptRgaInfo->atMppFrame[i], MPP_FMT_YUV420SP);
-        printf("***********addMppFrame**end****=\n");
 
         //mpp_frame_set_fmt(ptRgaInfo->atMppFrame[i], MPP_FMT_ARGB8888);
         //mpp_frame_set_fmt(ptRgaInfo->atMppFrame[i], MPP_FMT_ABGR8888);//no
@@ -114,7 +100,6 @@ RGA_HANDLE rga_create(int iWidth, int iHeight)
         return 0;	
     }
 
-    printf("*********rga_create***11**\n");
     memset((char *)ptRgaInfo, 0, sizeof(T_RGA_INFO));
     iRet = rga_init(&ptRgaInfo->ctx);
     if (iRet) 
@@ -123,16 +108,13 @@ RGA_HANDLE rga_create(int iWidth, int iHeight)
         free(ptRgaInfo);
         return 0;
     }
-    printf("*********rga_create***22**\n");
 
     ptRgaInfo->iFrameIndex = 0;
 
     iWidth = MPP_ALIGN(iWidth, 16);
     iHeight = MPP_ALIGN(iHeight, 16);
-    printf("*********rga_create***33**iWidth=%d-iHeight=%d\n",iWidth,iHeight);
 
     iRet = rga_set_cur_frame(ptRgaInfo, iWidth, iHeight);
-    printf("*********rga_create***44**\n");
 
     if(iRet < 0)
     {
@@ -140,7 +122,6 @@ RGA_HANDLE rga_create(int iWidth, int iHeight)
         free(ptRgaInfo);
         return 0;
     }
-    printf("*********rga_create***end**\n");
 
     return (RGA_HANDLE)ptRgaInfo;
 }
@@ -218,14 +199,11 @@ int rga_set_cur_frame(RGA_HANDLE hRga, int iWidth, int iHeight)
     {
         return -1;
     }
-    printf("***********rga_set_cur_frame*******11\n");
     iRet = getMppFrame(ptRgaInfo, iWidth, iHeight);
-    printf("***********rga_set_cur_frame*******22--iRet=%d\n",iRet);
 
     if(iRet < 0)
     {
         iRet = addMppFrame(ptRgaInfo, iWidth, iHeight);
-        printf("***********rga_set_cur_frame*******33--iRet=%d\n",iRet);
 
     }
     if(iRet < 0)
@@ -234,7 +212,6 @@ int rga_set_cur_frame(RGA_HANDLE hRga, int iWidth, int iHeight)
     }
 
     ptRgaInfo->iFrameIndex = iRet;
-    printf("***********rga_set_cur_frame*******end\n");
 
 //    printf("ptRgaInfo->iFrameIndex :%d, %d,%d \n", iWidth, iHeight, ptRgaInfo->iFrameIndex);
     return 0;
