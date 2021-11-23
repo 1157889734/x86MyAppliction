@@ -212,12 +212,8 @@ int decode_open(T_VDEC_INFO* ptDecInfo, T_DEC_CMD* cmd)
 
     MppFrameFormat  format = MPP_FMT_YUV420P;
 
-    RgaCtx rga_ctx = NULL;
 
     int ret = 0;
-
-    ret = rga_init(&rga_ctx);
-
     ret = mpp_packet_init(&packet, NULL, 0);
     if (ret) {
         printf("mpp_packet_init failed\n");
@@ -268,8 +264,6 @@ int decode_open(T_VDEC_INFO* ptDecInfo, T_DEC_CMD* cmd)
     ptDecInfo->mpi            = mpi;
     ptDecInfo->eos            = 0;
     ptDecInfo->packet         = packet;
-    ptDecInfo->frame          = frame;
-    ptDecInfo->pkt_grp      = NULL;
     ptDecInfo->frm_grp      = NULL;
 
     ret = mpi->control(ctx, MPP_DEC_SET_OUTPUT_FORMAT, &format);
@@ -293,11 +287,6 @@ MPP_TEST_OUT:
         ctx = NULL;
     }
 
-    if (ptDecInfo->pkt_grp) {
-        mpp_buffer_group_put(ptDecInfo->pkt_grp);
-        ptDecInfo->pkt_grp = NULL;
-    }
-
     if (ptDecInfo->frm_grp) {
         mpp_buffer_group_put(ptDecInfo->frm_grp);
         ptDecInfo->frm_grp = NULL;
@@ -314,20 +303,10 @@ int decoder_close(T_VDEC_INFO* ptDecInfo)
         ptDecInfo->packet = NULL;
     }
 
-    if (ptDecInfo->frame) {
-        mpp_frame_deinit(&ptDecInfo->frame);
-        ptDecInfo->frame = NULL;
-    }
-
     if (ptDecInfo->ctx) {
         ptDecInfo->mpi->reset(ptDecInfo->ctx);
         mpp_destroy(ptDecInfo->ctx);
         ptDecInfo->ctx = NULL;
-    }
-
-    if (ptDecInfo->pkt_grp) {
-        mpp_buffer_group_put(ptDecInfo->pkt_grp);
-        ptDecInfo->pkt_grp = NULL;
     }
 
     if (ptDecInfo->frm_grp) {
@@ -572,11 +551,6 @@ VDEC_HADNDLE VDEC_CreateVideoDecCh(T_WND_INFO *pWndInfo, int iWidth, int iHeight
         printf("decode_open error \n");
     }
     ptVideoInfo->ptDecInfo = ptDecInfo;
-
-    ptDecInfo->iX = pWndInfo->nX;
-    ptDecInfo->iY = pWndInfo->nY;
-    ptDecInfo->iWidth = pWndInfo->nWidth;
-    ptDecInfo->iHeight = pWndInfo->nHeight;
 
     pthread_create(&ptVideoInfo->hVideoDecodecThread, NULL, DecodecVideoProc, ptVideoInfo);
 

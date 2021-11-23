@@ -70,10 +70,14 @@ typedef struct _T_CMP_PLAYER_INFO
     unsigned int	uiPrevFrameTs;
     unsigned int	uiPlayBaseTime;
     CMP_VDEC_TYPE   eDecType;   //软、硬解码或者鱼眼矫正
-    T_WND_INFO      *ptWndInfo;
+    T_WND_INFO      ptWndInfo;
+    QWidget         *pWidget;
 } T_CMP_PLAYER_INFO, *PT_CMP_PLAYER_INFO;
 
-static int				   g_iCMPlayerInitFlag = 0;
+static int				 g_iCMPlayerInitFlag = 0;
+static QWidget          *s_pFullScreenWidget = NULL;
+static SHM_HANDLE        s_pFullScreenHandle = NULL;
+static SHM_HANDLE        s_pBackuphandle = NULL;
 
 static int WinSocketInit(void)
 {
@@ -182,12 +186,12 @@ static int RtpSetDataCallBack(int iFrameType, int iStreamType, char *pcFrame, in
     {
         if(E_STREAM_TYPE_H265 == iStreamType)
         {
-            ptCmpPlayer->VHandle = VDEC_CreateVideoDecCh(ptCmpPlayer->ptWndInfo,1920, 1080,
+            ptCmpPlayer->VHandle = VDEC_CreateVideoDecCh(&ptCmpPlayer->ptWndInfo,1920, 1080,
                                                          ptCmpPlayer->eDecType, H265_CODE);
         }
         else if(E_STREAM_TYPE_H264 == iStreamType)
         {
-            ptCmpPlayer->VHandle = VDEC_CreateVideoDecCh(ptCmpPlayer->ptWndInfo,1920, 1080,
+            ptCmpPlayer->VHandle = VDEC_CreateVideoDecCh(&ptCmpPlayer->ptWndInfo,1920, 1080,
                                                          ptCmpPlayer->eDecType, H264_CODE);
         }
 
@@ -581,6 +585,7 @@ CMPPlayer_API CMPHandle CMP_Init(T_WND_INFO *pWndInfo, CMP_VDEC_TYPE eDecType)
         g_iCMPlayerInitFlag = 1;
         WinSocketInit();
         VDEC_Init();;
+        SHM_Init();
     }
 
     memset(ptCmpPlayer->acUrl,0,sizeof(ptCmpPlayer->acUrl));
@@ -603,7 +608,13 @@ CMPPlayer_API CMPHandle CMP_Init(T_WND_INFO *pWndInfo, CMP_VDEC_TYPE eDecType)
     ptCmpPlayer->VHandle = NULL;
     ptCmpPlayer->eDecType = eDecType;
 
-    ptCmpPlayer->ptWndInfo = pWndInfo;
+    ptCmpPlayer->ptWndInfo = *pWndInfo;
+
+    QWidget* parent = (QWidget*)pWndInfo->hWnd;
+    ptCmpPlayer->pWidget = new QWidget(parent);
+    ptCmpPlayer->pWidget->setGeometry(0, 0, parent->width(), parent->height());
+    ptCmpPlayer->ptWndInfo.pRenderHandle = SHM_AddRect(ptCmpPlayer->pWidget);
+    ptCmpPlayer->pWidget->hide();
 
     InitMessgeList(ptCmpPlayer);
 
@@ -618,6 +629,10 @@ CMPPlayer_API int CMP_UnInit(CMPHandle hPlay)
     {
         return -1;
     }
+
+    delete ptCmpPlayer->pWidget;
+    SHM_FreeRect(ptCmpPlayer->ptWndInfo.pRenderHandle);
+    ptCmpPlayer->ptWndInfo.pRenderHandle = NULL;
 
     InitMessgeList(ptCmpPlayer);
     delete ptCmpPlayer;
@@ -888,7 +903,30 @@ CMPPlayer_API int CMP_ChangeWnd(CMPHandle hPlay,const T_WND_INFO *pWndInfo)
     {
         return -1;
     }
-    VDEC_ChangeWindow(ptCmpPlayer->VHandle, pWndInfo);
+
+    QWidget *parent = (QWidget*)pWndInfo->hWnd;
+    if(parent == NULL)
+    {
+        SHM_DetchWnd(s_pFullScreenHandle);
+        s_pFullScreenWidget->hide();
+        ptCmpPlayer->ptWndInfo.pRenderHandle = s_pBackuphandle;
+        s_pBackuphandle = NULL;
+    }
+    else
+    {
+        if(s_pFullScreenWidget == NULL)
+        {
+            s_pFullScreenWidget = new QWidget(parent);
+            s_pFullScreenWidget->setGeometry(0, 0, parent->width(), parent->height());
+            s_pFullScreenHandle = SHM_AddRect(s_pFullScreenWidget);
+        }
+        s_pFullScreenWidget->show();
+        SHM_AttchWnd(s_pFullScreenHandle);
+        s_pBackuphandle = ptCmpPlayer->ptWndInfo.pRenderHandle;
+        ptCmpPlayer->ptWndInfo.pRenderHandle = s_pFullScreenHandle;
+    }
+
+
     return 1;
 }
 
@@ -900,17 +938,36 @@ CMPPlayer_API int CMP_SetPlayEnnable(CMPHandle hPlay, int enable)
 
     if (NULL == ptCmpPlayer)
     {
+
         return -1;
     }
-    if(ptCmpPlayer->VHandle)
+
+    if(enable)
     {
-        if(enable)
+        if(!ptCmpPlayer->pWidget->isVisible())
+        {
+            ptCmpPlayer->pWidget->show();
+            SHM_AttchWnd(ptCmpPlayer->ptWndInfo.pRenderHandle);
+        }
+        if(ptCmpPlayer->VHandle)
         {
             VDEC_StartPlayStream(ptCmpPlayer->VHandle);
         }
-        else
+    }
+    else
+    {
+        if(ptCmpPlayer->VHandle)
         {
             VDEC_PausePlayStream(ptCmpPlayer->VHandle);
+
+        }
+        if(ptCmpPlayer->pWidget->isVisible())
+        {
+            SHM_FillRect(ptCmpPlayer->ptWndInfo.pRenderHandle, 0);
+            SHM_DetchWnd(ptCmpPlayer->ptWndInfo.pRenderHandle);
+
+            ptCmpPlayer->pWidget->hide();
+
         }
     }
     return 1;
@@ -938,15 +995,3 @@ CMPPlayer_API int CMP_GetStreamState(CMPHandle hPlay)
     }
     return ptCmpPlayer->iStreamState;
 }
-CMPPlayer_API int CMP_Window_show_hide(SHM_HANDLE hShmHandle, QWidget *pWnd)
-{
-    if(pWnd != NULL)
-    {
-        SHM_AttchWnd(hShmHandle, pWnd);
-    }
-    else
-    {
-        SHM_DetchWnd(hShmHandle);
-    }
-}
-

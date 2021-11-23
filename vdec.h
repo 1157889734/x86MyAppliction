@@ -17,18 +17,7 @@
 
 typedef struct
 {
-    pthread_t pthreadId;
-    int iTaskExitFlag;
-
-    int iLastPicWidth;
-    int iLastPicHeight;
-    int iX;
-    int iY;
-    int iWidth;
-    int iHeight;
-
     MppPacket 		packet;
-    MppFrame  		frame;
 
     MppCtx          ctx;
     MppApi          *mpi;
@@ -38,7 +27,6 @@ typedef struct
 
     /* input and output */
     MppBufferGroup  frm_grp;
-    MppBufferGroup  pkt_grp;
 
 }T_VDEC_INFO;
 

@@ -17,7 +17,6 @@
 #include "types.h"
 #include "cmplayer.h"
 #include "vdec.h"
-#include "shm.h"
 
 int g_iDateEditNo = 0;      //要显示时间的不同控件的编号
 static int g_iRNum = 0;
@@ -250,7 +249,6 @@ void recordPlayWidget::showPlayWindow(int enable)
         if(enable)
         {
             m_playWin->show();
-            SHM_AttchWnd(m_RealMonitorVideos.pRenderHandle, (QWidget*)m_RealMonitorVideos.hWnd);
             CMP_SetPlayEnnable(m_cmpHandle, 1);
 
         }
@@ -259,12 +257,6 @@ void recordPlayWidget::showPlayWindow(int enable)
 
             CMP_SetPlayEnnable(m_cmpHandle, 0);
 
-            qDebug()<<"*******showPlayWindow****111111111111";
-            SHM_FillRect(m_RealMonitorVideos.pRenderHandle, 0);
-            qDebug()<<"*******showPlayWindow****2222222222222222";
-
-            SHM_DetchWnd(m_RealMonitorVideos.pRenderHandle);
-            qDebug()<<"*******showPlayWindow****333333333333";
 
             m_playWin->hide();
         }
@@ -287,7 +279,7 @@ void recordPlayWidget::cmplaybackInit()
     m_RealMonitorVideos.nWidth = rt.width();
     m_RealMonitorVideos.nHeight = rt.height();
     m_RealMonitorVideos.hWnd = (HWND)pWnd;
-    m_RealMonitorVideos.pRenderHandle = (void *)SHM_AddRect(pWnd);
+    m_RealMonitorVideos.pRenderHandle = NULL;
 
 
 

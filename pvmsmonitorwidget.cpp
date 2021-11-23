@@ -12,7 +12,6 @@
 #include "libdrm/planetest.h"
 #include "cmplayer.h"
 #include "vdec.h"
-#include "shm.h"
 
 
 static pthread_mutex_t g_tCmpCtrlMutex;
@@ -327,6 +326,7 @@ pvmsMonitorWidget::pvmsMonitorWidget(QWidget *parent) :
 
 
     //参数初始化
+    monitor_timer = NULL;
     m_channelStateLabel = NULL;
     m_channelNoLabel = NULL;
     m_alarmHappenTimer = NULL;
@@ -354,7 +354,6 @@ pvmsMonitorWidget::pvmsMonitorWidget(QWidget *parent) :
      m_RealMonitorVideos.pRenderHandle = NULL;
 
 
-     SHM_Init();
 
     pthread_mutexattr_init(&mutexattr);
     pthread_mutexattr_settype(&mutexattr,PTHREAD_MUTEX_TIMED_NP);
@@ -436,11 +435,14 @@ void *monitorThread(void *param)     //实时监控线程，对通道轮询、�
     /*检测轮询*/
     if ((1 == pvmsMonitorPage->m_iPollingFlag) && ((tPollingCurTime-pvmsMonitorPage->tPollingOparateTime) >= iPollingTime))   //只有轮询标记为1并且时间到了轮询时间时才轮询
     {
-        iCameraIdex += 1;  //更新摄像头索引
-        if (iCameraIdex > (pvmsMonitorPage->m_iCameraNum - 1))    //iCameraIdex达到最大值，表示轮询完了一轮，将索引置位，开始重新一轮的轮询
+        if(pvmsMonitorPage->m_iFullScreenFlag == 0)
         {
-            iCameraIdex = 0;
-        }
+            iCameraIdex += 1;  //更新摄像头索引
+            if (iCameraIdex > (pvmsMonitorPage->m_iCameraNum - 1))    //iCameraIdex达到最大值，表示轮询完了一轮，将索引置位，开始重新一轮的轮询
+            {
+                iCameraIdex = 0;
+            }
+         }
 //        DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread polling to camera, %d !\n",iCameraIdex);
 
         iPollingFlag = 1;
@@ -709,6 +711,13 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
     m_threadId = 0;
     m_iThreadRunFlag = 1;
     m_iDisplayEnable = 1;  //全局显示使能开启，使轮询线程正常轮询
+
+//    if(monitor_timer == NULL)
+//    {
+//        monitor_timer = new QTimer(this);
+//        monitor_timer->start(50);
+//        connect(monitor_timer,SIGNAL(timeout()),this,SLOT(monitorThread()));
+//    }
     pthread_create(&m_threadId, NULL, monitorThread, (void *)this);    //创建监控线程
 
 }
@@ -722,8 +731,6 @@ void pvmsMonitorWidget::showPlayWindow(int enable)
         if(enable)
         {
             m_playWin->show();
-            if( m_RealMonitorVideos.pRenderHandle)
-                SHM_AttchWnd(m_RealMonitorVideos.pRenderHandle, (QWidget*)m_RealMonitorVideos.hWnd);
         }
         else
         {
@@ -734,11 +741,8 @@ void pvmsMonitorWidget::showPlayWindow(int enable)
                     CMP_SetPlayEnnable(m_tCameraInfo[i].cmpHandle, 0);
                 }
             }
-            if( m_RealMonitorVideos.pRenderHandle)
-                SHM_DetchWnd(m_RealMonitorVideos.pRenderHandle);
             m_playWin->hide();
         }
-
         printf("m_RealMonitorVideos.pRenderHandle eeeee: enable:%d \n", enable);
     }
 }
@@ -750,32 +754,21 @@ void pvmsMonitorWidget::enableVideoPlay(int iFlag)    //对摄像头进行解码
     static int iPollFlag = 0;
     T_CMP_PACKET tPkt;
 
-//    DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] set enableVideoPlay flag to %d!\n",__FUNCTION__,iFlag);
-
     if (1 == iFlag)  //只使能当前轮询到的摄像头，设置全局使能标志，使轮询线程按正常轮询
     {
-//        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] enable the polling camera's vdec channel!\n",__FUNCTION__);
-
-
-        //        qDebug()<<"******************enableVideoPlay00000"<<__LINE__;
-                if( m_RealMonitorVideos.pRenderHandle)
-                {
-//                    SHM_AttchWnd(m_RealMonitorVideos.pRenderHandle, (QWidget*)m_RealMonitorVideos.hWnd);
-                    qDebug()<<"*******SHM_AttchWnd*****"<<__LINE__<<endl;
-                }
-        //        qDebug()<<"******************enableVideoPlay1111"<<__LINE__;
 
         for (i = 0; i < m_iCameraNum; i++)
         {
+
 
             if(m_tCameraInfo[i].cmpHandle != NULL)
                 CMP_SetPlayEnnable(m_tCameraInfo[i].cmpHandle, 0);
 
             if (i == m_iCameraPlayNo)
             {
-                tPkt.iMsgCmd = CMP_CMD_ENABLE_CH;
-                tPkt.iCh = i;
-                PutNodeToCmpQueue(m_ptQueue, &tPkt);
+//                tPkt.iMsgCmd = CMP_CMD_ENABLE_CH;
+//                tPkt.iCh = i;
+//                PutNodeToCmpQueue(m_ptQueue, &tPkt);
             }
             else
             {
@@ -784,6 +777,12 @@ void pvmsMonitorWidget::enableVideoPlay(int iFlag)    //对摄像头进行解码
                 PutNodeToCmpQueue(m_ptQueue, &tPkt);
             }
 
+        }
+        if(m_iCameraPlayNo >= 0)
+        {
+            tPkt.iMsgCmd = CMP_CMD_ENABLE_CH;
+            tPkt.iCh = m_iCameraPlayNo;
+            PutNodeToCmpQueue(m_ptQueue, &tPkt);
         }
 
 //        for (i = 0; i < m_iCameraNum; i++)
@@ -818,13 +817,11 @@ void pvmsMonitorWidget::enableVideoPlay(int iFlag)    //对摄像头进行解码
         memset(&s_info,0,sizeof(s_info));
         sysinfo(&s_info);
         m_lastActionTime = s_info.uptime;    //切换到受电弓监控页面，复位最后操作时间
-        qDebug()<<"*********enableVideoPlay==1*********"<<__LINE__;
 
     }
 
     else if (0 == iFlag)    //全部禁止，并且设置全局使能标志，使轮询线程也一直不显示解码
     {
-//        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] diable all camera's vdec channel!\n",__FUNCTION__);
         for (i = 0; i < m_iCameraNum; i++)
         {
             /*
@@ -840,13 +837,7 @@ void pvmsMonitorWidget::enableVideoPlay(int iFlag)    //对摄像头进行解码
 //            tPkt.iCh = i;
 //            PutNodeToCmpQueue(m_ptQueue, &tPkt);
         }
-//        qDebug()<<"******************enableVideoPlay333333333"<<__LINE__;
-        if( m_RealMonitorVideos.pRenderHandle)
-        {
-//            SHM_DetchWnd(m_RealMonitorVideos.pRenderHandle);
-            qDebug()<<"*******SHM_DetchWnd*****"<<__LINE__<<endl;
-        }
-//        qDebug()<<"******************enableVideoPlay44444444"<<__LINE__;
+
 
         m_iDisplayEnable = 0;  //全局显示使能关闭，使轮询线程不管轮询到哪个摄像头都不显示
 
@@ -860,7 +851,6 @@ void pvmsMonitorWidget::enableVideoPlay(int iFlag)    //对摄像头进行解码
             sysinfo(&s_info);
             tPollingOparateTime = s_info.uptime;
         }
-        qDebug()<<"*********enableVideoPlay==0*********"<<__LINE__;
     }
 
 }
@@ -1671,9 +1661,7 @@ void pvmsMonitorWidget::cmplayInit()
     m_RealMonitorVideos.nWidth = rt.width();
     m_RealMonitorVideos.nHeight = rt.height();
     m_RealMonitorVideos.hWnd = (HWND)pWnd;
-
-    m_RealMonitorVideos.pRenderHandle = (void *)SHM_AddRect(pWnd);
-
+    m_RealMonitorVideos.pRenderHandle = NULL;
 
 }
 
@@ -1690,12 +1678,14 @@ void pvmsMonitorWidget::recordPlayCtrlSlot()
 void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
 {
     const char * rtsp_url[] = {
-                "rtsp://admin:12345@192.168.104.201", "rtsp://admin:12345@192.168.104.201",
-                "rtsp://admin:12345@192.168.104.201", "rtsp://admin:12345@192.168.104.201"};
-//    const char * rtsp_url[] ={"rtsp://admin:12345@192.168.104.201"};
-//    void* cmpHandle = NULL;
+                "rtsp://admin:12345@192.168.104.201", "rtsp://admin:admin123@192.168.104.200",
+                "rtsp://admin:12345@192.168.104.201", "rtsp://admin:admin123@192.168.104.200"};
 
     if (iCh > (MAX_SERVER_NUM*MAX_CAMERA_OFSERVER - 1))
+    {
+        return;
+    }
+    if(m_iFullScreenFlag)
     {
         return;
     }
@@ -1704,41 +1694,17 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
 
         if( NULL == m_tCameraInfo[iCh].cmpHandle)
         {
-            if(iCh == 0)
-            {
-                //SHM_FreeRect(m_RealMonitorVideos.pRenderHandle);
-                //m_RealMonitorVideos.pRenderHandle = NULL;
-
-//                m_playWin->hide();
-//                SHM_DetchWnd(m_RealMonitorVideos.pRenderHandle);
-
-
-//                m_playWin->update();
-
-//                m_playWin->show();
-//                SHM_AttchWnd(m_RealMonitorVideos.pRenderHandle, (QWidget*)m_RealMonitorVideos.hWnd);
-            }
-
 
             cmplayInit();
 
-            qDebug() << "sssssssssssssssss:::::"<< this->isVisible() << m_playWin->isVisible();
-
-            //m_playWin->show();
-            //SHM_AttchWnd(m_RealMonitorVideos.pRenderHandle, m_playWin);
             m_tCameraInfo[iCh].cmpHandle = CMP_Init(&m_RealMonitorVideos, CMP_VDEC_NORMAL);
             CMP_OpenMediaPreview(m_tCameraInfo[iCh].cmpHandle, rtsp_url[iCh]/*m_tCameraInfo[iCh].acCameraRtspUrl*/, CMP_TCP);
-//            if(iCh == 0)
-//                SHM_AttchWnd(m_RealMonitorVideos.pRenderHandle, (QWidget*)m_RealMonitorVideos.hWnd);
-
-            //m_playWin->update();
+            CMP_PlayMedia(m_tCameraInfo[iCh].cmpHandle);
 
 
         }
+
         m_tCameraInfo[iCh].iCmpOpenFlag = 1;
-
-
-
     }
     else if(CMP_CMD_DESTORY_CH == iType)
     {
@@ -1748,20 +1714,13 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
     else if (CMP_CMD_CLOSE_DESTORY_CH == iType)
     {
 
-//        CMP_CloseMedia(m_tCameraInfo[iCh].cmpHandle);
-//        CMP_UnInit(m_tCameraInfo[iCh].cmpHandle);
-//        CMP_SetPlayEnnable(m_tCameraInfo[iCh].cmpHandle, 0);
 
     }
     else if(CMP_CMD_ENABLE_CH == iType)
     {
 
-        if(m_tCameraInfo[iCh].cmpHandle != NULL && m_RealMonitorVideos.pRenderHandle)
+        if(m_tCameraInfo[iCh].cmpHandle != NULL)
         {
-            //m_playWin->show();
-            //SHM_AttchWnd(m_RealMonitorVideos.pRenderHandle, (QWidget*)m_RealMonitorVideos.hWnd);
-            //printf("SHM_AttchWndSHM_AttchWnd   \n");
-            //CMP_PlayMedia(m_tCameraInfo[iCh].cmpHandle);
             if(m_playWin->isVisible())
             {
                 CMP_SetPlayEnnable(m_tCameraInfo[iCh].cmpHandle, 1);
@@ -1771,10 +1730,9 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
     }
     else if(CMP_CMD_DISABLE_CH == iType)
     {
-        if(m_tCameraInfo[iCh].cmpHandle != NULL && m_RealMonitorVideos.pRenderHandle)
+        if(m_tCameraInfo[iCh].cmpHandle != NULL)
         {
             CMP_SetPlayEnnable(m_tCameraInfo[iCh].cmpHandle, 0);
-            //CMP_PauseMedia(m_tCameraInfo[iCh].cmpHandle);
 
         }
 
@@ -1786,8 +1744,7 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
     }
     else if (CMP_CMD_GET_STREAM_STATE == iType)
     {
-//        if(NULL != m_tCameraInfo[iCh].cmpHandle)
-//           m_tCameraInfo[iCh].iStreamState = CMP_GetStreamState(m_tCameraInfo[iCh].cmpHandle);
+
     }
 }
 
@@ -2125,17 +2082,17 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
                 m_playWin->move(0, 138);
                 m_playWin->resize(782, 620);
 
+                T_WND_INFO tWndInfo;
+                tWndInfo.hWnd = NULL;
+                CMP_ChangeWnd(m_tCameraInfo[m_iCameraPlayNo].cmpHandle, &tWndInfo);
+
                 qDebug()<<"*********eventFilter************000000000000";
 
-                SHM_FreeRect(m_RealMonitorVideos.pRenderHandle);
-                qDebug()<<"*********eventFilter************6666666666666666666666";
-
-                m_RealMonitorVideos.pRenderHandle = (void *)SHM_AddRect(m_playWin);
-                qDebug()<<"*********eventFilter************777777777777777777777777";
 
                 CMP_SetPlayEnnable(m_tCameraInfo[m_iCameraPlayNo].cmpHandle, 1);
+                m_iPollingFlag = 1;
 
-                qDebug()<<"*********eventFilter************1111111111111";
+                qDebug()<<"*********eventFilter************333333333333333333";
 //                tPkt.iMsgCmd = CMP_CMD_CHG_ALL_VIDEOWIN;
 //                tPkt.iCh = 0;
 //                PutNodeToCmpQueue(m_ptQueue, &tPkt);
@@ -2152,7 +2109,9 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
         {
             if (0 == m_iFullScreenFlag)
             {
-
+                m_iFullScreenFlag = 1;
+                qDebug()<<"*********eventFilter************m_iCameraNum";
+                m_iPollingFlag = 0;
                 for (int i = 0; i < m_iCameraNum; i++)
                 {
                     CMP_SetPlayEnnable(m_tCameraInfo[i].cmpHandle, 0);
@@ -2162,18 +2121,16 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
                 m_playWin->move(0, 0);
                 m_playWin->resize(1024, 768);
 
-                qDebug()<<"*********eventFilter************22222222222222222";
+                qDebug()<<"*********eventFilter************444444444444444";
 
 
-                SHM_FreeRect(m_RealMonitorVideos.pRenderHandle);
-                qDebug()<<"*********eventFilter************444444444444444444";
-
-                m_RealMonitorVideos.pRenderHandle = (void *)SHM_AddRect(m_playWin);
-                qDebug()<<"*********eventFilter************55555555555555555";
+                T_WND_INFO tWndInfo;
+                tWndInfo.hWnd = m_playWin;
+                CMP_ChangeWnd(m_tCameraInfo[m_iCameraPlayNo].cmpHandle, &tWndInfo);
 
                 CMP_SetPlayEnnable(m_tCameraInfo[m_iCameraPlayNo].cmpHandle, 1);
 
-                qDebug()<<"*********eventFilter************3333333333333333333";
+                qDebug()<<"*********eventFilter************777777777777777777";
 
 //                tPkt.iMsgCmd = CMP_CMD_CHG_ALL_VIDEOWIN;
 //                tPkt.iCh = 0;
@@ -2183,7 +2140,6 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
 
                 m_channelStateLabel->setGeometry(452, 360, 130, 50);
                 m_channelNoLabel->setGeometry(20, 690, 100, 50);
-                m_iFullScreenFlag = 1;
             }
         }
     }

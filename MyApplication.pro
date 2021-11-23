@@ -24,6 +24,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 
+QMAKE_CFLAGS += -g -O0
+QMAKE_CXXFLAGS += -g -O0
+
 INCLUDEPATH += $$PWD/include
 INCLUDEPATH += /home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/rockchip/
 INCLUDEPATH += /home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/libdrm

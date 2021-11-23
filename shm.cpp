@@ -29,6 +29,7 @@ typedef struct  T_SHM_RECT_INFO
     RGA_HANDLE rgaHandle;
     struct wl_surface *window_handle;
     struct wl_buffer* buffer;
+    QWidget *pWidget;
     CMutexLock lock;
     T_SHM_RECT_INFO()
     {
@@ -38,6 +39,7 @@ typedef struct  T_SHM_RECT_INFO
         rgaHandle = NULL;
         buffer = NULL;
         window_handle = NULL;
+        pWidget = NULL;
     }
 
 }*PT_SHM_RECT_INFO;
@@ -70,8 +72,16 @@ static PT_SHM_RECT_INFO create_rect_info(int w, int h)
         return NULL;
     }
 
-    fcntl(fd, F_SETFD, fcntl(fd, F_GETFD) | FD_CLOEXEC);
-    ftruncate(fd, size);
+    if(fcntl(fd, F_SETFD, fcntl(fd, F_GETFD) | FD_CLOEXEC) < 0)
+    {
+        close(fd);
+        return NULL;
+    }
+    if(ftruncate(fd, size) < 0)
+    {
+        close(fd);
+        return NULL;
+    }
 
     uchar *shm_data = (uchar*)mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     if (shm_data == MAP_FAILED) {
@@ -94,6 +104,7 @@ static PT_SHM_RECT_INFO create_rect_info(int w, int h)
     pRectInfo->w = w;
     pRectInfo->h = h;
     pRectInfo->fd = fd;
+    pRectInfo->size = size;
 
     return pRectInfo;
 }
@@ -174,17 +185,23 @@ SHM_HANDLE SHM_AddRect(QWidget *pWnd)
         printf("window_handle NULL \n");
         return NULL;
     }
+
     int w = pWnd->width();
     int h = pWnd->height();
 
     w = CODEC_ALIGN(w, 16);
     h = CODEC_ALIGN(h, 16);
 
+
     PT_SHM_RECT_INFO pShmRectInfo = create_rect_info(w, h);
     if (pShmRectInfo == NULL) {
         printf("create_buffer error \n");
         return NULL;
     }
+
+    pShmRectInfo->lock.Lock();
+    pShmRectInfo->pWidget = pWnd;
+
     RGA_HANDLE rgaHandle = NULL;
     rgaHandle = rga_create(w, h);
     if(!rgaHandle)
@@ -196,23 +213,26 @@ SHM_HANDLE SHM_AddRect(QWidget *pWnd)
     memset(pShmRectInfo->addr, 0x10, w * h);
     memset(pShmRectInfo->addr + w * h, 0x80, w * h * 0.5);
 
+
     pShmRectInfo->window_handle = window_handle;
     printf("wl_surface_attach, %0x \n", window_handle);
     wl_surface_attach(window_handle, pShmRectInfo->buffer, 0, 0);
     wl_surface_commit(window_handle);
-    wl_display_flush(display_handle);
+    //wl_display_flush(display_handle);
+    pShmRectInfo->lock.Unlock();
+
 
     return pShmRectInfo;
 }
 
-int SHM_AttchWnd(SHM_HANDLE hShmHandle, QWidget *pWnd)
+int SHM_AttchWnd(SHM_HANDLE hShmHandle)
 {
     PT_SHM_RECT_INFO pShmRectInfo = (PT_SHM_RECT_INFO)hShmHandle;
     if(pShmRectInfo == NULL)
     {
         return -1;
     }
-    pWnd->winId();
+    pShmRectInfo->pWidget->winId();
     if(pShmRectInfo->window_handle)
     {
         SHM_DetchWnd(hShmHandle);
@@ -221,7 +241,7 @@ int SHM_AttchWnd(SHM_HANDLE hShmHandle, QWidget *pWnd)
 
     struct wl_surface *window_handle  = NULL;
     window_handle = (struct wl_surface *)native->nativeResourceForWindow("surface",
-                                  pWnd->windowHandle());
+                                  pShmRectInfo->pWidget->windowHandle());
     if(window_handle == NULL)
     {
 

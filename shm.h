@@ -10,7 +10,7 @@ int SHM_Init();
 int SHM_Uinit();
 SHM_HANDLE SHM_AddRect(QWidget *);
 
-int SHM_AttchWnd(SHM_HANDLE, QWidget *);
+int SHM_AttchWnd(SHM_HANDLE);
 int SHM_DetchWnd(SHM_HANDLE);
 int SHM_FreeRect(SHM_HANDLE hShmHandle);
 
