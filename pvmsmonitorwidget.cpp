@@ -832,10 +832,17 @@ void pvmsMonitorWidget::enableVideoPlay(int iFlag)    //对摄像头进行解码
             }
             */
 
-
-//            tPkt.iMsgCmd = CMP_CMD_DISABLE_CH;
-//            tPkt.iCh = i;
-//            PutNodeToCmpQueue(m_ptQueue, &tPkt);
+            if (i != m_iCameraPlayNo)
+            {
+//                tPkt.iMsgCmd = CMP_CMD_DISABLE_CH;
+//                tPkt.iCh = i;
+//                PutNodeToCmpQueue(m_ptQueue, &tPkt);
+                if(m_tCameraInfo[i].cmpHandle != NULL)
+                {
+                    CMP_SetPlayEnnable(m_tCameraInfo[i].cmpHandle, 0);
+                    CMP_PauseMedia(m_tCameraInfo[i].cmpHandle);
+                }
+            }
         }
 
 
@@ -1680,6 +1687,10 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
     const char * rtsp_url[] = {
                 "rtsp://admin:12345@192.168.104.201", "rtsp://admin:admin123@192.168.104.200",
                 "rtsp://admin:12345@192.168.104.201", "rtsp://admin:admin123@192.168.104.200"};
+    int preindex=0,nextindex=0;
+    int curindex = iCh;
+    preindex = curindex==0?m_iCameraNum-1:curindex-1;
+    nextindex=  curindex==m_iCameraNum-1?0:curindex+1;
 
     if (iCh > (MAX_SERVER_NUM*MAX_CAMERA_OFSERVER - 1))
     {
@@ -1718,6 +1729,18 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
     }
     else if(CMP_CMD_ENABLE_CH == iType)
     {
+        for(int i =0;i < m_iCameraNum;i++)
+        {
+            if(i== curindex || i== preindex || i==nextindex)
+            {
+                CMP_PlayMedia(m_tCameraInfo[i].cmpHandle);
+            }
+            else
+            {
+                CMP_PauseMedia(m_tCameraInfo[i].cmpHandle);
+
+            }
+        }
 
         if(m_tCameraInfo[iCh].cmpHandle != NULL)
         {
@@ -1730,6 +1753,7 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
     }
     else if(CMP_CMD_DISABLE_CH == iType)
     {
+
         if(m_tCameraInfo[iCh].cmpHandle != NULL)
         {
             CMP_SetPlayEnnable(m_tCameraInfo[iCh].cmpHandle, 0);

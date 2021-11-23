@@ -808,6 +808,7 @@ CMPPlayer_API int CMP_PauseMedia(CMPHandle hPlay)
     SetPlayState(ptCmpPlayer, CMP_STATE_PAUSE);
     PushMessage(ptCmpPlayer, E_PLAY_STATE_PAUSE, 0);
     VDEC_PausePlayStream(ptCmpPlayer->VHandle);
+
     return 0;
 }
 
