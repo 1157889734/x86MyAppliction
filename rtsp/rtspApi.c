@@ -932,7 +932,7 @@ int RTSP_GetParam(RTSP_HANDLE RHandle, int iType, void *pValue)
 		int *piRangeValue = (int *)pValue;
 
 		*piRangeValue = ptRtspConn->iPlayRange;
-        printf("********RTSP_GetParam***line----934=%d\n",*piRangeValue);
+//        printf("********RTSP_GetParam***line----934=%d\n",*piRangeValue);
     }
 
     return 0;

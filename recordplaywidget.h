@@ -54,7 +54,7 @@ public:
 
     void showPlayWindow(int enable);
     void cmplaybackInit();
-    void closePlayWin(int value);
+    void closePlayWin();
     void recordQueryCtrl(char *pcMsgData, int iMsgDataLen);
     void recordPlayCtrl(int iRow, int iDex);
     void triggerSetSliderValueSignal(int iValue);   //触发设置播放进度条值的信号

@@ -163,8 +163,8 @@ int SHM_FreeRect(SHM_HANDLE hShmHandle)
         rga_destroy(pShmRectInfo->rgaHandle);
         pShmRectInfo->rgaHandle = NULL;
     }
+    wl_buffer_destroy(pShmRectInfo->buffer);
     munmap(pShmRectInfo->addr, pShmRectInfo->size);
-
     close(pShmRectInfo->fd);
 
     pShmRectInfo->lock.Unlock();

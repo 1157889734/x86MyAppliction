@@ -221,7 +221,20 @@ CMPPlayer_API int CMP_GetPlayRange(CMPHandle hPlay);
 *************************************************/
 
 
-CMPPlayer_API int CMP_SetPlayEnnable(CMPHandle hPlay, int enable);
+CMPPlayer_API int CMP_SetPlayEnable(CMPHandle hPlay, int enable);
+
+
+/*************************************************
+  函数功能:     CMP_SetPlayState
+  函数描述:     set dec start/stop
+  输入参数:     hPlay：媒体句柄
+  输出参数:     无
+  返回值:
+  作者：
+  日期:         2021-11-24
+  修改:
+*************************************************/
+CMPPlayer_API int CMP_SetPlayState(CMPHandle hPlay, int iState);
 
 CMPPlayer_API int CMP_GetOpenMediaState(CMPHandle hPlay);
 
