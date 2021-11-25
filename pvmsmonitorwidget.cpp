@@ -9,7 +9,6 @@
 #include <QMouseEvent>
 #include <qdebug.h>
 #include <QUrl>
-#include "libdrm/planetest.h"
 #include "cmplayer.h"
 #include "vdec.h"
 
@@ -326,7 +325,6 @@ pvmsMonitorWidget::pvmsMonitorWidget(QWidget *parent) :
 
 
     //参数初始化
-    monitor_timer = NULL;
     m_channelStateLabel = NULL;
     m_channelNoLabel = NULL;
     m_alarmHappenTimer = NULL;
@@ -571,8 +569,8 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
     if(NULL == m_playWin)
     {
         m_playWin = new QWidget(this->parentWidget());   //新建一个与目前窗体同属一个父窗体的播放子窗体，方便实现全屏
-        m_playWin->setGeometry(0, 138, 782, 620);
-        m_playWin->show();  //默认显示
+        m_playWin->setGeometry(0, 138, 784, 624);
+        //m_playWin->show();  //默认显示
         m_playWin->hide();
         m_playWin->setObjectName("m_playWin");
         m_playWin->setStyleSheet("QWidget{background-color: rgb(0, 0, 0);}");     //设置播放窗口背景色为黑色
@@ -609,7 +607,7 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
     {
         memset(acRtspUrl, 0, sizeof(acRtspUrl));
 //        snprintf(acRtspUrl, sizeof(acRtspUrl), "rtsp://admin:admin123@192.168.%d.81", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO);
-        snprintf(acRtspUrl, sizeof(acRtspUrl), "rtsp://admin:admin123@127.0.0.%d", 1);
+        snprintf(acRtspUrl, sizeof(acRtspUrl), "rtsp://admin:admin123@127.0.0.1");
 
 
         m_NvrServerPhandle[i] = STATE_GetNvrServerPmsgHandle(i);
@@ -715,12 +713,6 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
     m_iThreadRunFlag = 1;
     m_iDisplayEnable = 1;  //全局显示使能开启，使轮询线程正常轮询
 
-//    if(monitor_timer == NULL)
-//    {
-//        monitor_timer = new QTimer(this);
-//        monitor_timer->start(50);
-//        connect(monitor_timer,SIGNAL(timeout()),this,SLOT(monitorThread()));
-//    }
     pthread_create(&m_threadId, NULL, monitorThread, (void *)this);    //创建监控线程
 
 }
@@ -757,8 +749,6 @@ void pvmsMonitorWidget::enableVideoPlay(int iFlag)    //对摄像头进行解码
 
         for (i = 0; i < m_iCameraNum; i++)
         {
-
-
             if(m_tCameraInfo[i].cmpHandle != NULL)
                 CMP_SetPlayEnable(m_tCameraInfo[i].cmpHandle, 0);
 
@@ -770,6 +760,7 @@ void pvmsMonitorWidget::enableVideoPlay(int iFlag)    //对摄像头进行解码
             }
             else
             {
+
                 tPkt.iMsgCmd = CMP_CMD_DISABLE_CH;
                 tPkt.iCh = i;
                 PutNodeToCmpQueue(m_ptQueue, &tPkt);
@@ -822,13 +813,6 @@ void pvmsMonitorWidget::enableVideoPlay(int iFlag)    //对摄像头进行解码
     {
         for (i = 0; i < m_iCameraNum; i++)
         {
-            /*
-            if(m_tCameraInfo[i].cmpHandle != NULL)
-            {
-                CMP_SetPlayEnable(m_tCameraInfo[i].cmpHandle, 0);
-                CMP_PauseMedia(m_tCameraInfo[i].cmpHandle);
-            }
-            */
             tPkt.iMsgCmd = CMP_CMD_DISABLE_CH;
             tPkt.iCh = i;
             PutNodeToCmpQueue(m_ptQueue, &tPkt);
@@ -1740,6 +1724,8 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
     }
     else if(CMP_CMD_ENABLE_CH == iType)
     {
+
+
         qDebug()<<"******CMP_CMD_ENABLE_CH***show******ich="<<iCh<<__LINE__;
 
 #if 0
@@ -1999,7 +1985,7 @@ void pvmsMonitorWidget::alarmHappenSlot()
         sysinfo(&s_info);
         m_lastActionTime = s_info.uptime;  //更新最后一次操作计时
         m_playWin->move(0, 138);
-        m_playWin->resize(782, 620);
+        m_playWin->resize(784, 624);
         m_iFullScreenFlag = 0;
 
         tPkt.iMsgCmd = CMP_CMD_CHG_ALL_VIDEOWIN;
@@ -2066,6 +2052,8 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
 
     int iRet = 0;
     T_CMP_PACKET tPkt;
+    static int iPollFlag = 0;
+
     if (event->type()==QEvent::MouseButtonPress || event->type()==QEvent::MouseMove) //判断界面操作
     {
             //DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] a mousemove or movebuttonpress or a keypress is checked!\n", __FUNCTION__);
@@ -2092,6 +2080,17 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
             /*当播放窗体处于全屏状态时，再次单击退出全屏,全屏标志清0，并恢复播放窗体原始播放状态*/
             if ((1 == m_iFullScreenFlag) && (target == m_playWin) && (event->type()==QEvent::MouseButtonPress))
             {
+                if (1 == iPollFlag)    //切换到本界面时，如果之前是轮询的则恢复轮询
+                {
+                    iPollFlag = 0;
+                    m_iPollingFlag = 1;
+                    struct sysinfo s_info;
+                    memset(&s_info,0,sizeof(s_info));
+                    sysinfo(&s_info);
+                    tPollingOparateTime = s_info.uptime;
+                }
+                m_iFullScreenFlag = 0;
+
 //                DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget quit full screen!\n");
                 QMouseEvent *mouseEvent=static_cast<QMouseEvent*>(event);
                 if(mouseEvent->button()==Qt::RightButton)    //只响应鼠标左击
@@ -2102,27 +2101,20 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
                 for (int i = 0; i < m_iCameraNum; i++)
                 {
                     CMP_SetPlayEnable(m_tCameraInfo[i].cmpHandle, 0);
-                    usleep(1000*10);
-
                 }
 
-                m_iFullScreenFlag = 0;
                 m_playWin->move(0, 138);
-                m_playWin->resize(782, 620);
+                m_playWin->resize(784, 624);
 
                 T_WND_INFO tWndInfo;
                 tWndInfo.hWnd = NULL;
+                printf("m_iCameraPlayNo 1:%d \n", m_iCameraPlayNo);
                 CMP_ChangeWnd(m_tCameraInfo[m_iCameraPlayNo].cmpHandle, &tWndInfo);
 
 
+                printf("m_iCameraPlayNo 2:%d \n", m_iCameraPlayNo);
                 CMP_SetPlayEnable(m_tCameraInfo[m_iCameraPlayNo].cmpHandle, 1);
-                m_iPollingFlag = 1;
-                if(m_iPollingFlag ==1)
-                {
-                    struct sysinfo s_info;
-                    sysinfo(&s_info);
-                    tPollingOparateTime = s_info.uptime;
-                }
+                printf("m_iCameraPlayNo 3:%d \n", m_iCameraPlayNo);
 
                 m_channelStateLabel->setGeometry(452, 360, 130, 50);
                 m_channelNoLabel->setGeometry(20, 690, 100, 50);
@@ -2137,13 +2129,15 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
             if (0 == m_iFullScreenFlag)
             {
                 m_iFullScreenFlag = 1;
-                m_iPollingFlag = 0;
-                if(m_iPollingFlag ==0)
+                if (1 == m_iPollingFlag)
                 {
+                    iPollFlag = 1;
+                    m_iPollingFlag = 0;   //在切换到其他界面时，先暂时停止轮询
                     struct sysinfo s_info;
                     sysinfo(&s_info);
                     tPollingOparateTime = s_info.uptime;
                 }
+
                 for (int i = 0; i < m_iCameraNum; i++)
                 {
                     CMP_SetPlayEnable(m_tCameraInfo[i].cmpHandle, 0);
@@ -2471,7 +2465,7 @@ void pvmsMonitorWidget::blackScreenCtrlSlot()     //黑屏触发信号处理，�
         sysinfo(&s_info);
         m_lastActionTime = s_info.uptime;  //更新最后一次操作计时
         m_playWin->move(0, 138);
-        m_playWin->resize(782, 620);
+        m_playWin->resize(784, 624);
         m_iFullScreenFlag = 0;
 
         tPkt.iMsgCmd = CMP_CMD_CHG_ALL_VIDEOWIN;

@@ -3,7 +3,12 @@
 
 #include <QWidget>
 
-#include "rgaapi.h"
+#define H264_CODE 0
+#define H265_CODE 1
+
+#include "rockchip/mpp_common.h"
+#include "rockchip/mpp_frame.h"
+#include "rockchip/rk_mpi.h"
 
 typedef void* SHM_HANDLE;
 int SHM_Init();

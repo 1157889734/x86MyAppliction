@@ -244,25 +244,6 @@ recordPlayWidget::~recordPlayWidget()
 }
 
 
-void recordPlayWidget::showPlayWindow(int enable)
-{
-    if( m_RealMonitorVideos.pRenderHandle)
-    {
-        if(enable)
-        {
-            m_playWin->show();
-            CMP_SetPlayEnable(m_cmpHandle, 1);
-
-        }
-        else
-        {
-
-            CMP_SetPlayEnable(m_cmpHandle, 0);
-            m_playWin->hide();
-        }
-    }
-}
-
 void recordPlayWidget::cmplaybackInit()
 {
     if( m_RealMonitorVideos.pRenderHandle)
@@ -837,7 +818,7 @@ void recordPlayWidget::recordDownloadSlot()
         memset(&tTrainConfigInfo, 0, sizeof(T_TRAIN_CONFIG));
         STATE_GetCurrentTrainConfigInfo(&tTrainConfigInfo);
 //        snprintf(acIpAddr, sizeof(acIpAddr), "192.168.%d.81", 100+tTrainConfigInfo.tNvrServerInfo[idex].iCarriageNO);
-        snprintf(acIpAddr, sizeof(acIpAddr), "rtsp://admin:admin123@127.0.0.%d", 1);
+        snprintf(acIpAddr, sizeof(acIpAddr), "rtsp://admin:admin123@127.0.0.1");
 
         m_tFtpHandle[idex] = FTP_CreateConnect(acIpAddr, FTP_SERVER_PORT, PftpProc);
         if (0 == m_tFtpHandle[idex])
@@ -981,6 +962,7 @@ void recordPlayWidget::recordPlayStopSlot()
     {
         closePlayWin();
         setPlayButtonStyleSheet();
+
     }
 }
 
@@ -1014,6 +996,9 @@ void recordPlayWidget::closePlayWin()  ///////////??????????????
     }
     m_iRecordIdex = -1;
     m_iPlayFlag = 0;
+
+    m_playWin->hide();
+    m_playWin->show();
 }
 
 void recordPlayWidget::triggerSetSliderValueSignal(int iValue)

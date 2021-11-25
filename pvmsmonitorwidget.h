@@ -109,7 +109,6 @@ public:
     void showPlayWindow(int);
     QLabel *m_channelStateLabel;
     QLabel *m_channelNoLabel;
-    QTimer *monitor_timer;
     int pageType;
 
     int HDiskState;

@@ -71,7 +71,6 @@ typedef struct _T_CMP_PLAYER_INFO
     unsigned int	uiPlayBaseTime;
     CMP_VDEC_TYPE   eDecType;   //软、硬解码或者鱼眼矫正
     T_WND_INFO      ptWndInfo;
-    QWidget         *pWidget;
     int             iDisplayFlag;
 } T_CMP_PLAYER_INFO, *PT_CMP_PLAYER_INFO;
 
@@ -612,12 +611,7 @@ CMPPlayer_API CMPHandle CMP_Init(T_WND_INFO *pWndInfo, CMP_VDEC_TYPE eDecType)
     ptCmpPlayer->iDisplayFlag = 0;
 
     ptCmpPlayer->ptWndInfo = *pWndInfo;
-
-    QWidget* parent = (QWidget*)pWndInfo->hWnd;
-    ptCmpPlayer->pWidget = new QWidget(parent);
-    ptCmpPlayer->pWidget->setGeometry(0, 0, parent->width(), parent->height());
-    ptCmpPlayer->ptWndInfo.pRenderHandle = SHM_AddRect(ptCmpPlayer->pWidget);
-    ptCmpPlayer->pWidget->hide();
+    ptCmpPlayer->ptWndInfo.pRenderHandle = SHM_AddRect((QWidget*)pWndInfo->hWnd);
 
     InitMessgeList(ptCmpPlayer);
 
@@ -633,7 +627,6 @@ CMPPlayer_API int CMP_UnInit(CMPHandle hPlay)
         return -1;
     }
 
-    delete ptCmpPlayer->pWidget;
     SHM_FreeRect(ptCmpPlayer->ptWndInfo.pRenderHandle);
     ptCmpPlayer->ptWndInfo.pRenderHandle = NULL;
 
@@ -936,23 +929,14 @@ CMPPlayer_API int CMP_ChangeWnd(CMPHandle hPlay,const T_WND_INFO *pWndInfo)
 CMPPlayer_API int CMP_SetPlayEnable(CMPHandle hPlay, int enable)
 {
     PT_CMP_PLAYER_INFO ptCmpPlayer = (PT_CMP_PLAYER_INFO)hPlay;
-    CMPPLAY_STATE ePlayState = CMP_STATE_IDLE;
-    ePlayState = CMP_GetPlayStatus(hPlay);
-
     if (NULL == ptCmpPlayer)
     {
-
         return -1;
     }
 
-    ptCmpPlayer->iDisplayFlag = enable;
     if(enable)
     {
-        if(!ptCmpPlayer->pWidget->isVisible())
-        {
-            ptCmpPlayer->pWidget->show();
-            SHM_AttchWnd(ptCmpPlayer->ptWndInfo.pRenderHandle);
-        }
+        SHM_AttchWnd(ptCmpPlayer->ptWndInfo.pRenderHandle);
         if(ptCmpPlayer->VHandle)
         {
             VDEC_DisplayEnable(ptCmpPlayer->VHandle, enable);
@@ -964,15 +948,10 @@ CMPPlayer_API int CMP_SetPlayEnable(CMPHandle hPlay, int enable)
         {
             VDEC_DisplayEnable(ptCmpPlayer->VHandle, enable);
         }
-        if(ptCmpPlayer->pWidget->isVisible())
-        {
-            SHM_FillRect(ptCmpPlayer->ptWndInfo.pRenderHandle, 0);
-            SHM_DetchWnd(ptCmpPlayer->ptWndInfo.pRenderHandle);
-
-            ptCmpPlayer->pWidget->hide();
-
-        }
+        usleep(20000);
+        SHM_DetchWnd(ptCmpPlayer->ptWndInfo.pRenderHandle);
     }
+    ptCmpPlayer->iDisplayFlag = enable;
     return 1;
 }
 
@@ -980,6 +959,10 @@ CMPPlayer_API int CMP_SetPlayEnable(CMPHandle hPlay, int enable)
 CMPPlayer_API int CMP_SetPlayState(CMPHandle hPlay, int iState)
 {
     PT_CMP_PLAYER_INFO ptCmpPlayer = (PT_CMP_PLAYER_INFO)hPlay;
+    if(ptCmpPlayer == NULL)
+    {
+        return -1;
+    }
 
     if(CMP_STATE_PLAY == iState)
     {
@@ -991,6 +974,16 @@ CMPPlayer_API int CMP_SetPlayState(CMPHandle hPlay, int iState)
     }
 
     return 0;
+}
+
+CMPPlayer_API int CMP_FillDisplayBk(CMPHandle hPlay, uint32_t rgb)
+{
+    PT_CMP_PLAYER_INFO ptCmpPlayer = (PT_CMP_PLAYER_INFO)hPlay;
+    if(ptCmpPlayer == NULL)
+    {
+        return -1;
+    }
+    SHM_FillRect(ptCmpPlayer->ptWndInfo.pRenderHandle, rgb);
 }
 
 CMPPlayer_API int CMP_GetOpenMediaState(CMPHandle hPlay)

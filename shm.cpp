@@ -19,6 +19,12 @@
 #include "5.14.2/QtGui/qpa/qplatformnativeinterface.h"
 #endif
 
+#include "mutex.h"
+#include "RockchipRga.h"
+#include "RgaUtils.h"
+
+#define CODEC_ALIGN(x, a)   (((x)+(a)-1)&~((a)-1))
+
 typedef struct  T_SHM_RECT_INFO
 {
     int    w;
@@ -26,8 +32,7 @@ typedef struct  T_SHM_RECT_INFO
     int   size;
     int   fd;
     uchar *addr;
-    RGA_HANDLE rgaHandle;
-    struct wl_surface *window_handle;
+    struct wl_surface * volatile window_handle;
     struct wl_buffer* buffer;
     QWidget *pWidget;
     CMutexLock lock;
@@ -36,7 +41,6 @@ typedef struct  T_SHM_RECT_INFO
         fd = 0;
         w = h = 0;
         addr = NULL;
-        rgaHandle = NULL;
         buffer = NULL;
         window_handle = NULL;
         pWidget = NULL;
@@ -150,30 +154,6 @@ int SHM_Uinit()
     return 0;
 }
 
-int SHM_FreeRect(SHM_HANDLE hShmHandle)
-{
-    PT_SHM_RECT_INFO pShmRectInfo = (PT_SHM_RECT_INFO)hShmHandle;
-    if(pShmRectInfo == NULL)
-    {
-        return -1;
-    }
-    pShmRectInfo->lock.Lock();
-    if(pShmRectInfo->rgaHandle)
-    {
-        rga_destroy(pShmRectInfo->rgaHandle);
-        pShmRectInfo->rgaHandle = NULL;
-    }
-    wl_buffer_destroy(pShmRectInfo->buffer);
-    munmap(pShmRectInfo->addr, pShmRectInfo->size);
-    close(pShmRectInfo->fd);
-
-    pShmRectInfo->lock.Unlock();
-    delete pShmRectInfo;
-    pShmRectInfo = NULL;
-
-    return 0;
-}
-
 SHM_HANDLE SHM_AddRect(QWidget *pWnd)
 {
     pWnd->winId();
@@ -185,44 +165,54 @@ SHM_HANDLE SHM_AddRect(QWidget *pWnd)
         printf("window_handle NULL \n");
         return NULL;
     }
-
     int w = pWnd->width();
     int h = pWnd->height();
+
+//    printf("SHM_AddRect pWnd w:%d h:%d \n", w, h);
 
     w = CODEC_ALIGN(w, 16);
     h = CODEC_ALIGN(h, 16);
 
+//    printf("SHM_AddRect 16 ALIGN w:%d h:%d \n", w, h);
 
     PT_SHM_RECT_INFO pShmRectInfo = create_rect_info(w, h);
-    if (pShmRectInfo == NULL) {
-        printf("create_buffer error \n");
-        return NULL;
-    }
+    QWidget *pWidget = new QWidget(pWnd);
+    pWidget->setGeometry(0,0,pWnd->width(), pWnd->height());
+    pShmRectInfo->pWidget = pWidget;
 
-    pShmRectInfo->lock.Lock();
-    pShmRectInfo->pWidget = pWnd;
-
-    RGA_HANDLE rgaHandle = NULL;
-    rgaHandle = rga_create(w, h);
-    if(!rgaHandle)
+    //if(bo->format == DRM_FORMAT_NV12)
     {
-        printf("rga_create error \n");
+        memset(pShmRectInfo->addr, 0x10, w * h);
+        memset(pShmRectInfo->addr + w * h, 0x80, w * h * 0.5);
     }
-    pShmRectInfo->rgaHandle = rgaHandle;
-
-    memset(pShmRectInfo->addr, 0x10, w * h);
-    memset(pShmRectInfo->addr + w * h, 0x80, w * h * 0.5);
-
 
     pShmRectInfo->window_handle = window_handle;
-    printf("wl_surface_attach, %0x \n", window_handle);
     wl_surface_attach(window_handle, pShmRectInfo->buffer, 0, 0);
     wl_surface_commit(window_handle);
-    //wl_display_flush(display_handle);
-    pShmRectInfo->lock.Unlock();
-
-
+    wl_display_flush(display_handle);
+    //pShmRectInfo->iRenderThreadRun = 1;
+    //pthread_create(&pShmRectInfo->hRenderThread, NULL, RenderFrameFunc, pShmRectInfo);
+    printf("add rect end \n");
     return pShmRectInfo;
+}
+
+int SHM_FreeRect(SHM_HANDLE hShmHandle)
+{
+    PT_SHM_RECT_INFO pShmRectInfo = (PT_SHM_RECT_INFO)hShmHandle;
+    if(pShmRectInfo == NULL)
+    {
+        return -1;
+    }
+    pShmRectInfo->lock.Lock();
+    wl_buffer_destroy(pShmRectInfo->buffer);
+    munmap(pShmRectInfo->addr, pShmRectInfo->size);
+    close(pShmRectInfo->fd);
+    delete pShmRectInfo->pWidget;
+    pShmRectInfo->lock.Unlock();
+    delete pShmRectInfo;
+    pShmRectInfo = NULL;
+
+    return 0;
 }
 
 int SHM_AttchWnd(SHM_HANDLE hShmHandle)
@@ -232,13 +222,19 @@ int SHM_AttchWnd(SHM_HANDLE hShmHandle)
     {
         return -1;
     }
+
+    if(pShmRectInfo->pWidget->isVisible())
+    {
+        return 0;
+    }
+    pShmRectInfo->pWidget->show();
     pShmRectInfo->pWidget->winId();
     if(pShmRectInfo->window_handle)
     {
-        SHM_DetchWnd(hShmHandle);
-//        return -1;
-    }
+        //SHM_DetchWnd(hShmHandle);
 
+        return 0;
+    }
     struct wl_surface *window_handle  = NULL;
     window_handle = (struct wl_surface *)native->nativeResourceForWindow("surface",
                                   pShmRectInfo->pWidget->windowHandle());
@@ -249,7 +245,6 @@ int SHM_AttchWnd(SHM_HANDLE hShmHandle)
         return NULL;
     }
     pShmRectInfo->lock.Lock();
-
     printf("wl_surface_attach, %0x \n", window_handle);
     wl_surface_attach(window_handle, pShmRectInfo->buffer, 0, 0);
     wl_surface_commit(window_handle);
@@ -273,16 +268,16 @@ int SHM_DetchWnd(SHM_HANDLE hShmHandle)
     {
         return -1;
     }
+    if(!pShmRectInfo->pWidget->isVisible())
+    {
+        return 0;
+    }
+    pShmRectInfo->pWidget->hide();
     pShmRectInfo->lock.Lock();
-
-    wl_surface_attach(pShmRectInfo->window_handle, 0, 0, 0);
-
-
-    wl_surface_commit(pShmRectInfo->window_handle);
-
+    //wl_surface_attach(pShmRectInfo->window_handle, 0, 0, 0);
+    //wl_surface_commit(pShmRectInfo->window_handle);
     printf("wl_surface_DEttach %0x \n", pShmRectInfo->window_handle);
-
-    wl_display_flush(display_handle);
+    //wl_display_flush(display_handle);
     pShmRectInfo->window_handle = NULL;
     pShmRectInfo->lock.Unlock();
 
@@ -300,17 +295,70 @@ int SHM_FillRect(SHM_HANDLE hShmHandle, uint32_t color)
     {
         return -1;
     }
-
+    pShmRectInfo->lock.Lock();
     memset(pShmRectInfo->addr, 0x10, pShmRectInfo->w * pShmRectInfo->h);
     memset(pShmRectInfo->addr + pShmRectInfo->w * pShmRectInfo->h, 0x80, pShmRectInfo->w * pShmRectInfo->h * 0.5);
-
     wl_surface_attach(pShmRectInfo->window_handle, pShmRectInfo->buffer, 0, 0);
     wl_surface_commit(pShmRectInfo->window_handle);
-    wl_display_flush(display_handle);
+    //wl_display_flush(display_handle);
+    pShmRectInfo->lock.Unlock();
 
     return 0;
 }
 
+int SHM_RkRgaBlit(MppFrame tSrcMppFrame, uint8_t *dstAddr, int w, int h)
+{
+    static rga_info_t rgasrc;
+    static rga_info_t rgadst;
+
+    int ret = 0;
+    int srcWidth,srcHeight,srcFormat, src_h_stride;
+    int dstWidth,dstHeight,dstFormat;
+
+    RockchipRga &rkRga = RockchipRga::get();
+
+    dstWidth  = w;
+    dstHeight = h-6;
+    dstFormat = RK_FORMAT_YCbCr_420_SP;
+
+    MppBuffer buffer  = NULL;
+    RK_U8*    srcAddr = NULL;
+
+    srcFormat = RK_FORMAT_YCbCr_420_SP;
+    srcWidth  =   mpp_frame_get_width(tSrcMppFrame);
+    srcHeight =   mpp_frame_get_height(tSrcMppFrame);
+    src_h_stride    =   mpp_frame_get_hor_stride(tSrcMppFrame);
+    buffer = mpp_frame_get_buffer(tSrcMppFrame);
+    srcAddr = (RK_U8 *)mpp_buffer_get_ptr(buffer);
+
+    //printf("srcWidth:%d, srcHeight:%d, src_h_stride:%d \n", srcWidth, srcHeight, src_h_stride);
+    //printf("dstWidth:%d, dstHeight:%d, dstWidth:%d \n", dstWidth, dstHeight, dstWidth);
+
+    memset(&rgasrc, 0, sizeof(rga_info_t));
+    rgasrc.fd = -1;
+    rgasrc.mmuFlag = 1;
+    rgasrc.virAddr = srcAddr;
+
+    memset(&rgadst, 0, sizeof(rga_info_t));
+    rgadst.fd = -1;
+    rgadst.mmuFlag = 1;
+    rgadst.virAddr = dstAddr;
+
+    //memset(dstAddr, 0x10, w * h);
+    //memset(dstAddr+ w * h, 0x80, w * h * 0.5);
+
+    /********** set the rect_info **********/
+    rga_set_rect(&rgasrc.rect, 0, 0, srcWidth, srcHeight, src_h_stride, srcHeight, srcFormat);
+    rga_set_rect(&rgadst.rect, 0, 0, dstWidth, dstHeight, dstWidth, dstHeight, dstFormat);
+
+    /************ set the rga_mod ,rotation\composition\scale\copy .... **********/
+    //rgasrc.blend = 0xff0105;
+
+    /********** call rga_Interface **********/
+    ret = rkRga.RkRgaBlit(&rgasrc, &rgadst, NULL);
+
+    return ret;
+}
 int SHM_Display(SHM_HANDLE hPlaneHandle, MppFrame frame)
 {
     PT_SHM_RECT_INFO pShmRectInfo = (PT_SHM_RECT_INFO)hPlaneHandle;
@@ -319,59 +367,18 @@ int SHM_Display(SHM_HANDLE hPlaneHandle, MppFrame frame)
         printf("pShmRectInfo err \n");
         return -1;
     }
-
-    int err, i;
-    int width, height, h_stride, v_stride;
-    MppBuffer buffer    = NULL;
-    unsigned char* base = NULL;
-    MppFrame  dstFrame  = NULL;
-    RGA_HANDLE rgaHandle = pShmRectInfo->rgaHandle;
-    err = rga_blit(rgaHandle, frame, &dstFrame);
+    int err = -1;
+    err = SHM_RkRgaBlit(frame, pShmRectInfo->addr, pShmRectInfo->w, pShmRectInfo->h);
     if(err < 0)
     {
         printf("rga_blit err \n");
         return -1;
     }
-    err = mpp_frame_get_errinfo(dstFrame) | mpp_frame_get_discard(dstFrame);
-    if (err)
+    if(pShmRectInfo->window_handle == NULL)
     {
-        printf("get err info %d discard %d, go back.\n",
-               mpp_frame_get_errinfo(dstFrame),
-               mpp_frame_get_discard(dstFrame));
         return -1;
     }
-    h_stride = mpp_frame_get_hor_stride(dstFrame);
-    v_stride = mpp_frame_get_ver_stride(dstFrame);
-    width  =   mpp_frame_get_width(dstFrame);
-    height =   mpp_frame_get_height(dstFrame);
-    buffer = mpp_frame_get_buffer(dstFrame);
-#if 0
-    printf("w:%d, h:%d,h_stride:%d,v_stride:%d, bo->pitch:%d, bo->height:%d \n", width, height,
-           h_stride, v_stride,
-           pShmRectInfo->w, pShmRectInfo->h);
-#endif
-
     pShmRectInfo->lock.Lock();
-    if(!pShmRectInfo->window_handle)
-    {
-        printf("sss 0 \n");
-        pShmRectInfo->lock.Unlock();
-        return -1;
-    }
-
-    base = (RK_U8 *)mpp_buffer_get_ptr(buffer);
-    uint8_t *luma;
-    uint8_t *chroma;
-    for (i = 0; i < height; i++)
-    {
-        luma = (uint8_t *)pShmRectInfo->addr + i*pShmRectInfo->w;
-        memcpy(luma, base + i*h_stride, width);
-    }
-    for (i = 0; i < height / 2; i++)
-    {
-        chroma = (uint8_t *)pShmRectInfo->addr + (i+height)*pShmRectInfo->w;
-        memcpy(chroma, base + (i+height)*h_stride, width);
-    }
     wl_surface_attach(pShmRectInfo->window_handle, pShmRectInfo->buffer, 0, 0);
     wl_surface_damage (pShmRectInfo->window_handle, 0, 0,
         pShmRectInfo->w, pShmRectInfo->h);

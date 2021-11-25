@@ -13,6 +13,57 @@ typedef struct{
     unsigned int type;
 }T_DEC_CMD;
 
+typedef struct
+{
+    MppPacket 		packet;
+
+    MppCtx          ctx;
+    MppApi          *mpi;
+
+    /* end of stream flag when set quit the loop */
+    RK_U32          eos;
+
+    /* input and output */
+    MppBufferGroup  frm_grp;
+
+}T_VDEC_INFO;
+
+typedef struct _T_DATA_PACKET
+{
+    char *pcData;
+    int iLen;
+    unsigned int iPts;
+}T_DATA_PACKET, *PT_DATA_PACKET;
+
+typedef struct _T_DATA_PACKET_LIST
+{
+    T_DATA_PACKET tPkt;
+    struct _T_DATA_PACKET_LIST *next;
+}T_DATA_PACKET_LIST, *PT_DATA_PACKET_LIST;
+
+typedef struct _T_PACKET_QUEUE {
+    T_DATA_PACKET_LIST *first_pkt, *last_pkt;
+    int nb_packets;
+    CMutexLock *mutex;
+}T_PACKET_QUEUE;
+
+typedef struct _T_VIDEO_DEC_INFO
+{
+    T_PACKET_QUEUE tPacketQueue;
+    pthread_t hVideoDecodecThread;
+    CMutexLock cMute;
+    volatile int iVideoExitFlag;
+    volatile int iVideoExitFlagOver;
+    volatile int iStartPlayFlag;
+    volatile int iDisPlayFlag;
+    int iDecType;  //CMP_VDEC_TYPE
+    T_WND_INFO  *ptWndInfo;
+    T_VDEC_INFO *ptDecInfo;
+    //RGA_HANDLE   pRgaHandle;
+
+}T_VIDEO_DEC_INFO, *PT_VIDEO_DEC_INFO;
+
+
 int dec_simple(PT_VIDEO_DEC_INFO ptVideoInfo, T_DATA_PACKET *ptPkt)
 {
     int rt = 0;
@@ -62,7 +113,7 @@ int dec_simple(PT_VIDEO_DEC_INFO ptVideoInfo, T_DATA_PACKET *ptPkt)
             {
                 if (times > 0) {
                     times--;
-                    msleep(2);
+                    usleep(2000);
                     goto try_again;
                 }
                 printf("decode_get_frame failed too much time\n");
@@ -159,7 +210,7 @@ int dec_simple(PT_VIDEO_DEC_INFO ptVideoInfo, T_DATA_PACKET *ptPkt)
             // if last packet is send but last frame is not found continue
             if (pkt_eos && pkt_done && !frm_eos)
             {
-                msleep(1);
+                usleep(1000);
                 continue;
             }
 
@@ -184,7 +235,7 @@ int dec_simple(PT_VIDEO_DEC_INFO ptVideoInfo, T_DATA_PACKET *ptPkt)
          * frame which resolution is 1080p needs 2 ms,so here we sleep 3ms
          * * is enough.
          */
-        msleep(1);
+        usleep(1000);
     } while (1);
 
     return rt;

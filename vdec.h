@@ -2,78 +2,22 @@
 #define _VDEC_H_
 #include <unistd.h>
 
-#include "libdrm/planetest.h"
-
 #include "mutex.h"
 #include "types.h"
 #include "debugout/debug.h"
 
-#if 1
-
 #define H264_CODE 0
 #define H265_CODE 1
 
-
-
-typedef struct
-{
-    MppPacket 		packet;
-
-    MppCtx          ctx;
-    MppApi          *mpi;
-
-    /* end of stream flag when set quit the loop */
-    RK_U32          eos;
-
-    /* input and output */
-    MppBufferGroup  frm_grp;
-
-}T_VDEC_INFO;
-
 #define DISPLAY_START    1
 #define DISPLAY_STOP     0
-
 
 #define STOP_STREAM_PLAY    0
 #define START_STREAM_PLAY   1
 #define PAUSE_STREAM_PLAY   2
 
+
 typedef void* VDEC_HADNDLE;
-typedef struct _T_DATA_PACKET
-{
-    char *pcData;
-    int iLen;
-    unsigned int iPts;
-}T_DATA_PACKET, *PT_DATA_PACKET;
-
-typedef struct _T_DATA_PACKET_LIST
-{
-    T_DATA_PACKET tPkt;
-    struct _T_DATA_PACKET_LIST *next;
-}T_DATA_PACKET_LIST, *PT_DATA_PACKET_LIST;
-
-typedef struct _T_PACKET_QUEUE {
-    T_DATA_PACKET_LIST *first_pkt, *last_pkt;
-    int nb_packets;
-    CMutexLock *mutex;
-}T_PACKET_QUEUE;
-
-typedef struct _T_VIDEO_DEC_INFO
-{
-    T_PACKET_QUEUE tPacketQueue;
-    pthread_t hVideoDecodecThread;
-    CMutexLock cMute;
-    volatile int iVideoExitFlag;
-    volatile int iVideoExitFlagOver;
-    volatile int iStartPlayFlag;
-    volatile int iDisPlayFlag;
-    int iDecType;  //CMP_VDEC_TYPE
-    T_WND_INFO  *ptWndInfo;
-    T_VDEC_INFO *ptDecInfo;
-    //RGA_HANDLE   pRgaHandle;
-
-}T_VIDEO_DEC_INFO, *PT_VIDEO_DEC_INFO;
-
 
 /*************************************************
   函数功能:     VDEC_Init
@@ -198,5 +142,4 @@ int VDEC_PausePlayStream(VDEC_HADNDLE VHandle);
 *************************************************/
 int VDEC_DisplayEnable(VDEC_HADNDLE VHandle, int displayFlag);
 
-#endif
 #endif

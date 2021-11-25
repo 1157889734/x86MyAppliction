@@ -236,6 +236,20 @@ CMPPlayer_API int CMP_SetPlayEnable(CMPHandle hPlay, int enable);
 *************************************************/
 CMPPlayer_API int CMP_SetPlayState(CMPHandle hPlay, int iState);
 
+/*************************************************
+  函数功能:     CMP_FillDisplayBk
+  函数描述:     fill rgb
+  输入参数:     hPlay：媒体句柄
+  输出参数:     无
+  返回值:
+  作者：
+  日期:         2021-11-24
+  修改:
+*************************************************/
+CMPPlayer_API int CMP_FillDisplayBk(CMPHandle hPlay, uint32_t rgb);
+
+
+
 CMPPlayer_API int CMP_GetOpenMediaState(CMPHandle hPlay);
 
 CMPPlayer_API int CMP_GetStreamState(CMPHandle hPlay);
