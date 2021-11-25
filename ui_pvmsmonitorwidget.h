@@ -59,7 +59,7 @@ public:
     {
         if (pvmsMonitorWidget->objectName().isEmpty())
             pvmsMonitorWidget->setObjectName(QString::fromUtf8("pvmsMonitorWidget"));
-        pvmsMonitorWidget->resize(1024, 620);
+        pvmsMonitorWidget->resize(1024, 624);
         presetNoPushButton_8 = new QPushButton(pvmsMonitorWidget);
         presetNoPushButton_8->setObjectName(QString::fromUtf8("presetNoPushButton_8"));
         presetNoPushButton_8->setGeometry(QRect(970, 360, 53, 32));
@@ -448,12 +448,12 @@ public:
         canselPushButton->setCheckable(true);
         label_11 = new QLabel(pvmsMonitorWidget);
         label_11->setObjectName(QString::fromUtf8("label_11"));
-        label_11->setGeometry(QRect(0, 0, 1024, 620));
+        label_11->setGeometry(QRect(0, 0, 1024, 624));
         label_11->setToolTipDuration(0);
         label_11->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         mplayLabel = new QLabel(pvmsMonitorWidget);
         mplayLabel->setObjectName(QString::fromUtf8("mplayLabel"));
-        mplayLabel->setGeometry(QRect(0, 0, 782, 620));
+        mplayLabel->setGeometry(QRect(0, 0, 784, 624));
         mplayLabel->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 0, 0);"));
         label_11->raise();
         label_2->raise();

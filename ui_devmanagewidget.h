@@ -40,7 +40,7 @@ public:
     {
         if (devManageWidget->objectName().isEmpty())
             devManageWidget->setObjectName(QString::fromUtf8("devManageWidget"));
-        devManageWidget->resize(1024, 620);
+        devManageWidget->resize(1024, 624);
         TrainNumberLineEdit = new QLineEdit(devManageWidget);
         TrainNumberLineEdit->setObjectName(QString::fromUtf8("TrainNumberLineEdit"));
         TrainNumberLineEdit->setGeometry(QRect(680, 10, 113, 27));
@@ -134,7 +134,7 @@ public:
         devStorageLabel->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 0);"));
         label_2 = new QLabel(devManageWidget);
         label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setGeometry(QRect(0, 0, 1024, 620));
+        label_2->setGeometry(QRect(0, 0, 1024, 624));
         label_2->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         lineEdit = new QLineEdit(devManageWidget);
         lineEdit->setObjectName(QString::fromUtf8("lineEdit"));

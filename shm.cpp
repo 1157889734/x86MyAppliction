@@ -245,7 +245,7 @@ int SHM_AttchWnd(SHM_HANDLE hShmHandle)
         return NULL;
     }
     pShmRectInfo->lock.Lock();
-    printf("wl_surface_attach, %0x \n", window_handle);
+//    printf("wl_surface_attach, %0x \n", window_handle);
     wl_surface_attach(window_handle, pShmRectInfo->buffer, 0, 0);
     wl_surface_commit(window_handle);
     wl_display_flush(display_handle);
@@ -276,7 +276,7 @@ int SHM_DetchWnd(SHM_HANDLE hShmHandle)
     pShmRectInfo->lock.Lock();
     //wl_surface_attach(pShmRectInfo->window_handle, 0, 0, 0);
     //wl_surface_commit(pShmRectInfo->window_handle);
-    printf("wl_surface_DEttach %0x \n", pShmRectInfo->window_handle);
+//    printf("wl_surface_DEttach %0x \n", pShmRectInfo->window_handle);
     //wl_display_flush(display_handle);
     pShmRectInfo->window_handle = NULL;
     pShmRectInfo->lock.Unlock();

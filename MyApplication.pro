@@ -23,7 +23,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 CONFIG += c++11
 
-QMAKE_CFLAGS += -strip
+#QMAKE_CFLAGS += -strip
 #QMAKE_CXXFLAGS += -striped
 
 #QMAKE_CFLAGS += -g -O0

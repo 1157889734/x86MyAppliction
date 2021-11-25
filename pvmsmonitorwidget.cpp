@@ -44,6 +44,8 @@ typedef enum _E_THREAD_SIGNAL_TYPE    //子线程触发的信号类型
 #define GET_DEVSTATE_MONITOR_TIME 10     //获取设备状态间隔时间，单位秒
 #define SET_TIME_MONITOR_TIME 1   //更新设备维护界面时间显示的间隔时间，单位秒
 
+#define SET_LABLE_STATE_TIME 3   //更新获取流的状态，单位秒
+
 
 int GetNodeFromCmpQueue(PT_CMP_QUEUE ptCmpQueue, PT_CMP_PACKET ptPkt)
 {
@@ -369,6 +371,7 @@ void *monitorThread(void *param)     //实时监控线程，对通道轮询、�
     int iCameraIdex = 0;  //摄像头索引
     int iPollingFlag = 0;
     int err = 0;
+    time_t tPollStateTime = 0,tPollStateOldTime;
     time_t tPollingCurTime = 0;
     time_t tPresetReturnCurTime = 0;
     time_t tFullScreenCurTime = 0;
@@ -396,6 +399,8 @@ void *monitorThread(void *param)     //实时监控线程，对通道轮询、�
         pvmsMonitorPage->tPollingOparateTime = tPollingCurTime - iPollingTime;//保证线程一进来，就进行一次循环处理
     }
 
+    tPollStateTime = s_info.uptime;
+    tPollStateOldTime = tPollStateTime;
     tPresetReturnCurTime = s_info.uptime;
     tFullScreenCurTime = s_info.uptime;
     tGetDevStateCurTime = s_info.uptime;
@@ -409,140 +414,158 @@ void *monitorThread(void *param)     //实时监控线程，对通道轮询、�
         iRet = GetNodeFromCmpQueue(pvmsMonitorPage->m_ptQueue, &tCmpPkt);   //读取cmp队列，对解码通道进行相应处理
         if (iRet > 0)
         {
-//            qDebug()<<"**************tCmpPkt.iMsgCmd="<<tCmpPkt.iMsgCmd<<"******tCmpPkt.iCh="<<tCmpPkt.iCh<<__LINE__;
 //            DebugPrint(DEBUG_UI_NOMAL_PRINT, "MonitorPlayThread get cmpctrl cmd:%d, ch=%d\n", tCmpPkt.iMsgCmd, tCmpPkt.iCh);
-            pvmsMonitorPage->triggerCmpOptionCtrlSinal(tCmpPkt.iMsgCmd, tCmpPkt.iCh);
+              pvmsMonitorPage->triggerCmpOptionCtrlSinal(tCmpPkt.iMsgCmd, tCmpPkt.iCh);
         }
 
 
-    iPollingTime = STATE_GetPollingTime();
-    if (iPollingTime < 0)
-    {
-        usleep(100*1000);
-        continue;
-    }
-
-    iPresetReturnTime = STATE_GetPresetReturnTime();
-    if (iPresetReturnTime < 0)
-    {
-        usleep(100*1000);
-        continue;
-    }
-    iPresetReturnTime = iPresetReturnTime*60;
-    iPollingFlag = 0;  //轮询标志复位
-
-    /*检测轮询*/
-    if ((1 == pvmsMonitorPage->m_iPollingFlag) && ((tPollingCurTime-pvmsMonitorPage->tPollingOparateTime) >= iPollingTime))   //只有轮询标记为1并且时间到了轮询时间时才轮询
-    {
-        if(pvmsMonitorPage->m_iFullScreenFlag == 0)
+        iPollingTime = STATE_GetPollingTime();
+        if (iPollingTime < 0)
         {
-            iCameraIdex += 1;  //更新摄像头索引
-            if (iCameraIdex > (pvmsMonitorPage->m_iCameraNum - 1))    //iCameraIdex达到最大值，表示轮询完了一轮，将索引置位，开始重新一轮的轮询
+            usleep(100*1000);
+            continue;
+        }
+
+        iPresetReturnTime = STATE_GetPresetReturnTime();
+        if (iPresetReturnTime < 0)
+        {
+            usleep(100*1000);
+            continue;
+        }
+        iPresetReturnTime = iPresetReturnTime*60;
+        iPollingFlag = 0;  //轮询标志复位
+
+        /*检测轮询*/
+        if ((1 == pvmsMonitorPage->m_iPollingFlag) && ((tPollingCurTime-pvmsMonitorPage->tPollingOparateTime) >= iPollingTime))   //只有轮询标记为1并且时间到了轮询时间时才轮询
+        {
+            if(pvmsMonitorPage->m_iFullScreenFlag == 0)
+            {
+                iCameraIdex += 1;  //更新摄像头索引
+                if (iCameraIdex > (pvmsMonitorPage->m_iCameraNum - 1))    //iCameraIdex达到最大值，表示轮询完了一轮，将索引置位，开始重新一轮的轮询
+                {
+                    iCameraIdex = 0;
+                }
+             }
+
+            iPollingFlag = 1;
+        }
+
+        if (LASTONE == pvmsMonitorPage->m_iCameraSwitchState)  //外部操作了摄像头切换到上一个，状态更新为上一个，这里进行切换操作
+        {
+            iCameraIdex -= 1;
+            if (iCameraIdex < 0)
+            {
+                iCameraIdex = pvmsMonitorPage->m_iCameraNum - 1;
+            }
+
+            pvmsMonitorPage->m_iCameraSwitchState = NORMAL;   //摄像头切换状态恢复到正常不切换状态
+            iPollingFlag = 1;
+        }
+        else if (NEXTONE == pvmsMonitorPage->m_iCameraSwitchState) //外部操作了摄像头切换到下一个，状态更新为下一个，这里进行切换操作
+        {
+            iCameraIdex += 1;
+            if (iCameraIdex > (pvmsMonitorPage->m_iCameraNum - 1))
             {
                 iCameraIdex = 0;
             }
-         }
-//        DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread polling to camera, %d !\n",iCameraIdex);
 
-        iPollingFlag = 1;
-    }
-
-    if (LASTONE == pvmsMonitorPage->m_iCameraSwitchState)  //外部操作了摄像头切换到上一个，状态更新为上一个，这里进行切换操作
-    {
-        iCameraIdex -= 1;
-        if (iCameraIdex < 0)
-        {
-            iCameraIdex = pvmsMonitorPage->m_iCameraNum - 1;
-        }
-//        DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread polling to last camera no=%d !\n",iCameraIdex);
-        pvmsMonitorPage->m_iCameraSwitchState = NORMAL;   //摄像头切换状态恢复到正常不切换状态
-        iPollingFlag = 1;
-        qDebug()<<"*************pvmsMonitorPage->m_iCameraSwitchState***LASTONE="<<iCameraIdex<<__LINE__;
-    }
-    else if (NEXTONE == pvmsMonitorPage->m_iCameraSwitchState) //外部操作了摄像头切换到下一个，状态更新为下一个，这里进行切换操作
-    {
-        iCameraIdex += 1;
-        if (iCameraIdex > (pvmsMonitorPage->m_iCameraNum - 1))
-        {
-            iCameraIdex = 0;
+            pvmsMonitorPage->m_iCameraSwitchState = NORMAL;   //摄像头切换状态恢复到正常不切换状态
+            iPollingFlag = 1;
         }
 
-//        DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread polling to next camera, no=%d !\n",iCameraIdex);
-        qDebug()<<"*************pvmsMonitorPage->m_iCameraSwitchState***NEXTONE="<<iCameraIdex<<__LINE__;
-
-        pvmsMonitorPage->m_iCameraSwitchState = NORMAL;   //摄像头切换状态恢复到正常不切换状态
-        iPollingFlag = 1;
-    }
-
-    if (1 == iPollingFlag)
-    {
-        pvmsMonitorPage->m_iCameraPlayNo = iCameraIdex;  //更新当前摄像头编号，方便后续的各项操作能对准摄像头
-        pvmsMonitorPage->tPollingOparateTime = tPollingCurTime;
-        pvmsMonitorPage->triggerVideoPollingSignal();
-    }
-    else
-    {
-        /*非轮询状态下也要实时监控摄像头码流状态的，如果有变换需进行通道状态和通道号的处理，如果状态变成1(有流)则需要隐藏通道状态和通道号，变成0需要显示*/
-        pvmsMonitorPage->noPollingChOption();
-    }
-
-    /*检测回放状态是否改变*/
-    if (pvmsMonitorPage->m_iOldRecordPlayFlag != pvmsMonitorPage->m_iRecordPlayFlag)
-    {
-        pvmsMonitorPage->triggerRecordPlayCtrlSignal();
-        pvmsMonitorPage->m_iOldRecordPlayFlag = pvmsMonitorPage->m_iRecordPlayFlag;
-    }
-
-    /*检测预置点返回*/
-    for (i = 0; i < pvmsMonitorPage->m_iCameraNum; i++)
-    {
-        if ((pvmsMonitorPage->m_tCameraInfo[i].iPresetNo != 1) && ((tPresetReturnCurTime-pvmsMonitorPage->m_tCameraInfo[i].tPtzOprateTime) >= iPresetReturnTime) && (pvmsMonitorPage->m_tCameraInfo[i].phandle != 0))   //检测预置点返回操作
+        if (1 == iPollingFlag)
         {
-//            DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread presetReturn timeOut, no=%d !\n",i);
-            pvmsMonitorPage->triggerPresetReturnSignal(i);
-            pvmsMonitorPage->m_tCameraInfo[i].tPtzOprateTime = tPresetReturnCurTime;
-        }
-    }
 
-    /*检测是否要全屏*/
-    if ((tFullScreenCurTime-pvmsMonitorPage->m_lastActionTime) >= FULLSCREEN_MONITOR_TIME && 0 == pvmsMonitorPage->m_iFullScreenFlag)    //界面20秒无操作,全屏
-    {
-//        DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread fullScreen timeOut!\n");
-        //printf("tFullScreenCurTime=%d,pvmsMonitorPage->m_lastActionTime=%d\n",tFullScreenCurTime,pvmsMonitorPage->m_lastActionTime);
-        if (pvmsMonitorPage->isHidden() != 1)   //只有当前处于受电弓监控界面时才做触发全屏处理
+            pvmsMonitorPage->m_iCameraPlayNo = iCameraIdex;  //更新当前摄像头编号，方便后续的各项操作能对准摄像头
+            pvmsMonitorPage->tPollingOparateTime = tPollingCurTime;
+
+            pvmsMonitorPage->triggerVideoPollingSignal();
+
+        }
+        else
         {
-//            pvmsMonitorPage->triggerFullScreenSignal();
+            /*非轮询状态下也要实时监控摄像头码流状态的，如果有变换需进行通道状态和通道号的处理，如果状态变成1(有流)则需要隐藏通道状态和通道号，变成0需要显示*/
+            if ((tPollStateTime - tPollStateOldTime) >= SET_LABLE_STATE_TIME)
+            {
+                pvmsMonitorPage->noPollingChOption();
+                tPollStateOldTime = tPollStateTime;
+            }
+
         }
-        pvmsMonitorPage->m_lastActionTime = tFullScreenCurTime;
-    }
 
-    /*检测设备状态*/
-    if ((tGetDevStateCurTime - tGetDevStateOldTime) >= GET_DEVSTATE_MONITOR_TIME)
-    {
-//        DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread get device state timeOut!\n");
-//        qDebug()<<" DEBUG_UI_NOMAL_PRINT pvmsMonitorWidget monitor thread get device state timeOut--"<<__FUNCTION__<<__LINE__<<endl;
-        pvmsMonitorPage->triggerGetDevStateSignal();
-        tGetDevStateOldTime = tGetDevStateCurTime;
-    }
+        /*检测回放状态是否改变*/
+        if (pvmsMonitorPage->m_iOldRecordPlayFlag != pvmsMonitorPage->m_iRecordPlayFlag)
+        {
+            pvmsMonitorPage->triggerRecordPlayCtrlSignal();
+            pvmsMonitorPage->m_iOldRecordPlayFlag = pvmsMonitorPage->m_iRecordPlayFlag;
+        }
 
-    /*检测系统时间*/
-    if ((tSetTimeCurTime - tSetTimeOldTime) >= SET_TIME_MONITOR_TIME)
-    {
-        //DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread set devUpdatePage time timeOut!\n");
-        pvmsMonitorPage->triggerSetTimeSignal();
-        tSetTimeOldTime = tSetTimeCurTime;
-    }
+        /*检测预置点返回*/
+        for (i = 0; i < pvmsMonitorPage->m_iCameraNum; i++)
+        {
+            if ((pvmsMonitorPage->m_tCameraInfo[i].iPresetNo != 1) && ((tPresetReturnCurTime-pvmsMonitorPage->m_tCameraInfo[i].tPtzOprateTime) >= iPresetReturnTime) && (pvmsMonitorPage->m_tCameraInfo[i].phandle != 0))   //检测预置点返回操作
+            {
+    //            DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread presetReturn timeOut, no=%d !\n",i);
+                pvmsMonitorPage->triggerPresetReturnSignal(i);
+                pvmsMonitorPage->m_tCameraInfo[i].tPtzOprateTime = tPresetReturnCurTime;
+            }
+        }
 
-    usleep(50*1000);
-    if(sysinfo(&s_info))
-    {
-        printf("\n\ncode error=%d\n",err);
-    }
-    tPollingCurTime = s_info.uptime;
-    tPresetReturnCurTime = s_info.uptime;
-    tFullScreenCurTime = s_info.uptime;
-    tGetDevStateCurTime = s_info.uptime;
-    tSetTimeCurTime = s_info.uptime;
+        /*检测是否要全屏*/
+        if ((tFullScreenCurTime-pvmsMonitorPage->m_lastActionTime) >= FULLSCREEN_MONITOR_TIME && 0 == pvmsMonitorPage->m_iFullScreenFlag)    //界面20秒无操作,全屏
+        {
+    //        DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread fullScreen timeOut!\n");
+            //printf("tFullScreenCurTime=%d,pvmsMonitorPage->m_lastActionTime=%d\n",tFullScreenCurTime,pvmsMonitorPage->m_lastActionTime);
+            if (pvmsMonitorPage->isHidden() != 1)   //只有当前处于受电弓监控界面时才做触发全屏处理
+            {
+    //            pvmsMonitorPage->triggerFullScreenSignal();
+            }
+            pvmsMonitorPage->m_lastActionTime = tFullScreenCurTime;
+        }
+
+        /*检测设备状态*/
+        if ((tGetDevStateCurTime - tGetDevStateOldTime) >= GET_DEVSTATE_MONITOR_TIME)
+        {
+    //        DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread get device state timeOut!\n");
+            pvmsMonitorPage->triggerGetDevStateSignal();
+            tGetDevStateOldTime = tGetDevStateCurTime;
+
+        }
+
+        /*检测系统时间*/
+        if ((tSetTimeCurTime - tSetTimeOldTime) >= SET_TIME_MONITOR_TIME)
+        {
+            //DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread set devUpdatePage time timeOut!\n");
+            pvmsMonitorPage->triggerSetTimeSignal();
+            tSetTimeOldTime = tSetTimeCurTime;
+
+            if(CMP_GetStreamState(pvmsMonitorPage->m_tCameraInfo[pvmsMonitorPage->m_iCameraPlayNo].cmpHandle) > 0)
+            {
+                if(pvmsMonitorPage->m_channelStateLabel->isVisible() == true)
+                    pvmsMonitorPage->m_channelStateLabel->hide();
+                if(pvmsMonitorPage->m_channelNoLabel->isVisible() == true)
+                    pvmsMonitorPage->m_channelNoLabel->hide();
+            }
+            else
+            {
+                if(pvmsMonitorPage->m_channelStateLabel->isVisible() == false)
+                    pvmsMonitorPage->m_channelStateLabel->show();
+                if(pvmsMonitorPage->m_channelNoLabel->isVisible() == false)
+                    pvmsMonitorPage->m_channelNoLabel->show();
+            }
+        }
+
+        usleep(50*1000);
+        if(sysinfo(&s_info))
+        {
+            printf("\n\ncode error=%d\n",err);
+        }
+        tPollingCurTime = s_info.uptime;
+        tPresetReturnCurTime = s_info.uptime;
+        tFullScreenCurTime = s_info.uptime;
+        tGetDevStateCurTime = s_info.uptime;
+        tSetTimeCurTime = s_info.uptime;
+        tPollStateTime = s_info.uptime;
    }
     return NULL;
 
@@ -607,7 +630,7 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
     {
         memset(acRtspUrl, 0, sizeof(acRtspUrl));
 //        snprintf(acRtspUrl, sizeof(acRtspUrl), "rtsp://admin:admin123@192.168.%d.81", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO);
-        snprintf(acRtspUrl, sizeof(acRtspUrl), "rtsp://admin:admin123@127.0.0.1");
+        snprintf(acRtspUrl, sizeof(acRtspUrl), "rtsp://127.0.0.1");
 
 
         m_NvrServerPhandle[i] = STATE_GetNvrServerPmsgHandle(i);
@@ -760,7 +783,6 @@ void pvmsMonitorWidget::enableVideoPlay(int iFlag)    //对摄像头进行解码
             }
             else
             {
-
                 tPkt.iMsgCmd = CMP_CMD_DISABLE_CH;
                 tPkt.iCh = i;
                 PutNodeToCmpQueue(m_ptQueue, &tPkt);
@@ -769,23 +791,13 @@ void pvmsMonitorWidget::enableVideoPlay(int iFlag)    //对摄像头进行解码
         }
         if(m_iCameraPlayNo >= 0)
         {
-            tPkt.iMsgCmd = CMP_CMD_ENABLE_CH;
-            tPkt.iCh = m_iCameraPlayNo;
-            PutNodeToCmpQueue(m_ptQueue, &tPkt);
+            if(m_tCameraInfo[m_iCameraPlayNo].cmpHandle != NULL)
+                CMP_SetPlayEnable(m_tCameraInfo[m_iCameraPlayNo].cmpHandle, 1);
+
+//            tPkt.iMsgCmd = CMP_CMD_ENABLE_CH;
+//            tPkt.iCh = m_iCameraPlayNo;
+//            PutNodeToCmpQueue(m_ptQueue, &tPkt);
         }
-
-//        for (i = 0; i < m_iCameraNum; i++)
-//        {
-//            if (i == m_iCameraPlayNo)
-//            {
-
-//                if(m_tCameraInfo[i].cmpHandle != NULL)
-//                {
-//                    CMP_PlayMedia(m_tCameraInfo[i].cmpHandle);
-//                    CMP_SetPlayEnable(m_tCameraInfo[i].cmpHandle, 1);
-//                }
-//            }
-//        }
 
 
         m_iDisplayEnable = 1;  //全局显示使能开启，使轮询线程正常轮询
@@ -813,9 +825,11 @@ void pvmsMonitorWidget::enableVideoPlay(int iFlag)    //对摄像头进行解码
     {
         for (i = 0; i < m_iCameraNum; i++)
         {
-            tPkt.iMsgCmd = CMP_CMD_DISABLE_CH;
-            tPkt.iCh = i;
-            PutNodeToCmpQueue(m_ptQueue, &tPkt);
+//            tPkt.iMsgCmd = CMP_CMD_DISABLE_CH;
+//            tPkt.iCh = i;
+//            PutNodeToCmpQueue(m_ptQueue, &tPkt);
+            if(m_tCameraInfo[i].cmpHandle != NULL)
+                CMP_SetPlayEnable(m_tCameraInfo[i].cmpHandle, 0);
 
             if (i != m_iCameraPlayNo)
             {
@@ -1672,8 +1686,8 @@ void pvmsMonitorWidget::recordPlayCtrlSlot()
 void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
 {
     const char * rtsp_url[] = {
-                "rtsp://admin:12345@192.168.104.201", "rtsp://admin:admin123@192.168.104.200",
-                "rtsp://admin:12345@192.168.104.201", "rtsp://admin:admin123@192.168.104.200"};
+                "rtsp://192.168.104.201", "rtsp://192.168.104.200",
+                "rtsp://192.168.104.201", "rtsp://192.168.104.200"};
     int preindex=0,nextindex=0;
     int curindex = iCh;
     preindex = curindex==0?m_iCameraNum-1:curindex-1;
@@ -1705,14 +1719,14 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
     }
     else if(CMP_CMD_DESTORY_CH == iType)
     {
-        qDebug()<<"******CMP_CMD_DESTORY_CH******ich="<<iCh<<__LINE__;
-        if( NULL != m_tCameraInfo[iCh].cmpHandle)
-        {
-            CMP_SetPlayState(m_tCameraInfo[iCh].cmpHandle,CMP_STATE_IDLE);
-            CMP_CloseMedia(m_tCameraInfo[iCh].cmpHandle);
-            CMP_UnInit(m_tCameraInfo[iCh].cmpHandle);
-            m_tCameraInfo[iCh].cmpHandle = NULL;
-        }
+//        qDebug()<<"******CMP_CMD_DESTORY_CH******ich="<<iCh<<__LINE__;
+//        if( NULL != m_tCameraInfo[iCh].cmpHandle)
+//        {
+//            CMP_SetPlayState(m_tCameraInfo[iCh].cmpHandle,CMP_STATE_IDLE);
+//            CMP_CloseMedia(m_tCameraInfo[iCh].cmpHandle);
+//            CMP_UnInit(m_tCameraInfo[iCh].cmpHandle);
+//            m_tCameraInfo[iCh].cmpHandle = NULL;
+//        }
         m_tCameraInfo[iCh].iCmpOpenFlag = 0;
 
 
@@ -1769,7 +1783,7 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
     }
     else if(CMP_CMD_DISABLE_CH == iType)
     {
-        qDebug()<<"******CMP_CMD_DISABLE_CH***hide******ich="<<iCh<<__LINE__;
+//        qDebug()<<"******CMP_CMD_DISABLE_CH***hide******ich="<<iCh<<__LINE__;
 
         if(m_tCameraInfo[iCh].cmpHandle != NULL)
         {
@@ -1928,7 +1942,7 @@ void pvmsMonitorWidget::videoChannelCtrl()
             {
                 if (0 == m_tCameraInfo[i].iCmpOpenFlag)
                 {
-                    qDebug()<<"*****0000*******m_tCameraInfo[i].iCmpOpenFlag**i="<<i<<__LINE__;
+//                    qDebug()<<"*****0000*******m_tCameraInfo[i].iCmpOpenFlag**i="<<i<<__LINE__;
                     tPkt.iMsgCmd = CMP_CMD_CREATE_CH;
                     tPkt.iCh = i;
                     PutNodeToCmpQueue(m_ptQueue, &tPkt);
@@ -1938,7 +1952,7 @@ void pvmsMonitorWidget::videoChannelCtrl()
             {
                 if (1 == m_tCameraInfo[i].iCmpOpenFlag)
                 {
-                    qDebug()<<"*****1111*******m_tCameraInfo[i].iCmpOpenFlag**i="<<i<<__LINE__;
+//                    qDebug()<<"*****1111*******m_tCameraInfo[i].iCmpOpenFlag**i="<<i<<__LINE__;
 
                     tPkt.iMsgCmd = CMP_CMD_DESTORY_CH;
                     tPkt.iCh = i;
@@ -2108,17 +2122,22 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
 
                 T_WND_INFO tWndInfo;
                 tWndInfo.hWnd = NULL;
-                printf("m_iCameraPlayNo 1:%d \n", m_iCameraPlayNo);
                 CMP_ChangeWnd(m_tCameraInfo[m_iCameraPlayNo].cmpHandle, &tWndInfo);
-
-
-                printf("m_iCameraPlayNo 2:%d \n", m_iCameraPlayNo);
                 CMP_SetPlayEnable(m_tCameraInfo[m_iCameraPlayNo].cmpHandle, 1);
-                printf("m_iCameraPlayNo 3:%d \n", m_iCameraPlayNo);
 
-                m_channelStateLabel->setGeometry(452, 360, 130, 50);
-                m_channelNoLabel->setGeometry(20, 690, 100, 50);
+                if(CMP_GetStreamState(m_tCameraInfo[m_iCameraPlayNo].cmpHandle) > 0)
+                {
+                    m_channelStateLabel->hide();
+                    m_channelNoLabel->hide();
+                }
+                else
+                {
+                    m_channelStateLabel->show();
+                    m_channelNoLabel->show();
 
+                    m_channelStateLabel->setGeometry(452, 360, 130, 50);
+                    m_channelNoLabel->setGeometry(20, 690, 100, 50);
+                }
                 emit showAlarmWidgetSignal();
             }
     }
@@ -2151,12 +2170,20 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
                 T_WND_INFO tWndInfo;
                 tWndInfo.hWnd = m_playWin;
                 CMP_ChangeWnd(m_tCameraInfo[m_iCameraPlayNo].cmpHandle, &tWndInfo);
-
                 CMP_SetPlayEnable(m_tCameraInfo[m_iCameraPlayNo].cmpHandle, 1);
 
-
-                m_channelStateLabel->setGeometry(452, 360, 130, 50);
-                m_channelNoLabel->setGeometry(20, 690, 100, 50);
+                if(CMP_GetStreamState(m_tCameraInfo[m_iCameraPlayNo].cmpHandle) > 0)
+                {
+                    m_channelStateLabel->hide();
+                    m_channelNoLabel->hide();
+                }
+                else
+                {
+                    m_channelStateLabel->show();
+                    m_channelNoLabel->show();
+                    m_channelStateLabel->setGeometry(452, 360, 130, 50);
+                    m_channelNoLabel->setGeometry(20, 690, 100, 50);
+                }
             }
         }
     }

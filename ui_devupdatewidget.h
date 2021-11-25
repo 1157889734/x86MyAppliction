@@ -87,7 +87,7 @@ public:
     {
         if (devUpdateWidget->objectName().isEmpty())
             devUpdateWidget->setObjectName(QString::fromUtf8("devUpdateWidget"));
-        devUpdateWidget->resize(1024, 620);
+        devUpdateWidget->resize(1024, 624);
         devUpdateWidget->setStyleSheet(QString::fromUtf8(""));
         permissonManagePushButton = new QPushButton(devUpdateWidget);
         permissonManagePushButton->setObjectName(QString::fromUtf8("permissonManagePushButton"));
@@ -506,7 +506,7 @@ public:
         updateStatueTextEdit->raise();
         label_6 = new QLabel(devUpdateWidget);
         label_6->setObjectName(QString::fromUtf8("label_6"));
-        label_6->setGeometry(QRect(0, 0, 1024, 620));
+        label_6->setGeometry(QRect(0, 0, 1024, 624));
         label_6->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         label_6->raise();
         label_2->raise();

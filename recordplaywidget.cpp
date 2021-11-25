@@ -818,7 +818,7 @@ void recordPlayWidget::recordDownloadSlot()
         memset(&tTrainConfigInfo, 0, sizeof(T_TRAIN_CONFIG));
         STATE_GetCurrentTrainConfigInfo(&tTrainConfigInfo);
 //        snprintf(acIpAddr, sizeof(acIpAddr), "192.168.%d.81", 100+tTrainConfigInfo.tNvrServerInfo[idex].iCarriageNO);
-        snprintf(acIpAddr, sizeof(acIpAddr), "rtsp://admin:admin123@127.0.0.1");
+        snprintf(acIpAddr, sizeof(acIpAddr), "rtsp://127.0.0.1");
 
         m_tFtpHandle[idex] = FTP_CreateConnect(acIpAddr, FTP_SERVER_PORT, PftpProc);
         if (0 == m_tFtpHandle[idex])
@@ -1385,7 +1385,7 @@ void recordPlayWidget::recordPlayCtrl(int iRow, int iDex)
     m_dPlaySpeed = 1.00;
     setPlayButtonStyleSheet();
 
-    snprintf(acRtspAddr, sizeof(acRtspAddr), "rtsp://admin:admin123@127.0.0.1:554/%s", m_acFilePath[iRow]);
+    snprintf(acRtspAddr, sizeof(acRtspAddr), "rtsp://127.0.0.1:554/%s", m_acFilePath[iRow]);
 
     printf("************----recordPlayCtrl---%s\n",acRtspAddr);
     if (NULL == m_cmpHandle)

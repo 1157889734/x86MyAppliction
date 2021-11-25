@@ -1164,11 +1164,11 @@ INT32 RtspSendRequest (PT_RTSP_CONN ptRtspConn)
 							}
 							else
 							{
-							iVideoFrameLen = RtpParseH264Data(ptRtspConn, pcVideoFrame, iVideoFrameLen, pcRtpData, iRtpLen, iFrameLostFlag, NULL, ptRtpHeader->ts);
-							if (0 == iVideoFrameLen)
-							{
-								iFrameLostFlag = 0;
-							}
+                                iVideoFrameLen = RtpParseH264Data(ptRtspConn, pcVideoFrame, iVideoFrameLen, pcRtpData, iRtpLen, iFrameLostFlag, NULL, ptRtpHeader->ts);
+                                if (0 == iVideoFrameLen)
+                                {
+                                    iFrameLostFlag = 0;
+                                }
 							}
 						}
 

@@ -399,6 +399,7 @@ void* MonitorPlayThread(void *arg)
             //ptCmpPlayer->RHandle = RHandle;
             RTSP_GetParam(RHandle, E_TYPE_PLAY_RANGE, (void *)&ptCmpPlayer->iPlayRange);
             iRet =  RTSP_OpenStream(RHandle, 0, iRtpProtocol, (void *)RtpSetDataCallBack, (void *)ptCmpPlayer);
+
             if (iRet < 0)
             {
                 if(ptCmpPlayer->iThreadRunFlag == 0)
@@ -426,6 +427,7 @@ void* MonitorPlayThread(void *arg)
             }
 
             iRet =  RTSP_PlayControl(RHandle, E_PLAY_STATE_PLAY, 0);
+
             if (iRet < 0)
             {
                 if(0 == iFreshCount)
@@ -451,7 +453,7 @@ void* MonitorPlayThread(void *arg)
         }
         else
         {
-//            printf("--rtsp_login error!\n");
+            printf("--rtsp_login error--%s!\n", ptCmpPlayer->acUrl);
             DebugPrint(DEBUG_CMPLAYER_ERROR_PRINT, "rtsp_login %s error!\n", ptCmpPlayer->acUrl);
             if (PLAY_STREAM_TYPE_PLAYBACK == ptCmpPlayer->iPlayStreamType)
             {
