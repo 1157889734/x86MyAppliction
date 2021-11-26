@@ -59,6 +59,7 @@
 #define __linux 1
 #define __DEC32_EPSILON__ 1E-6DF
 #define __FLT_EVAL_METHOD_TS_18661_3__ 16
+#define __OPTIMIZE__ 1
 #define __CHAR_UNSIGNED__ 1
 #define __UINT32_MAX__ 0xffffffffU
 #define __GXX_EXPERIMENTAL_CXX0X__ 1
@@ -187,7 +188,6 @@
 #define __ARM_FEATURE_FP16_VECTOR_ARITHMETIC 1
 #define __FLT32_MIN__ 1.17549435082228750796873653722224568e-38F32
 #define __UINT8_TYPE__ unsigned char
-#define __NO_INLINE__ 1
 #define __FLT_MANT_DIG__ 24
 #define __LDBL_DECIMAL_DIG__ 36
 #define __VERSION__ "9.3.0"
@@ -355,6 +355,7 @@
 #define __FLT_DENORM_MIN__ 1.40129846432481707092372958328991613e-45F
 #define __INT8_MAX__ 0x7f
 #define __LONG_WIDTH__ 64
+#define __OPTIMIZE_SIZE__ 1
 #define __UINT_FAST32_TYPE__ long unsigned int
 #define __CHAR32_TYPE__ unsigned int
 #define __FLT_MAX__ 3.40282346638528859811704183484516925e+38F

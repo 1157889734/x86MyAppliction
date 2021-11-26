@@ -180,4 +180,9 @@ void loginWidget::showPageSlot()
 {
     this->show();
 }
+void loginWidget::clearSlot()
+{
+    ui->Passwd_Edit->clear();
+
+}
 

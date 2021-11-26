@@ -539,20 +539,7 @@ void *monitorThread(void *param)     //实时监控线程，对通道轮询、�
             pvmsMonitorPage->triggerSetTimeSignal();
             tSetTimeOldTime = tSetTimeCurTime;
 
-            if(CMP_GetStreamState(pvmsMonitorPage->m_tCameraInfo[pvmsMonitorPage->m_iCameraPlayNo].cmpHandle) > 0)
-            {
-                if(pvmsMonitorPage->m_channelStateLabel->isVisible() == true)
-                    pvmsMonitorPage->m_channelStateLabel->hide();
-                if(pvmsMonitorPage->m_channelNoLabel->isVisible() == true)
-                    pvmsMonitorPage->m_channelNoLabel->hide();
-            }
-            else
-            {
-                if(pvmsMonitorPage->m_channelStateLabel->isVisible() == false)
-                    pvmsMonitorPage->m_channelStateLabel->show();
-                if(pvmsMonitorPage->m_channelNoLabel->isVisible() == false)
-                    pvmsMonitorPage->m_channelNoLabel->show();
-            }
+
         }
 
         usleep(50*1000);
@@ -593,8 +580,8 @@ void pvmsMonitorWidget::startVideoPolling()    //开启视频轮询的处理
     {
         m_playWin = new QWidget(this->parentWidget());   //新建一个与目前窗体同属一个父窗体的播放子窗体，方便实现全屏
         m_playWin->setGeometry(0, 138, 784, 624);
-        //m_playWin->show();  //默认显示
-        m_playWin->hide();
+        m_playWin->show();  //默认显示
+//        m_playWin->hide();
         m_playWin->setObjectName("m_playWin");
         m_playWin->setStyleSheet("QWidget{background-color: rgb(0, 0, 0);}");     //设置播放窗口背景色为黑色
         m_playWin->installEventFilter(this);     //播放窗体注册进事件过滤器
@@ -772,14 +759,12 @@ void pvmsMonitorWidget::enableVideoPlay(int iFlag)    //对摄像头进行解码
 
         for (i = 0; i < m_iCameraNum; i++)
         {
-            if(m_tCameraInfo[i].cmpHandle != NULL)
-                CMP_SetPlayEnable(m_tCameraInfo[i].cmpHandle, 0);
 
             if (i == m_iCameraPlayNo)
             {
-//                tPkt.iMsgCmd = CMP_CMD_ENABLE_CH;
-//                tPkt.iCh = i;
-//                PutNodeToCmpQueue(m_ptQueue, &tPkt);
+                tPkt.iMsgCmd = CMP_CMD_ENABLE_CH;
+                tPkt.iCh = i;
+                PutNodeToCmpQueue(m_ptQueue, &tPkt);
             }
             else
             {
@@ -789,16 +774,6 @@ void pvmsMonitorWidget::enableVideoPlay(int iFlag)    //对摄像头进行解码
             }
 
         }
-        if(m_iCameraPlayNo >= 0)
-        {
-            if(m_tCameraInfo[m_iCameraPlayNo].cmpHandle != NULL)
-                CMP_SetPlayEnable(m_tCameraInfo[m_iCameraPlayNo].cmpHandle, 1);
-
-//            tPkt.iMsgCmd = CMP_CMD_ENABLE_CH;
-//            tPkt.iCh = m_iCameraPlayNo;
-//            PutNodeToCmpQueue(m_ptQueue, &tPkt);
-        }
-
 
         m_iDisplayEnable = 1;  //全局显示使能开启，使轮询线程正常轮询
 
@@ -825,25 +800,11 @@ void pvmsMonitorWidget::enableVideoPlay(int iFlag)    //对摄像头进行解码
     {
         for (i = 0; i < m_iCameraNum; i++)
         {
-//            tPkt.iMsgCmd = CMP_CMD_DISABLE_CH;
-//            tPkt.iCh = i;
-//            PutNodeToCmpQueue(m_ptQueue, &tPkt);
-            if(m_tCameraInfo[i].cmpHandle != NULL)
-                CMP_SetPlayEnable(m_tCameraInfo[i].cmpHandle, 0);
+            tPkt.iMsgCmd = CMP_CMD_DISABLE_CH;
+            tPkt.iCh = i;
+            PutNodeToCmpQueue(m_ptQueue, &tPkt);
 
-            if (i != m_iCameraPlayNo)
-            {
-//                tPkt.iMsgCmd = CMP_CMD_DISABLE_CH;
-//                tPkt.iCh = i;
-//                PutNodeToCmpQueue(m_ptQueue, &tPkt);
-//                if(m_tCameraInfo[i].cmpHandle != NULL)
-//                {
-//                    CMP_SetPlayEnable(m_tCameraInfo[i].cmpHandle, 0);
-//                    CMP_PauseMedia(m_tCameraInfo[i].cmpHandle);
-//                }
-            }
         }
-
 
         m_iDisplayEnable = 0;  //全局显示使能关闭，使轮询线程不管轮询到哪个摄像头都不显示
 
@@ -1712,21 +1673,19 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
             m_tCameraInfo[iCh].cmpHandle = CMP_Init(&m_RealMonitorVideos, CMP_VDEC_NORMAL);
             CMP_OpenMediaPreview(m_tCameraInfo[iCh].cmpHandle, rtsp_url[iCh]/*m_tCameraInfo[iCh].acCameraRtspUrl*/, CMP_TCP);
             CMP_PlayMedia(m_tCameraInfo[iCh].cmpHandle);
-
         }
 
         m_tCameraInfo[iCh].iCmpOpenFlag = 1;
     }
     else if(CMP_CMD_DESTORY_CH == iType)
     {
-//        qDebug()<<"******CMP_CMD_DESTORY_CH******ich="<<iCh<<__LINE__;
-//        if( NULL != m_tCameraInfo[iCh].cmpHandle)
-//        {
-//            CMP_SetPlayState(m_tCameraInfo[iCh].cmpHandle,CMP_STATE_IDLE);
-//            CMP_CloseMedia(m_tCameraInfo[iCh].cmpHandle);
-//            CMP_UnInit(m_tCameraInfo[iCh].cmpHandle);
-//            m_tCameraInfo[iCh].cmpHandle = NULL;
-//        }
+        qDebug()<<"******CMP_CMD_DESTORY_CH******ich="<<iCh<<__LINE__;
+        if( NULL != m_tCameraInfo[iCh].cmpHandle)
+        {
+            CMP_CloseMedia(m_tCameraInfo[iCh].cmpHandle);
+            CMP_UnInit(m_tCameraInfo[iCh].cmpHandle);
+            m_tCameraInfo[iCh].cmpHandle = NULL;
+        }
         m_tCameraInfo[iCh].iCmpOpenFlag = 0;
 
 
@@ -1980,13 +1939,19 @@ void pvmsMonitorWidget::closePlayWin()
 //        if (1 == m_tCameraInfo[i].iCmpOpenFlag)
         {
 
-            CMP_SetPlayEnable(m_tCameraInfo[i].cmpHandle, 0);
+//            CMP_SetPlayEnable(m_tCameraInfo[i].cmpHandle, 0);
             CMP_CloseMedia(m_tCameraInfo[i].cmpHandle);
             CMP_UnInit(m_tCameraInfo[i].cmpHandle);
         }
         m_tCameraInfo[i].cmpHandle = NULL;
     }
     m_iCameraNum = 0;
+
+    if(m_playWin != NULL)
+    {
+        delete m_playWin;
+        m_playWin = NULL;
+    }
 
 }
 
@@ -2002,9 +1967,20 @@ void pvmsMonitorWidget::alarmHappenSlot()
         m_playWin->resize(784, 624);
         m_iFullScreenFlag = 0;
 
-        tPkt.iMsgCmd = CMP_CMD_CHG_ALL_VIDEOWIN;
-        tPkt.iCh = 0;
-        PutNodeToCmpQueue(m_ptQueue, &tPkt);
+//        tPkt.iMsgCmd = CMP_CMD_CHG_ALL_VIDEOWIN;
+//        tPkt.iCh = 0;
+//        PutNodeToCmpQueue(m_ptQueue, &tPkt);
+        for (int i = 0; i < m_iCameraNum; i++)
+        {
+            CMP_SetPlayEnable(m_tCameraInfo[i].cmpHandle, 0);
+        }
+
+        T_WND_INFO tWndInfo;
+        tWndInfo.hWnd = NULL;
+        CMP_ChangeWnd(m_tCameraInfo[m_iCameraPlayNo].cmpHandle, &tWndInfo);
+        CMP_SetPlayEnable(m_tCameraInfo[m_iCameraPlayNo].cmpHandle, 1);
+
+
 
         if (m_channelStateLabel != NULL)
         {

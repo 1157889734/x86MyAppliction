@@ -30,6 +30,7 @@ public slots:
     void okButtonSlot();
     void canselButtonSlot();
     void showPageSlot();  //显示当前页面的响应槽函数，这里iType代表接收到的参数，表示页面类型，1-车厢监控页面，2-受电弓监控页面
+    void clearSlot();
 
 private:
     Ui::loginWidget *ui;

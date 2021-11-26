@@ -156,42 +156,28 @@ int SHM_Uinit()
 
 SHM_HANDLE SHM_AddRect(QWidget *pWnd)
 {
-    pWnd->winId();
-    struct wl_surface *window_handle  = NULL;
-    window_handle = (struct wl_surface *)native->nativeResourceForWindow("surface",
-                                  pWnd->windowHandle());
-    if(window_handle == NULL)
-    {
-        printf("window_handle NULL \n");
-        return NULL;
-    }
     int w = pWnd->width();
     int h = pWnd->height();
 
-//    printf("SHM_AddRect pWnd w:%d h:%d \n", w, h);
+    printf("SHM_AddRect pWnd w:%d h:%d \n", w, h);
 
     w = CODEC_ALIGN(w, 16);
     h = CODEC_ALIGN(h, 16);
 
-//    printf("SHM_AddRect 16 ALIGN w:%d h:%d \n", w, h);
+    printf("SHM_AddRect 16 ALIGN w:%d h:%d \n", w, h);
 
     PT_SHM_RECT_INFO pShmRectInfo = create_rect_info(w, h);
     QWidget *pWidget = new QWidget(pWnd);
     pWidget->setGeometry(0,0,pWnd->width(), pWnd->height());
     pShmRectInfo->pWidget = pWidget;
-
+    pWidget->hide();
     //if(bo->format == DRM_FORMAT_NV12)
     {
         memset(pShmRectInfo->addr, 0x10, w * h);
         memset(pShmRectInfo->addr + w * h, 0x80, w * h * 0.5);
     }
 
-    pShmRectInfo->window_handle = window_handle;
-    wl_surface_attach(window_handle, pShmRectInfo->buffer, 0, 0);
-    wl_surface_commit(window_handle);
-    wl_display_flush(display_handle);
-    //pShmRectInfo->iRenderThreadRun = 1;
-    //pthread_create(&pShmRectInfo->hRenderThread, NULL, RenderFrameFunc, pShmRectInfo);
+
     printf("add rect end \n");
     return pShmRectInfo;
 }

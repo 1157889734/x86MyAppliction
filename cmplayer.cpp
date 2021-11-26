@@ -577,6 +577,7 @@ CMPPlayer_API CMPHandle CMP_Init(T_WND_INFO *pWndInfo, CMP_VDEC_TYPE eDecType)
     PT_CMP_PLAYER_INFO ptCmpPlayer = NULL;
     ptCmpPlayer = new T_CMP_PLAYER_INFO;
 
+    printf("*****CMP_Init*****ptCmpPlayer=%x\n",(u_int64_t)ptCmpPlayer);
     if (NULL == ptCmpPlayer)
     {
         return NULL;
@@ -615,6 +616,8 @@ CMPPlayer_API CMPHandle CMP_Init(T_WND_INFO *pWndInfo, CMP_VDEC_TYPE eDecType)
     ptCmpPlayer->ptWndInfo = *pWndInfo;
     ptCmpPlayer->ptWndInfo.pRenderHandle = SHM_AddRect((QWidget*)pWndInfo->hWnd);
 
+    printf("*****CMP_Init***2222222222**pRenderHandle=%x\n",ptCmpPlayer->ptWndInfo.pRenderHandle);
+
     InitMessgeList(ptCmpPlayer);
 
     return (CMPHandle)ptCmpPlayer;
@@ -628,6 +631,8 @@ CMPPlayer_API int CMP_UnInit(CMPHandle hPlay)
     {
         return -1;
     }
+
+    printf("*****CMP_UnInit*****ptCmpPlayer=%x\n",(u_int64_t)ptCmpPlayer);
 
     SHM_FreeRect(ptCmpPlayer->ptWndInfo.pRenderHandle);
     ptCmpPlayer->ptWndInfo.pRenderHandle = NULL;
@@ -901,25 +906,35 @@ CMPPlayer_API int CMP_ChangeWnd(CMPHandle hPlay,const T_WND_INFO *pWndInfo)
     {
         return -1;
     }
-
+    qDebug()<<"******************CMP_ChangeWnd"<<ptCmpPlayer<<"******"<<pWndInfo->hWnd<<__LINE__;
     QWidget *parent = (QWidget*)pWndInfo->hWnd;
     if(parent == NULL)
     {
-        SHM_DetchWnd(s_pFullScreenHandle);
-        s_pFullScreenWidget->hide();
         ptCmpPlayer->ptWndInfo.pRenderHandle = s_pBackuphandle;
+        SHM_DetchWnd(s_pFullScreenHandle);
+        delete s_pFullScreenWidget;
+        s_pFullScreenWidget = NULL;
         s_pBackuphandle = NULL;
     }
     else
     {
         if(s_pFullScreenWidget == NULL)
         {
+            qDebug()<<"****11111111111******CMP_ChangeWnd**"<<__LINE__;
             s_pFullScreenWidget = new QWidget(parent);
             s_pFullScreenWidget->setGeometry(0, 0, parent->width(), parent->height());
             s_pFullScreenHandle = SHM_AddRect(s_pFullScreenWidget);
+            qDebug()<<"****2222222222222******CMP_ChangeWnd**"<<__LINE__;
+
         }
+        qDebug()<<"****3333333333333******CMP_ChangeWnd**"<<s_pFullScreenWidget<<__LINE__;
+
         s_pFullScreenWidget->show();
+        qDebug()<<"****3333333333333***44444444444***CMP_ChangeWnd**"<<__LINE__;
+
         SHM_AttchWnd(s_pFullScreenHandle);
+        qDebug()<<"****4444444444444******CMP_ChangeWnd**"<<__LINE__;
+
         s_pBackuphandle = ptCmpPlayer->ptWndInfo.pRenderHandle;
         ptCmpPlayer->ptWndInfo.pRenderHandle = s_pFullScreenHandle;
     }
