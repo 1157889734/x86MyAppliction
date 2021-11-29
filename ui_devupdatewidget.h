@@ -568,7 +568,7 @@ public:
         label_4->setText(QCoreApplication::translate("devUpdateWidget", "\347\247\222", nullptr));
         canselPushButton->setText(QString());
         label_17->setText(QString());
-        brightnessLineEdit->setText(QCoreApplication::translate("devUpdateWidget", "128", nullptr));
+        brightnessLineEdit->setText(QCoreApplication::translate("devUpdateWidget", "50", nullptr));
         carriageLabel->setText(QCoreApplication::translate("devUpdateWidget", "\350\275\246\345\216\242\345\217\267:", nullptr));
         configFilelookPushButton->setText(QString());
         carriageSelectionComboBox->setItemText(0, QCoreApplication::translate("devUpdateWidget", "1\345\217\267\350\275\246\345\216\242", nullptr));
@@ -577,13 +577,13 @@ public:
         cameraSelectionComboBox->setItemText(0, QCoreApplication::translate("devUpdateWidget", "8\345\217\267\346\221\204\345\203\217\346\234\272", nullptr));
         cameraSelectionComboBox->setItemText(1, QCoreApplication::translate("devUpdateWidget", "9\345\217\267\346\221\204\345\203\217\346\234\272", nullptr));
 
-        contrastLineEdit->setText(QCoreApplication::translate("devUpdateWidget", "128", nullptr));
+        contrastLineEdit->setText(QCoreApplication::translate("devUpdateWidget", "50", nullptr));
         label_9->setText(QCoreApplication::translate("devUpdateWidget", "\346\211\213\345\212\250\346\240\241\346\227\266", nullptr));
         timeAdjustPushButton->setText(QString());
         label_15->setText(QCoreApplication::translate("devUpdateWidget", "\345\233\276\345\275\242\345\217\202\346\225\260\351\205\215\347\275\256", nullptr));
         comboBox->setItemText(0, QCoreApplication::translate("devUpdateWidget", "\347\273\210\347\253\257\350\275\257\344\273\266", nullptr));
 
-        saturationLineEdit->setText(QCoreApplication::translate("devUpdateWidget", "128", nullptr));
+        saturationLineEdit->setText(QCoreApplication::translate("devUpdateWidget", "50", nullptr));
         imageParamSetPushButton->setText(QString());
         systimeAdjustLabel->setText(QString());
         saturationLabel->setText(QCoreApplication::translate("devUpdateWidget", "\351\245\261\345\222\214\345\272\246:", nullptr));

@@ -1647,8 +1647,8 @@ void pvmsMonitorWidget::recordPlayCtrlSlot()
 void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
 {
     const char * rtsp_url[] = {
-                "rtsp://192.168.104.201", "rtsp://192.168.104.200",
-                "rtsp://192.168.104.201", "rtsp://192.168.104.200"};
+                "rtsp://admin:12345@192.168.104.201", "rtsp://192.168.104.200",
+                "rtsp://admin:12345@192.168.104.201", "rtsp://192.168.104.200"};
     int preindex=0,nextindex=0;
     int curindex = iCh;
     preindex = curindex==0?m_iCameraNum-1:curindex-1;
@@ -1671,7 +1671,7 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
 
             cmplayInit();
             m_tCameraInfo[iCh].cmpHandle = CMP_Init(&m_RealMonitorVideos, CMP_VDEC_NORMAL);
-            CMP_OpenMediaPreview(m_tCameraInfo[iCh].cmpHandle, rtsp_url[iCh]/*m_tCameraInfo[iCh].acCameraRtspUrl*/, CMP_TCP);
+            CMP_OpenMediaPreview(m_tCameraInfo[iCh].cmpHandle, /*rtsp_url[iCh]*/m_tCameraInfo[iCh].acCameraRtspUrl, CMP_TCP);
             CMP_PlayMedia(m_tCameraInfo[iCh].cmpHandle);
         }
 

@@ -766,7 +766,7 @@ void recordPlayWidget::recordDownloadSlot()
         box.exec();
         return;
     }
-
+    qDebug()<<"***********ui->recordFileTableWidget->rowCount()****"<<ui->recordFileTableWidget->rowCount()<<__LINE__;
     if (ui->recordFileTableWidget->rowCount() > 0)
     {
         for (row = 0; row < ui->recordFileTableWidget->rowCount(); row++)    //先判断一次是否没有录像文件被选中，没有则弹框提示
@@ -776,6 +776,8 @@ void recordPlayWidget::recordDownloadSlot()
                 break;
             }
         }
+        qDebug()<<"***********ui->recordFileTableWidget->rowCount()****"<<ui->recordFileTableWidget->rowCount()<<__LINE__;
+
         if (row == ui->recordFileTableWidget->rowCount())
         {
 //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not select record file to download!\n");
@@ -785,6 +787,8 @@ void recordPlayWidget::recordDownloadSlot()
             msgBox.exec();
             return;
         }
+        qDebug()<<"***********ui->recordFileTableWidget->rowCount()****"<<ui->recordFileTableWidget->rowCount()<<__LINE__;
+
         if (access("/media/usb0/", F_OK) < 0)
         {
 //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not get USB device!\n");
@@ -806,21 +810,27 @@ void recordPlayWidget::recordDownloadSlot()
                 return;
             }
         }
-
         idex = ui->carSeletionComboBox->currentIndex();
+        qDebug()<<"***********idex****"<<idex<<__LINE__;
+
 
         if (idex < 0)
         {
             return;
         }
+        qDebug()<<"***********idex****"<<idex<<__LINE__;
         m_iFtpServerIdex = idex;
 
         memset(&tTrainConfigInfo, 0, sizeof(T_TRAIN_CONFIG));
         STATE_GetCurrentTrainConfigInfo(&tTrainConfigInfo);
 //        snprintf(acIpAddr, sizeof(acIpAddr), "192.168.%d.81", 100+tTrainConfigInfo.tNvrServerInfo[idex].iCarriageNO);
-        snprintf(acIpAddr, sizeof(acIpAddr), "rtsp://127.0.0.1");
+//        snprintf(acIpAddr, sizeof(acIpAddr), "rtsp://192.168.101.81");
+        snprintf(acIpAddr, sizeof(acIpAddr), "127.0.0.1");
+
 
         m_tFtpHandle[idex] = FTP_CreateConnect(acIpAddr, FTP_SERVER_PORT, PftpProc);
+        qDebug()<<"***********idex****"<<m_tFtpHandle[idex]<<"**********idex="<<idex<<__LINE__;
+
         if (0 == m_tFtpHandle[idex])
         {
 //            DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] connect to ftp server:%s error!\n", __FUNCTION__, acIpAddr);
@@ -835,7 +845,7 @@ void recordPlayWidget::recordDownloadSlot()
                 {
                     snprintf(acSaveFileName, sizeof(acSaveFileName), "%s%s", "/media/usb0/", parseFileName(m_acFilePath[row]));
                 }
-
+                qDebug()<<"****************acSaveFileName="<<acSaveFileName<<__LINE__;
 //                DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] add download file:%s!\n", __FUNCTION__, m_acFilePath[row]);
                 iRet = FTP_AddDownLoadFile(m_tFtpHandle[idex], m_acFilePath[row], acSaveFileName);
                 if (iRet < 0)

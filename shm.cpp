@@ -304,7 +304,7 @@ int SHM_RkRgaBlit(MppFrame tSrcMppFrame, uint8_t *dstAddr, int w, int h)
     RockchipRga &rkRga = RockchipRga::get();
 
     dstWidth  = w;
-    dstHeight = h-6;
+    dstHeight = h-6;//-6
     dstFormat = RK_FORMAT_YCbCr_420_SP;
 
     MppBuffer buffer  = NULL;

@@ -603,7 +603,7 @@ QPushButton:pressed
      </font>
     </property>
     <property name="text">
-     <string>128</string>
+     <string>50</string>
     </property>
    </widget>
    <widget class="QLabel" name="carriageLabel">
@@ -736,7 +736,7 @@ QPushButton:pressed
      </font>
     </property>
     <property name="text">
-     <string>128</string>
+     <string>50</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_9">
@@ -828,7 +828,7 @@ QPushButton:pressed
      </font>
     </property>
     <property name="text">
-     <string>128</string>
+     <string>50</string>
     </property>
    </widget>
    <widget class="QPushButton" name="imageParamSetPushButton">
