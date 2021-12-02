@@ -24,7 +24,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 #QMAKE_CFLAGS += -strip
-#QMAKE_CXXFLAGS += -striped
+#QMAKE_CXXFLAGS += -strip
 
 #QMAKE_CFLAGS += -g -O0
 #QMAKE_CXXFLAGS += -g -O0
@@ -36,6 +36,7 @@ INCLUDEPATH += /home/cftc/toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr
 LIBS += -L$$PWD/lib/  -ldl -lz -lbz2 -lrockchip_mpp -lrga -lpthread -lwayland-client
 
 SOURCES += \
+    ckeyboard.cpp \
     cmplayer.cpp \
     debugout/debug.c \
     led.c \
@@ -82,8 +83,10 @@ SOURCES += \
 HEADERS += \
     MyApplication.h \
     choicelogindevwidget.h \
+    ckeyboard.h \
     cmplayer.h \
     debugout/debug.h \
+    define.h \
     led.h \
     loginwidget.h \
     mutex.h \
@@ -137,6 +140,7 @@ RESOURCES += \
 
 FORMS += \
     choicelogindevwidget.ui \
+    ckeyboard.ui \
     loginwidget.ui \
     pvmsmenuwidget.ui \
     pvmsmonitorwidget.ui \

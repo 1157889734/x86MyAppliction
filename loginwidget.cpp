@@ -17,6 +17,8 @@ loginWidget::loginWidget(QWidget *parent) :
     this->setGeometry(0,0,1024,768);
     this->showFullScreen();
 
+    ui->username_Edit->installEventFilter(this);
+    ui->Passwd_Edit->installEventFilter(this);
     QPalette palette;
     palette.setBrush(QPalette::Background,QBrush(QPixmap(":/monres/Pantobg - 副本.bmp")));
     QIcon icon;
@@ -28,7 +30,12 @@ loginWidget::loginWidget(QWidget *parent) :
     connect(ui->ensure, SIGNAL(clicked(bool)), this, SLOT(okButtonSlot()));	   //确定按钮的按键信号连接相应槽函数
     connect(ui->cansel, SIGNAL(clicked(bool)), this, SLOT(canselButtonSlot()));	   //确定按钮的按键信号连接相应槽函数
 
+    mCkeybord = new CKeyboard(this,1);
+    mCkeybord->setGeometry(50,330,924,200);
+    mCkeybord->show();
 
+
+    connect(mCkeybord,SIGNAL(KeyboardPressKeySignal(char)),this,SLOT(KeyboardPressKeySlots(char)));
     ui->username_Edit->setText("admin");
     ui->username_Edit->setFont(QFont("宋体",20));
     ui->username_Edit->setAlignment(Qt::AlignCenter);
@@ -38,11 +45,77 @@ loginWidget::loginWidget(QWidget *parent) :
 
 loginWidget::~loginWidget()
 {
+    delete  mCkeybord;
+    mCkeybord = NULL;
     delete ui;
 }
+bool loginWidget::eventFilter(QObject *obj, QEvent *e)
+{
+
+    mCkeybord->show();
+
+    return QWidget::eventFilter(obj, e);
+
+}
+
+void loginWidget::KeyboardPressKeySlots(char key)
+{
+
+    if(key==BSPACE)
+    {
+
+        if(ui->username_Edit->hasFocus())//输入框1焦点
+        {
+            if(!ui->username_Edit->selectedText().isEmpty())
+            {
+                 ui->username_Edit->del();
+
+            }
+            else
+            {
+                ui->username_Edit->backspace();
+            }
+
+        }
+        else if(ui->Passwd_Edit->hasFocus())//输入框2焦点
+        {
+            if(!ui->Passwd_Edit->selectedText().isEmpty())
+            {
+                 ui->Passwd_Edit->del();
+
+            }
+            else
+            {
+                ui->Passwd_Edit->backspace();
+            }
+        }
+    }
+    else if(key == ENTER)
+    {
+        if (ui->Passwd_Edit->text() == "12345")
+        {
+            this->hide();
+//            STATE_SetCurrentUserType("supperManager");
+            emit gotoPvmsMenuPageSignal();
+
+        }
+    }
+    else
+    {
+        if(ui->username_Edit->hasFocus())//输入框1焦点
+        {
+            ui->username_Edit->insert(QString( key));
+        }
+        else if(ui->Passwd_Edit->hasFocus())//输入框2焦点
+        {
+            ui->Passwd_Edit->insert(QString( key));
+        }
+    }
+}
+
 void loginWidget::okButtonSlot()
 {
-#if 1 //TEST
+#if 0 //TEST
 
     this->hide();
     emit gotoPvmsMenuPageSignal();
@@ -106,10 +179,10 @@ void loginWidget::okButtonSlot()
             {
 //                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "loginWidget username or passwd input not match!\n");
                 QMessageBox box(QMessageBox::Warning,tr("信息有误"),tr("用户名或密码错误!"));     //新建消息提示框，提示错误信息
+                box.setWindowFlags(Qt::FramelessWindowHint);
                 box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
-                box.setButtonText (QMessageBox::Ok,tr("确 定"));     //将按钮显示改成"确 定"
+                box.setButtonText (QMessageBox::Ok,tr("OK"));     //将按钮显示改成"确 定"
                 box.exec();
-                qDebug()<<"loginWidget okButtonSlot"<<__FUNCTION__<<__LINE__<<endl;
 
 
             }
@@ -118,12 +191,11 @@ void loginWidget::okButtonSlot()
         {
             if (ui->Passwd_Edit->text() != pwd)
             {
-                qDebug()<<"loginWidget username or passwd input not match"<<__FUNCTION__<<__LINE__<<endl;
-
 //                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "loginWidget username or passwd input not match!\n");
                 QMessageBox box(QMessageBox::Warning,tr("信息有误"),tr("用户名或密码错误!"));     //新建消息提示框，提示错误信息
+                box.setWindowFlags(Qt::FramelessWindowHint);
                 box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
-                box.setButtonText (QMessageBox::Ok,tr("确 定"));     //将按钮显示改成"确 定"
+                box.setButtonText (QMessageBox::Ok,tr("OK"));     //将按钮显示改成"确 定"
                 box.exec();
             }
             else
@@ -161,9 +233,10 @@ void loginWidget::okButtonSlot()
         }
 
 //        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "loginWidget username or passwd input not match!\n");
-        QMessageBox box(QMessageBox::Warning,tr("信息有误"),tr("用户名或密码错误!"));     //新建消息提示框，提示错误信息
+        QMessageBox box(QMessageBox::Warning,tr("信息有误"),tr("用户名或密码错误!33"));     //新建消息提示框，提示错误信息
+        box.setWindowFlags(Qt::FramelessWindowHint);
         box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
-        box.setButtonText (QMessageBox::Ok,QString("确 定"));     //将按钮显示改成"确 定"
+        box.setButtonText (QMessageBox::Ok,tr("OK"));     //将按钮显示改成"确 定"
         box.exec();
     }
     database.close();
