@@ -641,6 +641,13 @@ int STATE_ReadPisConfig()
 	}
 	g_tPisConfigInfo.iPort = atoi(acparseStr);
 
+    iRet = ReadParam(SYSCONFIGFILEPATH, "[PISServer]", "IsPBD", acparseStr);
+    if (iRet < 0)
+    {
+        return -1;
+    }
+    g_tPisConfigInfo.IsPBD = atoi(acparseStr);
+
 	return 0;
 }
 

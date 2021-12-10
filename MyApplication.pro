@@ -38,6 +38,7 @@ LIBS += -L$$PWD/lib/  -ldl -lz -lbz2 -lrockchip_mpp -lrga -lpthread -lwayland-cl
 SOURCES += \
     ckeyboard.cpp \
     cmplayer.cpp \
+    ctcppisclient.c \
     debugout/debug.c \
     led.c \
     main.cpp \
@@ -85,6 +86,7 @@ HEADERS += \
     choicelogindevwidget.h \
     ckeyboard.h \
     cmplayer.h \
+    ctcppisclient.h \
     debugout/debug.h \
     define.h \
     led.h \

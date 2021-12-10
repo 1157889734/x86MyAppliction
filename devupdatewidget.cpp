@@ -686,12 +686,41 @@ void devUpdateWidget::configFileSelectionSlot()
                     return;
                 }
             }
+            char *pcfileName = NULL;
 
-            filename = QFileDialog::getOpenFileName(this, "打开文件", "/media/usb0/", "ini文件(*.ini)");
+            QFileDialog *dialog = new QFileDialog;
+            dialog->setAttribute(Qt::WA_DeleteOnClose);
+            dialog->setWindowFlag(Qt::FramelessWindowHint);
+            dialog->setFixedSize(800,600);
+            dialog->show();
+
+            QDir file = dialog->directory();
+            QDir *dir = NULL;
+            if(dir ==NULL)
+            {
+                dir = new QDir(file);
+            }
+            QStringList filter;
+            QList<QFileInfo> *fileInfo=new QList<QFileInfo>(dir->entryInfoList(filter));
+           for(int i = 0;i<fileInfo->count(); i++)
+           {
+//               qDebug()<<fileInfo->at(i).filePath();
+//               qDebug()<<fileInfo->at(i).fileName();
+               if(fileInfo->at(i).fileName() == "Station.ini")
+               {
+                    filename =fileInfo->at(i).filePath();
+
+               }
+           }
+//            filename = QFileDialog::getOpenFileName(this, "打开文件", "/media/usb0/", "ini文件(*.ini)");
             if (!filename.isNull())
             {
-                //QMessageBox::information(this, "Document", "Has document", QMessageBox::Ok | QMessageBox::Cancel);
                 ui->configFileDisplayLineEdit->setText(filename);
+            }
+            pcfileName = parseFileNameFromPath(ui->configFileDisplayLineEdit->text().toLatin1().data());
+            if (NULL == pcfileName)
+            {
+                return;
             }
         }
 

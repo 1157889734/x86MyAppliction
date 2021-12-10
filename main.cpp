@@ -1,4 +1,5 @@
 #include "MyApplication.h"
+#include "ctcppisclient.h"
 #include <QApplication>
 #include "choicelogindevwidget.h"
 #include "waitloginwidget.h"
@@ -62,8 +63,8 @@ int main(int argc, char *argv[])
     for (i = 0; i < tTrainConfigInfo.iNvrServerCount; i++)
     {
         memset(acNvrServerIp, 0, sizeof(acNvrServerIp));
-        snprintf(acNvrServerIp, sizeof(acNvrServerIp), "192.168.%d.81", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO);
-//        snprintf(acNvrServerIp, sizeof(acNvrServerIp), "127.0.0.%d", 1);
+//        snprintf(acNvrServerIp, sizeof(acNvrServerIp), "192.168.%d.81", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO);
+        snprintf(acNvrServerIp, sizeof(acNvrServerIp), "127.0.0.%d", 1);
         iRet = PMSG_CreateConnect(acNvrServerIp, 10100);
         if (0 == iRet)
         {
@@ -81,7 +82,8 @@ int main(int argc, char *argv[])
     STATE_ReadPisConfig();
     memset(&tPisConfigInfo, 0, sizeof(T_PIS_INFO));
     STATE_GetPisConfigInfo(&tPisConfigInfo);
-    iRet = PMSG_CreateConnect(tPisConfigInfo.acIpAddr, tPisConfigInfo.iPort);
+    iRet = PIS_CreateConnect(tPisConfigInfo.acIpAddr, tPisConfigInfo.iPort);
+    qDebug()<<"****************iRet="<<iRet<<__LINE__;
     if (0 == iRet)
     {
 //        DebugPrint(DEBUG_UI_ERROR_PRINT, "create connection to server:%s error!\n",acNvrServerIp);
@@ -94,13 +96,13 @@ int main(int argc, char *argv[])
 
     }
 
-    pRs485Handle = RS485_CreateConnect();
-    if (0 == pRs485Handle)
-    {
-//        DebugPrint(DEBUG_UI_ERROR_PRINT, "rs485 connection error!\n");
-        qDebug()<<"rs485 connection error!"<<__FUNCTION__<<__LINE__<<endl;
+//    pRs485Handle = RS485_CreateConnect();
+//    if (0 == pRs485Handle)
+//    {
+////        DebugPrint(DEBUG_UI_ERROR_PRINT, "rs485 connection error!\n");
+//        qDebug()<<"rs485 connection error!"<<__FUNCTION__<<__LINE__<<endl;
 
-    }
+//    }
 
     usleep(1*1000*1000);
 
@@ -158,7 +160,7 @@ int main(int argc, char *argv[])
     g_loginPage->hide();
     g_pvmsMenuPage->hide();
 
-    g_pvmsMenuPage->m_pRs485Handle = pRs485Handle;
+//    g_pvmsMenuPage->m_pRs485Handle = pRs485Handle;
 
 
 //    MyApplication app;

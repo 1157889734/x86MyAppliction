@@ -36,6 +36,7 @@ typedef struct _T_PIS_INFO   /*PIS系统信息*/
 {
 	char acIpAddr[128];
 	int iPort;
+    int IsPBD; //PIS协议
 } T_PIS_INFO, *PT_PIS_INFO;
 
 int STATE_GetIpAddr(char *pcIpAddr, int iLen);

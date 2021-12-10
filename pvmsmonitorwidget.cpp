@@ -2038,7 +2038,9 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
                 }
                 else
                 {
-                    return true;
+
+                    return QWidget::eventFilter(target, event);
+
                 }
             }
 
@@ -2046,10 +2048,12 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
             sysinfo(&s_info);
             m_lastActionTime = s_info.uptime;  //更新最后一次操作计时  //更新最后一次操作计时
 
-
+//            qDebug()<<"********0000000000********m_iFullScreenFlag"<<m_iFullScreenFlag<<__LINE__;
             /*当播放窗体处于全屏状态时，再次单击退出全屏,全屏标志清0，并恢复播放窗体原始播放状态*/
             if ((1 == m_iFullScreenFlag) && (target == m_playWin) && (event->type()==QEvent::MouseButtonPress))
             {
+//                qDebug()<<"****************m_iFullScreenFlag"<<m_iFullScreenFlag<<__LINE__;
+
                 if (1 == iPollFlag)    //切换到本界面时，如果之前是轮询的则恢复轮询
                 {
                     iPollFlag = 0;
@@ -2060,12 +2064,11 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
                     tPollingOparateTime = s_info.uptime;
                 }
                 m_iFullScreenFlag = 0;
-
 //                DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget quit full screen!\n");
                 QMouseEvent *mouseEvent=static_cast<QMouseEvent*>(event);
                 if(mouseEvent->button()==Qt::RightButton)    //只响应鼠标左击
                 {
-                    return true;
+                    return QWidget::eventFilter(target, event);
                 }
 
                 for (int i = 0; i < m_iCameraNum; i++)
@@ -2094,55 +2097,65 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
                     m_channelStateLabel->setGeometry(452, 360, 130, 50);
                     m_channelNoLabel->setGeometry(20, 690, 100, 50);
                 }
+//                qDebug()<<"QWidget::eventFilter "<<m_iFullScreenFlag<<__LINE__;
+//                return QWidget::eventFilter(target, event);
                 emit showAlarmWidgetSignal();
             }
-    }
-    if (target == m_playWin)
-    {
-        if (event->type()==QEvent::MouseButtonDblClick && (m_iAlarmNotCtrlFlag != 1))   //双击全屏,但是如何有报警未处理也不全屏
-        {
-            if (0 == m_iFullScreenFlag)
+
+            else if ((target == m_playWin) && (0 == m_iFullScreenFlag) && (m_iAlarmNotCtrlFlag != 1) && (event->type()==QEvent::MouseButtonPress))
             {
-                m_iFullScreenFlag = 1;
-                if (1 == m_iPollingFlag)
-                {
-                    iPollFlag = 1;
-                    m_iPollingFlag = 0;   //在切换到其他界面时，先暂时停止轮询
-                    struct sysinfo s_info;
-                    sysinfo(&s_info);
-                    tPollingOparateTime = s_info.uptime;
-                }
+//                qDebug()<<"****************m_iFullScreenFlag"<<m_iFullScreenFlag<<__LINE__;
 
-                for (int i = 0; i < m_iCameraNum; i++)
-                {
-                    CMP_SetPlayEnable(m_tCameraInfo[i].cmpHandle, 0);
-                    usleep(1000*10);
-                }
-//                DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget mouse double click to full screen!\n");
-                m_playWin->move(0, 0);
-                m_playWin->resize(1024, 768);
+//                if (event->type()==QEvent::MouseButtonPress && (m_iAlarmNotCtrlFlag != 1))   //双击全屏,但是如何有报警未处理也不全屏
+//                {
+//                    if (0 == m_iFullScreenFlag)
+//                    {
+                        m_iFullScreenFlag = 1;
+                        if (1 == m_iPollingFlag)
+                        {
+                            iPollFlag = 1;
+                            m_iPollingFlag = 0;   //在切换到其他界面时，先暂时停止轮询
+                            struct sysinfo s_info;
+                            sysinfo(&s_info);
+                            tPollingOparateTime = s_info.uptime;
+                        }
+
+                        for (int i = 0; i < m_iCameraNum; i++)
+                        {
+                            CMP_SetPlayEnable(m_tCameraInfo[i].cmpHandle, 0);
+                            usleep(1000*10);
+                        }
+        //                DebugPrint(DEBUG_UI_OPTION_PRINT, "pvmsMonitorWidget mouse double click to full screen!\n");
+                        m_playWin->move(0, 0);
+                        m_playWin->resize(1024, 768);
 
 
-                T_WND_INFO tWndInfo;
-                tWndInfo.hWnd = m_playWin;
-                CMP_ChangeWnd(m_tCameraInfo[m_iCameraPlayNo].cmpHandle, &tWndInfo);
-                CMP_SetPlayEnable(m_tCameraInfo[m_iCameraPlayNo].cmpHandle, 1);
+                        T_WND_INFO tWndInfo;
+                        tWndInfo.hWnd = m_playWin;
+                        CMP_ChangeWnd(m_tCameraInfo[m_iCameraPlayNo].cmpHandle, &tWndInfo);
+                        CMP_SetPlayEnable(m_tCameraInfo[m_iCameraPlayNo].cmpHandle, 1);
 
-                if(CMP_GetStreamState(m_tCameraInfo[m_iCameraPlayNo].cmpHandle) > 0)
-                {
-                    m_channelStateLabel->hide();
-                    m_channelNoLabel->hide();
-                }
-                else
-                {
-                    m_channelStateLabel->show();
-                    m_channelNoLabel->show();
-                    m_channelStateLabel->setGeometry(452, 360, 130, 50);
-                    m_channelNoLabel->setGeometry(20, 690, 100, 50);
-                }
+                        if(CMP_GetStreamState(m_tCameraInfo[m_iCameraPlayNo].cmpHandle) > 0)
+                        {
+                            m_channelStateLabel->hide();
+                            m_channelNoLabel->hide();
+                        }
+                        else
+                        {
+                            m_channelStateLabel->show();
+                            m_channelNoLabel->show();
+                            m_channelStateLabel->setGeometry(452, 360, 130, 50);
+                            m_channelNoLabel->setGeometry(20, 690, 100, 50);
+                        }
+                        //test code
+//                        qDebug()<<"QWidget::eventFilter "<<m_iFullScreenFlag<<__LINE__;
+//                        return QWidget::eventFilter(target, event);
+//                    }
+//                }
             }
-        }
+
     }
+
     if ((target == ui->ptzUpPushButton) || (target == ui->ptzDownPushButton) || (target == ui->ptzLeftPushButton) ||
         (target == ui->ptzRightPushButton) || (target == ui->zoomInPushButton) || (target == ui->zoomOutPushButton) ||
         (target == ui->focusFarPushButton) || (target == ui->focusNearPushButton))     //云台控制类按钮事件触发，发送云台控制消息到服务器

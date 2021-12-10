@@ -225,5 +225,14 @@
         <file>monres/mfast.bmp</file>
         <file>monres/mslow.bmp</file>
         <file>monres/in.bmp</file>
+        <file>monres/21.bmp</file>
+        <file>monres/22.bmp</file>
+        <file>monres/23.bmp</file>
+        <file>monres/24.bmp</file>
+        <file>monres/25.bmp</file>
+        <file>monres/26.bmp</file>
+        <file>monres/27.bmp</file>
+        <file>monres/28.bmp</file>
+        <file>monres/35.bmp</file>
     </qresource>
 </RCC>

@@ -222,6 +222,7 @@ void usergroupManage::on_addpushButton_clicked()
     ui->usernamelineEdit->clear();
     ui->surelineEdit->clear();
     ui->usernamelineEdit->setFocus();
+    addFlag = 1;
 }
 
 void usergroupManage::update_database_function()
@@ -296,87 +297,138 @@ void usergroupManage::on_savepushButton_clicked()
 
 
     QSqlQuery query;
-    query.exec("select username from tab");
+    query.exec("select * from tab");
     query.isActive();
     bool T2=true;
-    while(query.next())
-   {
-
-       QString id1= query.value(1).toString();
-       if(ui->usernamelineEdit->text().compare(id1)==0)
-        {
-            QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("该用户已存在不允许再次添加!")));
-            msgBox.setWindowFlags(Qt::FramelessWindowHint);
-            msgBox.setStandardButtons(QMessageBox::Yes);
-            msgBox.button(QMessageBox::Yes)->setText("OK");
-            msgBox.exec();
-            T2=false;
-            return;
-        }
-   }
 
 
-    if(1 == g_curTextState)
-    {
-
-       if(value_passwd != value_ensure_passwd)
+        while(query.next())
        {
-           QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("两次密码不一致!")));
-           msgBox.setWindowFlags(Qt::FramelessWindowHint);
-           msgBox.setStandardButtons(QMessageBox::Yes);
-           msgBox.button(QMessageBox::Yes)->setText("OK");
-           msgBox.exec();
-           return;
-       }
-       QString sql;
-       sql = QString("update tab set passwd = ('%1') where username = ('%2')")
-          .arg(value_passwd).arg(value_name);
-      bool ok = query.exec(sql);
-      if(ok)
-      {
-        QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("修改成功!")));
-        msgBox.setWindowFlags(Qt::FramelessWindowHint);
-        msgBox.setStandardButtons(QMessageBox::Yes);
-        msgBox.button(QMessageBox::Yes)->setText("OK");
-        msgBox.exec();
-        g_curTextState = 0;
-      }
-      else
-      {
-        QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("修改失败!")));
-        msgBox.setWindowFlags(Qt::FramelessWindowHint);
-        msgBox.setStandardButtons(QMessageBox::Yes);
-        msgBox.button(QMessageBox::Yes)->setText("OK");
-        msgBox.exec();
+           QString id1= query.value(0).toString();
+            if(addFlag == 1)
+            {
+               if(ui->usernamelineEdit->text().compare(id1)==0)
+                {
+                    QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("该用户已存在不允许再次添加!")));
+                    msgBox.setWindowFlags(Qt::FramelessWindowHint);
+                    msgBox.setStandardButtons(QMessageBox::Yes);
+                    msgBox.button(QMessageBox::Yes)->setText("OK");
+                    msgBox.exec();
+                    T2=false;
+                    return;
+                }
+            }
 
-      }
-      db.close();
-      return;
-    }
-    if(T2==true)
-    {
-         QString sql;
-        if(value_passwd != value_ensure_passwd)
-        {
-            QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("两次密码不一致!")));
-            msgBox.setWindowFlags(Qt::FramelessWindowHint);
-            msgBox.setStandardButtons(QMessageBox::Yes);
-            msgBox.button(QMessageBox::Yes)->setText("OK");
-            msgBox.exec();
-
-            return;
         }
-
-         QString value_type;
-         if(!gtype_text.isEmpty())
+        if(addFlag != 1)
         {
-            value_type = gtype_text;
+            if(1 == g_curTextState)
+            {
+
+               if(value_passwd != value_ensure_passwd)
+               {
+                   QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("两次密码不一致!")));
+                   msgBox.setWindowFlags(Qt::FramelessWindowHint);
+                   msgBox.setStandardButtons(QMessageBox::Yes);
+                   msgBox.button(QMessageBox::Yes)->setText("OK");
+                   msgBox.exec();
+                   return;
+               }
+               QString sql;
+               sql = QString("update tab set passwd = ('%1') where username = ('%2')")
+                  .arg(value_passwd).arg(value_name);
+              bool ok = query.exec(sql);
+              if(ok)
+              {
+                QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("修改成功!")));
+                msgBox.setWindowFlags(Qt::FramelessWindowHint);
+                msgBox.setStandardButtons(QMessageBox::Yes);
+                msgBox.button(QMessageBox::Yes)->setText("OK");
+                msgBox.exec();
+                g_curTextState = 0;
+              }
+              else
+              {
+                QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("修改失败!")));
+                msgBox.setWindowFlags(Qt::FramelessWindowHint);
+                msgBox.setStandardButtons(QMessageBox::Yes);
+                msgBox.button(QMessageBox::Yes)->setText("OK");
+                msgBox.exec();
+
+              }
+              db.close();
+              return;
+            }
         }
         else
         {
-            value_type = "operator";
-        }
-         sql = QString("insert into tab values ('%1', '%2', '%3' )")
+             QString sql;
+            if(value_passwd != value_ensure_passwd)
+            {
+                QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("两次密码不一致!")));
+                msgBox.setWindowFlags(Qt::FramelessWindowHint);
+                msgBox.setStandardButtons(QMessageBox::Yes);
+                msgBox.button(QMessageBox::Yes)->setText("OK");
+                msgBox.exec();
+
+                return;
+            }
+
+            char acUserType[16] = {0};
+            STATE_GetCurrentUserType(acUserType, sizeof(acUserType));
+
+
+            QString value_type;
+            if(!gtype_text.isEmpty())
+            {
+                value_type = gtype_text;
+            }
+            else
+            {
+                value_type = "operator";
+            }
+
+            if (!strcmp(acUserType, "supperManager"))
+            {
+                if (0 == QString::compare(value_type, tr("supperManager")))
+                {
+    //                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "userManageWidget this user type has no right to delete user!\n");
+                    qDebug()<<"userManageWidget this user type has no right to delete user!"<<__FUNCTION__<<__LINE__<<endl;
+                    QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("没有权限添加此类型成员!"));     //新建消息提示框，提示错误信息
+                    box.setWindowFlags(Qt::FramelessWindowHint);
+                    box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
+                    box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));     //将按钮显示改成"确 定"
+                    box.exec();
+                    return;
+                }
+            }
+            else if (!strcmp(acUserType, "manager"))
+            {
+                if (0 == QString::compare(value_type, tr("supperManager")) || (0 == QString::compare(value_type, tr("manager"))))
+                {
+    //                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "userManageWidget this user type has no right to delete user!\n");
+                    qDebug()<<"userManageWidget this user type has no right to delete user!"<<__FUNCTION__<<__LINE__<<endl;
+                    QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("没有权限添加此类型成员!"));     //新建消息提示框，提示错误信息
+                    box.setWindowFlags(Qt::FramelessWindowHint);
+                    box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
+                    box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));     //将按钮显示改成"确 定"
+                    box.exec();
+                    return;
+                }
+            }
+            else if (!strcmp(acUserType, "operator"))
+            {
+                qDebug()<<"userManageWidget this user type has no right to delete user!"<<__FUNCTION__<<__LINE__<<endl;
+                QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("没有权力添加成员!"));     //新建消息提示框，提示错误信息
+                box.setWindowFlags(Qt::FramelessWindowHint);
+                box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
+                box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));     //将按钮显示改成"确 定"
+                box.exec();
+                return;
+            }
+
+
+            sql = QString("insert into tab values ('%1', '%2', '%3' )")
             .arg(value_name).arg(value_passwd).arg(value_type);
         bool ok = query.exec(sql);
       if(ok)
@@ -395,7 +447,10 @@ void usergroupManage::on_savepushButton_clicked()
         msgBox.button(QMessageBox::Yes)->setText("OK");
         msgBox.exec();
 
-      }
+            }
+            addFlag = 0;
+
+
    }
 
     update_database_function();
@@ -538,17 +593,18 @@ void usergroupManage::choose_type_function(int type)
         {
             case 1:
             {
-                gtype_text = "超级管理员";
+
+                gtype_text = "supperManager";
                 break;
             }
             case 2:
             {
-                gtype_text = "管理员";
+                gtype_text = "manager";
                 break;
             }
             case 3:
             {
-                gtype_text = "操作员";
+                gtype_text = "operator";
                 break;
             }
             default:
