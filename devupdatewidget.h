@@ -47,6 +47,7 @@ public slots:
     void pollingTimeChange(int iComboBoxId);
     void lineEditpollingTimeChange(const QString &);
     void showSysTime();
+    void monitorSysTime();
     void systimeSlot();
     void registOutButtonClick();
     void closeUserManageWidget();

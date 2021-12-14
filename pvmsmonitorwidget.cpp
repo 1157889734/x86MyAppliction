@@ -960,11 +960,11 @@ void pvmsMonitorWidget::presetSetCtrlSlot()
         this->m_tCameraInfo[m_iCameraPlayNo].tPtzOprateTime = s_info.uptime;
         this->m_tCameraInfo[m_iCameraPlayNo].iPresetNo = m_iSelectPresetNo;
 //        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "pvmsMonitorWidget set preserNo %d success!\n", m_iSelectPresetNo);
-        QMessageBox box(QMessageBox::Information,QString::fromUtf8("注意"),QString::fromUtf8("预置点设置成功!"));
-        box.setWindowFlags(Qt::FramelessWindowHint);
-        box.setStandardButtons (QMessageBox::Ok);
-        box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
-        box.exec();
+//        QMessageBox box(QMessageBox::Information,QString::fromUtf8("注意"),QString::fromUtf8("预置点设置成功!"));
+//        box.setWindowFlags(Qt::FramelessWindowHint);
+//        box.setStandardButtons (QMessageBox::Ok);
+//        box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
+//        box.exec();
 
 //    }
 
@@ -992,11 +992,11 @@ void pvmsMonitorWidget::presetGetCtrlSlot()
       this->m_tCameraInfo[m_iCameraPlayNo].tPtzOprateTime = s_info.uptime;
       this->m_tCameraInfo[m_iCameraPlayNo].iPresetNo = m_iSelectPresetNo;
 
-      QMessageBox box(QMessageBox::Information,QString::fromUtf8("注意"),QString::fromUtf8("预置点调用成功!"));
-      box.setWindowFlags(Qt::FramelessWindowHint);
-      box.setStandardButtons (QMessageBox::Ok);
-      box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
-      box.exec();
+//      QMessageBox box(QMessageBox::Information,QString::fromUtf8("注意"),QString::fromUtf8("预置点调用成功!"));
+//      box.setWindowFlags(Qt::FramelessWindowHint);
+//      box.setStandardButtons (QMessageBox::Ok);
+//      box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
+//      box.exec();
 
 
 }

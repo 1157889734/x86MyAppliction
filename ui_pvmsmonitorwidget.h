@@ -390,6 +390,14 @@ public:
 "border-color: rgb(255, 255, 255);\n"
 "border-width: 1px;\n"
 "border-style: solid;}\n"
+"\n"
+"QPushButton:hover{\n"
+"	color: red;\n"
+"	border-color: green;\n"
+"    background-color: aqua;\n"
+"}\n"
+"\n"
+"\n"
 "QPushButton:pressed\n"
 "{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}"));
         presetNoPushButton_5->setCheckable(true);

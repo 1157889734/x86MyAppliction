@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_devUpdateWidget_t {
-    QByteArrayData data[31];
-    char stringdata0[527];
+    QByteArrayData data[32];
+    char stringdata0[542];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -55,14 +55,15 @@ QT_MOC_LITERAL(19, 304, 30), // "lineEditpresetReturnTimeChange"
 QT_MOC_LITERAL(20, 335, 17), // "pollingTimeChange"
 QT_MOC_LITERAL(21, 353, 25), // "lineEditpollingTimeChange"
 QT_MOC_LITERAL(22, 379, 11), // "showSysTime"
-QT_MOC_LITERAL(23, 391, 11), // "systimeSlot"
-QT_MOC_LITERAL(24, 403, 20), // "registOutButtonClick"
-QT_MOC_LITERAL(25, 424, 21), // "closeUserManageWidget"
-QT_MOC_LITERAL(26, 446, 23), // "setCameraImageParamSlot"
-QT_MOC_LITERAL(27, 470, 12), // "setTrainType"
-QT_MOC_LITERAL(28, 483, 17), // "setTimeSignalCtrl"
-QT_MOC_LITERAL(29, 501, 21), // "KeyboardPressKeySlots"
-QT_MOC_LITERAL(30, 523, 3) // "key"
+QT_MOC_LITERAL(23, 391, 14), // "monitorSysTime"
+QT_MOC_LITERAL(24, 406, 11), // "systimeSlot"
+QT_MOC_LITERAL(25, 418, 20), // "registOutButtonClick"
+QT_MOC_LITERAL(26, 439, 21), // "closeUserManageWidget"
+QT_MOC_LITERAL(27, 461, 23), // "setCameraImageParamSlot"
+QT_MOC_LITERAL(28, 485, 12), // "setTrainType"
+QT_MOC_LITERAL(29, 498, 17), // "setTimeSignalCtrl"
+QT_MOC_LITERAL(30, 516, 21), // "KeyboardPressKeySlots"
+QT_MOC_LITERAL(31, 538, 3) // "key"
 
     },
     "devUpdateWidget\0alarmPushButoonClickSignal\0"
@@ -75,10 +76,11 @@ QT_MOC_LITERAL(30, 523, 3) // "key"
     "presetReturnTimeChange\0iComboBoxId\0"
     "lineEditpresetReturnTimeChange\0"
     "pollingTimeChange\0lineEditpollingTimeChange\0"
-    "showSysTime\0systimeSlot\0registOutButtonClick\0"
-    "closeUserManageWidget\0setCameraImageParamSlot\0"
-    "setTrainType\0setTimeSignalCtrl\0"
-    "KeyboardPressKeySlots\0key"
+    "showSysTime\0monitorSysTime\0systimeSlot\0"
+    "registOutButtonClick\0closeUserManageWidget\0"
+    "setCameraImageParamSlot\0setTrainType\0"
+    "setTimeSignalCtrl\0KeyboardPressKeySlots\0"
+    "key"
 };
 #undef QT_MOC_LITERAL
 
@@ -88,7 +90,7 @@ static const uint qt_meta_data_devUpdateWidget[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      25,   14, // methods
+      26,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -96,33 +98,34 @@ static const uint qt_meta_data_devUpdateWidget[] = {
        4,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  139,    2, 0x06 /* Public */,
-       3,    1,  140,    2, 0x06 /* Public */,
-       5,    0,  143,    2, 0x06 /* Public */,
-       6,    1,  144,    2, 0x06 /* Public */,
+       1,    0,  144,    2, 0x06 /* Public */,
+       3,    1,  145,    2, 0x06 /* Public */,
+       5,    0,  148,    2, 0x06 /* Public */,
+       6,    1,  149,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       8,    0,  147,    2, 0x0a /* Public */,
-       9,    0,  148,    2, 0x0a /* Public */,
-      10,    0,  149,    2, 0x0a /* Public */,
-      11,    0,  150,    2, 0x0a /* Public */,
-      12,    0,  151,    2, 0x0a /* Public */,
-      13,    0,  152,    2, 0x0a /* Public */,
-      14,    0,  153,    2, 0x0a /* Public */,
-      15,    0,  154,    2, 0x0a /* Public */,
-      16,    0,  155,    2, 0x0a /* Public */,
-      17,    1,  156,    2, 0x0a /* Public */,
-      19,    1,  159,    2, 0x0a /* Public */,
-      20,    1,  162,    2, 0x0a /* Public */,
-      21,    1,  165,    2, 0x0a /* Public */,
-      22,    0,  168,    2, 0x0a /* Public */,
-      23,    0,  169,    2, 0x0a /* Public */,
-      24,    0,  170,    2, 0x0a /* Public */,
-      25,    0,  171,    2, 0x0a /* Public */,
-      26,    0,  172,    2, 0x0a /* Public */,
-      27,    0,  173,    2, 0x0a /* Public */,
-      28,    0,  174,    2, 0x0a /* Public */,
-      29,    1,  175,    2, 0x0a /* Public */,
+       8,    0,  152,    2, 0x0a /* Public */,
+       9,    0,  153,    2, 0x0a /* Public */,
+      10,    0,  154,    2, 0x0a /* Public */,
+      11,    0,  155,    2, 0x0a /* Public */,
+      12,    0,  156,    2, 0x0a /* Public */,
+      13,    0,  157,    2, 0x0a /* Public */,
+      14,    0,  158,    2, 0x0a /* Public */,
+      15,    0,  159,    2, 0x0a /* Public */,
+      16,    0,  160,    2, 0x0a /* Public */,
+      17,    1,  161,    2, 0x0a /* Public */,
+      19,    1,  164,    2, 0x0a /* Public */,
+      20,    1,  167,    2, 0x0a /* Public */,
+      21,    1,  170,    2, 0x0a /* Public */,
+      22,    0,  173,    2, 0x0a /* Public */,
+      23,    0,  174,    2, 0x0a /* Public */,
+      24,    0,  175,    2, 0x0a /* Public */,
+      25,    0,  176,    2, 0x0a /* Public */,
+      26,    0,  177,    2, 0x0a /* Public */,
+      27,    0,  178,    2, 0x0a /* Public */,
+      28,    0,  179,    2, 0x0a /* Public */,
+      29,    0,  180,    2, 0x0a /* Public */,
+      30,    1,  181,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -151,7 +154,8 @@ static const uint qt_meta_data_devUpdateWidget[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Char,   30,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Char,   31,
 
        0        // eod
 };
@@ -180,13 +184,14 @@ void devUpdateWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 15: _t->pollingTimeChange((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 16: _t->lineEditpollingTimeChange((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 17: _t->showSysTime(); break;
-        case 18: _t->systimeSlot(); break;
-        case 19: _t->registOutButtonClick(); break;
-        case 20: _t->closeUserManageWidget(); break;
-        case 21: _t->setCameraImageParamSlot(); break;
-        case 22: _t->setTrainType(); break;
-        case 23: _t->setTimeSignalCtrl(); break;
-        case 24: _t->KeyboardPressKeySlots((*reinterpret_cast< char(*)>(_a[1]))); break;
+        case 18: _t->monitorSysTime(); break;
+        case 19: _t->systimeSlot(); break;
+        case 20: _t->registOutButtonClick(); break;
+        case 21: _t->closeUserManageWidget(); break;
+        case 22: _t->setCameraImageParamSlot(); break;
+        case 23: _t->setTrainType(); break;
+        case 24: _t->setTimeSignalCtrl(); break;
+        case 25: _t->KeyboardPressKeySlots((*reinterpret_cast< char(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -251,13 +256,13 @@ int devUpdateWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 25)
+        if (_id < 26)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 25;
+        _id -= 26;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 25)
+        if (_id < 26)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 25;
+        _id -= 26;
     }
     return _id;
 }

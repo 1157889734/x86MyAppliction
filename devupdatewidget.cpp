@@ -71,13 +71,7 @@ devUpdateWidget::devUpdateWidget(QWidget *parent) :
     ui->contrastLineEdit->installEventFilter(this);
     ui->saturationLineEdit->installEventFilter(this);
 
-    QIntValidator* IntValidator = new QIntValidator;
-    IntValidator->setRange(0,255);
-    ui->brightnessLineEdit->setValidator(IntValidator);
-    ui->contrastLineEdit->setValidator(IntValidator);
-    ui->saturationLineEdit->setValidator(IntValidator);
-
-
+    connect(ui->timeSetPushButton,SIGNAL(clicked(bool)),this,SLOT(monitorSysTime()));
 
     connect(ui->permissonManagePushButton, SIGNAL(clicked(bool)), this, SLOT(userManageSlot()));
 
@@ -125,6 +119,9 @@ devUpdateWidget::devUpdateWidget(QWidget *parent) :
     ui->contrastLineEdit->setValidator(new QIntValidator(0,255,this));
 
     connect(ui->trainTypeSetPushButton, SIGNAL(clicked(bool)), this, SLOT(setTrainType()));
+    ui->dateEdit->setCalendarPopup(true);
+    ui->dateEdit->setDate(QDate::currentDate());
+    ui->dateEdit->setLocale(QLocale::Chinese);
 
 
     m_sys_timer = new QTimer(this);
@@ -304,6 +301,37 @@ void devUpdateWidget::registOutButtonClick()
 }
 
 
+void devUpdateWidget::monitorSysTime()
+{
+     char acTimeStr[128] = {0};
+    timeTd = QDateTime::currentDateTime();
+
+    timeTd.setDate(ui->dateEdit->date());
+    timeTd.setTime(ui->timeEdit->time());
+
+
+    time_t tt = (time_t)timeTd.toTime_t();
+    stime(&tt);
+
+    QDateTime time = QDateTime::currentDateTime(); // 获取当前时间
+    int year = time.date().year(); // 年
+    int month = time.date().month(); // 月
+    int day = time.date().day(); // 日
+//    int hour = time.time().hour(); // 时
+//    int sec = time.time().second(); // 分
+//    int msec = time.time().msec(); // 秒
+
+    int h=ui->timeEdit->time().hour();
+    int m =ui->timeEdit->time().minute();
+    int s =ui->timeEdit->time().second();
+
+
+    snprintf(acTimeStr, sizeof(acTimeStr), "date %02d%02d%02d%02d%4d.%02d", month, day, h, m,year, s);
+    system(acTimeStr);
+    system("hwclock -w");
+
+}
+
 void devUpdateWidget::showSysTime()
 {
     timeTd = QDateTime::currentDateTime();
@@ -320,10 +348,11 @@ void devUpdateWidget::systimeSlot()
     char acUserType[64] = {0};
     int year = 0, month = 0, day = 0, hour = 0, minute = 0, second = 0, i = 0, iRet = 0;
     short yr = 0;
+    char acTimeStr[256] = {0};
     T_TIME_INFO tTimeInfo;
     T_TRAIN_CONFIG tTrainConfigInfo;
     T_LOG_INFO tLogInfo;
-
+    ui->timeAdjustPushButton->setEnabled(false);
     STATE_GetCurrentUserType(acUserType, sizeof(acUserType));
 //        DebugPrint(DEBUG_UI_OPTION_PRINT, "devUpdateWidget set sys time!\n");
     if (!strcmp(acUserType, "operator"))	 //操作员无权校时
@@ -334,18 +363,25 @@ void devUpdateWidget::systimeSlot()
         box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
         box.setButtonText (QMessageBox::Ok,tr("OK")); 	//将按钮显示改成"确 定"
         box.exec();
+        ui->timeAdjustPushButton->setEnabled(true);
+
     }
     else
     {
-        QDate date = QDate::currentDate();
-        QTime time_t = QTime::currentTime();
-        year = date.year();
-        month = date.month();
-        day = date.day();
-        hour = time_t.hour();
-        minute = time_t.minute();
-        second = time_t.second();
 
+        if (strlen(ui->dateEdit->text().toLatin1().data()) > 0)
+        {
+            sscanf(ui->dateEdit->text().toLatin1().data(), "%4d-%02d-%02d", &year, &month, &day);
+        }
+        if (strlen(ui->timeEdit->text().toLatin1().data()) > 0)
+        {
+            sscanf(ui->timeEdit->text().toLatin1().data(), "%2d:%02d:%02d", &hour, &minute, &second);
+        }
+
+        snprintf(acTimeStr, sizeof(acTimeStr), "date %02d%02d%02d%02d%4d.%02d", month, day, hour, second,year, minute);
+        system(acTimeStr);
+        system("hwclock -w");
+        qDebug()<<"*******systimeSlot***"<<acTimeStr<<__LINE__<<"hour="<<hour<<"minute="<<minute<<"second="<<second;
         /*系统校时记录日志*/
         memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
         tLogInfo.iLogType = 0;
@@ -391,6 +427,7 @@ void devUpdateWidget::systimeSlot()
                 }
             }
         }
+        ui->timeAdjustPushButton->setEnabled(true);
 
     }
 
@@ -599,10 +636,22 @@ void devUpdateWidget::setCameraImageParamSlot()
             return;
         }
 
+        if(ui->brightnessLineEdit->text().toInt() > 255 || ui->saturationLineEdit->text().toInt() > 255 || ui->contrastLineEdit->text().toInt() > 255)
+        {
+            QMessageBox box(QMessageBox::Warning,tr("提示"),tr("输入数字不能超过255!"));	  //新建消息提示框，提示错误信息
+            box.setWindowFlags(Qt::FramelessWindowHint);
+            box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
+            box.setButtonText (QMessageBox::Ok,tr("OK")); 	//将按钮显示改成"确 定"
+            box.exec();
+            return;
+
+        }
+
         memset(&picParam, 0, sizeof(T_PIC_ATTRIBUTE));
         picParam.iBrightness = ui->brightnessLineEdit->text().toInt();
         picParam.iSaturation = ui->saturationLineEdit->text().toInt();
         picParam.iContrast = ui->contrastLineEdit->text().toInt();
+
 
 
         iRet = PMSG_SendPmsgData(m_Phandle[idex], CLI_SERV_MSG_TYPE_SET_PIC_ATTRIBUTE, (char *)&picParam, sizeof(T_PIC_ATTRIBUTE));    //发送设置图像效果参数命令
@@ -610,6 +659,11 @@ void devUpdateWidget::setCameraImageParamSlot()
         {
 //            DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_SET_PIC_ATTRIBUTE error!iRet=%d,server=%d\n", __FUNCTION__, iRet, idex+1);
         }
+        QMessageBox box(QMessageBox::Information,tr("提示"),tr("设置成功!"));	  //新建消息提示框，提示错误信息
+        box.setWindowFlags(Qt::FramelessWindowHint);
+        box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
+        box.setButtonText (QMessageBox::Ok,tr("OK")); 	//将按钮显示改成"确 定"
+        box.exec();
 
     }
 

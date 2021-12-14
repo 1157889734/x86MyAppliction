@@ -158,16 +158,16 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
     ui->EnddateEdit->setCalendarPopup(true);
     ui->EnddateEdit->setDate(QDate::currentDate());
 
-    ui->StartdateEdit->dumpObjectTree();
-    QLineEdit* lEdit = ui->StartdateEdit->findChild<QLineEdit*>();
-    if(lEdit)
-        lEdit->setReadOnly(true);
+//    ui->StartdateEdit->dumpObjectTree();
+//    QLineEdit* lEdit = ui->StartdateEdit->findChild<QLineEdit*>();
+//    if(lEdit)
+//        lEdit->setReadOnly(true);
 
 
-    ui->EnddateEdit->dumpObjectTree();
-    QLineEdit* lEdit2 = ui->EnddateEdit->findChild<QLineEdit*>();
-    if(lEdit2)
-        lEdit2->setReadOnly(true);
+//    ui->EnddateEdit->dumpObjectTree();
+//    QLineEdit* lEdit2 = ui->EnddateEdit->findChild<QLineEdit*>();
+//    if(lEdit2)
+//        lEdit2->setReadOnly(true);
 
 
     int value = QTime::currentTime().hour();
@@ -1015,6 +1015,19 @@ void recordPlayWidget::triggerDownloadProcessBarDisplaySignal(int iEnableFlag)	/
 void recordPlayWidget::triggerSetDownloadProcessBarValueSignal(int iValue)	//触发设置文件下载进度条的值的信号
 {
     emit setDownloadProcessBarValueSignal(iValue);
+}
+
+
+void recordPlayWidget::pageShowCtrl()  //每次切换到当前页面，则更新查询起始和结束时间控件显示
+{
+    QDateTime time = QDateTime::currentDateTime();
+
+    ui->StartdateEdit->setDate(time.date());
+    ui->EnddateEdit->setDate(time.date());
+    int value = QTime::currentTime().hour();
+     ui->EndcomboBox->setCurrentIndex(value);
+//    ui->EndtimeEdit->setTime(time.time());
+
 }
 
 void recordPlayWidget::recordPlayFastForwardSlot()

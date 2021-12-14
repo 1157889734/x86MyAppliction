@@ -9,14 +9,18 @@
 #ifndef UI_DEVUPDATEWIDGET_H
 #define UI_DEVUPDATEWIDGET_H
 
+#include <QtCore/QDate>
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QComboBox>
+#include <QtWidgets/QDateEdit>
+#include <QtWidgets/QGroupBox>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QRadioButton>
 #include <QtWidgets/QTextEdit>
+#include <QtWidgets/QTimeEdit>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -77,10 +81,16 @@ public:
     QPushButton *updateBeginPushButton;
     QPushButton *clientRebootPushButton_2;
     QTextEdit *updateStatueTextEdit;
-    QLineEdit *lineEdit;
-    QLineEdit *lineEdit_2;
-    QLineEdit *lineEdit_3;
-    QLineEdit *lineEdit_4;
+    QLabel *label_12;
+    QDateEdit *dateEdit;
+    QTimeEdit *timeEdit;
+    QGroupBox *groupBox;
+    QPushButton *timeSetPushButton;
+    QLabel *label_8;
+    QGroupBox *groupBox_3;
+    QGroupBox *groupBox_4;
+    QGroupBox *groupBox_5;
+    QGroupBox *groupBox_6;
     QLabel *label_6;
 
     void setupUi(QWidget *devUpdateWidget)
@@ -134,8 +144,10 @@ public:
 "border-width: 1px;\n"
 "border-style: solid;}\n"
 "\n"
+"\n"
 "QPushButton:pressed\n"
-"{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}"));
+"{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}\n"
+""));
         pollingTimeSetRadioButton_3 = new QRadioButton(devUpdateWidget);
         pollingTimeSetRadioButton_3->setObjectName(QString::fromUtf8("pollingTimeSetRadioButton_3"));
         pollingTimeSetRadioButton_3->setGeometry(QRect(440, 13, 61, 22));
@@ -309,11 +321,11 @@ public:
         contrastLineEdit->setFont(font);
         label_9 = new QLabel(deviceManagewidget);
         label_9->setObjectName(QString::fromUtf8("label_9"));
-        label_9->setGeometry(QRect(200, 10, 67, 17));
+        label_9->setGeometry(QRect(200, 5, 67, 17));
         label_9->setFont(font);
         timeAdjustPushButton = new QPushButton(deviceManagewidget);
         timeAdjustPushButton->setObjectName(QString::fromUtf8("timeAdjustPushButton"));
-        timeAdjustPushButton->setGeometry(QRect(190, 140, 137, 39));
+        timeAdjustPushButton->setGeometry(QRect(180, 150, 137, 39));
         timeAdjustPushButton->setStyleSheet(QString::fromUtf8("QPushButton{\n"
 "background-image: url(:/monres/timing.bmp);\n"
 "border-color: rgb(255, 255, 255);\n"
@@ -348,7 +360,7 @@ public:
 "{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}"));
         systimeAdjustLabel = new QLabel(deviceManagewidget);
         systimeAdjustLabel->setObjectName(QString::fromUtf8("systimeAdjustLabel"));
-        systimeAdjustLabel->setGeometry(QRect(150, 100, 91, 21));
+        systimeAdjustLabel->setGeometry(QRect(290, 125, 91, 21));
         saturationLabel = new QLabel(deviceManagewidget);
         saturationLabel->setObjectName(QString::fromUtf8("saturationLabel"));
         saturationLabel->setGeometry(QRect(630, 300, 52, 24));
@@ -399,7 +411,7 @@ public:
 "{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}"));
         sysDataAdjustLabel = new QLabel(deviceManagewidget);
         sysDataAdjustLabel->setObjectName(QString::fromUtf8("sysDataAdjustLabel"));
-        sysDataAdjustLabel->setGeometry(QRect(20, 100, 120, 21));
+        sysDataAdjustLabel->setGeometry(QRect(110, 125, 120, 20));
         QFont font1;
         font1.setPointSize(10);
         sysDataAdjustLabel->setFont(font1);
@@ -411,7 +423,7 @@ public:
         devConfigLabel->setStyleSheet(QString::fromUtf8(""));
         updateStatusLabel = new QLabel(deviceManagewidget);
         updateStatusLabel->setObjectName(QString::fromUtf8("updateStatusLabel"));
-        updateStatusLabel->setGeometry(QRect(670, 10, 71, 17));
+        updateStatusLabel->setGeometry(QRect(670, 5, 71, 17));
         updateStatusLabel->setFont(font);
         updateStatusLabel->setStyleSheet(QString::fromUtf8(""));
         label_18 = new QLabel(deviceManagewidget);
@@ -419,7 +431,7 @@ public:
         label_18->setGeometry(QRect(110, 250, 67, 17));
         label_5 = new QLabel(deviceManagewidget);
         label_5->setObjectName(QString::fromUtf8("label_5"));
-        label_5->setGeometry(QRect(20, 70, 67, 17));
+        label_5->setGeometry(QRect(20, 130, 67, 17));
         label_5->setFont(font);
         updateBeginPushButton = new QPushButton(deviceManagewidget);
         updateBeginPushButton->setObjectName(QString::fromUtf8("updateBeginPushButton"));
@@ -451,30 +463,88 @@ public:
         updateStatueTextEdit->setGeometry(QRect(511, 40, 401, 101));
         updateStatueTextEdit->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 0);\n"
 "background-color: rgb(172, 209, 178);"));
-        lineEdit = new QLineEdit(deviceManagewidget);
-        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
-        lineEdit->setEnabled(false);
-        lineEdit->setGeometry(QRect(0, 0, 461, 191));
-        lineEdit->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
-        lineEdit_2 = new QLineEdit(deviceManagewidget);
-        lineEdit_2->setObjectName(QString::fromUtf8("lineEdit_2"));
-        lineEdit_2->setEnabled(false);
-        lineEdit_2->setGeometry(QRect(470, 0, 471, 191));
-        lineEdit_2->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
-        lineEdit_3 = new QLineEdit(deviceManagewidget);
-        lineEdit_3->setObjectName(QString::fromUtf8("lineEdit_3"));
-        lineEdit_3->setEnabled(false);
-        lineEdit_3->setGeometry(QRect(0, 195, 461, 201));
-        lineEdit_3->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
-        lineEdit_4 = new QLineEdit(deviceManagewidget);
-        lineEdit_4->setObjectName(QString::fromUtf8("lineEdit_4"));
-        lineEdit_4->setEnabled(false);
-        lineEdit_4->setGeometry(QRect(470, 195, 471, 201));
-        lineEdit_4->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
-        lineEdit_4->raise();
-        lineEdit_3->raise();
-        lineEdit_2->raise();
-        lineEdit->raise();
+        label_12 = new QLabel(deviceManagewidget);
+        label_12->setObjectName(QString::fromUtf8("label_12"));
+        label_12->setGeometry(QRect(40, 76, 51, 31));
+        label_12->setFont(font);
+        dateEdit = new QDateEdit(deviceManagewidget);
+        dateEdit->setObjectName(QString::fromUtf8("dateEdit"));
+        dateEdit->setGeometry(QRect(110, 40, 141, 35));
+        dateEdit->setDate(QDate(2020, 1, 1));
+        timeEdit = new QTimeEdit(deviceManagewidget);
+        timeEdit->setObjectName(QString::fromUtf8("timeEdit"));
+        timeEdit->setGeometry(QRect(110, 80, 141, 35));
+        timeEdit->setDateTime(QDateTime(QDate(2000, 1, 1), QTime(10, 3, 3)));
+        groupBox = new QGroupBox(deviceManagewidget);
+        groupBox->setObjectName(QString::fromUtf8("groupBox"));
+        groupBox->setGeometry(QRect(20, 20, 421, 101));
+        groupBox->setStyleSheet(QString::fromUtf8("QGroupBox{\n"
+"	border-width:1px;\n"
+"	border-style:solid;\n"
+"	border-color:black;\n"
+"	margin-top:1ex;\n"
+"}\n"
+"QGroupBox:title{\n"
+"	subcontrol-orgin:0 10px;\n"
+"	subcontrol-position: top left;\n"
+"	left:10px;\n"
+"	top:-1ex;\n"
+"	margin-left:0px;\n"
+"	padding:0 1px;\n"
+"}\n"
+""));
+        timeSetPushButton = new QPushButton(deviceManagewidget);
+        timeSetPushButton->setObjectName(QString::fromUtf8("timeSetPushButton"));
+        timeSetPushButton->setGeometry(QRect(280, 65, 112, 32));
+        timeSetPushButton->setFont(font);
+        timeSetPushButton->setStyleSheet(QString::fromUtf8("QPushButton{\n"
+"background-image: url(:/monres/sure.bmp);\n"
+"border-color: rgb(255, 255, 255);\n"
+"border-width: 1px;\n"
+"border-style: solid;}\n"
+"\n"
+"QPushButton:pressed\n"
+"{background-color: rgb(86, 164, 246);color: rgb(255, 255, 255);border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid;}"));
+        label_8 = new QLabel(deviceManagewidget);
+        label_8->setObjectName(QString::fromUtf8("label_8"));
+        label_8->setGeometry(QRect(40, 40, 51, 17));
+        label_8->setFont(font);
+        groupBox_3 = new QGroupBox(deviceManagewidget);
+        groupBox_3->setObjectName(QString::fromUtf8("groupBox_3"));
+        groupBox_3->setGeometry(QRect(0, 0, 461, 196));
+        groupBox_3->setStyleSheet(QString::fromUtf8("QGroupBox{\n"
+"	border-width:1px;\n"
+"	border-style:solid;\n"
+"	border-color:black;\n"
+"}"));
+        groupBox_4 = new QGroupBox(deviceManagewidget);
+        groupBox_4->setObjectName(QString::fromUtf8("groupBox_4"));
+        groupBox_4->setGeometry(QRect(470, 0, 471, 196));
+        groupBox_4->setStyleSheet(QString::fromUtf8("QGroupBox{\n"
+"	border-width:1px;\n"
+"	border-style:solid;\n"
+"	border-color:black;\n"
+"}"));
+        groupBox_5 = new QGroupBox(deviceManagewidget);
+        groupBox_5->setObjectName(QString::fromUtf8("groupBox_5"));
+        groupBox_5->setGeometry(QRect(0, 200, 461, 196));
+        groupBox_5->setStyleSheet(QString::fromUtf8("QGroupBox{\n"
+"	border-width:1px;\n"
+"	border-style:solid;\n"
+"	border-color:black;\n"
+"}"));
+        groupBox_6 = new QGroupBox(deviceManagewidget);
+        groupBox_6->setObjectName(QString::fromUtf8("groupBox_6"));
+        groupBox_6->setGeometry(QRect(470, 200, 471, 196));
+        groupBox_6->setStyleSheet(QString::fromUtf8("QGroupBox{\n"
+"	border-width:1px;\n"
+"	border-style:solid;\n"
+"	border-color:black;\n"
+"}"));
+        groupBox_6->raise();
+        groupBox_5->raise();
+        groupBox_4->raise();
+        groupBox_3->raise();
         label_15->raise();
         saturationLineEdit->raise();
         imageParamSetPushButton->raise();
@@ -504,6 +574,12 @@ public:
         clientRebootPushButton_2->raise();
         systimeAdjustLabel->raise();
         updateStatueTextEdit->raise();
+        groupBox->raise();
+        label_8->raise();
+        label_12->raise();
+        timeEdit->raise();
+        timeSetPushButton->raise();
+        dateEdit->raise();
         label_6 = new QLabel(devUpdateWidget);
         label_6->setObjectName(QString::fromUtf8("label_6"));
         label_6->setGeometry(QRect(0, 0, 1024, 624));
@@ -600,6 +676,16 @@ public:
         label_5->setText(QCoreApplication::translate("devUpdateWidget", "\347\263\273\347\273\237\346\227\266\351\227\264", nullptr));
         updateBeginPushButton->setText(QString());
         clientRebootPushButton_2->setText(QString());
+        label_12->setText(QCoreApplication::translate("devUpdateWidget", "\346\227\266\351\227\264", nullptr));
+        dateEdit->setDisplayFormat(QCoreApplication::translate("devUpdateWidget", "yyyy-MM-dd", nullptr));
+        timeEdit->setDisplayFormat(QCoreApplication::translate("devUpdateWidget", "hh:mm:ss", nullptr));
+        groupBox->setTitle(QCoreApplication::translate("devUpdateWidget", "\346\233\264\346\224\271\347\263\273\347\273\237\346\227\266\351\227\264", nullptr));
+        timeSetPushButton->setText(QString());
+        label_8->setText(QCoreApplication::translate("devUpdateWidget", "\346\227\245\346\234\237", nullptr));
+        groupBox_3->setTitle(QString());
+        groupBox_4->setTitle(QString());
+        groupBox_5->setTitle(QString());
+        groupBox_6->setTitle(QString());
         label_6->setText(QString());
     } // retranslateUi
 

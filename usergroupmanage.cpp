@@ -340,7 +340,7 @@ void usergroupManage::on_savepushButton_clicked()
               bool ok = query.exec(sql);
               if(ok)
               {
-                QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("修改成功!")));
+                QMessageBox msgBox(QMessageBox::Information,QString(tr("注意")),QString(tr("修改成功!")));
                 msgBox.setWindowFlags(Qt::FramelessWindowHint);
                 msgBox.setStandardButtons(QMessageBox::Yes);
                 msgBox.button(QMessageBox::Yes)->setText("OK");
@@ -433,7 +433,7 @@ void usergroupManage::on_savepushButton_clicked()
         bool ok = query.exec(sql);
       if(ok)
       {
-        QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("添加成功!")));
+        QMessageBox msgBox(QMessageBox::Information,QString(tr("注意")),QString(tr("添加成功!")));
         msgBox.setWindowFlags(Qt::FramelessWindowHint);
         msgBox.setStandardButtons(QMessageBox::Yes);
         msgBox.button(QMessageBox::Yes)->setText("OK");
@@ -534,7 +534,7 @@ void usergroupManage::on_deletepushButton_clicked()
         bool ok = query.exec(sql);
         if(ok)
         {
-            QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("删除成功!")));
+            QMessageBox msgBox(QMessageBox::Information,QString(tr("注意")),QString(tr("删除成功!")));
             msgBox.setWindowFlags(Qt::FramelessWindowHint);
             msgBox.setStandardButtons(QMessageBox::Yes);
             msgBox.button(QMessageBox::Yes)->setText("OK");
