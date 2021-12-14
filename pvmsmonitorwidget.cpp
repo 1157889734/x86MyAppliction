@@ -2039,7 +2039,7 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
                 else
                 {
 
-                    return QWidget::eventFilter(target, event);
+                    return true;
 
                 }
             }
@@ -2068,7 +2068,7 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
                 QMouseEvent *mouseEvent=static_cast<QMouseEvent*>(event);
                 if(mouseEvent->button()==Qt::RightButton)    //只响应鼠标左击
                 {
-                    return QWidget::eventFilter(target, event);
+                    return true;
                 }
 
                 for (int i = 0; i < m_iCameraNum; i++)

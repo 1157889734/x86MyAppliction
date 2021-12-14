@@ -71,6 +71,14 @@ devUpdateWidget::devUpdateWidget(QWidget *parent) :
     ui->contrastLineEdit->installEventFilter(this);
     ui->saturationLineEdit->installEventFilter(this);
 
+    QIntValidator* IntValidator = new QIntValidator;
+    IntValidator->setRange(0,255);
+    ui->brightnessLineEdit->setValidator(IntValidator);
+    ui->contrastLineEdit->setValidator(IntValidator);
+    ui->saturationLineEdit->setValidator(IntValidator);
+
+
+
     connect(ui->permissonManagePushButton, SIGNAL(clicked(bool)), this, SLOT(userManageSlot()));
 
     connect(ui->configFilelookPushButton,   SIGNAL(clicked(bool)),   this, SLOT(configFileSelectionSlot()));
