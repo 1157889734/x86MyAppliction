@@ -88,7 +88,7 @@ public:
 " }"));
         playNextOnePushButton = new QPushButton(recordPlayWidget);
         playNextOnePushButton->setObjectName(QString::fromUtf8("playNextOnePushButton"));
-        playNextOnePushButton->setGeometry(QRect(660, 565, 51, 51));
+        playNextOnePushButton->setGeometry(QRect(640, 565, 51, 51));
         playNextOnePushButton->setStyleSheet(QString::fromUtf8("QPushButton{\n"
 "background-image: url(:/monres/next.bmp);\n"
 "border-color: rgb(255, 255, 255);\n"
@@ -104,7 +104,7 @@ public:
         playNextOnePushButton->setFlat(true);
         stopPushButton = new QPushButton(recordPlayWidget);
         stopPushButton->setObjectName(QString::fromUtf8("stopPushButton"));
-        stopPushButton->setGeometry(QRect(530, 565, 51, 51));
+        stopPushButton->setGeometry(QRect(520, 565, 51, 51));
         stopPushButton->setStyleSheet(QString::fromUtf8("QPushButton{\n"
 "background-image: url(:/monres/stop.bmp);\n"
 "border-color: rgb(255, 255, 255);\n"
@@ -132,7 +132,7 @@ public:
 " }"));
         alarmPushButton = new QPushButton(recordPlayWidget);
         alarmPushButton->setObjectName(QString::fromUtf8("alarmPushButton"));
-        alarmPushButton->setGeometry(QRect(715, 575, 82, 36));
+        alarmPushButton->setGeometry(QRect(700, 575, 82, 36));
         alarmPushButton->setFont(font);
         alarmPushButton->setStyleSheet(QString::fromUtf8("QPushButton{\n"
 "background-image: url(:/monres/alertoff.bmp);\n"
@@ -195,7 +195,7 @@ public:
         recordFileTableWidget->verticalHeader()->setVisible(false);
         playLastOnePushButton = new QPushButton(recordPlayWidget);
         playLastOnePushButton->setObjectName(QString::fromUtf8("playLastOnePushButton"));
-        playLastOnePushButton->setGeometry(QRect(270, 565, 51, 51));
+        playLastOnePushButton->setGeometry(QRect(280, 565, 51, 51));
         playLastOnePushButton->setStyleSheet(QString::fromUtf8("QPushButton{\n"
 "background-image: url(:/monres/before.bmp);\n"
 "border-color: rgb(255, 255, 255);\n"
@@ -310,7 +310,7 @@ public:
 " }"));
         fastForwardPushButton = new QPushButton(recordPlayWidget);
         fastForwardPushButton->setObjectName(QString::fromUtf8("fastForwardPushButton"));
-        fastForwardPushButton->setGeometry(QRect(590, 565, 51, 51));
+        fastForwardPushButton->setGeometry(QRect(580, 565, 51, 51));
         fastForwardPushButton->setStyleSheet(QString::fromUtf8("QPushButton{\n"
 "background-image: url(:/monres/fast.bmp);\n"
 "border-color: rgb(255, 255, 255);\n"
@@ -338,7 +338,7 @@ public:
 " }"));
         slowForwardPushButton = new QPushButton(recordPlayWidget);
         slowForwardPushButton->setObjectName(QString::fromUtf8("slowForwardPushButton"));
-        slowForwardPushButton->setGeometry(QRect(330, 565, 51, 51));
+        slowForwardPushButton->setGeometry(QRect(340, 565, 51, 51));
         slowForwardPushButton->setStyleSheet(QString::fromUtf8("QPushButton{\n"
 "background-image: url(:/monres/slow.bmp);\n"
 "border-color: rgb(255, 255, 255);\n"
@@ -406,10 +406,11 @@ public:
         label_14->setGeometry(QRect(180, 85, 31, 21));
         canselPushButton = new QPushButton(recordPlayWidget);
         canselPushButton->setObjectName(QString::fromUtf8("canselPushButton"));
-        canselPushButton->setGeometry(QRect(800, 575, 82, 36));
+        canselPushButton->setGeometry(QRect(790, 575, 84, 38));
         canselPushButton->setFont(font);
         canselPushButton->setStyleSheet(QString::fromUtf8("QPushButton{\n"
 "background-image: url(:/monres/cancel.bmp);\n"
+"background-repeat: no-repeat;\n"
 "border-color: rgb(255, 255, 255);\n"
 "border-width: 1px;\n"
 "border-style: solid;}\n"
@@ -579,7 +580,7 @@ public:
         slowForwardPushButton->setText(QString());
         label_3->setText(QCoreApplication::translate("recordPlayWidget", " \350\265\267\345\247\213\346\227\266\351\227\264", nullptr));
         plusStepPushButton->setText(QString());
-        StartdateEdit->setDisplayFormat(QCoreApplication::translate("recordPlayWidget", "yyyy/M/dd ", nullptr));
+        StartdateEdit->setDisplayFormat(QCoreApplication::translate("recordPlayWidget", "yyyy/MM/dd ", nullptr));
         EnddateEdit->setDisplayFormat(QCoreApplication::translate("recordPlayWidget", "yyyy/MM/dd", nullptr));
         label->setText(QCoreApplication::translate("recordPlayWidget", "\346\227\266\351\227\264", nullptr));
         label_14->setText(QCoreApplication::translate("recordPlayWidget", "\346\227\266\351\227\264", nullptr));

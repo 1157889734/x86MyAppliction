@@ -74,7 +74,7 @@ color: rgb(255, 255, 255);</string>
      <string>报警信息</string>
     </property>
     <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
    <widget class="QTableWidget" name="tableWidget">
@@ -173,7 +173,7 @@ border-width: 1px;
 border-style: solid;</string>
     </property>
     <property name="text">
-     <string>关闭</string>
+     <string>返回</string>
     </property>
    </widget>
   </widget>

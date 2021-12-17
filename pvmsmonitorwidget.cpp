@@ -336,7 +336,7 @@ pvmsMonitorWidget::pvmsMonitorWidget(QWidget *parent) :
     m_temporarySaveTimer = NULL;
     m_iCameraSwitchState = NORMAL;   //摄像头切换状态默认为正常，表示不切换
     m_iPresetPasswdOkFlag = 0;
-//    m_presetPasswdConfirmPage = NULL;
+    m_presetPasswdConfirmPage = NULL;
     m_iCameraNum = 0;
     m_iCameraPlayNo = 0;
     m_iPollingFlag = 1;   //默认轮询开启
@@ -928,22 +928,22 @@ void pvmsMonitorWidget::presetSetCtrlSlot()
     int iRet = 0;
     char acSendBuf[4] = {0};
 
-//    if (0 == m_iPresetPasswdOkFlag)
-//    {
-//        m_iPresetPasswdOkFlag = 1;
+    if (0 == m_iPresetPasswdOkFlag)
+    {
+        m_iPresetPasswdOkFlag = 1;
 
-//        if (NULL == m_presetPasswdConfirmPage)
-//        {
-//            m_presetPasswdConfirmPage = new presetPasswdConfirm(this);  //新建一个确认密码的子窗体
-//        }
-//        m_presetPasswdConfirmPage->move(300, 270);
-//        m_presetPasswdConfirmPage->show();
-//        connect(m_presetPasswdConfirmPage, SIGNAL(sendCloseSignal()), this, SLOT(closePresetPasswdPageSlot()));  //密码验证不通过会受到close信号，closePresetPasswdPageSlot里只会关闭密码验证界面
-//        connect(m_presetPasswdConfirmPage, SIGNAL(sendOkSignal()), this, SLOT(setPresetSlot()));  //密码验证正确会受到OK信号，setPresetSlot里会关闭密码验证界面，并执行预置点设置操作
+        if (NULL == m_presetPasswdConfirmPage)
+        {
+            m_presetPasswdConfirmPage = new presetPasswdConfirm(this);  //新建一个确认密码的子窗体
+        }
+        m_presetPasswdConfirmPage->move(300, 270);
+        m_presetPasswdConfirmPage->show();
+        connect(m_presetPasswdConfirmPage, SIGNAL(sendCloseSignal()), this, SLOT(closePresetPasswdPageSlot()));  //密码验证不通过会受到close信号，closePresetPasswdPageSlot里只会关闭密码验证界面
+        connect(m_presetPasswdConfirmPage, SIGNAL(sendOkSignal()), this, SLOT(setPresetSlot()));  //密码验证正确会受到OK信号，setPresetSlot里会关闭密码验证界面，并执行预置点设置操作
 
-//    }
-//    else
-//    {
+    }
+    else
+    {
 //        DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget preset set option ctrl!\n");
 
         /*发送调用或设置预置点的消息给服务器，消息内容为3个字节，第一个字节表示控制类型:设置还是调用预置点，第二个字节表示预置点号，第三个字节表示受电弓摄像机位置号*/
@@ -960,13 +960,13 @@ void pvmsMonitorWidget::presetSetCtrlSlot()
         this->m_tCameraInfo[m_iCameraPlayNo].tPtzOprateTime = s_info.uptime;
         this->m_tCameraInfo[m_iCameraPlayNo].iPresetNo = m_iSelectPresetNo;
 //        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "pvmsMonitorWidget set preserNo %d success!\n", m_iSelectPresetNo);
-//        QMessageBox box(QMessageBox::Information,QString::fromUtf8("注意"),QString::fromUtf8("预置点设置成功!"));
-//        box.setWindowFlags(Qt::FramelessWindowHint);
-//        box.setStandardButtons (QMessageBox::Ok);
-//        box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
-//        box.exec();
+        QMessageBox box(QMessageBox::Information,QString::fromUtf8("注意"),QString::fromUtf8("预置点设置成功!"));
+        box.setWindowFlags(Qt::FramelessWindowHint);
+        box.setStandardButtons (QMessageBox::Ok);
+        box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
+        box.exec();
 
-//    }
+    }
 
 }
 void pvmsMonitorWidget::presetGetCtrlSlot()
@@ -1339,29 +1339,28 @@ void pvmsMonitorWidget::fillLightSwitchEndSlot()
 
 void pvmsMonitorWidget::closePresetPasswdPageSlot()    //关闭预置点密码确认界面
 {
-//    if(NULL==this->m_presetPasswdConfirmPage)
-//    {
-//        return;
-//    }
-//    else
-//    {
-//        delete this->m_presetPasswdConfirmPage;
-//    }
-//    this->m_presetPasswdConfirmPage=NULL;
+    if(NULL==this->m_presetPasswdConfirmPage)
+    {
+        return;
+    }
+    else
+    {
+        delete this->m_presetPasswdConfirmPage;
+    }
+    this->m_presetPasswdConfirmPage=NULL;
 }
 void pvmsMonitorWidget::setPresetSlot()
 {
 
-//    if(NULL==this->m_presetPasswdConfirmPage)
-//    {
-//        return;
-//    }
-//    else
-//    {
-//        delete this->m_presetPasswdConfirmPage;
-//    }
-//    this->m_presetPasswdConfirmPage=NULL;
-
+    if(NULL==this->m_presetPasswdConfirmPage)
+    {
+        return;
+    }
+    else
+    {
+        delete this->m_presetPasswdConfirmPage;
+    }
+    this->m_presetPasswdConfirmPage=NULL;
 
 }
 
@@ -1478,11 +1477,11 @@ void pvmsMonitorWidget::videoPollingSignalCtrl()
         emit fillLightSwitchButtonTextCtrlSignal(1);  //触发让补光灯开关按钮显示文本的信号
     }
 
-//    if (m_presetPasswdConfirmPage != NULL)    //摄像头切换了，如果弹出了预置点密码确认界面，则关闭，避免出现跨云台设置预置点的问题
-//    {
-//        delete m_presetPasswdConfirmPage;
-//        m_presetPasswdConfirmPage = NULL;
-//    }
+    if (m_presetPasswdConfirmPage != NULL)    //摄像头切换了，如果弹出了预置点密码确认界面，则关闭，避免出现跨云台设置预置点的问题
+    {
+        delete m_presetPasswdConfirmPage;
+        m_presetPasswdConfirmPage = NULL;
+    }
 
     if (this->isHidden() != 1)
     {
@@ -1516,11 +1515,11 @@ void pvmsMonitorWidget::setFullScreenSignalCtrl()
 
         m_channelStateLabel->setGeometry(452, 230, 130, 50);
         m_channelNoLabel->setGeometry(20, 690, 100, 50);
-//        if (m_presetPasswdConfirmPage != NULL)
-//        {
-//            m_presetPasswdConfirmPage->hide();
+        if (m_presetPasswdConfirmPage != NULL)
+        {
+            m_presetPasswdConfirmPage->hide();
 
-//        }
+        }
         emit hideAlarmWidgetSignal();
         m_iFullScreenFlag = 1;
     }
@@ -2097,16 +2096,12 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
                     m_channelStateLabel->setGeometry(452, 360, 130, 50);
                     m_channelNoLabel->setGeometry(20, 690, 100, 50);
                 }
-//                qDebug()<<"QWidget::eventFilter "<<m_iFullScreenFlag<<__LINE__;
-//                return QWidget::eventFilter(target, event);
                 emit showAlarmWidgetSignal();
             }
 
             else if ((target == m_playWin) && (0 == m_iFullScreenFlag) && (m_iAlarmNotCtrlFlag != 1) && (event->type()==QEvent::MouseButtonPress))
             {
-//                qDebug()<<"****************m_iFullScreenFlag"<<m_iFullScreenFlag<<__LINE__;
-
-//                if (event->type()==QEvent::MouseButtonPress && (m_iAlarmNotCtrlFlag != 1))   //双击全屏,但是如何有报警未处理也不全屏
+//                if (event->type()==QEvent::MouseButtonDblClick && (m_iAlarmNotCtrlFlag != 1))   //双击全屏,但是如何有报警未处理也不全屏
 //                {
 //                    if (0 == m_iFullScreenFlag)
 //                    {
@@ -2147,9 +2142,6 @@ bool pvmsMonitorWidget::eventFilter(QObject *target, QEvent *event)    //事件�
                             m_channelStateLabel->setGeometry(452, 360, 130, 50);
                             m_channelNoLabel->setGeometry(20, 690, 100, 50);
                         }
-                        //test code
-//                        qDebug()<<"QWidget::eventFilter "<<m_iFullScreenFlag<<__LINE__;
-//                        return QWidget::eventFilter(target, event);
 //                    }
 //                }
             }
@@ -2486,10 +2478,10 @@ void pvmsMonitorWidget::blackScreenCtrlSlot()     //黑屏触发信号处理，�
         {
             m_channelNoLabel->setGeometry(20, 690, 100, 50);
         }
-//        if (m_presetPasswdConfirmPage != NULL)
-//        {
-//            m_presetPasswdConfirmPage->show();
-//        }
+        if (m_presetPasswdConfirmPage != NULL)
+        {
+            m_presetPasswdConfirmPage->show();
+        }
 
         emit showAlarmWidgetSignal();
     }
@@ -2694,11 +2686,11 @@ pvmsMonitorWidget::~pvmsMonitorWidget()
         pthread_mutex_destroy(&tMutex);
     }
 
-//    if (m_presetPasswdConfirmPage != NULL)
-//    {
-//        delete m_presetPasswdConfirmPage;
-//        m_presetPasswdConfirmPage = NULL;
-//    }
+    if (m_presetPasswdConfirmPage != NULL)
+    {
+        delete m_presetPasswdConfirmPage;
+        m_presetPasswdConfirmPage = NULL;
+    }
     delete g_buttonGroup;
     g_buttonGroup = NULL;
 

@@ -17,6 +17,7 @@
 #include "types.h"
 #include "cmplayer.h"
 #include "vdec.h"
+#include <QCheckBox>
 
 int g_iDateEditNo = 0;      //要显示时间的不同控件的编号
 static int g_iRNum = 0;
@@ -97,8 +98,8 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
     ui->recordFileTableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);  //设置整行选中方式
     ui->recordFileTableWidget->setSelectionMode(QAbstractItemView::NoSelection); //设置只能选择一行，不能多行选中
 //    ui->recordFileTableWidget->setAlternatingRowColors(true);                        //设置隔一行变一颜色，即：一灰一白
-    ui->recordFileTableWidget->horizontalHeader()->resizeSection(0,46); //设置表头第一列的宽度为46
-    ui->recordFileTableWidget->horizontalHeader()->resizeSection(1,46);
+    ui->recordFileTableWidget->horizontalHeader()->resizeSection(0,40); //设置表头第一列的宽度为46
+    ui->recordFileTableWidget->horizontalHeader()->resizeSection(1,40);
     ui->recordFileTableWidget->horizontalHeader()->resizeSection(2,280);
 //    ui->recordFileTableWidget->resizeColumnToContents(2);
     ui->recordFileTableWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
@@ -150,24 +151,12 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
 
     cmplaybackInit();
 
-//    Mouseflag = true;
     ui->StartdateEdit->setCalendarPopup(true);
     ui->StartdateEdit->setDate(QDate::currentDate());
 
 
     ui->EnddateEdit->setCalendarPopup(true);
     ui->EnddateEdit->setDate(QDate::currentDate());
-
-//    ui->StartdateEdit->dumpObjectTree();
-//    QLineEdit* lEdit = ui->StartdateEdit->findChild<QLineEdit*>();
-//    if(lEdit)
-//        lEdit->setReadOnly(true);
-
-
-//    ui->EnddateEdit->dumpObjectTree();
-//    QLineEdit* lEdit2 = ui->EnddateEdit->findChild<QLineEdit*>();
-//    if(lEdit2)
-//        lEdit2->setReadOnly(true);
 
 
     int value = QTime::currentTime().hour();
@@ -197,7 +186,6 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
     connect(ui->carSeletionComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(carNoChangeSlot()));  //车厢选择下拉框当前索引改变信号响应
 
 
-
     connect(this, SIGNAL(setSliderValueSignal(int)), this, SLOT(setPlaySliderValueSlot(int)));
     connect(this, SIGNAL(downloadProcessBarDisplaySignal(int)), this, SLOT(downloadProcessBarDisplaySlot(int)));
     connect(this, SIGNAL(setDownloadProcessBarValueSignal(int)), this, SLOT(setDownloadProcessBarValueSlot(int)));
@@ -206,6 +194,7 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
     connect(this, SIGNAL(recordTableWidgetFillSignal()), this, SLOT(recordTableWidgetFillSlot()));
     connect(this, SIGNAL(setRangeLabelSignal()), this, SLOT(setRangeLabelSlot()));
     connect(this, SIGNAL(recordSeletPlay(QTableWidgetItem *)), this, SLOT(recordPlaySlot(QTableWidgetItem*)));
+
 
     g_recordPlayThis = this;
 
@@ -492,7 +481,6 @@ void recordPlayWidget::recordTableWidgetFillFunc()
     char acFilePath[MAX_RECFILE_PATH_LEN] = {0};
     int iParseIdex = 0;
     QString item = "";
-
     pcBufTmp = strstr(pcToken,".MP4");
     while (pcBufTmp != NULL)
     {
@@ -508,11 +496,20 @@ void recordPlayWidget::recordTableWidgetFillFunc()
 
         ui->recordFileTableWidget->insertRow(iParseIdex-1);//添加新的一行
 
-        QTableWidgetItem *checkBox = new QTableWidgetItem();
-        checkBox->setFlags(Qt::ItemIsSelectable | Qt::ItemIsUserCheckable | Qt::ItemIsEnabled );
-        checkBox->setTextAlignment(Qt::AlignVCenter);
-        checkBox->setCheckState(Qt::Unchecked);
-        ui->recordFileTableWidget->setItem(iParseIdex-1, 0, checkBox);
+        QWidget *checkWidget= new QWidget(this); //创建一个widget
+
+        QCheckBox *checkBox = new QCheckBox(checkWidget);
+        checkBox->setChecked(Qt::Unchecked);
+        QHBoxLayout *hLayout = new QHBoxLayout(); //创建布局
+        hLayout->addWidget(checkBox); //添加checkbox
+        hLayout->setMargin(0); //设置边缘距离 否则会很难看
+        hLayout->setAlignment(checkBox, Qt::AlignCenter); //居中
+        checkWidget->setLayout(hLayout); //设置widget的布局
+
+        checkBox->setStyleSheet(QString(".QCheckBox {margin:3px;border:3px;}QCheckBox::indicator {width: %1px; height: %1px; }").arg(30));
+        ui->recordFileTableWidget->setCellWidget(iParseIdex-1, 0, checkWidget);
+
+
 
         item = QString::number(iParseIdex);
         ui->recordFileTableWidget->setItem(iParseIdex-1, 1, new QTableWidgetItem(item));
@@ -740,10 +737,18 @@ void recordPlayWidget::recordDownloadSlot()
     {
         for (row = 0; row < ui->recordFileTableWidget->rowCount(); row++)    //先判断一次是否没有录像文件被选中，没有则弹框提示
         {
-            if (ui->recordFileTableWidget->item(row, 0)->checkState() == Qt::Checked)
+
+
+            if(QWidget *w = ui->recordFileTableWidget->cellWidget(row,0))
             {
-                break;
+                QCheckBox *checkBox = (QCheckBox*)(w->children().at(0));
+
+                if(checkBox->checkState() == Qt::Checked)
+                {
+                   break;
+                }
             }
+
         }
 
         if (row == ui->recordFileTableWidget->rowCount())
@@ -795,7 +800,6 @@ void recordPlayWidget::recordDownloadSlot()
 //        snprintf(acIpAddr, sizeof(acIpAddr), "rtsp://192.168.101.81");
         snprintf(acIpAddr, sizeof(acIpAddr), "127.0.0.1");
 
-
         m_tFtpHandle[idex] = FTP_CreateConnect(acIpAddr, FTP_SERVER_PORT, PftpProc);
 
         if (0 == m_tFtpHandle[idex])
@@ -806,27 +810,36 @@ void recordPlayWidget::recordDownloadSlot()
 
         for (row = 0; row < ui->recordFileTableWidget->rowCount(); row++)
         {
-            if (ui->recordFileTableWidget->item(row, 0)->checkState() == Qt::Checked)
+
+            if(QWidget *w = ui->recordFileTableWidget->cellWidget(row,0))
             {
-                if (parseFileName(m_acFilePath[row]) != NULL)
+                QCheckBox *checkBox = (QCheckBox*)(w->children().at(0));
+                if(checkBox->checkState() == Qt::Checked)
                 {
-                    snprintf(acSaveFileName, sizeof(acSaveFileName), "%s%s", "/media/usb0/", parseFileName(m_acFilePath[row]));
+                    if (parseFileName(m_acFilePath[row]) != NULL)
+                    {
+                        snprintf(acSaveFileName, sizeof(acSaveFileName), "%s%s", "/media/usb0/", parseFileName(m_acFilePath[row]));
+                    }
+    //                DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] add download file:%s!\n", __FUNCTION__, m_acFilePath[row]);
+                    iRet = FTP_AddDownLoadFile(m_tFtpHandle[idex], m_acFilePath[row], acSaveFileName);
+                    if (iRet < 0)
+                    {
+                        FTP_DestoryConnect(m_tFtpHandle[m_iFtpServerIdex]);
+                        m_tFtpHandle[m_iFtpServerIdex] = 0;
+    //                    DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not get USB device!\n");
+                        QMessageBox msgBox(QMessageBox::Warning,QString(tr("提示")),QString(tr("文件下载失败")));
+                        msgBox.setWindowFlags(Qt::FramelessWindowHint);
+                        msgBox.setStandardButtons(QMessageBox::Yes);
+                        msgBox.button(QMessageBox::Yes)->setText("OK");
+                        msgBox.exec();
+                        return;
+                    }
+
                 }
-//                DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] add download file:%s!\n", __FUNCTION__, m_acFilePath[row]);
-                iRet = FTP_AddDownLoadFile(m_tFtpHandle[idex], m_acFilePath[row], acSaveFileName);
-                if (iRet < 0)
-                {
-                    FTP_DestoryConnect(m_tFtpHandle[m_iFtpServerIdex]);
-                    m_tFtpHandle[m_iFtpServerIdex] = 0;
-//                    DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not get USB device!\n");
-                    QMessageBox msgBox(QMessageBox::Warning,QString(tr("提示")),QString(tr("文件下载失败")));
-                    msgBox.setWindowFlags(Qt::FramelessWindowHint);
-                    msgBox.setStandardButtons(QMessageBox::Yes);
-                    msgBox.button(QMessageBox::Yes)->setText("OK");
-                    msgBox.exec();
-                    return;
-                }
+
             }
+
+
         }
 
         iRet = FTP_FileDownLoad(m_tFtpHandle[idex]);
@@ -843,6 +856,7 @@ void recordPlayWidget::recordDownloadSlot()
             return;
         }
     }
+
 
 }
 
@@ -890,7 +904,7 @@ void recordPlayWidget::getTrainConfig()    	//获取车型配置文件，初始�
             for (j = 0; j < tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum; j++)
             {
                 item = "";
-                item = QString::number(8+j);
+                item = QString::number(1+j);
                 item += tr("摄像机");
                 ui->cameraSelectionComboBox->addItem(item);
 //                qDebug()<<"DEBUG_UI_NOMAL_PRINT tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum ="<<i<<"=:"<<tTrainConfigInfo.tNvrServerInfo[i].iPvmsCameraNum<<__FUNCTION__<<__LINE__<<endl;
@@ -1196,7 +1210,7 @@ void recordPlayWidget::carNoChangeSlot()   //车厢号切换信号响应槽函�
     for (i = 0; i < tTrainConfigInfo.tNvrServerInfo[idex].iPvmsCameraNum; i++)        //根据不同车厢位置的NVR服务器的摄像机数量个数跟新摄像机选择下拉框
     {
         item = "";
-        item = QString::number(8+i);
+        item = QString::number(1+i);
         item += tr("号摄像机");
         ui->cameraSelectionComboBox->addItem(item);
     }

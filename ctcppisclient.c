@@ -343,7 +343,7 @@ void *PisProcessThread(void *arg)
                         {
                             Msg_RecvPISInfoEx RecvPISInfoEx;
                             memcpy(&RecvPISInfoEx,pcRecvBuf + sizeof(TCP_HEADER), sizeof(Msg_RecvPISInfoEx));
-                            int leng = (sizeof(TCP_HEADER)+ sizeof(Msg_RecvPISInfoEx));
+//                            int leng = (sizeof(TCP_HEADER)+ sizeof(Msg_RecvPISInfoEx));
 //                            for(int i = 0; i<leng;i++)
 //                            {
 //                                printf("%02x",pcRecvBuf[i]);

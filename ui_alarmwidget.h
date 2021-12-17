@@ -58,7 +58,7 @@ public:
         label_2->setFont(font);
         label_2->setStyleSheet(QString::fromUtf8("background-color: rgb(88, 124, 224);\n"
 "color: rgb(255, 255, 255);"));
-        label_2->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+        label_2->setAlignment(Qt::AlignCenter);
         tableWidget = new QTableWidget(frame);
         if (tableWidget->columnCount() < 3)
             tableWidget->setColumnCount(3);
@@ -118,7 +118,7 @@ public:
         QTableWidgetItem *___qtablewidgetitem2 = tableWidget->horizontalHeaderItem(2);
         ___qtablewidgetitem2->setText(QCoreApplication::translate("alarmWidget", "\346\212\245\350\255\246\350\257\246\346\203\205", nullptr));
         clearPushButton->setText(QCoreApplication::translate("alarmWidget", "\346\270\205\351\231\244", nullptr));
-        closeRPushButton->setText(QCoreApplication::translate("alarmWidget", "\345\205\263\351\227\255", nullptr));
+        closeRPushButton->setText(QCoreApplication::translate("alarmWidget", "\350\277\224\345\233\236", nullptr));
     } // retranslateUi
 
 };

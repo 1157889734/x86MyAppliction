@@ -61,7 +61,7 @@
   <widget class="QPushButton" name="playNextOnePushButton">
    <property name="geometry">
     <rect>
-     <x>660</x>
+     <x>640</x>
      <y>565</y>
      <width>51</width>
      <height>51</height>
@@ -96,7 +96,7 @@ border-width: 2px;border-style: solid;}</string>
   <widget class="QPushButton" name="stopPushButton">
    <property name="geometry">
     <rect>
-     <x>530</x>
+     <x>520</x>
      <y>565</y>
      <width>51</width>
      <height>51</height>
@@ -159,7 +159,7 @@ border-width: 2px;border-style: solid;}
   <widget class="QPushButton" name="alarmPushButton">
    <property name="geometry">
     <rect>
-     <x>715</x>
+     <x>700</x>
      <y>575</y>
      <width>82</width>
      <height>36</height>
@@ -326,7 +326,7 @@ border-width: 1px;border-style: solid;</string>
   <widget class="QPushButton" name="playLastOnePushButton">
    <property name="geometry">
     <rect>
-     <x>270</x>
+     <x>280</x>
      <y>565</y>
      <width>51</width>
      <height>51</height>
@@ -594,7 +594,7 @@ border-width: 2px;border-style: solid;}
   <widget class="QPushButton" name="fastForwardPushButton">
    <property name="geometry">
     <rect>
-     <x>590</x>
+     <x>580</x>
      <y>565</y>
      <width>51</width>
      <height>51</height>
@@ -657,7 +657,7 @@ border-width: 2px;border-style: solid;}
   <widget class="QPushButton" name="slowForwardPushButton">
    <property name="geometry">
     <rect>
-     <x>330</x>
+     <x>340</x>
      <y>565</y>
      <width>51</width>
      <height>51</height>
@@ -780,7 +780,7 @@ QPushButton:pressed
     <bool>false</bool>
    </property>
    <property name="displayFormat">
-    <string>yyyy/M/dd </string>
+    <string>yyyy/MM/dd </string>
    </property>
    <property name="calendarPopup">
     <bool>false</bool>
@@ -860,10 +860,10 @@ QPushButton:pressed
   <widget class="QPushButton" name="canselPushButton">
    <property name="geometry">
     <rect>
-     <x>800</x>
+     <x>790</x>
      <y>575</y>
-     <width>82</width>
-     <height>36</height>
+     <width>84</width>
+     <height>38</height>
     </rect>
    </property>
    <property name="font">
@@ -874,6 +874,7 @@ QPushButton:pressed
    <property name="styleSheet">
     <string notr="true">QPushButton{
 background-image: url(:/monres/cancel.bmp);
+background-repeat: no-repeat;
 border-color: rgb(255, 255, 255);
 border-width: 1px;
 border-style: solid;}
