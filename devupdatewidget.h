@@ -13,6 +13,7 @@
 
 #include "usergroupmanage.h"
 #include "ckeyboard.h"
+#include "qmessagedialog.h"
 
 
 
@@ -53,6 +54,7 @@ public slots:
     void closeUserManageWidget();
 
     void setCameraImageParamSlot();
+    void carNoChangeSlot();
 
     void setTrainType();
 
@@ -83,6 +85,7 @@ private:
     QString m_saturationText;
     QString m_contrastText;
     usergroupManage *gusergroupManage;
+    MsgBox *box;
 
 
 };

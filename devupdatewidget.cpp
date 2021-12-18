@@ -100,6 +100,15 @@ devUpdateWidget::devUpdateWidget(QWidget *parent) :
     g_buttonGroup2->addButton(ui->presetReturnTimeSetRadioButton_4,4);
 
 
+    box = new MsgBox(this);
+    box->setWindowModality(Qt::ApplicationModal);
+    box->setStyleSheet("background-color: rgb(51, 153, 223);");
+    box->move(350,300);
+    box->hide();
+
+
+
+
     connect(ui->canselPushButton, SIGNAL(clicked()), this, SLOT(registOutButtonClick()));
 
     connect(g_buttonGroup1, SIGNAL(buttonClicked(int)), this, SLOT(pollingTimeChange(int)));     //单选按钮组按键信号连接响应槽函数
@@ -110,6 +119,9 @@ devUpdateWidget::devUpdateWidget(QWidget *parent) :
 
     connect(ui->timeAdjustPushButton,SIGNAL(clicked(bool)),this,SLOT(systimeSlot()));
     connect(ui->imageParamSetPushButton, SIGNAL(clicked(bool)), this, SLOT(setCameraImageParamSlot()));     //图像参数设置
+
+    connect(ui->carriageSelectionComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(carNoChangeSlot()));  //车厢选择下拉框当前索引改变信号响应
+
 
     ui->pollingTimeSetLineEdit->setValidator(new QIntValidator(1,24*3600,this));   //只能输入1-24*3600的整数，不能输入字母或其他数字
     ui->presetReturnTimeSetLineEdit->setValidator(new QIntValidator(1,24*60,this));
@@ -155,6 +167,10 @@ devUpdateWidget::~devUpdateWidget()
 
     delete m_sys_timer;
     m_sys_timer = NULL;
+
+    delete  box;
+    box = NULL;
+
     delete ui;
 }
 
@@ -358,11 +374,14 @@ void devUpdateWidget::systimeSlot()
     if (!strcmp(acUserType, "operator"))	 //操作员无权校时
     {
 //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget this user type has no right to set system time!\n");
-        QMessageBox box(QMessageBox::Warning,tr("提示"),tr("无权限设置!"));	  //新建消息提示框，提示错误信息
-        box.setWindowFlags(Qt::FramelessWindowHint);
-        box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
-        box.setButtonText (QMessageBox::Ok,tr("OK")); 	//将按钮显示改成"确 定"
-        box.exec();
+//        QMessageBox box(QMessageBox::Warning,tr("提示"),tr("无权限设置!"));	  //新建消息提示框，提示错误信息
+//        box.setWindowFlags(Qt::FramelessWindowHint);
+//        box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
+//        box.setButtonText (QMessageBox::Ok,tr("OK")); 	//将按钮显示改成"确 定"
+//        box.exec();
+        box->setInfo(QString("提示："),QString("无权限设置"),true);
+        box->show();
+
         ui->timeAdjustPushButton->setEnabled(true);
 
     }
@@ -378,10 +397,10 @@ void devUpdateWidget::systimeSlot()
             sscanf(ui->timeEdit->text().toLatin1().data(), "%2d:%02d:%02d", &hour, &minute, &second);
         }
 
-        snprintf(acTimeStr, sizeof(acTimeStr), "date %02d%02d%02d%02d%4d.%02d", month, day, hour, second,year, minute);
-        system(acTimeStr);
-        system("hwclock -w");
-        qDebug()<<"*******systimeSlot***"<<acTimeStr<<__LINE__<<"hour="<<hour<<"minute="<<minute<<"second="<<second;
+//        snprintf(acTimeStr, sizeof(acTimeStr), "date %02d%02d%02d%02d%4d.%02d", month, day, hour, second,year, minute);
+//        system(acTimeStr);
+//        system("hwclock -w");
+//        qDebug()<<"*******systimeSlot***"<<acTimeStr<<__LINE__<<"hour="<<hour<<"minute="<<minute<<"second="<<second;
         /*系统校时记录日志*/
         memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
         tLogInfo.iLogType = 0;
@@ -419,11 +438,14 @@ void devUpdateWidget::systimeSlot()
                     snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "notify server %d Time Check OK, %4d-%02d-%02d %02d:%02d:%02d!", 100+tTrainConfigInfo.tNvrServerInfo[i].iCarriageNO, year, month, day, hour, minute, second);
                     LOG_WriteLog(&tLogInfo);
 
-                    QMessageBox box(QMessageBox::Information,QString::fromUtf8("注意"),QString::fromUtf8("校时成功!"));
-                    box.setWindowFlags(Qt::FramelessWindowHint);
-                    box.setStandardButtons (QMessageBox::Ok);
-                    box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
-                    box.exec();
+                    box->setInfo(QString("提示："),QString("校时成功"),true);
+                    box->show();
+
+//                    QMessageBox box(QMessageBox::Information,QString::fromUtf8("注意"),QString::fromUtf8("校时成功!"));
+//                    box.setWindowFlags(Qt::FramelessWindowHint);
+//                    box.setStandardButtons (QMessageBox::Ok);
+//                    box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
+//                    box.exec();
                 }
             }
         }
@@ -570,27 +592,36 @@ void devUpdateWidget::setTrainType()
     if (!strcmp(acUserType, "operator"))   //操作员不能设置车型
     {
 //        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget this user type has no right to set train type!\n");
-        QMessageBox box(QMessageBox::Warning,QString::fromUtf8("提示"),QString::fromUtf8("无权限设置!"));     //新建消息提示框，提示错误信息
-        box.setWindowFlags(Qt::FramelessWindowHint);
-        box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
-        box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));     //将按钮显示改成"确 定"
-        box.exec();
+//        QMessageBox box(QMessageBox::Warning,QString::fromUtf8("提示"),QString::fromUtf8("无权限设置!"));     //新建消息提示框，提示错误信息
+//        box.setWindowFlags(Qt::FramelessWindowHint);
+//        box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
+//        box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));     //将按钮显示改成"确 定"
+//        box.exec();
+        box->setInfo(QString("提示："),QString("无权限设置"),false);
+        box->show();
     }
     else
     {
         if (m_TrainType != ui->trainTypeSetComboBox->currentText())   //只有当车型选择被改变才进行设置
         {
 //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget set train type will reboot client, confirm?\n");
-            QMessageBox msgBox(QMessageBox::Question,QString(tr("提示")),QString(tr("将重启使车型设置生效，是否继续？")));
-            msgBox.setWindowFlags(Qt::FramelessWindowHint);
-            msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-            msgBox.button(QMessageBox::Yes)->setText("Yes");
-            msgBox.button(QMessageBox::No)->setText("NO");
-            iRet=msgBox.exec();
-            if(iRet != QMessageBox::Yes)
+//            QMessageBox msgBox(QMessageBox::Question,QString(tr("提示")),QString(tr("将重启使车型设置生效，是否继续？")));
+//            msgBox.setWindowFlags(Qt::FramelessWindowHint);
+//            msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+//            msgBox.button(QMessageBox::Yes)->setText("Yes");
+//            msgBox.button(QMessageBox::No)->setText("NO");
+//            iRet=msgBox.exec();
+//            if(iRet != QMessageBox::Yes)
+//            {
+//                return;
+//            }
+            box->setInfo(QString("提示："),QString("将重启使车型设置生效，是否继续？"),false);
+            box->show();
+            if(box->getStatus() == 0)
             {
                 return;
             }
+
             snprintf(acTrainType, sizeof(acTrainType), "%s", ui->trainTypeSetComboBox->currentText().toLatin1().data());
             STATE_SetCurrentTrainType(acTrainType);
 //            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] set currernt traintype to %s\n", __FUNCTION__, acTrainType);
@@ -600,17 +631,37 @@ void devUpdateWidget::setTrainType()
             snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "change traintype to %s and monitor Client reboot!", acTrainType);
             LOG_WriteLog(&tLogInfo);
 
-//            QApplication *app;
-//            app->exit();
-            QString program = QApplication::applicationFilePath();
-            QStringList arguments = QApplication::arguments();
-            QString workingDirectory = QDir::currentPath();
+            system("reboot");
+            system("sync");
 
-            QProcess::startDetached(program, arguments, workingDirectory);
-            QApplication::exit();
         }
     }
 }
+
+
+void devUpdateWidget::carNoChangeSlot()   //车厢号切换信号响应槽函数
+{
+    int i = 0, idex = ui->carriageSelectionComboBox->currentIndex();    //获取当前车厢选择下拉框的索引
+    QString item = "";
+    T_TRAIN_CONFIG tTrainConfigInfo;
+//    DebugPrint(DEBUG_UI_OPTION_PRINT, "recordPlayWidget change server carriage No!\n");
+
+    memset(&tTrainConfigInfo, 0, sizeof(T_TRAIN_CONFIG));
+    STATE_GetCurrentTrainConfigInfo(&tTrainConfigInfo);
+    ui->cameraSelectionComboBox->setCurrentIndex(-1);
+    ui->cameraSelectionComboBox->clear();
+
+    qDebug()<<"*****---carNoChangeSlot--=:"<<idex<<tTrainConfigInfo.tNvrServerInfo[idex].iPvmsCameraNum<<__FUNCTION__<<__LINE__<<endl;
+    for (i = 0; i < tTrainConfigInfo.tNvrServerInfo[idex].iPvmsCameraNum; i++)        //根据不同车厢位置的NVR服务器的摄像机数量个数跟新摄像机选择下拉框
+    {
+        item = "";
+        item = QString::number(1+i);
+        item += tr("号摄像机");
+        ui->cameraSelectionComboBox->addItem(item);
+    }
+
+}
+
 
 void devUpdateWidget::setCameraImageParamSlot()
 {
@@ -622,11 +673,14 @@ void devUpdateWidget::setCameraImageParamSlot()
     if (!strcmp(acUserType, "operator"))	 //操作员无权校时
     {
 //        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget this user type has no right to set CameraImage Param!\n");
-        QMessageBox box(QMessageBox::Warning,tr("提示"),tr("无权限设置!"));	  //新建消息提示框，提示错误信息
-        box.setWindowFlags(Qt::FramelessWindowHint);
-        box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
-        box.setButtonText (QMessageBox::Ok,tr("OK")); 	//将按钮显示改成"确 定"
-        box.exec();
+//        QMessageBox box(QMessageBox::Warning,tr("提示"),tr("无权限设置!"));	  //新建消息提示框，提示错误信息
+//        box.setWindowFlags(Qt::FramelessWindowHint);
+//        box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
+//        box.setButtonText (QMessageBox::Ok,tr("OK")); 	//将按钮显示改成"确 定"
+//        box.exec();
+        box->setInfo(QString("提示："),QString("无权限设置！"),true);
+        box->show();
+
     }
     else
     {
@@ -638,11 +692,16 @@ void devUpdateWidget::setCameraImageParamSlot()
 
         if(ui->brightnessLineEdit->text().toInt() > 255 || ui->saturationLineEdit->text().toInt() > 255 || ui->contrastLineEdit->text().toInt() > 255)
         {
-            QMessageBox box(QMessageBox::Warning,tr("提示"),tr("输入数字不能超过255!"));	  //新建消息提示框，提示错误信息
-            box.setWindowFlags(Qt::FramelessWindowHint);
-            box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
-            box.setButtonText (QMessageBox::Ok,tr("OK")); 	//将按钮显示改成"确 定"
-            box.exec();
+
+            box->setInfo(QString("提示："),QString("参数输入不能超过255！"),true);
+            box->show();
+
+//            QMessageBox box(QMessageBox::Warning,tr("提示"),tr("输入数字不能超过255!"));	  //新建消息提示框，提示错误信息
+//            box.setWindowFlags(Qt::FramelessWindowHint);
+//            box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
+//            box.setButtonText (QMessageBox::Ok,tr("OK")); 	//将按钮显示改成"确 定"
+//            box.exec();
+
             return;
 
         }
@@ -659,11 +718,17 @@ void devUpdateWidget::setCameraImageParamSlot()
         {
 //            DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_SET_PIC_ATTRIBUTE error!iRet=%d,server=%d\n", __FUNCTION__, iRet, idex+1);
         }
-        QMessageBox box(QMessageBox::Information,tr("提示"),tr("设置成功!"));	  //新建消息提示框，提示错误信息
-        box.setWindowFlags(Qt::FramelessWindowHint);
-        box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
-        box.setButtonText (QMessageBox::Ok,tr("OK")); 	//将按钮显示改成"确 定"
-        box.exec();
+
+
+        box->setInfo(QString("提示："),QString("设置成功"),true);
+        box->show();
+
+
+//        QMessageBox  box(QMessageBox::Information,tr("提示"),tr("设置成功!"));	  //新建消息提示框，提示错误信息
+//        box.setWindowFlags(Qt::FramelessWindowHint);
+//        box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
+//        box.setButtonText (QMessageBox::Ok,tr("OK")); 	//将按钮显示改成"确 定"
+//        box.exec();
 
     }
 
@@ -715,23 +780,28 @@ void devUpdateWidget::configFileSelectionSlot()
         if (!strcmp(acUserType, "operator"))	 //操作员无权校时
         {
 //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget this user type has no right to select config file!\n");
-            QMessageBox box(QMessageBox::Warning,tr("提示"),tr("无权限设置!"));	  //新建消息提示框，提示错误信息
-            box.setWindowFlags(Qt::FramelessWindowHint);
-            box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
-            box.setButtonText (QMessageBox::Ok,tr("OK")); 	//将按钮显示改成"确 定"
-            box.exec();
+//            QMessageBox box(QMessageBox::Warning,tr("提示"),tr("无权限设置!"));	  //新建消息提示框，提示错误信息
+//            box.setWindowFlags(Qt::FramelessWindowHint);
+//            box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
+//            box.setButtonText (QMessageBox::Ok,tr("OK")); 	//将按钮显示改成"确 定"
+//            box.exec();
+            box->setInfo(QString("提示："),QString("无权限设置!"),true);
+            box->show();
+
         }
         else
         {
             if (access("/media/usb0/", F_OK) < 0)
             {
 //                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget::%s %d not get USB device!\n",__FUNCTION__,__LINE__);
-                QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
-                msgBox.setWindowFlags(Qt::FramelessWindowHint);
-                msgBox.setStandardButtons(QMessageBox::Yes);
-                msgBox.button(QMessageBox::Yes)->setText("OK");
-                msgBox.exec();
-                ui->clientRebootPushButton->setEnabled(true);
+//                QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
+//                msgBox.setWindowFlags(Qt::FramelessWindowHint);
+//                msgBox.setStandardButtons(QMessageBox::Yes);
+//                msgBox.button(QMessageBox::Yes)->setText("OK");
+//                msgBox.exec();
+                box->setInfo(QString("提示："),QString("未检测到U盘,请插入!"),true);
+                box->show();
+
                 return;
             }
             else
@@ -739,12 +809,15 @@ void devUpdateWidget::configFileSelectionSlot()
                 if (0 == STATE_FindUsbDev())   //这里处理一个特殊情况:U盘拔掉时umount失败，/mnt/usb/u/路径还存在，但是实际U盘是没有再插上的
                 {
 //                    DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget::%s %d not get USB device!\n",__FUNCTION__,__LINE__);
-                    QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
-                    msgBox.setWindowFlags(Qt::FramelessWindowHint);
-                    msgBox.setStandardButtons(QMessageBox::Yes);
-                    msgBox.button(QMessageBox::Yes)->setText("OK");
-                    msgBox.exec();
-                    ui->clientRebootPushButton->setEnabled(true);
+                    box->setInfo(QString("提示："),QString("未检测到U盘,请插入!"),true);
+                    box->show();
+
+//                    QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
+//                    msgBox.setWindowFlags(Qt::FramelessWindowHint);
+//                    msgBox.setStandardButtons(QMessageBox::Yes);
+//                    msgBox.button(QMessageBox::Yes)->setText("OK");
+//                    msgBox.exec();
+
                     return;
                 }
             }
@@ -754,7 +827,10 @@ void devUpdateWidget::configFileSelectionSlot()
             dialog->setAttribute(Qt::WA_DeleteOnClose);
             dialog->setWindowFlag(Qt::FramelessWindowHint);
             dialog->setFixedSize(800,600);
+            dialog->setDirectory("/media/usb0/");
+            dialog->setFilter(QDir::Files);
             dialog->show();
+
 
             QDir file = dialog->directory();
             QDir *dir = NULL;
@@ -798,25 +874,29 @@ void devUpdateWidget::devUpdateSlot()
     if (!strcmp(acUserType, "operator"))	 //操作员无权校时
     {
 //        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget this user type has no right to update device!\n");
-        QMessageBox box(QMessageBox::Warning,tr("提示"),tr("无权限设置!"));   //新建消息提示框，提示错误信息
-        box.setWindowFlags(Qt::FramelessWindowHint);
-        box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
-        box.setButtonText (QMessageBox::Ok,tr("OK")); 	//将按钮显示改成"确 定"
-        box.exec();
+//        QMessageBox box(QMessageBox::Warning,tr("提示"),tr("无权限设置!"));   //新建消息提示框，提示错误信息
+//        box.setWindowFlags(Qt::FramelessWindowHint);
+//        box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
+//        box.setButtonText (QMessageBox::Ok,tr("OK")); 	//将按钮显示改成"确 定"
+//        box.exec();
+        box->setInfo(QString("提示："),QString("无权限设置!"),true);
+        box->show();
     }
     else
     {
         ui->updateStatueTextEdit->clear();
-        ui->clientRebootPushButton->setEnabled(false);    //更新开始，设置重启按钮不可操作
+
 
         if (access("/media/usb0/", F_OK) < 0)
         {
 //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget::%s %d not get USB device!\n",__FUNCTION__,__LINE__);
-            QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
-            msgBox.setWindowFlags(Qt::FramelessWindowHint);
-            msgBox.setStandardButtons(QMessageBox::Yes);
-            msgBox.button(QMessageBox::Yes)->setText("OK");
-            msgBox.exec();
+//            QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
+//            msgBox.setWindowFlags(Qt::FramelessWindowHint);
+//            msgBox.setStandardButtons(QMessageBox::Yes);
+//            msgBox.button(QMessageBox::Yes)->setText("OK");
+//            msgBox.exec();
+            box->setInfo(QString("提示："),QString("未检测到U盘,请插入!"),true);
+            box->show();
             ui->clientRebootPushButton->setEnabled(true);
             return;
         }
@@ -825,11 +905,13 @@ void devUpdateWidget::devUpdateSlot()
             if (0 == STATE_FindUsbDev())   //这里处理一个特殊情况:U盘拔掉时umount失败，/mnt/usb/u/路径还存在，但是实际U盘是没有再插上的
             {
 //                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget::%s %d not get USB device!\n",__FUNCTION__,__LINE__);
-                QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
-                msgBox.setWindowFlags(Qt::FramelessWindowHint);
-                msgBox.setStandardButtons(QMessageBox::Yes);
-                msgBox.button(QMessageBox::Yes)->setText("OK");
-                msgBox.exec();
+                box->setInfo(QString("提示："),QString("未检测到U盘,请插入!"),true);
+                box->show();
+//                QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
+//                msgBox.setWindowFlags(Qt::FramelessWindowHint);
+//                msgBox.setStandardButtons(QMessageBox::Yes);
+//                msgBox.button(QMessageBox::Yes)->setText("OK");
+//                msgBox.exec();
                 ui->clientRebootPushButton->setEnabled(true);
                 return;
             }
@@ -840,14 +922,18 @@ void devUpdateWidget::devUpdateSlot()
         if (access("/media/usb0/monitor_ytj", F_OK) < 0)
         {
 //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget not find update file in USB device!\n");
-            QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("U盘中未检测更新文件!")));
-            msgBox.setWindowFlags(Qt::FramelessWindowHint);
-            msgBox.setStandardButtons(QMessageBox::Yes);
-            msgBox.button(QMessageBox::Yes)->setText("OK");
-            msgBox.exec();
+            box->setInfo(QString("提示："),QString("U盘中未检测更新文件!"),true);
+            box->show();
+//            QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("U盘中未检测更新文件!")));
+//            msgBox.setWindowFlags(Qt::FramelessWindowHint);
+//            msgBox.setStandardButtons(QMessageBox::Yes);
+//            msgBox.button(QMessageBox::Yes)->setText("OK");
+//            msgBox.exec();
             ui->clientRebootPushButton->setEnabled(true);
             return;
         }
+
+        ui->clientRebootPushButton->setEnabled(false);    //更新开始，设置重启按钮不可操作
 
         ui->updateStatueTextEdit->append(tr("正在复制文件..."));
         if (access("/home/data/backup",F_OK) < 0)
@@ -875,11 +961,13 @@ void devUpdateWidget::devRebootSlot()
     if (!strcmp(acUserType, "operator"))
     {
 //        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget this user type has no right to reboot client!\n");
-        QMessageBox box(QMessageBox::Warning,tr("提示"),tr("无权限设置!"));	  //新建消息提示框，提示错误信息
-        box.setWindowFlags(Qt::FramelessWindowHint);
-        box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
-        box.setButtonText (QMessageBox::Ok,tr("OK")); 	//将按钮显示改成"确 定"
-        box.exec();
+//        QMessageBox box(QMessageBox::Warning,tr("提示"),tr("无权限设置!"));	  //新建消息提示框，提示错误信息
+//        box.setWindowFlags(Qt::FramelessWindowHint);
+//        box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
+//        box.setButtonText (QMessageBox::Ok,tr("OK")); 	//将按钮显示改成"确 定"
+//        box.exec();
+        box->setInfo(QString("提示："),QString("无权限设置!"),true);
+        box->show();
     }
     else
     {
@@ -888,18 +976,8 @@ void devUpdateWidget::devRebootSlot()
         snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "monitor Client reboot!");
         LOG_WriteLog(&tLogInfo);
 
-
-        QString program = QApplication::applicationFilePath();
-        QStringList arguments = QApplication::arguments();
-        QString workingDirectory = QDir::currentPath();
-        if("/home/user/bin/monitor_ytj" != program)
-        {
-            system("cp /home/data/backup/monitor_ytj /home/user/bin/ ");
-            program = "/home/user/bin/monitor_ytj";
-        }
-
-        QProcess::startDetached(program, arguments, workingDirectory);
-        QApplication::exit();
+        system("reboot");
+        system("sync");
 
     }
 
@@ -1024,22 +1102,26 @@ void devUpdateWidget::configFileImportSlot()
     if (!strcmp(acUserType, "operator"))	 //操作员无权校时
     {
 //        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget this user type has no right to import config file!\n");
-        QMessageBox box(QMessageBox::Warning,tr("提示"),tr("无权限设置!"));	  //新建消息提示框，提示错误信息
-        box.setWindowFlags(Qt::FramelessWindowHint);
-        box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
-        box.setButtonText (QMessageBox::Ok,tr("OK")); 	//将按钮显示改成"确 定"
-        box.exec();
+//        QMessageBox box(QMessageBox::Warning,tr("提示"),tr("无权限设置!"));	  //新建消息提示框，提示错误信息
+//        box.setWindowFlags(Qt::FramelessWindowHint);
+//        box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
+//        box.setButtonText (QMessageBox::Ok,tr("OK")); 	//将按钮显示改成"确 定"
+//        box.exec();
+        box->setInfo(QString("提示："),QString("无权限设置!"),true);
+        box->show();
     }
     else
     {
         if (0 == strlen(ui->configFileDisplayLineEdit->text().toLatin1().data()))
         {
 //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget not select any config file!\n");
-            QMessageBox msgBox(QMessageBox::Question,QString(tr("注意")),QString(tr("请选择配置文件")));
-            msgBox.setWindowFlags(Qt::FramelessWindowHint);
-            msgBox.setStandardButtons(QMessageBox::Yes);
-            msgBox.button(QMessageBox::Yes)->setText("OK");
-            msgBox.exec();
+            box->setInfo(QString("提示："),QString("请选择配置文件!"),true);
+            box->show();
+//            QMessageBox msgBox(QMessageBox::Question,QString(tr("注意")),QString(tr("请选择配置文件")));
+//            msgBox.setWindowFlags(Qt::FramelessWindowHint);
+//            msgBox.setStandardButtons(QMessageBox::Yes);
+//            msgBox.button(QMessageBox::Yes)->setText("OK");
+//            msgBox.exec();
             return;
         }
 
@@ -1052,22 +1134,13 @@ void devUpdateWidget::configFileImportSlot()
         if (strncmp(pcfileName, "Station.ini", strlen(pcfileName)) != 0)
         {
 //            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget select error config file!\n");
-            QMessageBox msgBox(QMessageBox::Question,QString(tr("注意")),QString(tr("配置文件选择错误")));
-            msgBox.setWindowFlags(Qt::FramelessWindowHint);
-            msgBox.setStandardButtons(QMessageBox::Yes);
-            msgBox.button(QMessageBox::Yes)->setText("OK");
-            msgBox.exec();
-            return;
-        }
-
-        QMessageBox msgBox(QMessageBox::Question,QString(tr("提示")),QString(tr("确认导入配置文件？")));
-        msgBox.setWindowFlags(Qt::FramelessWindowHint);
-        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-        msgBox.button(QMessageBox::Yes)->setText("Yes");
-        msgBox.button(QMessageBox::No)->setText("No");
-        iRet=msgBox.exec();
-        if(iRet != QMessageBox::Yes)
-        {
+            box->setInfo(QString("提示："),QString("配置文件选择错误!"),true);
+            box->show();
+//            QMessageBox msgBox(QMessageBox::Question,QString(tr("注意")),QString(tr("配置文件选择错误")));
+//            msgBox.setWindowFlags(Qt::FramelessWindowHint);
+//            msgBox.setStandardButtons(QMessageBox::Yes);
+//            msgBox.button(QMessageBox::Yes)->setText("OK");
+//            msgBox.exec();
             return;
         }
 
@@ -1075,11 +1148,16 @@ void devUpdateWidget::configFileImportSlot()
 
         system("sync");
 
-        QMessageBox msgBox2(QMessageBox::Information,QString(tr("注意")),QString(tr("导入成功，请拔出U盘!")));
-        msgBox2.setWindowFlags(Qt::FramelessWindowHint);
-        msgBox2.setStandardButtons(QMessageBox::Yes);
-        msgBox2.button(QMessageBox::Yes)->setText("OK");
-        msgBox2.exec();
+        box->setInfo(QString("提示："),QString("导入成功，请拔出U盘!"),true);
+        box->show();
+
+//        QMessageBox msgBox2(QMessageBox::Information,QString(tr("注意")),QString(tr("导入成功，请拔出U盘!")));
+//        msgBox2.setWindowFlags(Qt::FramelessWindowHint);
+//        msgBox2.setStandardButtons(QMessageBox::Yes);
+//        msgBox2.button(QMessageBox::Yes)->setText("OK");
+//        msgBox2.exec();
+
+
         return;
     }
 

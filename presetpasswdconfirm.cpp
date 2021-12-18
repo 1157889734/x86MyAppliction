@@ -18,6 +18,12 @@ presetPasswdConfirm::presetPasswdConfirm(QWidget *parent) :
     mCkeybord->setGeometry(50,500,924,200);
     mCkeybord->hide();
 
+    box = new MsgBox(this);
+    box->setWindowModality(Qt::ApplicationModal);
+    box->setStyleSheet("background-color: rgb(51, 153, 223);");
+    box->move(350,300);
+    box->hide();
+
 
     ui->passwordLineEdit->installEventFilter(this);
     ui->closePushButton->setFocusPolicy(Qt::NoFocus);
@@ -36,6 +42,9 @@ presetPasswdConfirm::~presetPasswdConfirm()
 {
     delete mCkeybord;
     mCkeybord =NULL;
+
+    delete box;
+    box = NULL;
 
     delete ui;
 }
@@ -56,11 +65,13 @@ void presetPasswdConfirm::pushButtonClickSlot()
         }
         else
         {
-            QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("密码错误!"));     //新建消息提示框，提示错误信息
-            box.setWindowFlags(Qt::FramelessWindowHint);
-            box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
-            box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));     //将按钮显示改成"确 定"
-            box.exec();
+//            QMessageBox box(QMessageBox::Warning,QString::fromUtf8("错误"),QString::fromUtf8("密码错误!"));     //新建消息提示框，提示错误信息
+//            box.setWindowFlags(Qt::FramelessWindowHint);
+//            box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
+//            box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));     //将按钮显示改成"确 定"
+//            box.exec();
+            box->setInfo(QString("提示："),QString("密码错误!"),true);
+            box->show();
         }
     }
 

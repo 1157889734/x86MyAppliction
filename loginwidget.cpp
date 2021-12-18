@@ -17,6 +17,14 @@ loginWidget::loginWidget(QWidget *parent) :
     this->setGeometry(0,0,1024,768);
     this->showFullScreen();
 
+
+    box = new MsgBox(this);
+    box->setWindowModality(Qt::ApplicationModal);
+    box->setStyleSheet("background-color: rgb(51, 153, 223);");
+    box->move(350,300);
+    box->hide();
+
+
     ui->username_Edit->installEventFilter(this);
     ui->Passwd_Edit->installEventFilter(this);
     QPalette palette;
@@ -40,6 +48,7 @@ loginWidget::loginWidget(QWidget *parent) :
     ui->username_Edit->setFont(QFont("宋体",20));
     ui->username_Edit->setAlignment(Qt::AlignCenter);
     ui->Passwd_Edit->setEchoMode(QLineEdit::Password);
+    ui->Passwd_Edit->setFocus();
 
 }
 
@@ -47,6 +56,10 @@ loginWidget::~loginWidget()
 {
     delete  mCkeybord;
     mCkeybord = NULL;
+
+    delete box;
+    box = NULL;
+
     delete ui;
 }
 bool loginWidget::eventFilter(QObject *obj, QEvent *e)
@@ -178,11 +191,13 @@ void loginWidget::okButtonSlot()
             else
             {
 //                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "loginWidget username or passwd input not match!\n");
-                QMessageBox box(QMessageBox::Warning,tr("信息有误"),tr("用户名或密码错误!"));     //新建消息提示框，提示错误信息
-                box.setWindowFlags(Qt::FramelessWindowHint);
-                box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
-                box.setButtonText (QMessageBox::Ok,tr("OK"));     //将按钮显示改成"确 定"
-                box.exec();
+                box->setInfo(QString("提示："),QString("用户名或密码错误!"),true);
+                box->show();
+//                QMessageBox box(QMessageBox::Warning,tr("信息有误"),tr("用户名或密码错误!"));     //新建消息提示框，提示错误信息
+//                box.setWindowFlags(Qt::FramelessWindowHint);
+//                box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
+//                box.setButtonText (QMessageBox::Ok,tr("OK"));     //将按钮显示改成"确 定"
+//                box.exec();
 
 
             }
@@ -192,11 +207,13 @@ void loginWidget::okButtonSlot()
             if (ui->Passwd_Edit->text() != pwd)
             {
 //                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "loginWidget username or passwd input not match!\n");
-                QMessageBox box(QMessageBox::Warning,tr("信息有误"),tr("用户名或密码错误!"));     //新建消息提示框，提示错误信息
-                box.setWindowFlags(Qt::FramelessWindowHint);
-                box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
-                box.setButtonText (QMessageBox::Ok,tr("OK"));     //将按钮显示改成"确 定"
-                box.exec();
+                box->setInfo(QString("提示："),QString("用户名或密码错误!"),true);
+                box->show();
+//                QMessageBox box(QMessageBox::Warning,tr("信息有误"),tr("用户名或密码错误!"));     //新建消息提示框，提示错误信息
+//                box.setWindowFlags(Qt::FramelessWindowHint);
+//                box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
+//                box.setButtonText (QMessageBox::Ok,tr("OK"));     //将按钮显示改成"确 定"
+//                box.exec();
             }
             else
             {
@@ -232,12 +249,16 @@ void loginWidget::okButtonSlot()
             }
         }
 
+        box->setInfo(QString("提示："),QString("用户名或密码错误!"),true);
+        box->show();
+
+
 //        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "loginWidget username or passwd input not match!\n");
-        QMessageBox box(QMessageBox::Warning,tr("信息有误"),tr("用户名或密码错误!"));     //新建消息提示框，提示错误信息
-        box.setWindowFlags(Qt::FramelessWindowHint);
-        box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
-        box.setButtonText (QMessageBox::Ok,tr("OK"));     //将按钮显示改成"确 定"
-        box.exec();
+//        QMessageBox box(QMessageBox::Warning,tr("信息有误"),tr("用户名或密码错误!"));     //新建消息提示框，提示错误信息
+//        box.setWindowFlags(Qt::FramelessWindowHint);
+//        box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
+//        box.setButtonText (QMessageBox::Ok,tr("OK"));     //将按钮显示改成"确 定"
+//        box.exec();
     }
     database.close();
 #endif

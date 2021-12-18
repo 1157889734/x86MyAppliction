@@ -80,6 +80,12 @@ devManageWidget::devManageWidget(QWidget *parent) :
     ui->alarmPushButton->setFocusPolicy(Qt::NoFocus);
     ui->TrainNumberSetPushButton->setFocusPolicy(Qt::NoFocus);
 
+    box = new MsgBox(this);
+    box->setWindowModality(Qt::ApplicationModal);
+    box->setStyleSheet("background-color: rgb(51, 153, 223);");
+    box->move(350,300);
+    box->hide();
+
     int i = 0, j = 0;
 
     for (i = 0; i < MAX_SERVER_NUM; i++)
@@ -114,6 +120,9 @@ devManageWidget::devManageWidget(QWidget *parent) :
 
 devManageWidget::~devManageWidget()
 {
+    delete  box;
+    box = NULL;
+
     delete ui;
 }
 
@@ -433,7 +442,9 @@ void devManageWidget::getNvrStatusCtrl(PMSG_HANDLE pHandle, char *pcMsgData)
     iDevType = (int)ptNvrstaus->i8DevType;
     acDeviceTp = (iDevType==1)?tr("受电弓监控服务器"):tr("智能分析主机");
     snprintf(actmp, sizeof(actmp), "%d", htons(ptNvrstaus->i16Version));
-    snprintf(acVersion, sizeof(acVersion), "V%c.%c.%c",actmp[0],actmp[1],actmp[2]);
+
+
+    snprintf(acVersion, sizeof(acVersion), "V%c.0.0",actmp[0]);
     snprintf(acDiskFull, sizeof(acDiskFull), "%dG", htons(ptNvrstaus->i16HdiskTotalSize));
     snprintf(acDiskUsed, sizeof(acDiskUsed), "%dG", htons(ptNvrstaus->i16HdiskUsedSize));
 
@@ -629,11 +640,14 @@ void devManageWidget::trainNumberChange(QString TrainNumberStr)
         strncpy(acTrainNumber, TrainNumberStr.toLatin1().data(), 7);
         ui->TrainNumberLineEdit->setText(QString(QLatin1String(acTrainNumber)));
 //        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devManageWidget input train number len can't over 7!\n");
-        QMessageBox box(QMessageBox::Warning,QString::fromUtf8("提示"),QString::fromUtf8("输入的车次字符数不能超过7!"));     //提示框
-        box.setWindowFlags(Qt::FramelessWindowHint);
-        box.setStandardButtons (QMessageBox::Ok);
-        box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
-        box.exec();
+//        QMessageBox box(QMessageBox::Warning,QString::fromUtf8("提示"),QString::fromUtf8("输入的车次字符数不能超过7!"));     //提示框
+//        box.setWindowFlags(Qt::FramelessWindowHint);
+//        box.setStandardButtons (QMessageBox::Ok);
+//        box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
+//        box.exec();
+        box->setInfo(QString("提示："),QString("输入的车次字符数不能超过7!"),true);
+        box->show();
+
     }
 }
 void devManageWidget::getDevStateSignalCtrl()

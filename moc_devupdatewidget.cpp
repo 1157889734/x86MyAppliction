@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_devUpdateWidget_t {
-    QByteArrayData data[32];
-    char stringdata0[542];
+    QByteArrayData data[33];
+    char stringdata0[558];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -60,10 +60,11 @@ QT_MOC_LITERAL(24, 406, 11), // "systimeSlot"
 QT_MOC_LITERAL(25, 418, 20), // "registOutButtonClick"
 QT_MOC_LITERAL(26, 439, 21), // "closeUserManageWidget"
 QT_MOC_LITERAL(27, 461, 23), // "setCameraImageParamSlot"
-QT_MOC_LITERAL(28, 485, 12), // "setTrainType"
-QT_MOC_LITERAL(29, 498, 17), // "setTimeSignalCtrl"
-QT_MOC_LITERAL(30, 516, 21), // "KeyboardPressKeySlots"
-QT_MOC_LITERAL(31, 538, 3) // "key"
+QT_MOC_LITERAL(28, 485, 15), // "carNoChangeSlot"
+QT_MOC_LITERAL(29, 501, 12), // "setTrainType"
+QT_MOC_LITERAL(30, 514, 17), // "setTimeSignalCtrl"
+QT_MOC_LITERAL(31, 532, 21), // "KeyboardPressKeySlots"
+QT_MOC_LITERAL(32, 554, 3) // "key"
 
     },
     "devUpdateWidget\0alarmPushButoonClickSignal\0"
@@ -78,9 +79,9 @@ QT_MOC_LITERAL(31, 538, 3) // "key"
     "pollingTimeChange\0lineEditpollingTimeChange\0"
     "showSysTime\0monitorSysTime\0systimeSlot\0"
     "registOutButtonClick\0closeUserManageWidget\0"
-    "setCameraImageParamSlot\0setTrainType\0"
-    "setTimeSignalCtrl\0KeyboardPressKeySlots\0"
-    "key"
+    "setCameraImageParamSlot\0carNoChangeSlot\0"
+    "setTrainType\0setTimeSignalCtrl\0"
+    "KeyboardPressKeySlots\0key"
 };
 #undef QT_MOC_LITERAL
 
@@ -90,7 +91,7 @@ static const uint qt_meta_data_devUpdateWidget[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      26,   14, // methods
+      27,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -98,34 +99,35 @@ static const uint qt_meta_data_devUpdateWidget[] = {
        4,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  144,    2, 0x06 /* Public */,
-       3,    1,  145,    2, 0x06 /* Public */,
-       5,    0,  148,    2, 0x06 /* Public */,
-       6,    1,  149,    2, 0x06 /* Public */,
+       1,    0,  149,    2, 0x06 /* Public */,
+       3,    1,  150,    2, 0x06 /* Public */,
+       5,    0,  153,    2, 0x06 /* Public */,
+       6,    1,  154,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       8,    0,  152,    2, 0x0a /* Public */,
-       9,    0,  153,    2, 0x0a /* Public */,
-      10,    0,  154,    2, 0x0a /* Public */,
-      11,    0,  155,    2, 0x0a /* Public */,
-      12,    0,  156,    2, 0x0a /* Public */,
-      13,    0,  157,    2, 0x0a /* Public */,
-      14,    0,  158,    2, 0x0a /* Public */,
-      15,    0,  159,    2, 0x0a /* Public */,
-      16,    0,  160,    2, 0x0a /* Public */,
-      17,    1,  161,    2, 0x0a /* Public */,
-      19,    1,  164,    2, 0x0a /* Public */,
-      20,    1,  167,    2, 0x0a /* Public */,
-      21,    1,  170,    2, 0x0a /* Public */,
-      22,    0,  173,    2, 0x0a /* Public */,
-      23,    0,  174,    2, 0x0a /* Public */,
-      24,    0,  175,    2, 0x0a /* Public */,
-      25,    0,  176,    2, 0x0a /* Public */,
-      26,    0,  177,    2, 0x0a /* Public */,
-      27,    0,  178,    2, 0x0a /* Public */,
-      28,    0,  179,    2, 0x0a /* Public */,
-      29,    0,  180,    2, 0x0a /* Public */,
-      30,    1,  181,    2, 0x0a /* Public */,
+       8,    0,  157,    2, 0x0a /* Public */,
+       9,    0,  158,    2, 0x0a /* Public */,
+      10,    0,  159,    2, 0x0a /* Public */,
+      11,    0,  160,    2, 0x0a /* Public */,
+      12,    0,  161,    2, 0x0a /* Public */,
+      13,    0,  162,    2, 0x0a /* Public */,
+      14,    0,  163,    2, 0x0a /* Public */,
+      15,    0,  164,    2, 0x0a /* Public */,
+      16,    0,  165,    2, 0x0a /* Public */,
+      17,    1,  166,    2, 0x0a /* Public */,
+      19,    1,  169,    2, 0x0a /* Public */,
+      20,    1,  172,    2, 0x0a /* Public */,
+      21,    1,  175,    2, 0x0a /* Public */,
+      22,    0,  178,    2, 0x0a /* Public */,
+      23,    0,  179,    2, 0x0a /* Public */,
+      24,    0,  180,    2, 0x0a /* Public */,
+      25,    0,  181,    2, 0x0a /* Public */,
+      26,    0,  182,    2, 0x0a /* Public */,
+      27,    0,  183,    2, 0x0a /* Public */,
+      28,    0,  184,    2, 0x0a /* Public */,
+      29,    0,  185,    2, 0x0a /* Public */,
+      30,    0,  186,    2, 0x0a /* Public */,
+      31,    1,  187,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -155,7 +157,8 @@ static const uint qt_meta_data_devUpdateWidget[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Char,   31,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Char,   32,
 
        0        // eod
 };
@@ -189,9 +192,10 @@ void devUpdateWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 20: _t->registOutButtonClick(); break;
         case 21: _t->closeUserManageWidget(); break;
         case 22: _t->setCameraImageParamSlot(); break;
-        case 23: _t->setTrainType(); break;
-        case 24: _t->setTimeSignalCtrl(); break;
-        case 25: _t->KeyboardPressKeySlots((*reinterpret_cast< char(*)>(_a[1]))); break;
+        case 23: _t->carNoChangeSlot(); break;
+        case 24: _t->setTrainType(); break;
+        case 25: _t->setTimeSignalCtrl(); break;
+        case 26: _t->KeyboardPressKeySlots((*reinterpret_cast< char(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -256,13 +260,13 @@ int devUpdateWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 26)
+        if (_id < 27)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 26;
+        _id -= 27;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 26)
+        if (_id < 27)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 26;
+        _id -= 27;
     }
     return _id;
 }
