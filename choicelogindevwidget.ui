@@ -14,12 +14,10 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#choiceLoginDevWidget { 
+   <string notr="true">QWidget#choiceLoginDevWidget { 
 border-image: url(:/monres/background.bmp); 
 } 
-#choiceLoginDevWidget * { 
-border-image:url(); 
-}</string>
+</string>
   </property>
   <widget class="QPushButton" name="pvmsPushButton">
    <property name="geometry">

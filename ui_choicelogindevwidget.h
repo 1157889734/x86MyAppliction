@@ -29,12 +29,10 @@ public:
         if (choiceLoginDevWidget->objectName().isEmpty())
             choiceLoginDevWidget->setObjectName(QString::fromUtf8("choiceLoginDevWidget"));
         choiceLoginDevWidget->resize(1024, 768);
-        choiceLoginDevWidget->setStyleSheet(QString::fromUtf8("#choiceLoginDevWidget { \n"
+        choiceLoginDevWidget->setStyleSheet(QString::fromUtf8("QWidget#choiceLoginDevWidget { \n"
 "border-image: url(:/monres/background.bmp); \n"
 "} \n"
-"#choiceLoginDevWidget * { \n"
-"border-image:url(); \n"
-"}"));
+""));
         pvmsPushButton = new QPushButton(choiceLoginDevWidget);
         pvmsPushButton->setObjectName(QString::fromUtf8("pvmsPushButton"));
         pvmsPushButton->setGeometry(QRect(550, 330, 274, 97));

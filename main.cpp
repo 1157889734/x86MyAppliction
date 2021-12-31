@@ -18,6 +18,7 @@
 #include <stdio.h>
 
 
+#define DEBUG_PORT 9880
 
 
 waitLoginWidget *g_waitLoginPage = NULL;  //等待登录页面
@@ -45,6 +46,7 @@ int main(int argc, char *argv[])
     PRS485_HANDLE pRs485Handle = 0;
 	signal(SIGPIPE,SIG_IGN);    
 
+    DebugInit(DEBUG_PORT);    //调试信息模块初始化
 
     LOG_Init();    //本地日志模块初始化
 
@@ -68,14 +70,12 @@ int main(int argc, char *argv[])
         iRet = PMSG_CreateConnect(acNvrServerIp, 10100);
         if (0 == iRet)
         {
-//            DebugPrint(DEBUG_UI_ERROR_PRINT, "create connection to server:%s error!\n",acNvrServerIp);
-            qDebug()<<"DEBUG_UI_ERROR_PRINT create connection to server eroor"<<__FUNCTION__<<__LINE__<<acNvrServerIp<<endl;
+            DebugPrint(DEBUG_UI_ERROR_PRINT, "create connection to server:%s error!\n",acNvrServerIp);
             continue;
         }
         if (STATE_SetNvrServerPmsgHandle(i, (PMSG_HANDLE)iRet) < 0)
         {
-//            DebugPrint(DEBUG_UI_ERROR_PRINT, "save server:%s pmsg handle error!\n",acNvrServerIp);
-            qDebug()<<"DEBUG_UI_ERROR_PRINT,save server pmsg handle error"<<__FUNCTION__<<__LINE__<<acNvrServerIp<<endl;
+            DebugPrint(DEBUG_UI_ERROR_PRINT, "save server:%s pmsg handle error!\n",acNvrServerIp);
         }
     }
 
@@ -83,26 +83,23 @@ int main(int argc, char *argv[])
     memset(&tPisConfigInfo, 0, sizeof(T_PIS_INFO));
     STATE_GetPisConfigInfo(&tPisConfigInfo);
     iRet = PIS_CreateConnect(tPisConfigInfo.acIpAddr, tPisConfigInfo.iPort);
-    qDebug()<<"****************iRet="<<iRet<<__LINE__;
     if (0 == iRet)
     {
-//        DebugPrint(DEBUG_UI_ERROR_PRINT, "create connection to server:%s error!\n",acNvrServerIp);
-//        qDebug()<<"create connection to server:%s error"<<__FUNCTION__<<__LINE__<<acNvrServerIp<<endl;
+        DebugPrint(DEBUG_UI_ERROR_PRINT, "create connection to server:%s error!\n",acNvrServerIp);
+
     }
     if (STATE_SetPisPmsgHandle((PMSG_HANDLE)iRet) < 0)
     {
-//        DebugPrint(DEBUG_UI_ERROR_PRINT, "save pis server pmsg handle error!\n");
-        qDebug()<<"save pis server pmsg handle error"<<__FUNCTION__<<__LINE__<<endl;
+        DebugPrint(DEBUG_UI_ERROR_PRINT, "save pis server pmsg handle error!\n");
 
     }
 
-//    pRs485Handle = RS485_CreateConnect();
-//    if (0 == pRs485Handle)
-//    {
-////        DebugPrint(DEBUG_UI_ERROR_PRINT, "rs485 connection error!\n");
-//        qDebug()<<"rs485 connection error!"<<__FUNCTION__<<__LINE__<<endl;
+    pRs485Handle = RS485_CreateConnect();
+    if (0 == pRs485Handle)
+    {
+        DebugPrint(DEBUG_UI_ERROR_PRINT, "rs485 connection error!\n");
 
-//    }
+    }
 
     usleep(1*1000*1000);
 
@@ -125,15 +122,13 @@ int main(int argc, char *argv[])
         iRet = PMSG_SendPmsgData(pmsgHandle, CLI_SERV_MSG_TYPE_SET_PVMS_INFO, (char *)&tPvmsInfo, sizeof(T_PVMS_INFO));
         if (iRet < 0)
         {
-//            DebugPrint(DEBUG_UI_ERROR_PRINT, "PMSG_SendPmsgData CLI_SERV_MSG_TYPE_SET_PVMS_INFO to server %d error!iRet=%d\n", i+1,iRet);
-              qDebug()<<"PMSG_SendPmsgData CLI_SERV_MSG_TYPE_SET_PVMS_INFO to server %d error"<<i+1<<iRet<<__FUNCTION__<<__LINE__<<endl;
+            DebugPrint(DEBUG_UI_ERROR_PRINT, "PMSG_SendPmsgData CLI_SERV_MSG_TYPE_SET_PVMS_INFO to server %d error!iRet=%d\n", i+1,iRet);
         }
 
         iRet = PMSG_SendPmsgData(pmsgHandle, CLI_SERV_MSG_TYPE_CHECK_TIME, (char *)&tTimeInfo, sizeof(T_TIME_INFO));    //发送校时命令
         if (iRet < 0)
         {
-//            DebugPrint(DEBUG_UI_ERROR_PRINT, "PMSG_SendPmsgData CLI_SERV_MSG_TYPE_CHECK_TIME to server %d error!iRet=%d\n", i+1,iRet);
-              qDebug()<<"PMSG_SendPmsgData CLI_SERV_MSG_TYPE_CHECK_TIME to server %d error!iRet"<<i+1<<iRet<<__FUNCTION__<<__LINE__<<endl;
+            DebugPrint(DEBUG_UI_ERROR_PRINT, "PMSG_SendPmsgData CLI_SERV_MSG_TYPE_CHECK_TIME to server %d error!iRet=%d\n", i+1,iRet);
         }
         else
         {
@@ -160,7 +155,7 @@ int main(int argc, char *argv[])
     g_loginPage->hide();
     g_pvmsMenuPage->hide();
 
-//    g_pvmsMenuPage->m_pRs485Handle = pRs485Handle;
+    g_pvmsMenuPage->m_pRs485Handle = pRs485Handle;
 
 
 //    MyApplication app;
@@ -216,6 +211,7 @@ int main(int argc, char *argv[])
 
     PMSG_Uninit();
     LOG_UnInit();
+    DebugUninit();
 
     return 0;
 }

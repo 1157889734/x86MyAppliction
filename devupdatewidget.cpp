@@ -15,6 +15,8 @@
 #include <netinet/in.h>
 #include <QProcess>
 #include <QLabel>
+#include <QList>
+#include "debug.h"
 
 static int g_ibShowKeyboard = 0;
 static int g_ichagepage = 0;
@@ -22,7 +24,7 @@ static int g_iVNum = 0;
 #define PVMSPAGETYPE  2    //此页面类型，2表示受电弓监控页面
 
 #define NVR_RESTART_PORT 11001
-QButtonGroup *g_buttonGroup1 = NULL, *g_buttonGroup2 = NULL;
+QButtonGroup *g_buttonGroup1 = NULL, *g_buttonGroup2 = NULL ,*g_buttonGroup3 = NULL;
 
 char *parseFileNameFromPath(char *pcSrcStr)     //根据导入文件路径全名解析得到单纯的导入文件名
 {
@@ -53,6 +55,8 @@ devUpdateWidget::devUpdateWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowFlags(Qt::FramelessWindowHint);
+    QDateTime current_date_time ;
+    char acTimeStr[128] = {0};
 
 
     connect(ui->alarmPushButton, SIGNAL(clicked(bool)), this, SLOT(alarmPushButoonClickSlot()));   //报警按钮按键信号响应打开报警信息界面
@@ -70,7 +74,6 @@ devUpdateWidget::devUpdateWidget(QWidget *parent) :
     ui->contrastLineEdit->installEventFilter(this);
     ui->saturationLineEdit->installEventFilter(this);
 
-    connect(ui->timeSetPushButton,SIGNAL(clicked(bool)),this,SLOT(monitorSysTime()));
 
     connect(ui->permissonManagePushButton, SIGNAL(clicked(bool)), this, SLOT(userManageSlot()));
 
@@ -99,6 +102,10 @@ devUpdateWidget::devUpdateWidget(QWidget *parent) :
     g_buttonGroup2->addButton(ui->presetReturnTimeSetRadioButton_4,4);
 
 
+    g_buttonGroup3 = new QButtonGroup();
+    g_buttonGroup3->addButton(ui->setManalTimeRadioButton,0);
+    g_buttonGroup3->addButton(ui->setSysTimeRadioButton,1);
+
     connect(ui->canselPushButton, SIGNAL(clicked()), this, SLOT(registOutButtonClick()));
 
     connect(g_buttonGroup1, SIGNAL(buttonClicked(int)), this, SLOT(pollingTimeChange(int)));     //单选按钮组按键信号连接响应槽函数
@@ -121,14 +128,16 @@ devUpdateWidget::devUpdateWidget(QWidget *parent) :
     ui->contrastLineEdit->setValidator(new QIntValidator(0,255,this));
 
     connect(ui->trainTypeSetPushButton, SIGNAL(clicked(bool)), this, SLOT(setTrainType()));
-    ui->dateEdit->setCalendarPopup(true);
-    ui->dateEdit->setDate(QDate::currentDate());
-    ui->dateEdit->setLocale(QLocale::Chinese);
 
+    current_date_time = QDateTime::currentDateTime();
+    snprintf(acTimeStr, sizeof(acTimeStr), "%4d-%02d-%02d %02d:%02d:%02d", current_date_time.date().year(), current_date_time.date().month(), current_date_time.date().day(), current_date_time.time().hour(), current_date_time.time().minute(), current_date_time.time().second());
+    ui->timeSetLineEdit->setText(QString(QLatin1String(acTimeStr)));
 
-    m_sys_timer = new QTimer(this);
-    connect(m_sys_timer,SIGNAL(timeout()),this,SLOT(showSysTime()));
-    m_sys_timer->start(1000);
+    /*创建时间设置子窗体，默认隐藏*/
+    timeSetWidget = new timeset(this);
+    timeSetWidget->hide();
+    connect(timeSetWidget, SIGNAL(timeSetSendMsg(QString,QString,QString,QString,QString,QString)), this, SLOT(timeSetRecvMsg(QString,QString,QString,QString,QString,QString)));  //时间设置窗体控件设置信号响应
+    connect(ui->timeSetPushButton_2, SIGNAL(clicked(bool)), this, SLOT(openTimeSetWidgetSlot()));
 
 //    ui->sysDataAdjustLabel->setText();
     m_TrainType = "";
@@ -155,8 +164,13 @@ devUpdateWidget::~devUpdateWidget()
     delete g_buttonGroup2;
     g_buttonGroup2 = NULL;
 
-    delete m_sys_timer;
-    m_sys_timer = NULL;
+    delete  g_buttonGroup3;
+    g_buttonGroup3 = NULL;
+
+    delete timeSetWidget;
+    timeSetWidget = NULL;
+
+
     delete ui;
 }
 
@@ -302,48 +316,36 @@ void devUpdateWidget::registOutButtonClick()
 
 }
 
-
-void devUpdateWidget::monitorSysTime()
+void devUpdateWidget::openTimeSetWidgetSlot()
 {
-     char acTimeStr[128] = {0};
-    timeTd = QDateTime::currentDateTime();
+    QString timeStr = ui->sysTimeAdjustLabel->text();
+    char acTimeStr[256] = {0};
+    int iYear = 0, iMonth = 0, iDay = 0, iHour = 0, iMin = 0, iSec = 0;
 
-    timeTd.setDate(ui->dateEdit->date());
-    timeTd.setTime(ui->timeEdit->time());
-
-
-    time_t tt = (time_t)timeTd.toTime_t();
-    stime(&tt);
-
-    QDateTime time = QDateTime::currentDateTime(); // 获取当前时间
-    int year = time.date().year(); // 年
-    int month = time.date().month(); // 月
-    int day = time.date().day(); // 日
-//    int hour = time.time().hour(); // 时
-//    int sec = time.time().second(); // 分
-//    int msec = time.time().msec(); // 秒
-
-    int h=ui->timeEdit->time().hour();
-    int m =ui->timeEdit->time().minute();
-    int s =ui->timeEdit->time().second();
-
-
-    snprintf(acTimeStr, sizeof(acTimeStr), "date %02d%02d%02d%02d%4d.%02d", month, day, h, m,year, s);
-    system(acTimeStr);
-    system("hwclock -w");
+    DebugPrint(DEBUG_UI_OPTION_PRINT, "devUpdateWidget timeSetPushButton pressed!\n");
+    strcpy(acTimeStr, timeStr.toLatin1().data());
+    if (strlen(acTimeStr) != 0)
+    {
+        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] timeStr:%s!\n", __FUNCTION__, acTimeStr);
+        sscanf(acTimeStr, "%4d-%02d-%02d %02d:%02d:%02d", &iYear, &iMonth, &iDay, &iHour, &iMin, &iSec);
+        DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] %d-%d-%d %d:%d:%d!\n", __FUNCTION__, iYear, iMonth, iDay, iHour, iMin, iSec);
+    }
+    timeSetWidget->setGeometry(450, 257, timeSetWidget->width(), timeSetWidget->height());
+    timeSetWidget->setTimeLabelText(iYear, iMonth, iDay, iHour, iMin, iSec);
+    timeSetWidget->show();
 
 }
-
-void devUpdateWidget::showSysTime()
+void devUpdateWidget::timeSetRecvMsg(QString year, QString month, QString day, QString hour, QString min, QString sec)
 {
-    timeTd = QDateTime::currentDateTime();
-    QString str_data = timeTd.toString("yyyy-MM-dd");
-    QString str_time = timeTd.toString("hh:mm:ss");
-
-    ui->sysDataAdjustLabel->setText(str_data);
-    ui->systimeAdjustLabel->setText(str_time);
-
+    char timestr[128] = {0};
+    snprintf(timestr, sizeof(timestr), "%s-%s-%s %s:%s:%s", year.toStdString().data(), month.toStdString().data(), day.toStdString().data(),
+            hour.toStdString().data(), min.toStdString().data(), sec.toStdString().data());
+    QString string = QString(QLatin1String(timestr)) ;
+//    ui->startTimeLabel->setText(string);
+    ui->timeSetLineEdit->setText(string);
 }
+
+
 
 void devUpdateWidget::systimeSlot()
 {
@@ -356,10 +358,10 @@ void devUpdateWidget::systimeSlot()
     T_LOG_INFO tLogInfo;
     ui->timeAdjustPushButton->setEnabled(false);
     STATE_GetCurrentUserType(acUserType, sizeof(acUserType));
-//        DebugPrint(DEBUG_UI_OPTION_PRINT, "devUpdateWidget set sys time!\n");
+    DebugPrint(DEBUG_UI_OPTION_PRINT, "devUpdateWidget set sys time!\n");
     if (!strcmp(acUserType, "operator"))	 //操作员无权校时
     {
-//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget this user type has no right to set system time!\n");
+            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget this user type has no right to set system time!\n");
         static QMessageBox box(QMessageBox::Warning,tr("提示"),tr("无权限设置!"));	  //新建消息提示框，提示错误信息
         box.setWindowFlags(Qt::FramelessWindowHint);
         box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
@@ -373,27 +375,38 @@ void devUpdateWidget::systimeSlot()
     else
     {
 
-        if (strlen(ui->dateEdit->text().toLatin1().data()) > 0)
+        if (0 == g_buttonGroup3->checkedId())
         {
-            sscanf(ui->dateEdit->text().toLatin1().data(), "%4d-%02d-%02d", &year, &month, &day);
+            DebugPrint(DEBUG_UI_OPTION_PRINT, "devUpdateWidget set rtc time!");
+            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] timeStr:%s\n", __FUNCTION__, ui->timeSetLineEdit->text().toLatin1().data());
+            if (strlen(ui->timeSetLineEdit->text().toLatin1().data()) > 0)
+            {
+                sscanf(ui->timeSetLineEdit->text().toLatin1().data(), "%4d-%02d-%02d %02d:%02d:%02d", &year, &month, &day, &hour, &minute, &second);
+            }
+
+            snprintf(acTimeStr, sizeof(acTimeStr), "date %02d%02d%02d%02d%4d.%02d", month, day, hour, minute,year, second);
+            qDebug()<<"***********acTimeStr="<<acTimeStr<<__LINE__;
+            system(acTimeStr);
+            system("hwclock -w");
+
+
+            /*系统校时记录日志*/
+            memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
+            tLogInfo.iLogType = 0;
+            snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "set local time %4d-%02d-%02d %02d:%02d:%02d", year, month, day, hour, minute, second);
+            LOG_WriteLog(&tLogInfo);
+
+            ui->sysTimeAdjustLabel->setText(ui->timeSetLineEdit->text());
+            emit systimeSetSignal();
         }
-        if (strlen(ui->timeEdit->text().toLatin1().data()) > 0)
+        else
         {
-            sscanf(ui->timeEdit->text().toLatin1().data(), "%2d:%02d:%02d", &hour, &minute, &second);
+            if (strlen(ui->sysTimeAdjustLabel->text().toLatin1().data()) > 0)
+            {
+                sscanf(ui->sysTimeAdjustLabel->text().toLatin1().data(), "%4d-%02d-%02d %02d:%02d:%02d", &year, &month, &day, &hour, &minute, &second);
+                DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] set time(%d-%d-%d %d:%d:%d)\n", __FUNCTION__, year, month, day, hour, minute, second);
+            }
         }
-
-//        snprintf(acTimeStr, sizeof(acTimeStr), "date %02d%02d%02d%02d%4d.%02d", month, day, hour, second,year, minute);
-//        system(acTimeStr);
-//        system("hwclock -w");
-//        qDebug()<<"*******systimeSlot***"<<acTimeStr<<__LINE__<<"hour="<<hour<<"minute="<<minute<<"second="<<second;
-        /*系统校时记录日志*/
-        memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
-        tLogInfo.iLogType = 0;
-        snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "set local time %4d-%02d-%02d %02d:%02d:%02d", year, month, day, hour, minute, second);
-        LOG_WriteLog(&tLogInfo);
-
-        emit systimeSetSignal();
-
 
         if (year >= 1970 && (month >= 1 && month <= 12) && (day >= 1 && day <= 31) &&
             (hour >= 0 && hour <= 23) && (minute >= 0 && minute <= 59) && (second >= 0 && second <= 59))
@@ -414,7 +427,7 @@ void devUpdateWidget::systimeSlot()
                 iRet = PMSG_SendPmsgData(m_Phandle[i], CLI_SERV_MSG_TYPE_CHECK_TIME, (char *)&tTimeInfo, sizeof(T_TIME_INFO));    //发送校时命令
                 if (iRet < 0)
                 {
-//                    DebugPrint(DEBUG_UI_ERROR_PRINT, "PMSG_SendPmsgData CLI_SERV_MSG_TYPE_CHECK_TIME error!iRet=%d\n",iRet);
+                    DebugPrint(DEBUG_UI_ERROR_PRINT, "PMSG_SendPmsgData CLI_SERV_MSG_TYPE_CHECK_TIME error!iRet=%d\n",iRet);
                 }
                 else
                 {
@@ -569,12 +582,12 @@ void devUpdateWidget::setTrainType()
     int iRet = 0;
     T_LOG_INFO tLogInfo;
 
-//    DebugPrint(DEBUG_UI_OPTION_PRINT, "devUpdateWidget trainTypeSet button pressed!\n");
+    DebugPrint(DEBUG_UI_OPTION_PRINT, "devUpdateWidget trainTypeSet button pressed!\n");
 
     STATE_GetCurrentUserType(acUserType, sizeof(acUserType));
     if (!strcmp(acUserType, "operator"))   //操作员不能设置车型
     {
-//        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget this user type has no right to set train type!\n");
+        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget this user type has no right to set train type!\n");
         static  QMessageBox box(QMessageBox::Warning,QString::fromUtf8("提示"),QString::fromUtf8("无权限设置!"));     //新建消息提示框，提示错误信息
         box.setWindowFlags(Qt::FramelessWindowHint);
         box.setStandardButtons (QMessageBox::Ok);   //设置提示框只有一个标准按钮
@@ -586,7 +599,7 @@ void devUpdateWidget::setTrainType()
     {
         if (m_TrainType != ui->trainTypeSetComboBox->currentText())   //只有当车型选择被改变才进行设置
         {
-//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget set train type will reboot client, confirm?\n");
+            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget set train type will reboot client, confirm?\n");
             static QMessageBox msgBox(QMessageBox::Question,QString(tr("提示")),QString(tr("将重启使车型设置生效，是否继续？")));
             msgBox.setWindowFlags(Qt::FramelessWindowHint);
             msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
@@ -600,7 +613,7 @@ void devUpdateWidget::setTrainType()
 
             snprintf(acTrainType, sizeof(acTrainType), "%s", ui->trainTypeSetComboBox->currentText().toLatin1().data());
             STATE_SetCurrentTrainType(acTrainType);
-//            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] set currernt traintype to %s\n", __FUNCTION__, acTrainType);
+            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] set currernt traintype to %s\n", __FUNCTION__, acTrainType);
 
             memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
             tLogInfo.iLogType = 0;
@@ -620,7 +633,7 @@ void devUpdateWidget::carNoChangeSlot()   //车厢号切换信号响应槽函数
     int i = 0, idex = ui->carriageSelectionComboBox->currentIndex();    //获取当前车厢选择下拉框的索引
     QString item = "";
     T_TRAIN_CONFIG tTrainConfigInfo;
-//    DebugPrint(DEBUG_UI_OPTION_PRINT, "recordPlayWidget change server carriage No!\n");
+    DebugPrint(DEBUG_UI_OPTION_PRINT, "recordPlayWidget change server carriage No!\n");
 
     memset(&tTrainConfigInfo, 0, sizeof(T_TRAIN_CONFIG));
     STATE_GetCurrentTrainConfigInfo(&tTrainConfigInfo);
@@ -648,7 +661,7 @@ void devUpdateWidget::setCameraImageParamSlot()
     STATE_GetCurrentUserType(acUserType, sizeof(acUserType));
     if (!strcmp(acUserType, "operator"))	 //操作员无权校时
     {
-//        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget this user type has no right to set CameraImage Param!\n");
+        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget this user type has no right to set CameraImage Param!\n");
         static QMessageBox box(QMessageBox::Warning,tr("提示"),tr("无权限设置!"));	  //新建消息提示框，提示错误信息
         box.setWindowFlags(Qt::FramelessWindowHint);
         box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
@@ -666,7 +679,7 @@ void devUpdateWidget::setCameraImageParamSlot()
 
         if(ui->brightnessLineEdit->text().toInt() > 255 || ui->saturationLineEdit->text().toInt() > 255 || ui->contrastLineEdit->text().toInt() > 255)
         {
-            static QMessageBox box(QMessageBox::Warning,tr("提示"),tr("输入数字不能超过255!"));	  //新建消息提示框，提示错误信息
+            static QMessageBox box(QMessageBox::Warning,tr("提示"),tr("参数输入不能超过255！"));	  //新建消息提示框，提示错误信息
             box.setWindowFlags(Qt::FramelessWindowHint);
             box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
             box.setButtonText (QMessageBox::Ok,tr("OK")); 	//将按钮显示改成"确 定"
@@ -686,7 +699,7 @@ void devUpdateWidget::setCameraImageParamSlot()
         iRet = PMSG_SendPmsgData(m_Phandle[idex], CLI_SERV_MSG_TYPE_SET_PIC_ATTRIBUTE, (char *)&picParam, sizeof(T_PIC_ATTRIBUTE));    //发送设置图像效果参数命令
         if (iRet < 0)
         {
-//            DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_SET_PIC_ATTRIBUTE error!iRet=%d,server=%d\n", __FUNCTION__, iRet, idex+1);
+            DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] PMSG_SendPmsgData CLI_SERV_MSG_TYPE_SET_PIC_ATTRIBUTE error!iRet=%d,server=%d\n", __FUNCTION__, iRet, idex+1);
         }
 
     }
@@ -733,12 +746,12 @@ void devUpdateWidget::configFileSelectionSlot()
     QString filename = "";
     char acUserType[64] = {0};
 
-//    DebugPrint(DEBUG_UI_OPTION_PRINT, "devUpdateWidget configFileSelection button pressed!\n");
+    DebugPrint(DEBUG_UI_OPTION_PRINT, "devUpdateWidget configFileSelection button pressed!\n");
 
         STATE_GetCurrentUserType(acUserType, sizeof(acUserType));
         if (!strcmp(acUserType, "operator"))	 //操作员无权校时
         {
-//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget this user type has no right to select config file!\n");
+            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget this user type has no right to select config file!\n");
             static QMessageBox box(QMessageBox::Warning,tr("提示"),tr("无权限设置!"));	  //新建消息提示框，提示错误信息
             box.setWindowFlags(Qt::FramelessWindowHint);
             box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
@@ -751,7 +764,7 @@ void devUpdateWidget::configFileSelectionSlot()
         {
             if (access("/media/usb0/", F_OK) < 0)
             {
-//                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget::%s %d not get USB device!\n",__FUNCTION__,__LINE__);
+                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget::%s %d not get USB device!\n",__FUNCTION__,__LINE__);
                 static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
                 msgBox.setWindowFlags(Qt::FramelessWindowHint);
                 msgBox.setStandardButtons(QMessageBox::Yes);
@@ -764,7 +777,7 @@ void devUpdateWidget::configFileSelectionSlot()
             {
                 if (0 == STATE_FindUsbDev())   //这里处理一个特殊情况:U盘拔掉时umount失败，/mnt/usb/u/路径还存在，但是实际U盘是没有再插上的
                 {
-//                    DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget::%s %d not get USB device!\n",__FUNCTION__,__LINE__);
+                    DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget::%s %d not get USB device!\n",__FUNCTION__,__LINE__);
                     static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
                     msgBox.setWindowFlags(Qt::FramelessWindowHint);
                     msgBox.setStandardButtons(QMessageBox::Yes);
@@ -779,9 +792,9 @@ void devUpdateWidget::configFileSelectionSlot()
             QFileDialog *dialog = new QFileDialog;
             dialog->setAttribute(Qt::WA_DeleteOnClose);
             dialog->setWindowFlag(Qt::FramelessWindowHint);
-            dialog->setFixedSize(800,600);
             dialog->setDirectory("/media/usb0/");
-            dialog->setFilter(QDir::Files);
+            dialog->setFilter(QDir::Dirs);
+            dialog->setFixedSize(800,600);
             dialog->show();
 
 
@@ -797,7 +810,7 @@ void devUpdateWidget::configFileSelectionSlot()
            {
 //               qDebug()<<fileInfo->at(i).filePath();
 //               qDebug()<<fileInfo->at(i).fileName();
-               if(fileInfo->at(i).fileName() == "Station.ini")
+               if(fileInfo->at(i).fileName() == "monitorCfg")
                {
                     filename =fileInfo->at(i).filePath();
 
@@ -822,11 +835,12 @@ void devUpdateWidget::devUpdateSlot()
 {
     char acUserType[64] = {0};
 
+    DebugPrint(DEBUG_UI_OPTION_PRINT, "devUpdateWidget update device!\n");
 
     STATE_GetCurrentUserType(acUserType, sizeof(acUserType));
     if (!strcmp(acUserType, "operator"))	 //操作员无权校时
     {
-//        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget this user type has no right to update device!\n");
+        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget this user type has no right to update device!\n");
         static QMessageBox box(QMessageBox::Warning,tr("提示"),tr("无权限设置!"));   //新建消息提示框，提示错误信息
         box.setWindowFlags(Qt::FramelessWindowHint);
         box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
@@ -841,15 +855,17 @@ void devUpdateWidget::devUpdateSlot()
 
         if (access("/media/usb0/", F_OK) < 0)
         {
-//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget::%s %d not get USB device!\n",__FUNCTION__,__LINE__);
+            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget::%s %d not get USB device!\n",__FUNCTION__,__LINE__);
             ui->clientRebootPushButton->setEnabled(true);
+            ui->updateStatueTextEdit->append(tr("没有发现USB"));
+
             return;
         }
         else
         {
             if (0 == STATE_FindUsbDev())   //这里处理一个特殊情况:U盘拔掉时umount失败，/mnt/usb/u/路径还存在，但是实际U盘是没有再插上的
             {
-//                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget::%s %d not get USB device!\n",__FUNCTION__,__LINE__);
+                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget::%s %d not get USB device!\n",__FUNCTION__,__LINE__);
                 ui->clientRebootPushButton->setEnabled(true);
                 ui->updateStatueTextEdit->append(tr("没有发现USB"));
 
@@ -861,7 +877,7 @@ void devUpdateWidget::devUpdateSlot()
 
         if (access("/media/usb0/monitor_ytj", F_OK) < 0)
         {
-//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget not find update file in USB device!\n");
+            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget not find update file in USB device!\n");
             static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("U盘中未检测到更新文件!")));
             msgBox.setWindowFlags(Qt::FramelessWindowHint);
             msgBox.setStandardButtons(QMessageBox::Yes);
@@ -897,10 +913,12 @@ void devUpdateWidget::devRebootSlot()
     T_LOG_INFO tLogInfo;
     int iRet = 0;
 
+    DebugPrint(DEBUG_UI_OPTION_PRINT, "devUpdateWidget client reboot!\n");
+
     STATE_GetCurrentUserType(acUserType, sizeof(acUserType));
     if (!strcmp(acUserType, "operator"))
     {
-//        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget this user type has no right to reboot client!\n");
+        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget this user type has no right to reboot client!\n");
         static QMessageBox box(QMessageBox::Warning,tr("提示"),tr("无权限设置!"));	  //新建消息提示框，提示错误信息
         box.setWindowFlags(Qt::FramelessWindowHint);
         box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
@@ -911,7 +929,7 @@ void devUpdateWidget::devRebootSlot()
     else
     {
 
-        static QMessageBox msgBox(QMessageBox::Question,QString(tr("提示")),QString(tr("将重启使车型设置生效，是否继续？")));
+        static QMessageBox msgBox(QMessageBox::Question,QString(tr("提示")),QString(tr("是否重启？")));
         msgBox.setWindowFlags(Qt::FramelessWindowHint);
         msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
         msgBox.button(QMessageBox::Yes)->setText("Yes");
@@ -1048,12 +1066,12 @@ void devUpdateWidget::configFileImportSlot()
     char *pcfileName = NULL;
     char acUserType[64] = {0};
 
-//    DebugPrint(DEBUG_UI_OPTION_PRINT, "devUpdateWidget configFileImport button pressed!\n");
+    DebugPrint(DEBUG_UI_OPTION_PRINT, "devUpdateWidget configFileImport button pressed!\n");
 
     STATE_GetCurrentUserType(acUserType, sizeof(acUserType));
     if (!strcmp(acUserType, "operator"))	 //操作员无权校时
     {
-//        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget this user type has no right to import config file!\n");
+        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget this user type has no right to import config file!\n");
         static QMessageBox box(QMessageBox::Warning,tr("提示"),tr("无权限设置!"));	  //新建消息提示框，提示错误信息
         box.setWindowFlags(Qt::FramelessWindowHint);
         box.setStandardButtons (QMessageBox::Ok);	//设置提示框只有一个标准按钮
@@ -1065,9 +1083,9 @@ void devUpdateWidget::configFileImportSlot()
     {
         if (0 == strlen(ui->configFileDisplayLineEdit->text().toLatin1().data()))
         {
-//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget not select any config file!\n");
+            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget not select any config file!\n");
 
-            static QMessageBox msgBox(QMessageBox::Question,QString(tr("注意")),QString(tr("请选择配置文件!")));
+            static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("请选择配置文件!")));
             msgBox.setWindowFlags(Qt::FramelessWindowHint);
             msgBox.setStandardButtons(QMessageBox::Yes);
             msgBox.button(QMessageBox::Yes)->setText("OK");
@@ -1081,19 +1099,33 @@ void devUpdateWidget::configFileImportSlot()
             return;
         }
 
-        if (strncmp(pcfileName, "Station.ini", strlen(pcfileName)) != 0)
+        if (strncmp(pcfileName, "monitorCfg", strlen(pcfileName)) != 0)
         {
-//            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget select error config file!\n");
-
-            static QMessageBox msgBox(QMessageBox::Question,QString(tr("注意")),QString(tr("配置文件选择错误!")));
+            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget select error config file!\n");
+            static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("配置文件选择错误!")));
             msgBox.setWindowFlags(Qt::FramelessWindowHint);
             msgBox.setStandardButtons(QMessageBox::Yes);
             msgBox.button(QMessageBox::Yes)->setText("OK");
             msgBox.exec();
+
             return;
         }
 
-        system("cp /media/usb0/Station.ini /home/data/monitorCfg/Station.ini");
+        if(access("/media/usb0/monitorCfg/C3SysConfig.ini",F_OK) == 0)
+        {
+            system("cp /media/usb0/monitorCfg/C3SysConfig.ini /home/data/monitorCfg/");
+
+        }
+        if(access("/media/usb0/monitorCfg/Station.ini",F_OK) == 0)
+        {
+            system("cp /media/usb0/monitorCfg/Station.ini /home/data/monitorCfg/");
+
+        }
+        if(access("/media/usb0/monitorCfg/cfg",F_OK) == 0)
+        {
+            system("cp /media/usb0/monitorCfg/cfg/* /home/data/monitorCfg/cfg/ -R");
+        }
+
 
         system("sync");
 
