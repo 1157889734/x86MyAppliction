@@ -324,11 +324,14 @@ void devUpdateWidget::openTimeSetWidgetSlot()
 
     DebugPrint(DEBUG_UI_OPTION_PRINT, "devUpdateWidget timeSetPushButton pressed!\n");
     strcpy(acTimeStr, timeStr.toLatin1().data());
+
     if (strlen(acTimeStr) != 0)
     {
         DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] timeStr:%s!\n", __FUNCTION__, acTimeStr);
         sscanf(acTimeStr, "%4d-%02d-%02d %02d:%02d:%02d", &iYear, &iMonth, &iDay, &iHour, &iMin, &iSec);
         DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] %d-%d-%d %d:%d:%d!\n", __FUNCTION__, iYear, iMonth, iDay, iHour, iMin, iSec);
+
+
     }
     timeSetWidget->setGeometry(450, 257, timeSetWidget->width(), timeSetWidget->height());
     timeSetWidget->setTimeLabelText(iYear, iMonth, iDay, iHour, iMin, iSec);
@@ -341,7 +344,6 @@ void devUpdateWidget::timeSetRecvMsg(QString year, QString month, QString day, Q
     snprintf(timestr, sizeof(timestr), "%s-%s-%s %s:%s:%s", year.toStdString().data(), month.toStdString().data(), day.toStdString().data(),
             hour.toStdString().data(), min.toStdString().data(), sec.toStdString().data());
     QString string = QString(QLatin1String(timestr)) ;
-//    ui->startTimeLabel->setText(string);
     ui->timeSetLineEdit->setText(string);
 }
 
@@ -408,6 +410,7 @@ void devUpdateWidget::systimeSlot()
             }
         }
 
+
         if (year >= 1970 && (month >= 1 && month <= 12) && (day >= 1 && day <= 31) &&
             (hour >= 0 && hour <= 23) && (minute >= 0 && minute <= 59) && (second >= 0 && second <= 59))
         {
@@ -421,9 +424,10 @@ void devUpdateWidget::systimeSlot()
             tTimeInfo.sec = second;
             memset(&tTrainConfigInfo, 0, sizeof(T_TRAIN_CONFIG));
             STATE_GetCurrentTrainConfigInfo(&tTrainConfigInfo);
-            //printf("%d-%d-%d %d:%d:%d\n",timeInfo.year, (int)timeInfo.mon, (int)timeInfo.day, (int)timeInfo.hour, (int)timeInfo.min, (int)timeInfo.sec);
+//            printf("%d-%d-%d %d:%d:%d\n",tTimeInfo.year, (int)tTimeInfo.mon, (int)tTimeInfo.day, (int)tTimeInfo.hour, (int)tTimeInfo.min, (int)tTimeInfo.sec);
             for (i = 0; i < tTrainConfigInfo.iNvrServerCount; i++)
             {
+
                 iRet = PMSG_SendPmsgData(m_Phandle[i], CLI_SERV_MSG_TYPE_CHECK_TIME, (char *)&tTimeInfo, sizeof(T_TIME_INFO));    //发送校时命令
                 if (iRet < 0)
                 {
@@ -571,7 +575,7 @@ void devUpdateWidget::setTimeSignalCtrl()
 
     current_date_time = QDateTime::currentDateTime();
     snprintf(acTimeStr, sizeof(acTimeStr), "%4d-%02d-%02d %02d:%02d:%02d", current_date_time.date().year(), current_date_time.date().month(), current_date_time.date().day(), current_date_time.time().hour(), current_date_time.time().minute(), current_date_time.time().second());
-//    ui->sysTimeAdjustLabel->setText(QString(QLatin1String(acTimeStr)));
+    ui->sysTimeAdjustLabel->setText(QString(QLatin1String(acTimeStr)));
 
     return;
 }
