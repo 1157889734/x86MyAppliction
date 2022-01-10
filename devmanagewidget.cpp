@@ -8,6 +8,7 @@
 #include <QDebug>
 #include <QTabWidget>
 #include "debug.h"
+#include "led.h"
 
 static int g_ibShowKeyboard = 0;
 static int g_iDNum = 0;
@@ -473,6 +474,7 @@ void devManageWidget::getNvrStatusCtrl(PMSG_HANDLE pHandle, char *pcMsgData)
                     ui->devStorageTableWidget->item(i, 5)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
                     ui->devStorageTableWidget->setItem(i, 6, new QTableWidgetItem(QString(tr("硬盘异常"))));
                     ui->devStorageTableWidget->item(i, 6)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+                    gpio_output_ctrl(LED_DEVICE,LED_OFF);
                 }
             }
             else

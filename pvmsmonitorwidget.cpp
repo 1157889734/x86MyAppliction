@@ -12,6 +12,7 @@
 #include "cmplayer.h"
 #include "vdec.h"
 #include "debug.h"
+#include "led.h"
 
 
 static pthread_mutex_t g_tCmpCtrlMutex;
@@ -23,7 +24,7 @@ static pthread_mutex_t g_tCmpCtrlMutex;
 static int g_iPNum = 0;
 QButtonGroup *g_buttonGroup = NULL;
 #define PVMSPAGETYPE  2    //此页面类型，2表示受电弓监控页面
-
+static int g_LED_flag = 0;
 typedef enum _E_CAMERA_SWITCH_STATE    //摄像机切换状态
 {
     NORMAL = 0,    //正常，不切换
@@ -46,7 +47,7 @@ typedef enum _E_THREAD_SIGNAL_TYPE    //子线程触发的信号类型
 #define SET_TIME_MONITOR_TIME 1   //更新设备维护界面时间显示的间隔时间，单位秒
 
 #define SET_LABLE_STATE_TIME 3   //更新获取流的状态，单位秒
-
+#define SET_LED_CICLE_TIME 1
 
 int GetNodeFromCmpQueue(PT_CMP_QUEUE ptCmpQueue, PT_CMP_PACKET ptPkt)
 {
@@ -379,9 +380,10 @@ void *monitorThread(void *param)     //实时监控线程，对通道轮询、�
     time_t tFullScreenCurTime = 0;
     time_t tGetDevStateCurTime = 0, tGetDevStateOldTime = 0;
     time_t tSetTimeCurTime = 0, tSetTimeOldTime = 0;
+    time_t tSetLEDCurTime = 0,tSetLEDOldTime=0;
     T_CMP_PACKET tCmpPkt;
     struct sysinfo s_info;
-
+    alarmWidget g_alarmWidget;
 
     pvmsMonitorWidget *pvmsMonitorPage = (pvmsMonitorWidget *)param;
     if (NULL == pvmsMonitorPage)
@@ -407,8 +409,10 @@ void *monitorThread(void *param)     //实时监控线程，对通道轮询、�
     tFullScreenCurTime = s_info.uptime;
     tGetDevStateCurTime = s_info.uptime;
     tSetTimeCurTime = s_info.uptime;
+    tSetLEDCurTime = s_info.uptime;
     tGetDevStateOldTime = tGetDevStateCurTime;
     tSetTimeOldTime = tSetTimeCurTime;
+    tSetLEDOldTime = tSetLEDCurTime;
 
     while (1 == pvmsMonitorPage->m_iThreadRunFlag)
     {
@@ -542,6 +546,29 @@ void *monitorThread(void *param)     //实时监控线程，对通道轮询、�
 
 
         }
+        /*LED灯的状态灯的状态 */
+        if((tSetLEDCurTime - tSetLEDOldTime) >= SET_LED_CICLE_TIME)
+        {
+            if(pvmsMonitorPage->HDiskState == ALARM_HDISK_LOST || pvmsMonitorPage->HDiskState ==ALARM_HDISK_ERR)
+            {
+                gpio_output_ctrl(LED_DEVICE,LED_OFF);
+            }
+            else
+            {
+                if(g_LED_flag == 0)
+                {
+                    g_LED_flag = 1;
+                    gpio_output_ctrl(LED_DEVICE,LED_ON);
+                }
+                else
+                {
+                    g_LED_flag = 0;
+                    gpio_output_ctrl(LED_DEVICE,LED_OFF);
+
+                }
+            }
+            tSetLEDOldTime = tSetLEDCurTime;
+        }
 
         usleep(50*1000);
         if(sysinfo(&s_info))
@@ -554,6 +581,7 @@ void *monitorThread(void *param)     //实时监控线程，对通道轮询、�
         tGetDevStateCurTime = s_info.uptime;
         tSetTimeCurTime = s_info.uptime;
         tPollStateTime = s_info.uptime;
+        tSetLEDCurTime = s_info.uptime;
    }
     return NULL;
 

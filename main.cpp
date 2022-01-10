@@ -1,4 +1,5 @@
 #include "MyApplication.h"
+#include "led.h"
 #include "ctcppisclient.h"
 #include <QApplication>
 #include "choicelogindevwidget.h"
@@ -157,7 +158,7 @@ int main(int argc, char *argv[])
 
     g_pvmsMenuPage->m_pRs485Handle = pRs485Handle;
 
-
+    LED_Init();
 //    MyApplication app;
 
     QObject::connect(&app, SIGNAL(blackScreenSignal()), g_pvmsMenuPage, SLOT(blackScreenCtrlSlot()));
