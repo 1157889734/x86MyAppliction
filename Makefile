@@ -55,6 +55,7 @@ OBJECTS_DIR   = ./
 SOURCES       = ckeyboard.cpp \
 		cmplayer.cpp \
 		ctcppisclient.c \
+		led.c \
 		debug.c \
 		main.cpp \
 		MyApplication.cpp \
@@ -111,6 +112,7 @@ SOURCES       = ckeyboard.cpp \
 OBJECTS       = ckeyboard.o \
 		cmplayer.o \
 		ctcppisclient.o \
+		led.o \
 		debug.o \
 		main.o \
 		MyApplication.o \
@@ -362,6 +364,7 @@ DIST          = ../../toolchain/host/mkspecs/features/spec_pre.prf \
 		usergroupmanage.h ckeyboard.cpp \
 		cmplayer.cpp \
 		ctcppisclient.c \
+		led.c \
 		debug.c \
 		main.cpp \
 		MyApplication.cpp \
@@ -737,7 +740,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents res.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../toolchain/host/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents MyApplication.h choicelogindevwidget.h ckeyboard.h cmplayer.h ctcppisclient.h debug.h define.h loginwidget.h mutex.h mypushbutton.h pvmsmenuwidget.h pvmsmonitorwidget.h qmessagedialog.h recordplaywidget.h devmanagewidget.h devupdatewidget.h alarmwidget.h fileConfig.h gb2312_utf8.h log.h pmsgcli.h rtsp/Base64EncDec.h rtsp/md5.h rtsp/mutex.h rtsp/ourMD5.h rtsp/rtcp.h rtsp/rtp.h rtsp/rtsp.h rtsp/rtspApi.h rtsp/rtspComm.h rtsp/types.h shm.h state.h timeset.h types.h presetpasswdconfirm.h myslider.h ftpApi.h rs485serv.h vdec.h waitloginwidget.h usergroupmanage.h $(DISTDIR)/
-	$(COPY_FILE) --parents ckeyboard.cpp cmplayer.cpp ctcppisclient.c debug.c main.cpp MyApplication.cpp choicelogindevwidget.cpp loginwidget.cpp mutex.cpp mypushbutton.cpp pvmsmenuwidget.cpp pvmsmonitorwidget.cpp qmessagedialog.cpp recordplaywidget.cpp devmanagewidget.cpp devupdatewidget.cpp alarmwidget.cpp fileConfig.cpp rtsp/Base64EncDec.c rtsp/md5.c rtsp/ourMD5.c rtsp/rtcp.c rtsp/rtp.c rtsp/rtsp.c rtsp/rtspApi.c rtsp/rtspComm.c shm.cpp state.cpp timeset.cpp gb2312_utf8.c log.c pmsgcli.c presetpasswdconfirm.cpp myslider.cpp ftpApi.c rs485serv.c vdec.cpp waitloginwidget.cpp usergroupmanage.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ckeyboard.cpp cmplayer.cpp ctcppisclient.c led.c debug.c main.cpp MyApplication.cpp choicelogindevwidget.cpp loginwidget.cpp mutex.cpp mypushbutton.cpp pvmsmenuwidget.cpp pvmsmonitorwidget.cpp qmessagedialog.cpp recordplaywidget.cpp devmanagewidget.cpp devupdatewidget.cpp alarmwidget.cpp fileConfig.cpp rtsp/Base64EncDec.c rtsp/md5.c rtsp/ourMD5.c rtsp/rtcp.c rtsp/rtp.c rtsp/rtsp.c rtsp/rtspApi.c rtsp/rtspComm.c shm.cpp state.cpp timeset.cpp gb2312_utf8.c log.c pmsgcli.c presetpasswdconfirm.cpp myslider.cpp ftpApi.c rs485serv.c vdec.cpp waitloginwidget.cpp usergroupmanage.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents choicelogindevwidget.ui ckeyboard.ui loginwidget.ui pvmsmenuwidget.ui pvmsmonitorwidget.ui recordplaywidget.ui devmanagewidget.ui devupdatewidget.ui alarmwidget.ui presetpasswdconfirm.ui timeset.ui useredit.ui useradd.ui usermanage.ui usergroupmanage.ui waitloginwidget.ui usermanageconfig.ui devupdatewidget_base.ui $(DISTDIR)/
 
 
@@ -807,6 +810,7 @@ qrc_res.cpp: res.qrc \
 		monres/slow.bmp \
 		monres/search.bmp \
 		monres/15.bmp \
+		monres/usermanage.bmp \
 		monres/next.bmp \
 		monres/bj.bmp \
 		monres/24.bmp \
@@ -4040,8 +4044,12 @@ ctcppisclient.o: ctcppisclient.c ctcppisclient.h \
 		log.h \
 		types.h \
 		state.h \
-		pmsgcli.h
+		pmsgcli.h \
+		debug.h
 	$(CC) -c $(CFLAGS) $(INCPATH) -o ctcppisclient.o ctcppisclient.c
+
+led.o: led.c led.h
+	$(CC) -c $(CFLAGS) $(INCPATH) -o led.o led.c
 
 debug.o: debug.c debug.h
 	$(CC) -c $(CFLAGS) $(INCPATH) -o debug.o debug.c
@@ -4158,6 +4166,7 @@ main.o: main.cpp MyApplication.h \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/qdesktopwidget.h \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qguiapplication.h \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui/qinputmethod.h \
+		led.h \
 		ctcppisclient.h \
 		log.h \
 		types.h \
@@ -5065,7 +5074,8 @@ loginwidget.o: loginwidget.cpp loginwidget.h \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtSql/qsqlerror.h \
 		state.h \
 		pmsgcli.h \
-		types.h
+		types.h \
+		debug.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o loginwidget.o loginwidget.cpp
 
 mutex.o: mutex.cpp mutex.h
@@ -5632,7 +5642,8 @@ pvmsmonitorwidget.o: pvmsmonitorwidget.cpp pvmsmonitorwidget.h \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QHBoxLayout \
 		vdec.h \
 		mutex.h \
-		debug.h
+		debug.h \
+		led.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o pvmsmonitorwidget.o pvmsmonitorwidget.cpp
 
 qmessagedialog.o: qmessagedialog.cpp qmessagedialog.h \
@@ -6182,7 +6193,8 @@ devmanagewidget.o: devmanagewidget.cpp devmanagewidget.h \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore/qdatetime.h \
 		log.h \
 		../../toolchain/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets/QTabWidget \
-		debug.h
+		debug.h \
+		led.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o devmanagewidget.o devmanagewidget.cpp
 
 devupdatewidget.o: devupdatewidget.cpp devupdatewidget.h \

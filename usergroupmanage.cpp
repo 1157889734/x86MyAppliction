@@ -227,6 +227,8 @@ void usergroupManage::on_addpushButton_clicked()
     ui->usernamelineEdit->clear();
     ui->surelineEdit->clear();
     ui->usernamelineEdit->setFocus();
+    ui->usernamelineEdit->setReadOnly(false);
+
     addFlag = 1;
 }
 
@@ -327,7 +329,6 @@ void usergroupManage::on_savepushButton_clicked()
         {
             if(1 == g_curTextState)
             {
-
                if(value_passwd != value_ensure_passwd)
                {
 
@@ -590,6 +591,7 @@ void usergroupManage::table_choose_fuction(QTableWidgetItem *item)
     QTableWidgetItem *mitem = items.at(0);
     QString text = mitem->text(); //获取内容
     ui->usernamelineEdit->setText(text);
+    ui->usernamelineEdit->setReadOnly(true);
     ui->passwdlineEdit->clear();
     ui->surelineEdit->clear();
 }

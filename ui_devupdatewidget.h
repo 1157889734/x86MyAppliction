@@ -74,17 +74,14 @@ public:
     QLabel *devConfigLabel;
     QLabel *updateStatusLabel;
     QLabel *label_18;
-    QLabel *label_5;
     QPushButton *updateBeginPushButton;
     QPushButton *clientRebootPushButton_2;
     QTextEdit *updateStatueTextEdit;
     QGroupBox *groupBox_3;
     QLineEdit *timeSetLineEdit;
     QRadioButton *setManalTimeRadioButton;
-    QLabel *label_8;
     QLabel *sysTimeAdjustLabel;
     QPushButton *timeSetPushButton_2;
-    QLabel *label_11;
     QRadioButton *setSysTimeRadioButton;
     QGroupBox *groupBox_4;
     QGroupBox *groupBox_5;
@@ -104,7 +101,7 @@ public:
         font.setPointSize(12);
         permissonManagePushButton->setFont(font);
         permissonManagePushButton->setStyleSheet(QString::fromUtf8("QPushButton{\n"
-"border-image: url(:/monres/user.bmp);\n"
+"border-image: url(:/monres/usermanage.bmp);\n"
 "border-color: rgb(255, 255, 255);\n"
 "border-width: 1px;\n"
 "border-style: solid;}\n"
@@ -431,10 +428,6 @@ public:
         label_18->setObjectName(QString::fromUtf8("label_18"));
         label_18->setGeometry(QRect(110, 260, 67, 31));
         label_18->setFont(font);
-        label_5 = new QLabel(deviceManagewidget);
-        label_5->setObjectName(QString::fromUtf8("label_5"));
-        label_5->setGeometry(QRect(20, 132, 67, 25));
-        label_5->setFont(font);
         updateBeginPushButton = new QPushButton(deviceManagewidget);
         updateBeginPushButton->setObjectName(QString::fromUtf8("updateBeginPushButton"));
         updateBeginPushButton->setGeometry(QRect(550, 150, 112, 32));
@@ -484,12 +477,9 @@ public:
 "border-style: solid;"));
         setManalTimeRadioButton = new QRadioButton(groupBox_3);
         setManalTimeRadioButton->setObjectName(QString::fromUtf8("setManalTimeRadioButton"));
-        setManalTimeRadioButton->setGeometry(QRect(20, 40, 30, 30));
+        setManalTimeRadioButton->setGeometry(QRect(20, 40, 91, 30));
+        setManalTimeRadioButton->setFont(font);
         setManalTimeRadioButton->setChecked(false);
-        label_8 = new QLabel(groupBox_3);
-        label_8->setObjectName(QString::fromUtf8("label_8"));
-        label_8->setGeometry(QRect(50, 95, 67, 17));
-        label_8->setFont(font);
         sysTimeAdjustLabel = new QLabel(groupBox_3);
         sysTimeAdjustLabel->setObjectName(QString::fromUtf8("sysTimeAdjustLabel"));
         sysTimeAdjustLabel->setGeometry(QRect(140, 95, 201, 27));
@@ -500,13 +490,10 @@ public:
         timeSetPushButton_2->setObjectName(QString::fromUtf8("timeSetPushButton_2"));
         timeSetPushButton_2->setGeometry(QRect(360, 45, 25, 25));
         timeSetPushButton_2->setStyleSheet(QString::fromUtf8("border-image: url(:/res/time_set.png);"));
-        label_11 = new QLabel(groupBox_3);
-        label_11->setObjectName(QString::fromUtf8("label_11"));
-        label_11->setGeometry(QRect(50, 45, 67, 17));
-        label_11->setFont(font);
         setSysTimeRadioButton = new QRadioButton(groupBox_3);
         setSysTimeRadioButton->setObjectName(QString::fromUtf8("setSysTimeRadioButton"));
-        setSysTimeRadioButton->setGeometry(QRect(20, 90, 30, 30));
+        setSysTimeRadioButton->setGeometry(QRect(20, 90, 91, 30));
+        setSysTimeRadioButton->setFont(font);
         setSysTimeRadioButton->setChecked(true);
         groupBox_4 = new QGroupBox(deviceManagewidget);
         groupBox_4->setObjectName(QString::fromUtf8("groupBox_4"));
@@ -548,7 +535,6 @@ public:
         devConfigLabel->raise();
         updateStatusLabel->raise();
         label_18->raise();
-        label_5->raise();
         updateBeginPushButton->raise();
         brightnessLineEdit->raise();
         cameraSelectionComboBox->raise();
@@ -652,16 +638,13 @@ public:
         devConfigLabel->setText(QCoreApplication::translate("devUpdateWidget", "                                         \350\256\276\345\244\207\351\205\215\347\275\256", nullptr));
         updateStatusLabel->setText(QCoreApplication::translate("devUpdateWidget", "\347\250\213\345\272\217\346\233\264\346\226\260", nullptr));
         label_18->setText(QCoreApplication::translate("devUpdateWidget", "\350\256\276\345\244\207\351\200\211\346\213\251:", nullptr));
-        label_5->setText(QCoreApplication::translate("devUpdateWidget", "\347\263\273\347\273\237\346\227\266\351\227\264", nullptr));
         updateBeginPushButton->setText(QString());
         clientRebootPushButton_2->setText(QString());
         groupBox_3->setTitle(QString());
-        setManalTimeRadioButton->setText(QString());
-        label_8->setText(QCoreApplication::translate("devUpdateWidget", "\347\263\273\347\273\237\346\240\241\346\227\266", nullptr));
+        setManalTimeRadioButton->setText(QCoreApplication::translate("devUpdateWidget", "\346\211\213\345\212\250\346\240\241\346\227\266", nullptr));
         sysTimeAdjustLabel->setText(QString());
         timeSetPushButton_2->setText(QString());
-        label_11->setText(QCoreApplication::translate("devUpdateWidget", "\346\211\213\345\212\250\346\240\241\346\227\266", nullptr));
-        setSysTimeRadioButton->setText(QString());
+        setSysTimeRadioButton->setText(QCoreApplication::translate("devUpdateWidget", "\347\263\273\347\273\237\346\240\241\346\227\266", nullptr));
         groupBox_4->setTitle(QString());
         groupBox_5->setTitle(QString());
         groupBox_6->setTitle(QString());

@@ -24,7 +24,7 @@ static int g_iVNum = 0;
 #define PVMSPAGETYPE  2    //此页面类型，2表示受电弓监控页面
 
 #define NVR_RESTART_PORT 11001
-QButtonGroup *g_buttonGroup1 = NULL, *g_buttonGroup2 = NULL ,*g_buttonGroup3 = NULL;
+QButtonGroup *g_buttonGroup1 = NULL, *g_buttonGroup2 = NULL, *g_buttonGroup3 = NULL;
 
 char *parseFileNameFromPath(char *pcSrcStr)     //根据导入文件路径全名解析得到单纯的导入文件名
 {
@@ -386,10 +386,10 @@ void devUpdateWidget::systimeSlot()
                 sscanf(ui->timeSetLineEdit->text().toLatin1().data(), "%4d-%02d-%02d %02d:%02d:%02d", &year, &month, &day, &hour, &minute, &second);
             }
 
-            snprintf(acTimeStr, sizeof(acTimeStr), "date %02d%02d%02d%02d%4d.%02d", month, day, hour, minute,year, second);
-            qDebug()<<"***********acTimeStr="<<acTimeStr<<__LINE__;
-            system(acTimeStr);
-            system("hwclock -w");
+//            snprintf(acTimeStr, sizeof(acTimeStr), "date %02d%02d%02d%02d%4d.%02d", month, day, hour, minute,year, second);
+//            qDebug()<<"***********acTimeStr="<<acTimeStr<<__LINE__;
+//            system(acTimeStr);
+//            system("hwclock -w");
 
 
             /*系统校时记录日志*/

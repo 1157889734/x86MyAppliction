@@ -32,7 +32,7 @@
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
-border-image: url(:/monres/user.bmp);
+border-image: url(:/monres/usermanage.bmp);
 border-color: rgb(255, 255, 255);
 border-width: 1px;
 border-style: solid;}
@@ -1110,24 +1110,6 @@ QPushButton:pressed
      <string>设备选择:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_5">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>132</y>
-      <width>67</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>12</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>系统时间</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="updateBeginPushButton">
     <property name="geometry">
      <rect>
@@ -1247,24 +1229,8 @@ border-style: solid;</string>
       <rect>
        <x>20</x>
        <y>40</y>
-       <width>30</width>
+       <width>91</width>
        <height>30</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="checked">
-      <bool>false</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_8">
-     <property name="geometry">
-      <rect>
-       <x>50</x>
-       <y>95</y>
-       <width>67</width>
-       <height>17</height>
       </rect>
      </property>
      <property name="font">
@@ -1273,7 +1239,10 @@ border-style: solid;</string>
       </font>
      </property>
      <property name="text">
-      <string>系统校时</string>
+      <string>手动校时</string>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
      </property>
     </widget>
     <widget class="QLabel" name="sysTimeAdjustLabel">
@@ -1314,13 +1283,13 @@ color: rgb(0, 0, 0);</string>
       <string/>
      </property>
     </widget>
-    <widget class="QLabel" name="label_11">
+    <widget class="QRadioButton" name="setSysTimeRadioButton">
      <property name="geometry">
       <rect>
-       <x>50</x>
-       <y>45</y>
-       <width>67</width>
-       <height>17</height>
+       <x>20</x>
+       <y>90</y>
+       <width>91</width>
+       <height>30</height>
       </rect>
      </property>
      <property name="font">
@@ -1329,20 +1298,7 @@ color: rgb(0, 0, 0);</string>
       </font>
      </property>
      <property name="text">
-      <string>手动校时</string>
-     </property>
-    </widget>
-    <widget class="QRadioButton" name="setSysTimeRadioButton">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>90</y>
-       <width>30</width>
-       <height>30</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
+      <string>系统校时</string>
      </property>
      <property name="checked">
       <bool>true</bool>
@@ -1425,7 +1381,6 @@ color: rgb(0, 0, 0);</string>
    <zorder>devConfigLabel</zorder>
    <zorder>updateStatusLabel</zorder>
    <zorder>label_18</zorder>
-   <zorder>label_5</zorder>
    <zorder>updateBeginPushButton</zorder>
    <zorder>brightnessLineEdit</zorder>
    <zorder>cameraSelectionComboBox</zorder>

@@ -499,33 +499,6 @@ void ParsePisYCInfo(Msg_RecvPISYCInfo  RecvPISInfo)
     tTimeInfo.sec = ptPisInfo->tTime.i8Sec;
 
 
-    iYear = ptPisInfo->tTime.i16Year;
-    printf("********iYear=%d---tTimeInfo.hour=%d---tTimeInfo.min=%d--tTimeInfo.sec=%d\n",iYear,tTimeInfo.hour,tTimeInfo.min,tTimeInfo.sec);
-
-    localTime = time(NULL);
-    tmVal.tm_year = iYear - 1900;
-    tmVal.tm_mon = tTimeInfo.mon - 1;
-    tmVal.tm_mday = tTimeInfo.day;
-    tmVal.tm_hour = tTimeInfo.hour;
-    tmVal.tm_min = tTimeInfo.min;
-    tmVal.tm_sec = tTimeInfo.sec;
-    pisTime = mktime(&tmVal);
-
-    if (abs(localTime - pisTime) > 3)
-    {
-        snprintf(acStr, sizeof(acStr), "date %02d%02d%02d%02d%4d.%02d", ptPisInfo->tTime.i8Mon, ptPisInfo->tTime.i8day, ptPisInfo->tTime.i8Hour, ptPisInfo->tTime.i8Sec,iYear, ptPisInfo->tTime.i8Min);
-        system(acStr);
-        system("hwclock -w");
-
-        /*系统校时记录日志*/
-        memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
-        tLogInfo.iLogType = 0;
-        snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "set local time %4d-%02d-%02d %02d:%02d:%02d", iYear, ptPisInfo->tTime.i8Mon, ptPisInfo->tTime.i8day, ptPisInfo->tTime.i8Hour, ptPisInfo->tTime.i8Min, ptPisInfo->tTime.i8Sec);
-        LOG_WriteLog(&tLogInfo);
-
-    }
-
-
 
     ptPisInfo->wSpeed = RecvPISInfo.Speed;
 
@@ -621,32 +594,6 @@ void ParsePisInfo(Msg_RecvPISInfo  RecvPISInfo)
     tTimeInfo.sec = ptPisInfo->tTime.i8Sec;
 
 
-    iYear = htons(ptPisInfo->tTime.i16Year);
-
-    localTime = time(NULL);
-    tmVal.tm_year = iYear - 1900;
-    tmVal.tm_mon = tTimeInfo.mon - 1;
-    tmVal.tm_mday = tTimeInfo.day;
-    tmVal.tm_hour = tTimeInfo.hour;
-    tmVal.tm_min = tTimeInfo.min;
-    tmVal.tm_sec = tTimeInfo.sec;
-    pisTime = mktime(&tmVal);
-
-    if (abs(localTime - pisTime) > 3)
-    {
-        snprintf(acStr, sizeof(acStr), "date %02d%02d%02d%02d%4d.%02d", ptPisInfo->tTime.i8Mon, ptPisInfo->tTime.i8day, ptPisInfo->tTime.i8Hour, ptPisInfo->tTime.i8Sec,iYear, ptPisInfo->tTime.i8Min);
-        system(acStr);
-        system("hwclock -w");
-
-        /*系统校时记录日志*/
-        memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
-        tLogInfo.iLogType = 0;
-        snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "set local time %4d-%02d-%02d %02d:%02d:%02d", iYear, ptPisInfo->tTime.i8Mon, ptPisInfo->tTime.i8day, ptPisInfo->tTime.i8Hour, ptPisInfo->tTime.i8Min, ptPisInfo->tTime.i8Sec);
-        LOG_WriteLog(&tLogInfo);
-
-    }
-
-
     ptPisInfo->wSpeed = RecvPISInfo.Speed;
 
     short uiTmp = RecvPISInfo.Mileage[0] << 8 | RecvPISInfo.Mileage[1];
@@ -730,33 +677,6 @@ void ParsePisInfoEx(Msg_RecvPISInfoEx RecvPISInfo)
     tTimeInfo.hour = ptPisInfo->tTime.i8Hour;
     tTimeInfo.min = ptPisInfo->tTime.i8Min;
     tTimeInfo.sec = ptPisInfo->tTime.i8Sec;
-
-
-    iYear = htons(ptPisInfo->tTime.i16Year);
-
-    localTime = time(NULL);
-    tmVal.tm_year = iYear - 1900;
-    tmVal.tm_mon = tTimeInfo.mon - 1;
-    tmVal.tm_mday = tTimeInfo.day;
-    tmVal.tm_hour = tTimeInfo.hour;
-    tmVal.tm_min = tTimeInfo.min;
-    tmVal.tm_sec = tTimeInfo.sec;
-    pisTime = mktime(&tmVal);
-
-    if (abs(localTime - pisTime) > 3)
-    {
-        snprintf(acStr, sizeof(acStr), "date %02d%02d%02d%02d%4d.%02d", ptPisInfo->tTime.i8Mon, ptPisInfo->tTime.i8day, ptPisInfo->tTime.i8Hour, ptPisInfo->tTime.i8Sec,iYear, ptPisInfo->tTime.i8Min);
-        system(acStr);
-        system("hwclock -w");
-
-        printf("**********date=%s\n",acStr);
-        /*系统校时记录日志*/
-        memset(&tLogInfo, 0, sizeof(T_LOG_INFO));
-        tLogInfo.iLogType = 0;
-        snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "set local time %4d-%02d-%02d %02d:%02d:%02d", iYear, ptPisInfo->tTime.i8Mon, ptPisInfo->tTime.i8day, ptPisInfo->tTime.i8Hour, ptPisInfo->tTime.i8Min, ptPisInfo->tTime.i8Sec);
-        LOG_WriteLog(&tLogInfo);
-
-    }
 
 
     ptPisInfo->wSpeed =RecvPISInfo.Speed;

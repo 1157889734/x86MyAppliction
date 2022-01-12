@@ -39,7 +39,7 @@ SOURCES += \
     ckeyboard.cpp \
     cmplayer.cpp \
     ctcppisclient.c \
-#    led.c \
+    led.c \
     debug.c \
     main.cpp \
     MyApplication.cpp \
