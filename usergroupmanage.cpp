@@ -591,7 +591,8 @@ void usergroupManage::table_choose_fuction(QTableWidgetItem *item)
     QTableWidgetItem *mitem = items.at(0);
     QString text = mitem->text(); //获取内容
     ui->usernamelineEdit->setText(text);
-    ui->usernamelineEdit->setReadOnly(true);
+    ui->usernamelineEdit->setFocusPolicy(Qt::NoFocus);
+//    ui->usernamelineEdit->setReadOnly(true);
     ui->passwdlineEdit->clear();
     ui->surelineEdit->clear();
 }
