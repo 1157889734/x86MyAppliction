@@ -227,7 +227,6 @@ void usergroupManage::on_addpushButton_clicked()
     ui->usernamelineEdit->clear();
     ui->surelineEdit->clear();
     ui->usernamelineEdit->setFocus();
-    ui->usernamelineEdit->setReadOnly(false);
 
     addFlag = 1;
 }
@@ -592,7 +591,6 @@ void usergroupManage::table_choose_fuction(QTableWidgetItem *item)
     QString text = mitem->text(); //获取内容
     ui->usernamelineEdit->setText(text);
     ui->usernamelineEdit->setFocusPolicy(Qt::NoFocus);
-//    ui->usernamelineEdit->setReadOnly(true);
     ui->passwdlineEdit->clear();
     ui->surelineEdit->clear();
 }
