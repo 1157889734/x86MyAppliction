@@ -32,6 +32,7 @@ int STATE_GetSysVersion(char *pcVersion, int iLen)
 	return 0;
 }
 
+
 int STATE_GetIpAddr(char *pcIpAddr, int iLen)
 {
 	char acIpStr[128] = {0};

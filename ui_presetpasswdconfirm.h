@@ -53,6 +53,7 @@ public:
         passwordLineEdit = new QLineEdit(presetPasswdConfirm);
         passwordLineEdit->setObjectName(QString::fromUtf8("passwordLineEdit"));
         passwordLineEdit->setGeometry(QRect(140, 73, 171, 27));
+        passwordLineEdit->setFocusPolicy(Qt::TabFocus);
         passwordLineEdit->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         passwordLineEdit->setEchoMode(QLineEdit::Password);
         passwordLineEdit->setReadOnly(false);

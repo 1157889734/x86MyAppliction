@@ -49,7 +49,6 @@ SOURCES += \
     mypushbutton.cpp \
     pvmsmenuwidget.cpp \
     pvmsmonitorwidget.cpp \
-    qmessagedialog.cpp \
     recordplaywidget.cpp \
     devmanagewidget.cpp \
     devupdatewidget.cpp \
@@ -85,19 +84,16 @@ HEADERS += \
     ctcppisclient.h \
     debug.h \
     define.h \
-#    led.h \
+    led.h \
     loginwidget.h \
     mutex.h \
     mypushbutton.h \
     pvmsmenuwidget.h \
     pvmsmonitorwidget.h \
-    qmessagedialog.h \
     recordplaywidget.h \
-#    inteanalywidget.h \
     devmanagewidget.h \
     devupdatewidget.h \
     alarmwidget.h \
-#    debug.h \
     fileConfig.h \
     gb2312_utf8.h \
     log.h \

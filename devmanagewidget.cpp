@@ -1,5 +1,11 @@
 #include "devmanagewidget.h"
 #include "ui_devmanagewidget.h"
+#include <net/if.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <sys/ioctl.h>
 #include <QMessageBox>
 #include <QDateTime>
 #include "log.h"
@@ -9,6 +15,7 @@
 #include <QTabWidget>
 #include "debug.h"
 #include "led.h"
+
 
 static int g_ibShowKeyboard = 0;
 static int g_iDNum = 0;
@@ -787,10 +794,28 @@ void devManageWidget::getTrainConfig()   //获取车型配置信息，填充页�
     QString devStatus = tr("离线");     //设备状态初始默认值为离线
     T_TRAIN_CONFIG tTrainConfigInfo;
     char tranNum[32] = {0};
+    const char *acIP= NULL;
 
-    char acIP[32] = {0};
-    STATE_GetIpAddr(acIP,sizeof(acIP));
-    printf("*******getTrainConfig****acIP=%s",acIP);
+    int                fd;
+    char               buf[64];
+    struct ifreq       ifr;
+    struct sockaddr_in *sa = NULL;
+
+    acIP = (char *)malloc(sizeof(buf));
+    if (NULL == acIP)
+    {
+        return;
+    }
+    fd = socket(AF_INET, SOCK_STREAM, 0);
+    strcpy(ifr.ifr_name, "eth1");
+    if (ioctl(fd, SIOCGIFADDR, &ifr) < 0) {
+        perror("ioctl");
+    }
+    sa = (struct sockaddr_in *)(&ifr.ifr_addr);
+    acIP = inet_ntop(AF_INET, &sa->sin_addr, buf, sizeof (buf));
+
+//    STATE_GetIpAddr(acIP,sizeof(acIP));
+    printf("*******getTrainConfig****acIP=%s\n",acIP);
 
     /*设备状态和设备存储列表清空*/
     row = ui->devStorageTableWidget->rowCount();

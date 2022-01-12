@@ -27,7 +27,6 @@ class devUpdateWidget : public QWidget
 public:
     explicit devUpdateWidget(QWidget *parent = 0);
     ~devUpdateWidget();
-    QDateTime timeTd;
     bool eventFilter(QObject *obj, QEvent *e);
     void ShowKeyboardSlots(int nShow);
     timeset *timeSetWidget;    //时间设置控制窗体
