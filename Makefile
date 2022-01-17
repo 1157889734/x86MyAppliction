@@ -861,6 +861,7 @@ qrc_res.cpp: res.qrc \
 		monres/carriageequip1.bmp \
 		monres/fast.bmp \
 		monres/saveing.bmp \
+		monres/daoru.bmp \
 		monres/lighton.jpg \
 		monres/PantoIntell1.bmp \
 		monres/stop.bmp \

@@ -846,8 +846,10 @@ void recordPlayWidget::recordDownloadSlot()
 //        snprintf(acIpAddr, sizeof(acIpAddr), "rtsp://192.168.101.81");
         snprintf(acIpAddr, sizeof(acIpAddr), "127.0.0.1");
 
-        m_tFtpHandle[idex] = FTP_CreateConnect(acIpAddr, FTP_SERVER_PORT, PftpProc);
-
+        if(m_tFtpHandle[idex] == 0)
+        {
+            m_tFtpHandle[idex] = FTP_CreateConnect(acIpAddr, FTP_SERVER_PORT, PftpProc);
+        }
         if (0 == m_tFtpHandle[idex])
         {
             DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] connect to ftp server:%s error!\n", __FUNCTION__, acIpAddr);

@@ -236,5 +236,6 @@
         <file>monres/35.bmp</file>
         <file>monres/user.bmp</file>
         <file>monres/usermanage.bmp</file>
+        <file>monres/daoru.bmp</file>
     </qresource>
 </RCC>

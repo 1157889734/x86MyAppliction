@@ -400,7 +400,7 @@ public:
         configFileImportPushButton->setGeometry(QRect(50, 370, 82, 37));
         configFileImportPushButton->setFont(font);
         configFileImportPushButton->setStyleSheet(QString::fromUtf8("QPushButton{\n"
-"background-image: url(:/monres/in.bmp);\n"
+"background-image: url(:/monres/daoru.bmp);\n"
 "border-color: rgb(255, 255, 255);\n"
 "border-width: 1px;\n"
 "border-style: solid;}\n"

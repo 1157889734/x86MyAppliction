@@ -309,7 +309,10 @@ int find_usbDev()
     {
         return 0;
     }
-
+    if(access("/proc/scsi/usb-storage",F_OK) < 0)
+    {
+        return 0;
+    }
     while (fgets(acBuf, sizeof(acBuf), pFile))
     {
         if (strstr(acBuf, "sd") != NULL)
@@ -717,6 +720,7 @@ int FTP_ServerLogin(T_FTP_CONNECTION_INFO *ftp, int addr, int port, char *uname,
     err = FTP_SendCmd(ftp, buf);
     if (err < 0)
     {
+        DebugPrint(DEBUG_ERROR_PRINT, "FTP_SendCmderr, err=%d,\n", err);
         FTP_Quit(ftp);
         return FTP_SEND_USER_ERR;
     }
@@ -727,10 +731,12 @@ int FTP_ServerLogin(T_FTP_CONNECTION_INFO *ftp, int addr, int port, char *uname,
     {
         if(strstr(recv_buf,"230")!=0)
         {   
+            DebugPrint(DEBUG_ERROR_PRINT, "FTP_RecvResponse err, err=%d,\n", err);
             return 0;     
         }
         else
         {   
+            DebugPrint(DEBUG_ERROR_PRINT, "111FTP_Quit FTP_RecvResponse err, err=%d,\n", err);
             FTP_Quit(ftp);
             return FTP_SEND_USER_ERR;
         }
@@ -918,10 +924,10 @@ void *FTP_DownloadDataRecvThread(void *param)
     {		
     	if (0 == find_usbDev())
 		{
-			if (0 == access("/mnt/usb/u/", F_OK))
-			{
-				system("rm -r /mnt/usb/u/");
-			}
+//			if (0 == access("/mnt/usb/u/", F_OK))
+//			{
+//				system("rm -r /mnt/usb/u/");
+//			}
 			iPos = -1;  //暂定回调进度-1，表示告知U盘已拔出
 			goto FAIL;
 		}
@@ -1031,10 +1037,10 @@ void *FTP_DownloadDataRecvThread(void *param)
 			{	
 				if (0 == find_usbDev())
 				{
-					if (0 == access("/mnt/usb/u/", F_OK))
-					{
-						system("rm -r /mnt/usb/u/");
-					}
+//					if (0 == access("/mnt/usb/u/", F_OK))
+//					{
+//						system("rm -r /mnt/usb/u/");
+//					}
 					iPos = -1;  //暂定回调进度-1，表示告知U盘已拔出
 					break;
 				}
@@ -1063,10 +1069,10 @@ void *FTP_DownloadDataRecvThread(void *param)
 								}
 								else
 								{
-									if (0 == access("/mnt/usb/u/", F_OK))
-									{
-										system("rm -r /mnt/usb/u/");
-									}
+//									if (0 == access("/mnt/usb/u/", F_OK))
+//									{
+//										system("rm -r /mnt/usb/u/");
+//									}
 									iPos = -1;  //暂定回调进度-1，表示告知U盘已拔出
 								}
 			                	break;
@@ -1105,19 +1111,24 @@ void *FTP_DownloadDataRecvThread(void *param)
 						    {
 						    	FD_CLR(ptFtpConnectionInfo->data_socket, &ptFtpConnectionInfo->readSet);
 						    	FTP_CloseClientDataSocket(ptFtpConnectionInfo);
+                                DebugPrint(DEBUG_ERROR_PRINT, "11recv err,iRecvLen=%d\n",iRecvLen);
+                                iPos = -3; //暂定回调进度-3，表示告知数据接收失败
 						    }
+
 					        break;
 					    }
 						if(ptFtpConnectionInfo->data_socket > 0)
 					    {
 					    	FD_CLR(ptFtpConnectionInfo->data_socket, &ptFtpConnectionInfo->readSet);
 					    	FTP_CloseClientDataSocket(ptFtpConnectionInfo);
+                            DebugPrint(DEBUG_ERROR_PRINT, "22recv err,iRecvLen=%d\n",iRecvLen);
 					    }
-						break;
+                            break;
+
 					}
 			        else
 			        {
-                        DebugPrint(DEBUG_ERROR_PRINT, "recv err,iRecvLen=%d\n",iRecvLen);
+                        DebugPrint(DEBUG_ERROR_PRINT, "33recv err,iRecvLen=%d\n",iRecvLen);
 			            iPos = -3; //暂定回调进度-3，表示告知数据接收失败
 			            break;
 			        }
