@@ -230,7 +230,7 @@ public:
         trainTypeSetComboBox->setFont(font);
         presetReturnTimeSetLineEdit = new QLineEdit(devUpdateWidget);
         presetReturnTimeSetLineEdit->setObjectName(QString::fromUtf8("presetReturnTimeSetLineEdit"));
-        presetReturnTimeSetLineEdit->setGeometry(QRect(790, 80, 141, 31));
+        presetReturnTimeSetLineEdit->setGeometry(QRect(780, 80, 151, 31));
         presetReturnTimeSetLineEdit->setFont(font);
         presetReturnTimeSetLineEdit->setReadOnly(false);
         alarmPushButton = new QPushButton(devUpdateWidget);
@@ -284,7 +284,7 @@ public:
         brightnessLineEdit->setFont(font);
         carriageLabel = new QLabel(deviceManagewidget);
         carriageLabel->setObjectName(QString::fromUtf8("carriageLabel"));
-        carriageLabel->setGeometry(QRect(500, 280, 61, 24));
+        carriageLabel->setGeometry(QRect(500, 280, 71, 24));
         carriageLabel->setFont(font);
         carriageLabel->setStyleSheet(QString::fromUtf8(""));
         configFilelookPushButton = new QPushButton(deviceManagewidget);
@@ -365,7 +365,7 @@ public:
         saturationLabel->setStyleSheet(QString::fromUtf8(""));
         brightnessLabel = new QLabel(deviceManagewidget);
         brightnessLabel->setObjectName(QString::fromUtf8("brightnessLabel"));
-        brightnessLabel->setGeometry(QRect(480, 320, 51, 24));
+        brightnessLabel->setGeometry(QRect(480, 322, 51, 24));
         brightnessLabel->setFont(font);
         brightnessLabel->setStyleSheet(QString::fromUtf8(""));
         clientRebootPushButton = new QPushButton(deviceManagewidget);
@@ -616,7 +616,7 @@ public:
         canselPushButton->setText(QString());
         label_17->setText(QString());
         brightnessLineEdit->setText(QCoreApplication::translate("devUpdateWidget", "50", nullptr));
-        carriageLabel->setText(QCoreApplication::translate("devUpdateWidget", "\350\275\246\345\216\242\345\217\267:", nullptr));
+        carriageLabel->setText(QCoreApplication::translate("devUpdateWidget", " \350\275\246\345\216\242\345\217\267:", nullptr));
         configFilelookPushButton->setText(QString());
         contrastLineEdit->setText(QCoreApplication::translate("devUpdateWidget", "50", nullptr));
         label_9->setText(QCoreApplication::translate("devUpdateWidget", "\346\211\213\345\212\250\346\240\241\346\227\266", nullptr));

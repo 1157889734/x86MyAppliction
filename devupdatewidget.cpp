@@ -766,7 +766,7 @@ void devUpdateWidget::configFileSelectionSlot()
         }
         else
         {
-            if (access("/media/usb0/", F_OK) < 0)
+            if (access("/home/data/u/", F_OK) < 0)
             {
                 DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget::%s %d not get USB device!\n",__FUNCTION__,__LINE__);
                 static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
@@ -796,7 +796,7 @@ void devUpdateWidget::configFileSelectionSlot()
             QFileDialog *dialog = new QFileDialog;
             dialog->setAttribute(Qt::WA_DeleteOnClose);
             dialog->setWindowFlag(Qt::FramelessWindowHint);
-            dialog->setDirectory("/media/usb0/");
+            dialog->setDirectory("/home/data/u/");
             dialog->setFilter(QDir::Dirs);
             dialog->setFixedSize(800,600);
             dialog->show();
@@ -820,7 +820,7 @@ void devUpdateWidget::configFileSelectionSlot()
 
                }
            }
-//            filename = QFileDialog::getOpenFileName(this, "打开文件", "/media/usb0/", "ini文件(*.ini)");
+//            filename = QFileDialog::getOpenFileName(this, "打开文件", "/home/data/u/", "ini文件(*.ini)");
             if (!filename.isNull())
             {
                 ui->configFileDisplayLineEdit->setText(filename);
@@ -857,7 +857,7 @@ void devUpdateWidget::devUpdateSlot()
         ui->updateStatueTextEdit->clear();
 
 
-        if (access("/media/usb0/", F_OK) < 0)
+        if (access("/home/data/u/", F_OK) < 0)
         {
             DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget::%s %d not get USB device!\n",__FUNCTION__,__LINE__);
             ui->clientRebootPushButton->setEnabled(true);
@@ -879,7 +879,7 @@ void devUpdateWidget::devUpdateSlot()
 
         ui->updateStatueTextEdit->append(tr("发现USB，已准备好"));
 
-        if (access("/media/usb0/monitor_ytj", F_OK) < 0)
+        if (access("/home/data/u/monitor_ytj", F_OK) < 0)
         {
             DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget not find update file in USB device!\n");
             static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("U盘中未检测到更新文件!")));
@@ -902,7 +902,7 @@ void devUpdateWidget::devUpdateSlot()
 
         system("cp /home/user/bin/monitor_ytj /home/data/backup/");
         system("rm /home/user/bin/monitor_ytj");
-        system("cp /media/usb0/monitor_ytj /home/user/bin/monitor_ytj");
+        system("cp /home/data/u/monitor_ytj /home/user/bin/monitor_ytj");
         system("sync");
 
         ui->updateStatueTextEdit->append(tr("复制文件完成"));
@@ -1115,19 +1115,19 @@ void devUpdateWidget::configFileImportSlot()
             return;
         }
 
-        if(access("/media/usb0/monitorCfg/C3SysConfig.ini",F_OK) == 0)
+        if(access("/home/data/u/monitorCfg/C3SysConfig.ini",F_OK) == 0)
         {
-            system("cp /media/usb0/monitorCfg/C3SysConfig.ini /home/data/monitorCfg/");
+            system("cp /home/data/u/monitorCfg/C3SysConfig.ini /home/data/monitorCfg/");
 
         }
-        if(access("/media/usb0/monitorCfg/Station.ini",F_OK) == 0)
+        if(access("/home/data/u/monitorCfg/Station.ini",F_OK) == 0)
         {
-            system("cp /media/usb0/monitorCfg/Station.ini /home/data/monitorCfg/");
+            system("cp /home/data/u/monitorCfg/Station.ini /home/data/monitorCfg/");
 
         }
-        if(access("/media/usb0/monitorCfg/cfg",F_OK) == 0)
+        if(access("/home/data/u/monitorCfg/cfg",F_OK) == 0)
         {
-            system("cp /media/usb0/monitorCfg/cfg/* /home/data/monitorCfg/cfg/ -R");
+            system("cp /home/data/u/monitorCfg/cfg/* /home/data/monitorCfg/cfg/ -R");
         }
 
 
