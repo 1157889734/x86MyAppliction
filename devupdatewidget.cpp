@@ -624,8 +624,10 @@ void devUpdateWidget::setTrainType()
             snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "change traintype to %s and monitor Client reboot!", acTrainType);
             LOG_WriteLog(&tLogInfo);
 
-            system("reboot");
-            system("sync");
+//            system("reboot");
+//            system("sync");
+            QProcess *pro = new QProcess;
+            pro->start("reboot");
 
         }
     }
@@ -949,10 +951,10 @@ void devUpdateWidget::devRebootSlot()
         tLogInfo.iLogType = 0;
         snprintf(tLogInfo.acLogDesc, sizeof(tLogInfo.acLogDesc), "monitor Client reboot!");
         LOG_WriteLog(&tLogInfo);
-
-        system("reboot");
-        system("sync");
-
+//        system("reboot");
+//        system("sync");
+        QProcess *pro = new QProcess;
+        pro->start("reboot");
     }
 
 

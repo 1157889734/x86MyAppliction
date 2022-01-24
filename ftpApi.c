@@ -899,7 +899,7 @@ void *FTP_DownloadDataRecvThread(void *param)
 	int iRet = 0, trytimes = 0;
 	int iPos = 0, iRecvLen = 0, iRecvSize = 0;
 	unsigned long long iFileSize = 0;
-	char acLocalDatabuf[4096] = {0};
+    char acLocalDatabuf[4096] = {0};
 	
     char buf[256] = {0};
     char recv_buf[1024] = {0};
@@ -1082,14 +1082,17 @@ void *FTP_DownloadDataRecvThread(void *param)
 			                if (ptFtpConnectionInfo->DownloadFileSize > 0)
 			                {
 								iPos = iFileSize*100/ptFtpConnectionInfo->DownloadFileSize;
-								if (iPos >= 0)
+                                if (iPos > 0)
 								{	
 									if (iPos == 100)
 									{
+                                        usleep(200*1000);
 						        		break;
 						        	} 
 						        	else
 						        	{
+//                                        DebugPrint(DEBUG_UI_NOMAL_PRINT, "*****recv,iPos=%d\n",iPos);
+
 										ptFtpConnectionInfo->pFtpProcFunc((PFTP_HANDLE)ptFtpConnectionInfo, iPos);
 						        	}
 				                }
@@ -1150,8 +1153,9 @@ void *FTP_DownloadDataRecvThread(void *param)
 			}
 			fflush(fp);
 			fsync(fileno(fp));
-			fclose(fp);
+            fclose(fp);
 		    fp = NULL;
+            system("sync");
 		FAIL:
 		    if ((100 == iPos) || (-1 == iPos) || (-2 == iPos) || (-3 == iPos))
 		    {

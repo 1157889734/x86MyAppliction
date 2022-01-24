@@ -849,6 +849,8 @@ void recordPlayWidget::recordDownloadSlot()
         if(m_tFtpHandle[idex] == 0)
         {
             m_tFtpHandle[idex] = FTP_CreateConnect(acIpAddr, FTP_SERVER_PORT, PftpProc);
+            DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] m_tFtpHandle[idex]=%p*****idex=%d!\n", __FUNCTION__, m_tFtpHandle[idex],idex);
+
         }
 
         if (0 == m_tFtpHandle[idex])
@@ -856,6 +858,8 @@ void recordPlayWidget::recordDownloadSlot()
             DebugPrint(DEBUG_UI_ERROR_PRINT, "[%s] connect to ftp server:%s error!\n", __FUNCTION__, acIpAddr);
             return;
         }
+
+        memset(acSaveFileName,0,sizeof (acSaveFileName));
 
         for (row = 0; row < ui->recordFileTableWidget->rowCount(); row++)
         {
