@@ -1,4 +1,5 @@
 #include "devupdatewidget.h"
+#include "recordplaywidget.h"
 #include "ui_devupdatewidget.h"
 #include <QButtonGroup>
 #include <QDebug>
@@ -768,6 +769,18 @@ void devUpdateWidget::configFileSelectionSlot()
         }
         else
         {
+            if(g_downloadFlag == 1)
+            {
+                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget::%s %d g_downloadFlag!\n",__FUNCTION__,__LINE__);
+                static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("下载过程，禁止导入!")));
+                msgBox.setWindowFlags(Qt::FramelessWindowHint);
+                msgBox.setStandardButtons(QMessageBox::Yes);
+                msgBox.button(QMessageBox::Yes)->setText("OK");
+                msgBox.exec();
+                return;
+
+            }
+
             if (access("/home/data/u/", F_OK) < 0)
             {
                 DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget::%s %d not get USB device!\n",__FUNCTION__,__LINE__);

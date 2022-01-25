@@ -20,6 +20,7 @@
 #include <QCheckBox>
 #include "debug.h"
 
+int g_downloadFlag = 0;
 int g_iDateEditNo = 0;      //要显示时间的不同控件的编号
 static int g_iRNum = 0;
 #define PVMSPAGETYPE  2    //此页面类型，2表示受电弓监控页面
@@ -44,6 +45,11 @@ void PftpProc(PFTP_HANDLE PHandle, int iPos)     //回调函数处理接收到�
 
     if ((100 == iPos) || (-1 == iPos) || (-2 == iPos) || (-3 == iPos))  //iPos=100,表示下载完毕。暂定iPos=-1表示被告知U盘已拔出, iPos=-2表示被告知U盘写入失败,iPos=-3表示被告知数据接收失败失败。 三种情况都隐藏进度条，并在信号处理函数中销毁FTP连接
     {
+        if(100 == iPos)
+        {
+            usleep(1000*1000);
+        }
+
         g_recordPlayThis->triggerDownloadProcessBarDisplaySignal(0);
     }
 
@@ -449,21 +455,48 @@ void recordPlayWidget::downloadProcessBarDisplaySlot(int iEnableFlag)   //是否
 {
     if ((0 == iEnableFlag) && (0 == ui->fileDownloadProgressBar->isHidden()))
     {
-        ui->fileDownloadProgressBar->hide();
-        ui->queryPushButton->setEnabled(true);
-        ui->downLoadPushButton->setEnabled(true);
+
+        if(ui->fileDownloadProgressBar->isVisible() == true)
+        {
+            ui->fileDownloadProgressBar->hide();
+        }
+        if(ui->queryPushButton->isEnabled() == false)
+        {
+            ui->queryPushButton->setEnabled(true);
+        }
+        if(ui->downLoadPushButton->isEnabled() == false)
+        {
+            ui->downLoadPushButton->setEnabled(true);
+        }
+
+        g_downloadFlag = 0;
+
+
     }
     else if ((1 == iEnableFlag) && (1 == ui->fileDownloadProgressBar->isHidden()))
     {
-        ui->fileDownloadProgressBar->show();
-        ui->queryPushButton->setEnabled(false);
-        ui->downLoadPushButton->setEnabled(false);
+
+        if(ui->fileDownloadProgressBar->isVisible() == false)
+        {
+            ui->fileDownloadProgressBar->show();
+        }
+        if(ui->queryPushButton->isEnabled() == true)
+        {
+            ui->queryPushButton->setEnabled(false);
+        }
+        if(ui->downLoadPushButton->isEnabled() == true)
+        {
+            ui->downLoadPushButton->setEnabled(false);
+        }
+
+        g_downloadFlag = 1;
     }
 
 }
 
 void recordPlayWidget::setDownloadProcessBarValueSlot(int iValue)   //设置文件下载进度条的值
 {
+
     if (-1 == iValue) //iValue=-1时,表示被告知U盘已拔出,销毁FTP连接并弹框提示
     {
         FTP_DestoryConnect(m_tFtpHandle[m_iFtpServerIdex]);
@@ -477,6 +510,7 @@ void recordPlayWidget::setDownloadProcessBarValueSlot(int iValue)   //设置文�
         return;
     }
 
+
     if (-2 == iValue) //iValue=-2时,表示被告知U盘写入失败,销毁FTP连接并弹框提示
     {
         FTP_DestoryConnect(m_tFtpHandle[m_iFtpServerIdex]);
@@ -489,6 +523,7 @@ void recordPlayWidget::setDownloadProcessBarValueSlot(int iValue)   //设置文�
         box.exec();
         return;
     }
+
 
     if (-3 == iValue) //iValue=-3时,表示被告知数据接收失败,销毁FTP连接并弹框提示
     {
@@ -851,6 +886,10 @@ void recordPlayWidget::recordDownloadSlot()
             m_tFtpHandle[idex] = FTP_CreateConnect(acIpAddr, FTP_SERVER_PORT, PftpProc);
             DebugPrint(DEBUG_UI_NOMAL_PRINT, "[%s] m_tFtpHandle[idex]=%p*****idex=%d!\n", __FUNCTION__, m_tFtpHandle[idex],idex);
 
+        }
+        else
+        {
+            return;
         }
 
         if (0 == m_tFtpHandle[idex])
