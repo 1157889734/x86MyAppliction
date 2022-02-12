@@ -1461,12 +1461,19 @@ int FTP_AddDownLoadFile(PFTP_HANDLE pFtpHandle, char *pcSrcFileName, char *pcDst
 
     if (NULL == ptFtpConnectionInfo || NULL == pcSrcFileName || NULL == pcDstFileName)
     {
+        printf("***************%s*****%d\n",__FUNCTION__,__LINE__);
     	return FTP_ERR_ELSE;
     }
 
 	FTP_GetFileSize(ptFtpConnectionInfo, pcSrcFileName, &fileSize); 
 
 	ptFtpConnectionInfo->DownloadFileSize += fileSize;
+
+    if(ptFtpConnectionInfo->DownloadFileSize <= 0)
+    {
+        printf("***************%s*****%d\n",__FUNCTION__,__LINE__);
+        return FTP_ERR_ELSE;
+    }
 
     memset(tPkt.acSrcFileName, 0, sizeof(tPkt.acSrcFileName));
     memcpy(tPkt.acSrcFileName, pcSrcFileName, strlen(pcSrcFileName));

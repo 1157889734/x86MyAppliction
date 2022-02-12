@@ -139,6 +139,8 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
 
     m_iPlayFlag = 0;
     m_iRecordIdex = -1;
+    g_fistSelctFlag = -1;
+    recordPlayFlag = 0;
     m_iSliderValue = 0;
     m_threadId = 0;
     m_pcRecordFileBuf = (char *)malloc(MAX_RECORD_SEACH_NUM*MAX_RECFILE_PATH_LEN);
@@ -162,6 +164,8 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
 
 
      timeSetWidget = new timeset(this);
+     timeSetWidget->setWindowFlags(timeSetWidget->windowFlags() | Qt::FramelessWindowHint| Qt::Dialog);
+
      timeSetWidget->hide();
 
      connect(timeSetWidget, SIGNAL(timeSetSendMsg(QString,QString,QString,QString,QString,QString)), this, SLOT(timeSetRecvMsg(QString,QString,QString,QString,QString,QString)));  //时间设置窗体控件设置信号响应
@@ -499,6 +503,8 @@ void recordPlayWidget::setDownloadProcessBarValueSlot(int iValue)   //设置文�
 
     if (-1 == iValue) //iValue=-1时,表示被告知U盘已拔出,销毁FTP连接并弹框提示
     {
+        ui->fileDownloadProgressBar->hide();
+
         FTP_DestoryConnect(m_tFtpHandle[m_iFtpServerIdex]);
         m_tFtpHandle[m_iFtpServerIdex] = 0;
 
@@ -513,6 +519,8 @@ void recordPlayWidget::setDownloadProcessBarValueSlot(int iValue)   //设置文�
 
     if (-2 == iValue) //iValue=-2时,表示被告知U盘写入失败,销毁FTP连接并弹框提示
     {
+        ui->fileDownloadProgressBar->hide();
+
         FTP_DestoryConnect(m_tFtpHandle[m_iFtpServerIdex]);
         m_tFtpHandle[m_iFtpServerIdex] = 0;
 
@@ -527,6 +535,8 @@ void recordPlayWidget::setDownloadProcessBarValueSlot(int iValue)   //设置文�
 
     if (-3 == iValue) //iValue=-3时,表示被告知数据接收失败,销毁FTP连接并弹框提示
     {
+        ui->fileDownloadProgressBar->hide();
+
         FTP_DestoryConnect2(m_tFtpHandle[m_iFtpServerIdex]);
         m_tFtpHandle[m_iFtpServerIdex] = 0;
 
@@ -611,6 +621,11 @@ void recordPlayWidget::recordTableWidgetFillFunc()
         {
             ui->recordFileTableWidget->item(iParseIdex-1, 1)->setForeground(Qt::red);
             ui->recordFileTableWidget->item(iParseIdex-1, 2)->setForeground(Qt::red);
+        }
+        else
+        {
+            ui->recordFileTableWidget->item(iParseIdex-1, 1)->setForeground(Qt::black);
+            ui->recordFileTableWidget->item(iParseIdex-1, 2)->setForeground(Qt::black);
         }
 
         pcToken = pcBufTmp + strlen(".MP4");
@@ -939,6 +954,8 @@ void recordPlayWidget::recordDownloadSlot()
 
         }
 
+        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget record file start download!\n");
+
         iRet = FTP_FileDownLoad(m_tFtpHandle[idex]);
         if (iRet < 0)
         {
@@ -1013,6 +1030,7 @@ void recordPlayWidget::getTrainConfig()    	//获取车型配置文件，初始�
 
 void recordPlayWidget::recordPlayStartSlot()
 {
+    recordPlayFlag = 1;
     if (m_cmpHandle != NULL)
     {
         if (0 == m_iPlayFlag)
@@ -1090,11 +1108,13 @@ void recordPlayWidget::closePlayWin()  ///////////??????????????
         emit setRecordPlayFlagSignal(0);
     }
 
+
     if (m_iRecordIdex >= 0 && ui->recordFileTableWidget->item(m_iRecordIdex, 2) != NULL && 0 == ui->recordFileTableWidget->item(m_iRecordIdex, 2)->text().contains("tmp"))
     {
-        ui->recordFileTableWidget->item(m_iRecordIdex, 1)->setForeground(Qt::black);
-        ui->recordFileTableWidget->item(m_iRecordIdex, 2)->setForeground(Qt::black);
+        ui->recordFileTableWidget->item(m_iRecordIdex, 1)->setForeground(Qt::cyan);
+        ui->recordFileTableWidget->item(m_iRecordIdex, 2)->setForeground(Qt::cyan);
     }
+
     m_iRecordIdex = -1;
     m_iPlayFlag = 0;
 
@@ -1357,12 +1377,15 @@ void recordPlayWidget::recordSelectionSlot(QTableWidgetItem *item)
             {
                 ui->recordFileTableWidget->item(i, 1)->setTextColor(Qt::green);
                 ui->recordFileTableWidget->item(i, 2)->setForeground(Qt::green);
+
             }
             else
             {
                 ui->recordFileTableWidget->item(i, 1)->setTextColor(Qt::black);
                 ui->recordFileTableWidget->item(i, 2)->setForeground(Qt::black);
             }
+            setPlayButtonStyleSheet();
+
         }
     }
 
@@ -1430,13 +1453,25 @@ void recordPlayWidget::recordPlaySlot(QTableWidgetItem *item)    //录像文件�
     int iRow = 0, iDex = 0;
     DebugPrint(DEBUG_UI_OPTION_PRINT, "recordPlayWidget record play pressed!\n");
 
-    setPlayButtonStyleSheet();
-
     closePlayWin();   //先关闭之前的
     setPlayButtonStyleSheet();
     emit setRecordPlayFlagSignal(1);
 
-    iRow = item->row();
+    //qDebug()<<"************g_fistSelctFlag="<<g_fistSelctFlag<<__LINE__;
+
+    if(recordPlayFlag == 1)
+    {
+        if(g_fistSelctFlag >= 0)
+        {
+            iRow = g_fistSelctFlag;
+        }
+        recordPlayFlag = 0;
+    }
+    else
+    {
+        iRow = item->row();
+    }
+
     iDex = ui->carSeletionComboBox->currentIndex();
 
     recordPlayCtrl(iRow, iDex);
@@ -1614,11 +1649,36 @@ void recordPlayWidget::recordPlayCtrl(int iRow, int iDex)
     }
 
     m_iRecordIdex = iRow;
-    if (0 == ui->recordFileTableWidget->item(m_iRecordIdex, 2)->text().contains("tmp"))
+    g_fistSelctFlag = m_iRecordIdex;
+
+//    if (0 == ui->recordFileTableWidget->item(m_iRecordIdex, 2)->text().contains("tmp"))
+//    {
+//        ui->recordFileTableWidget->item(m_iRecordIdex, 1)->setTextColor(Qt::blue);
+//        ui->recordFileTableWidget->item(m_iRecordIdex, 2)->setForeground(Qt::blue);
+//    }
+//    else
+//    {
+//        ui->recordFileTableWidget->item(m_iRecordIdex, 1)->setTextColor(Qt::black);
+//        ui->recordFileTableWidget->item(m_iRecordIdex, 2)->setForeground(Qt::black);
+//    }
+
+
+    for (int i = 0; i < ui->recordFileTableWidget->rowCount(); i++)
     {
-        ui->recordFileTableWidget->item(m_iRecordIdex, 1)->setTextColor(Qt::blue);
-        ui->recordFileTableWidget->item(m_iRecordIdex, 2)->setForeground(Qt::blue);
+        if (0 == ui->recordFileTableWidget->item(i, 2)->text().contains("tmp") && i == m_iRecordIdex)
+        {
+            ui->recordFileTableWidget->item(i, 1)->setTextColor(Qt::blue);
+            ui->recordFileTableWidget->item(i, 2)->setForeground(Qt::blue);
+        }
+        else
+        {
+            ui->recordFileTableWidget->item(i, 1)->setTextColor(Qt::black);
+            ui->recordFileTableWidget->item(i, 2)->setForeground(Qt::black);
+
+        }
     }
+
+
 
     usleep(200*1000);
     if (0 == m_threadId)    //保证播放进度条刷新线程只创建一次

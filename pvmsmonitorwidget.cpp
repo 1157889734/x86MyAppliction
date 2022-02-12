@@ -531,7 +531,7 @@ void *monitorThread(void *param)     //实时监控线程，对通道轮询、�
         /*检测设备状态*/
         if ((tGetDevStateCurTime - tGetDevStateOldTime) >= GET_DEVSTATE_MONITOR_TIME)
         {
-            DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread get device state timeOut!\n");
+//            DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread get device state timeOut!\n");
             pvmsMonitorPage->triggerGetDevStateSignal();
             tGetDevStateOldTime = tGetDevStateCurTime;
 
@@ -540,7 +540,7 @@ void *monitorThread(void *param)     //实时监控线程，对通道轮询、�
         /*检测系统时间*/
         if ((tSetTimeCurTime - tSetTimeOldTime) >= SET_TIME_MONITOR_TIME)
         {
-            DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread set devUpdatePage time timeOut!\n");
+//            DebugPrint(DEBUG_UI_NOMAL_PRINT, "pvmsMonitorWidget monitor thread set devUpdatePage time timeOut!\n");
             pvmsMonitorPage->triggerSetTimeSignal();
             tSetTimeOldTime = tSetTimeCurTime;
 

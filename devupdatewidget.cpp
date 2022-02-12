@@ -334,7 +334,7 @@ void devUpdateWidget::openTimeSetWidgetSlot()
 
 
     }
-    timeSetWidget->setGeometry(450, 257, timeSetWidget->width(), timeSetWidget->height());
+    timeSetWidget->setGeometry(425, 160, timeSetWidget->width(), timeSetWidget->height());
     timeSetWidget->setTimeLabelText(iYear, iMonth, iDay, iHour, iMin, iSec);
     timeSetWidget->show();
 
