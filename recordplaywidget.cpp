@@ -47,7 +47,7 @@ void PftpProc(PFTP_HANDLE PHandle, int iPos)     //回调函数处理接收到�
     {
         if(100 == iPos)
         {
-            usleep(1000*1000);
+            usleep(2000*1000);
         }
 
         g_recordPlayThis->triggerDownloadProcessBarDisplaySignal(0);
@@ -1232,6 +1232,22 @@ void recordPlayWidget::recordPlaySlowForwardSlot()
 
 }
 
+void recordPlayWidget::manualtableSwitchVideoEndSlot()
+{
+    ui->recordFileTableWidget->setEnabled(true);
+
+    if (m_tableVideoSwitchTimer != NULL)
+    {
+        if (m_tableVideoSwitchTimer->isActive())
+        {
+            m_tableVideoSwitchTimer->stop();
+        }
+        delete m_tableVideoSwitchTimer;
+        m_tableVideoSwitchTimer = NULL;
+    }
+
+}
+
 void recordPlayWidget::manualSwitchVideoEndSlot()
 {
 
@@ -1375,6 +1391,8 @@ void recordPlayWidget::recordSelectionSlot(QTableWidgetItem *item)
         {
             if (i == item->row())
             {
+                g_fistSelctFlag = item->row();
+
                 ui->recordFileTableWidget->item(i, 1)->setTextColor(Qt::green);
                 ui->recordFileTableWidget->item(i, 2)->setForeground(Qt::green);
 
@@ -1465,12 +1483,23 @@ void recordPlayWidget::recordPlaySlot(QTableWidgetItem *item)    //录像文件�
         {
             iRow = g_fistSelctFlag;
         }
-        recordPlayFlag = 0;
     }
     else
     {
         iRow = item->row();
+
     }
+
+    ui->recordFileTableWidget->setEnabled(false);
+    if(m_tableVideoSwitchTimer == NULL)
+    {
+        m_tableVideoSwitchTimer = new QTimer(this);
+        m_tableVideoSwitchTimer->start(1*1000);
+        connect(m_tableVideoSwitchTimer,SIGNAL(timeout()), this,SLOT(manualtableSwitchVideoEndSlot()));
+    }
+
+
+    recordPlayFlag = 0;
 
     iDex = ui->carSeletionComboBox->currentIndex();
 
@@ -1649,7 +1678,7 @@ void recordPlayWidget::recordPlayCtrl(int iRow, int iDex)
     }
 
     m_iRecordIdex = iRow;
-    g_fistSelctFlag = m_iRecordIdex;
+//    g_fistSelctFlag = m_iRecordIdex;
 
 //    if (0 == ui->recordFileTableWidget->item(m_iRecordIdex, 2)->text().contains("tmp"))
 //    {
@@ -1661,7 +1690,6 @@ void recordPlayWidget::recordPlayCtrl(int iRow, int iDex)
 //        ui->recordFileTableWidget->item(m_iRecordIdex, 1)->setTextColor(Qt::black);
 //        ui->recordFileTableWidget->item(m_iRecordIdex, 2)->setForeground(Qt::black);
 //    }
-
 
     for (int i = 0; i < ui->recordFileTableWidget->rowCount(); i++)
     {
