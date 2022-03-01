@@ -3,6 +3,11 @@
 #include <QDateTime>
 #include <stdio.h>
 #include <QDebug>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <stdio.h>
+#include "unistd.h"
 
 int idayNum[12]={31,28,31,30,31,30,31,31,30,31,30,31};
 
@@ -12,30 +17,42 @@ timeset::timeset(QWidget *parent) :
 {
     ui->setupUi(this);
 
+
     setWindowFlags(Qt::FramelessWindowHint);
 
-    connect(ui->pushButton_1, SIGNAL(clicked()), this, SLOT(stButtonClick()));
-    connect(ui->pushButton_1_1, SIGNAL(clicked()), this, SLOT(stButtonClick()));
-    connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(stButtonClick()));
-    connect(ui->pushButton_2_1, SIGNAL(clicked()), this, SLOT(stButtonClick()));
-    connect(ui->pushButton_3, SIGNAL(clicked()), this, SLOT(stButtonClick()));
-    connect(ui->pushButton_3_1, SIGNAL(clicked()), this, SLOT(stButtonClick()));
-    connect(ui->pushButton_4, SIGNAL(clicked()), this, SLOT(stButtonClick()));
-    connect(ui->pushButton_4_1, SIGNAL(clicked()), this, SLOT(stButtonClick()));
-    connect(ui->pushButton_5, SIGNAL(clicked()), this, SLOT(stButtonClick()));
-    connect(ui->pushButton_5_1, SIGNAL(clicked()), this, SLOT(stButtonClick()));
-    connect(ui->pushButton_6, SIGNAL(clicked()), this, SLOT(stButtonClick()));
-    connect(ui->pushButton_6_1, SIGNAL(clicked()), this, SLOT(stButtonClick()));
+
     connect(ui->pushButton_7, SIGNAL(clicked()), this, SLOT(okButtonClick()));
     connect(ui->pushButton_8, SIGNAL(clicked()), this, SLOT(cancleButtonClick()));
+
+    timeGroupButton = new  QButtonGroup(this);
+    timeGroupButton->addButton(ui->pushButton_1,0);
+    timeGroupButton->addButton(ui->pushButton_2,2);
+    timeGroupButton->addButton(ui->pushButton_3,4);
+    timeGroupButton->addButton(ui->pushButton_4,6);
+    timeGroupButton->addButton(ui->pushButton_5,8);
+    timeGroupButton->addButton(ui->pushButton_6,10);
+    timeGroupButton->addButton(ui->pushButton_1_1,1);
+    timeGroupButton->addButton(ui->pushButton_2_1,3);
+    timeGroupButton->addButton(ui->pushButton_3_1,5);
+    timeGroupButton->addButton(ui->pushButton_4_1,7);
+    timeGroupButton->addButton(ui->pushButton_5_1,9);
+    timeGroupButton->addButton(ui->pushButton_6_1,11);
+
+    timeGroupButton->installEventFilter(this);
+
+   connect(timeGroupButton, SIGNAL(buttonClicked(int)), this, SLOT(stButtonClick(int)));     //预置点按钮组按键信号连接响应槽函数
 
 
 }
 
 timeset::~timeset()
 {
+    delete timeGroupButton;
+    timeGroupButton = NULL;
+
     delete ui;
 }
+
 
 
 
@@ -51,269 +68,201 @@ void timeset::okButtonClick()
     emit timeSetSendMsg(ui->label_2->text(), ui->label_3->text(), ui->label_4->text(), ui->label_5->text(), ui->label_6->text(), ui->label_7->text());
 }
 
-void timeset::stButtonClick()
+void timeset::stButtonClick(int id)
 {
-    //printf("timeSet::stButtonClick (%d,%d),(%d,%d)\n",cursor().pos().x(),cursor().pos().y(),this->pos().x(),this->pos().y());
+    clickButtonNum = id;
+
     int num = 0, mon = 0;
     QString string = "";
     QPoint pt=cursor().pos()-((QWidget *)(this->parent()))->pos()-this->pos();
     QObject* Object=sender();
-    if (Object == ui->pushButton_1 || Object == ui->pushButton_1_1)
-    {
-        //printf("set year! %d-%d\n",pt.x(),pt.y());
-        num = ui->label_2->text().toInt();
-//        if (((pt.x() >= ui->pushButton_1->x()) && (pt.x() < ui->pushButton_1->x() + ui->pushButton_1->width())) && ((pt.y() >= ui->pushButton_1->y() && (pt.y() < ui->pushButton_1->y() + 27))))
-//        {
-//            printf("up!\n");
-//            num +=1;
-//        }
-//        else if (((pt.x() >= ui->pushButton_1->x()) && (pt.x() < ui->pushButton_1->x() + ui->pushButton_1->width())) && ((pt.y() >= 84 && (pt.y() < 111))))
-//        {
-//            printf("down!\n");
-//            num -=1;
-//        }
-        if(Object == ui->pushButton_1)
-        {
-            num +=1;
-        }
-        else
-        {
-            num -=1;
-        }
-        if ((num%4==0&&num%100!=0)||(num%400==0))
-        {
-            idayNum[1] = 29;
-        }
-        else
-        {
-            idayNum[1] = 28;
-        }
-        ui->label_2->setText(QString::number(num));
-    }
-    if (Object == ui->pushButton_2 || Object ==ui->pushButton_2_1)
-    {
-        string = "";
-        num = ui->label_3->text().toInt();
-//        if (((pt.x() >= ui->pushButton_2->x()) && (pt.x() < ui->pushButton_2->x() + ui->pushButton_2->width())) && ((pt.y() >= ui->pushButton_2->y() && (pt.y() < ui->pushButton_2->y() + 27))))
-//        {
-//            num +=1;
-//            if (num > 12)
-//            {
-//                num = 1;
-//            }
-//        }
-//        else if (((pt.x() >= ui->pushButton_2->x()) && (pt.x() < ui->pushButton_2->x() + ui->pushButton_2->width())) && ((pt.y() >= 84 && (pt.y() < 111))))
-//        {
-//            num -=1;
-//            if (num < 1)
-//            {
-//                num = 12;
-//            }
-//        }
-        if(Object == ui->pushButton_2)
-        {
-            num +=1;
-            if (num > 12)
-            {
-                num = 1;
-            }
-        }
-        else
-        {
-            num -=1;
-            if (num < 1)
-            {
-                num = 12;
-            }
-        }
 
-        if (num < 10)
+    //    if (Object == ui->pushButton_1 || Object == ui->pushButton_1_1)
+        if(clickButtonNum == 0 || clickButtonNum == 1)
         {
-            string += "0";
-        }
-//        printf("***************num=%d\n",num);
 
-        string += QString::number(num);
-        ui->label_3->setText(string);
-    }
-    if (Object == ui->pushButton_3 || Object == ui->pushButton_3_1)
-    {
-        string = "";
-        mon = ui->label_3->text().toInt();
-        num = ui->label_4->text().toInt();
-//        if (((pt.x() >= ui->pushButton_3->x()) && (pt.x() < ui->pushButton_3->x() + ui->pushButton_3->width())) && ((pt.y() >= ui->pushButton_3->y() && (pt.y() < ui->pushButton_3->y() + 27))))
-//        {
-//            num +=1;
-//            if (num > idayNum[mon-1])
-//            {
-//                num = 1;
-//            }
-//        }
-//        else if (((pt.x() >= ui->pushButton_3->x()) && (pt.x() < ui->pushButton_3->x() + ui->pushButton_3->width())) && ((pt.y() >= 84 && (pt.y() < 111))))
-//        {
-//            num -=1;
-//            if (num < 1)
-//            {
-//                num = idayNum[mon-1];
-//            }
-//        }
-        if(Object == ui->pushButton_3)
-        {
-            num +=1;
-            if (num > idayNum[mon-1])
-            {
-                num = 1;
-            }
-        }
-        else
-        {
-            num -=1;
-            if (num < 1)
-            {
-                num = idayNum[mon-1];
-            }
-        }
+            num = ui->label_2->text().toInt();
 
-        if (num < 10)
-        {
-            string += "0";
-        }
-        string += QString::number(num);
-        ui->label_4->setText(string);
-    }
-    if (Object == ui->pushButton_4 || Object == ui->pushButton_4_1)
-    {
-        string = "";
-        num = ui->label_5->text().toInt();
-//        if (((pt.x() >= ui->pushButton_4->x()) && (pt.x() < ui->pushButton_4->x() + ui->pushButton_4->width())) && ((pt.y() >= ui->pushButton_4->y() && (pt.y() < ui->pushButton_4->y() + 30))))
-//        {
-//            num +=1;
-//            if (num > 23)
-//            {
-//                num = 0;
-//            }
-//        }
-//        else if (((pt.x() >= ui->pushButton_4->x()) && (pt.x() < ui->pushButton_4->x() + ui->pushButton_4->width())) && ((pt.y() >= 214 && (pt.y() < 238))))
-//        {
-//            num -=1;
-//            if (num < 0)
-//            {
-//                num = 23;
-//            }
-//        }
-        if(Object == ui->pushButton_4)
-        {
-            num +=1;
-            if (num > 23)
+    //        if(Object == ui->pushButton_1)
+             if(clickButtonNum == 0)
             {
-                num = 0;
+                num +=1;
             }
-        }
-        else
-        {
-            num -=1;
-            if (num < 0)
+            else
             {
-                num = 23;
+                num -=1;
             }
+            if ((num%4==0&&num%100!=0)||(num%400==0))
+            {
+                idayNum[1] = 29;
+            }
+            else
+            {
+                idayNum[1] = 28;
+            }
+            ui->label_2->setText(QString::number(num));
         }
+    //    if (Object == ui->pushButton_2 || Object ==ui->pushButton_2_1)
+        if(clickButtonNum == 2 || clickButtonNum == 3)
+        {
+            string = "";
+            num = ui->label_3->text().toInt();
 
-        if (num < 10)
-        {
-            string += "0";
-        }
-        string += QString::number(num);
-        ui->label_5->setText(string);
-    }
-    if (Object == ui->pushButton_5 || Object == ui->pushButton_5_1)
-    {
-        string = "";
-        num = ui->label_6->text().toInt();
-//        if (((pt.x() >= ui->pushButton_5->x()) && (pt.x() < ui->pushButton_5->x() + ui->pushButton_5->width())) && ((pt.y() >= ui->pushButton_5->y() && (pt.y() < ui->pushButton_5->y() + 30))))
-//        {
-//            num +=1;
-//            if (num > 59)
-//            {
-//                num = 0;
-//            }
-//        }
-//        else if (((pt.x() >= ui->pushButton_5->x()) && (pt.x() < ui->pushButton_5->x() + ui->pushButton_5->width())) && ((pt.y() >= 214 && (pt.y() < 238))))
-//        {
-//            num -=1;
-//            if (num < 0)
-//            {
-//                num = 59;
-//            }
-//        }
-        if(Object == ui->pushButton_5)
-        {
-            num +=1;
-            if (num > 59)
+    //        if(Object == ui->pushButton_2)
+            if(clickButtonNum == 2)
             {
-                num = 0;
+                num +=1;
+                if (num > 12)
+                {
+                    num = 1;
+                }
             }
-        }
-        else
-        {
-            num -=1;
-            if (num < 0)
+            else
             {
-                num = 59;
+                num -=1;
+                if (num < 1)
+                {
+                    num = 12;
+                }
             }
-        }
 
-        if (num < 10)
-        {
-            string += "0";
-        }
-        string += QString::number(num);
-        ui->label_6->setText(string);
-    }
-    if (Object == ui->pushButton_6 || Object == ui->pushButton_6_1)
-    {
-        string = "";
-        num = ui->label_7->text().toInt();
-//        if (((pt.x() >= ui->pushButton_6->x()) && (pt.x() < ui->pushButton_6->x() + ui->pushButton_6->width())) && ((pt.y() >= ui->pushButton_6->y() && (pt.y() < ui->pushButton_6->y() + 30))))
-//        {
-//            num +=1;
-//            if (num > 59)
-//            {
-//                num = 0;
-//            }
-//        }
-//        else if (((pt.x() >= ui->pushButton_6->x()) && (pt.x() < ui->pushButton_6->x() + ui->pushButton_6->width())) && ((pt.y() >= 214 && (pt.y() < 238))))
-//        {
-//            num -=1;
-//            if (num < 0)
-//            {
-//                num = 59;
-//            }
-//        }
-        if(Object == ui->pushButton_6)
-        {
-            num +=1;
-            if (num > 59)
+            if (num < 10)
             {
-                num = 0;
+                string += "0";
             }
+    //        printf("***************num=%d\n",num);
+
+            string += QString::number(num);
+            ui->label_3->setText(string);
         }
-        else
+    //    if (Object == ui->pushButton_3 || Object == ui->pushButton_3_1)
+        if(clickButtonNum == 4 || clickButtonNum == 5)
         {
-            num -=1;
-            if (num < 0)
+            string = "";
+            mon = ui->label_3->text().toInt();
+            num = ui->label_4->text().toInt();
+
+    //        if(Object == ui->pushButton_3)
+            if(clickButtonNum == 4)
             {
-                num = 59;
+                num +=1;
+                if (num > idayNum[mon-1])
+                {
+                    num = 1;
+                }
             }
+            else
+            {
+                num -=1;
+                if (num < 1)
+                {
+                    num = idayNum[mon-1];
+                }
+            }
+
+            if (num < 10)
+            {
+                string += "0";
+            }
+            string += QString::number(num);
+            ui->label_4->setText(string);
+        }
+    //    if (Object == ui->pushButton_4 || Object == ui->pushButton_4_1)
+        if(clickButtonNum == 6 || clickButtonNum == 7)
+        {
+            string = "";
+            num = ui->label_5->text().toInt();
+
+    //        if(Object == ui->pushButton_4)
+           if(clickButtonNum == 6)
+            {
+                num +=1;
+                if (num > 23)
+                {
+                    num = 0;
+                }
+            }
+            else
+            {
+                num -=1;
+                if (num < 0)
+                {
+                    num = 23;
+                }
+            }
+
+            if (num < 10)
+            {
+                string += "0";
+            }
+            string += QString::number(num);
+            ui->label_5->setText(string);
+        }
+    //    if (Object == ui->pushButton_5 || Object == ui->pushButton_5_1)
+        if(clickButtonNum == 8 || clickButtonNum == 9)
+        {
+            string = "";
+            num = ui->label_6->text().toInt();
+
+    //        if(Object == ui->pushButton_5)
+            if(clickButtonNum == 8)
+            {
+                num +=1;
+                if (num > 59)
+                {
+                    num = 0;
+                }
+            }
+            else
+            {
+                num -=1;
+                if (num < 0)
+                {
+                    num = 59;
+                }
+            }
+
+            if (num < 10)
+            {
+                string += "0";
+            }
+            string += QString::number(num);
+            ui->label_6->setText(string);
+        }
+    //    if (Object == ui->pushButton_6 || Object == ui->pushButton_6_1)
+        if(clickButtonNum == 10 || clickButtonNum == 11)
+        {
+            string = "";
+            num = ui->label_7->text().toInt();
+            if(clickButtonNum == 10)
+    //        if(Object == ui->pushButton_6)
+            {
+                num +=1;
+                if (num > 59)
+                {
+                    num = 0;
+                }
+            }
+            else
+            {
+                num -=1;
+                if (num < 0)
+                {
+                    num = 59;
+                }
+            }
+
+
+            if (num < 10)
+            {
+                string += "0";
+            }
+            string += QString::number(num);
+            ui->label_7->setText(string);
         }
 
 
-        if (num < 10)
-        {
-            string += "0";
-        }
-        string += QString::number(num);
-        ui->label_7->setText(string);
-    }
+
 }
 
 void timeset::setTimeLabelText(int year, int month, int day, int hour, int min, int sec)
