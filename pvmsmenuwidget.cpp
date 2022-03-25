@@ -730,7 +730,7 @@ void pvmsMenuWidget::menuButtonClick()
         m_devManagePage->hide();
         m_devUpdatePage->hide();
 
-        m_recordPlayPage->pageShowCtrl();
+//        m_recordPlayPage->pageShowCtrl();
 
 
         ui->pvmsMonitorMenuPushButton->setChecked(false);

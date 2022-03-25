@@ -15,6 +15,7 @@
 #include "ckeyboard.h"
 
 
+class QFileDialog;
 
 namespace Ui {
 class devUpdateWidget;
@@ -85,7 +86,7 @@ private:
     QString m_saturationText;
     QString m_contrastText;
     usergroupManage *gusergroupManage;
-
+    QFileDialog *m_pFileDialog;
 
 };
 

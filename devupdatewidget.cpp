@@ -150,6 +150,13 @@ devUpdateWidget::devUpdateWidget(QWidget *parent) :
     setPollingTimeRadioButton();  //设置轮询时间单选按钮组的样式
     setPresetReturnTimeRadioButton(); //设置预置点返回时间单选按钮组的样式
 
+    m_pFileDialog=new QFileDialog;
+    m_pFileDialog->setWindowFlag(Qt::FramelessWindowHint);
+    m_pFileDialog->setDirectory("/home/data/u/");
+    m_pFileDialog->setFilter(QDir::Dirs);
+    m_pFileDialog->setFixedSize(800,600);
+    m_pFileDialog->hide();
+
 
 }
 
@@ -810,16 +817,16 @@ void devUpdateWidget::configFileSelectionSlot()
             }
             char *pcfileName = NULL;
 
-            QFileDialog *dialog = new QFileDialog;
-            dialog->setAttribute(Qt::WA_DeleteOnClose);
-            dialog->setWindowFlag(Qt::FramelessWindowHint);
-            dialog->setDirectory("/home/data/u/");
-            dialog->setFilter(QDir::Dirs);
-            dialog->setFixedSize(800,600);
-            dialog->show();
+//            QFileDialog *dialog = new QFileDialog;
+//            dialog->setAttribute(Qt::WA_DeleteOnClose);
+//            dialog->setWindowFlag(Qt::FramelessWindowHint);
+//            dialog->setDirectory("/home/data/u/");
+//            dialog->setFilter(QDir::Dirs);
+//            dialog->setFixedSize(800,600);
+//            dialog->show();
+            m_pFileDialog->exec();
 
-
-            QDir file = dialog->directory();
+            QDir file = m_pFileDialog->directory();
             QDir *dir = NULL;
             if(dir ==NULL)
             {

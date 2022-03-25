@@ -217,7 +217,7 @@ QPushButton:pressed
   <widget class="QTableWidget" name="recordFileTableWidget">
    <property name="geometry">
     <rect>
-     <x>0</x>
+     <x>10</x>
      <y>250</y>
      <width>281</width>
      <height>291</height>
@@ -842,7 +842,7 @@ border-width: 2px;border-style: solid;}
   <widget class="QProgressBar" name="fileDownloadProgressBar">
    <property name="geometry">
     <rect>
-     <x>0</x>
+     <x>10</x>
      <y>550</y>
      <width>271</width>
      <height>23</height>
@@ -900,9 +900,9 @@ border-style: solid;</string>
    <property name="geometry">
     <rect>
      <x>260</x>
-     <y>50</y>
-     <width>21</width>
-     <height>21</height>
+     <y>46</y>
+     <width>25</width>
+     <height>25</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -941,9 +941,9 @@ border-style: solid;</string>
    <property name="geometry">
     <rect>
      <x>260</x>
-     <y>90</y>
-     <width>21</width>
-     <height>21</height>
+     <y>86</y>
+     <width>25</width>
+     <height>25</height>
     </rect>
    </property>
    <property name="styleSheet">

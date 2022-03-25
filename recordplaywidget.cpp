@@ -156,7 +156,7 @@ recordPlayWidget::recordPlayWidget(QWidget *parent) :
     getTrainConfig();
 
     m_playWin = new QWidget(this);
-    m_playWin->setGeometry(290, 0, 730, 540);
+    m_playWin->setGeometry(295, 0, 725, 540);
     m_playWin->show();
     m_playWin->setStyleSheet("QWidget{background-color: rgb(0, 0, 0);}");
 
@@ -591,18 +591,25 @@ void recordPlayWidget::recordTableWidgetFillFunc()
 
         ui->recordFileTableWidget->insertRow(iParseIdex-1);//添加新的一行
 
-        QWidget *checkWidget= new QWidget(this); //创建一个widget
+        QTableWidgetItem *checkBox = new QTableWidgetItem();
+        checkBox->setSizeHint(QSize(40,40));
+        checkBox->setCheckState(Qt::Unchecked);
 
-        QCheckBox *checkBox = new QCheckBox(checkWidget);
-        checkBox->setChecked(Qt::Unchecked);
-        QHBoxLayout *hLayout = new QHBoxLayout(); //创建布局
-        hLayout->addWidget(checkBox); //添加checkbox
-        hLayout->setMargin(0); //设置边缘距离 否则会很难看
-        hLayout->setAlignment(checkBox, Qt::AlignCenter); //居中
-        checkWidget->setLayout(hLayout); //设置widget的布局
+        ui->recordFileTableWidget->setItem(iParseIdex-1, 0, checkBox);
+        ui->recordFileTableWidget->item(iParseIdex-1, 0)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
 
-        checkBox->setStyleSheet(QString("QCheckBox {margin:3px;border:3px; border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid}QCheckBox::indicator {width: %1px; height: %1px;}").arg(30));
-        ui->recordFileTableWidget->setCellWidget(iParseIdex-1, 0, checkWidget);
+//        QWidget *checkWidget= new QWidget(this); //创建一个widget
+
+//        QCheckBox *checkBox = new QCheckBox(checkWidget);
+//        checkBox->setChecked(Qt::Unchecked);
+//        QHBoxLayout *hLayout = new QHBoxLayout(); //创建布局
+//        hLayout->addWidget(checkBox); //添加checkbox
+//        hLayout->setMargin(0); //设置边缘距离 否则会很难看
+//        hLayout->setAlignment(checkBox, Qt::AlignCenter); //居中
+//        checkWidget->setLayout(hLayout); //设置widget的布局
+
+//        checkBox->setStyleSheet(QString("QCheckBox {margin:3px;border:3px; border-color: rgb(170, 170, 170);border-width: 2px;border-style: solid}QCheckBox::indicator {width: %1px; height: %1px;}").arg(30));
+//        ui->recordFileTableWidget->setCellWidget(iParseIdex-1, 0, checkWidget);
 
 
         item = QString::number(iParseIdex);
@@ -670,8 +677,11 @@ void recordPlayWidget::setPlaySliderValueSlot(int iValue)    //实时刷新播�
 void recordPlayWidget::recordQuerySlot()
 {
     int iRet = 0, row = 0, iServerIdex = 0, iCameraIdex = 0, i = 0;
-    int year = 0, mon = 0, day = 0, hour = 0, min = 0, sec = 0;
-    short yr = 0;
+    int startyear = 0, startmon = 0, startday = 0, starthour = 0, startmin = 0, startsec = 0;
+    short startyr = 0;
+
+    int endyear = 0, endmon = 0, endday = 0, endhour = 0, endmin = 0, endsec = 0;
+    short endyr = 0;
     T_TRAIN_CONFIG tTrainConfigInfo;
     T_LOG_INFO tLogInfo;
 
@@ -695,31 +705,50 @@ void recordPlayWidget::recordQuerySlot()
     iServerIdex = ui->carSeletionComboBox->currentIndex();
     iCameraIdex = ui->cameraSelectionComboBox->currentIndex();
 
+    int iDiscTime = 0;
     if (m_Phandle[iServerIdex])
     {
         T_NVR_SEARCH_RECORD tRecordSeach;
         memset(&tRecordSeach, 0, sizeof(T_NVR_SEARCH_RECORD));
-        sscanf(ui->startTimeLabel->text().toLatin1().data(), "%4d-%2d-%2d %2d:%2d:%2d", &year, &mon, &day, &hour, &min, &sec);
+        sscanf(ui->startTimeLabel->text().toLatin1().data(), "%4d-%2d-%2d %2d:%2d:%2d", &startyear, &startmon, &startday, &starthour, &startmin, &startsec);
 
 
-        yr = year;
-        tRecordSeach.tStartTime.i16Year = htons(yr);
-        tRecordSeach.tStartTime.i8Mon = mon;
-        tRecordSeach.tStartTime.i8day = day;
-        tRecordSeach.tStartTime.i8Hour = hour;
-        tRecordSeach.tStartTime.i8Min = min;
-        tRecordSeach.tStartTime.i8Sec = sec;
+        startyr = startyear;
+        tRecordSeach.tStartTime.i16Year = htons(startyr);
+        tRecordSeach.tStartTime.i8Mon = startmon;
+        tRecordSeach.tStartTime.i8day = startday;
+        tRecordSeach.tStartTime.i8Hour = starthour;
+        tRecordSeach.tStartTime.i8Min = startmin;
+        tRecordSeach.tStartTime.i8Sec = startsec;
 
-        sscanf(ui->endTimeLabel->text().toLatin1().data(), "%4d-%2d-%2d %2d:%2d:%2d", &year, &mon, &day, &hour, &min, &sec);
+        sscanf(ui->endTimeLabel->text().toLatin1().data(), "%4d-%2d-%2d %2d:%2d:%2d", &endyear, &endmon, &endday, &endhour, &endmin, &endsec);
 
 
-        yr = year;
-        tRecordSeach.tEndTime.i16Year = htons(yr);
-        tRecordSeach.tEndTime.i8Mon = mon;
-        tRecordSeach.tEndTime.i8day = day;
-        tRecordSeach.tEndTime.i8Hour = hour;
-        tRecordSeach.tEndTime.i8Min = min;
-        tRecordSeach.tEndTime.i8Sec = sec;
+        endyr = endyear;
+        tRecordSeach.tEndTime.i16Year = htons(endyr);
+        tRecordSeach.tEndTime.i8Mon = endmon;
+        tRecordSeach.tEndTime.i8day = endday;
+        tRecordSeach.tEndTime.i8Hour = endhour;
+        tRecordSeach.tEndTime.i8Min = endmin;
+        tRecordSeach.tEndTime.i8Sec = endsec;
+
+
+        iDiscTime = (startyear - endyear)*366*24*3600
+            +(startmon - endmon)*30*24*3600
+            +(startday - endday)*24*3600
+            +(starthour - endhour)*3600
+            +(startmin - endmin)*60
+            +(startsec - endsec);
+
+        if(iDiscTime > 0)
+        {
+            static QMessageBox box(QMessageBox::Warning,QString::fromUtf8("warning"),QString::fromUtf8("开始时间不能大于结束时间!"));
+            box.setWindowFlags(Qt::FramelessWindowHint);
+            box.setStandardButtons (QMessageBox::Ok);
+            box.setButtonText (QMessageBox::Ok,QString::fromUtf8("OK"));
+            box.exec();
+            return;
+        }
 
         tRecordSeach.iCarriageNo = tTrainConfigInfo.tNvrServerInfo[iServerIdex].iCarriageNO;
         tRecordSeach.iIpcPos = 8+iCameraIdex;
@@ -831,21 +860,51 @@ void recordPlayWidget::recordDownloadSlot()
         return;
     }
 
+    if (access("/home/data/u/", F_OK) < 0)
+    {
+        DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not get USB device!\n");
+        static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
+        msgBox.setWindowFlags(Qt::FramelessWindowHint);
+        msgBox.setStandardButtons(QMessageBox::Yes);
+        msgBox.button(QMessageBox::Yes)->setText("OK");
+        msgBox.exec();
+
+        return;
+    }
+    else
+    {
+        if (0 == STATE_FindUsbDev())   //这里处理一个特殊情况:U盘拔掉是umount失败，/mnt/usb/u/路径还存在，但是实际U盘是没有再插上的
+        {
+            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not get USB device!\n");
+            static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
+            msgBox.setWindowFlags(Qt::FramelessWindowHint);
+            msgBox.setStandardButtons(QMessageBox::Yes);
+            msgBox.button(QMessageBox::Yes)->setText("OK");
+            msgBox.exec();
+
+            return;
+        }
+    }
+
     if (ui->recordFileTableWidget->rowCount() > 0)
     {
         for (row = 0; row < ui->recordFileTableWidget->rowCount(); row++)    //先判断一次是否没有录像文件被选中，没有则弹框提示
         {
 
-
-            if(QWidget *w = ui->recordFileTableWidget->cellWidget(row,0))
+            if (ui->recordFileTableWidget->item(row, 0)->checkState() == Qt::Checked)
             {
-                QCheckBox *checkBox = (QCheckBox*)(w->children().at(0));
-
-                if(checkBox->checkState() == Qt::Checked)
-                {
-                   break;
-                }
+                break;
             }
+
+//            if(QWidget *w = ui->recordFileTableWidget->cellWidget(row,0))
+//            {
+//                QCheckBox *checkBox = (QCheckBox*)(w->children().at(0));
+
+//                if(checkBox->checkState() == Qt::Checked)
+//                {
+//                   break;
+//                }
+//            }
         }
 
         if (row == ui->recordFileTableWidget->rowCount())
@@ -860,31 +919,7 @@ void recordPlayWidget::recordDownloadSlot()
             return;
         }
 
-        if (access("/home/data/u/", F_OK) < 0)
-        {
-            DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not get USB device!\n");
-            static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
-            msgBox.setWindowFlags(Qt::FramelessWindowHint);
-            msgBox.setStandardButtons(QMessageBox::Yes);
-            msgBox.button(QMessageBox::Yes)->setText("OK");
-            msgBox.exec();
 
-            return;
-        }
-        else
-        {
-            if (0 == STATE_FindUsbDev())   //这里处理一个特殊情况:U盘拔掉是umount失败，/mnt/usb/u/路径还存在，但是实际U盘是没有再插上的
-            {
-                DebugPrint(DEBUG_UI_MESSAGE_PRINT, "recordPlayWidget not get USB device!\n");
-                static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
-                msgBox.setWindowFlags(Qt::FramelessWindowHint);
-                msgBox.setStandardButtons(QMessageBox::Yes);
-                msgBox.button(QMessageBox::Yes)->setText("OK");
-                msgBox.exec();
-
-                return;
-            }
-        }
 
         idex = ui->carSeletionComboBox->currentIndex();
 
@@ -922,10 +957,11 @@ void recordPlayWidget::recordDownloadSlot()
         for (row = 0; row < ui->recordFileTableWidget->rowCount(); row++)
         {
 
-            if(QWidget *w = ui->recordFileTableWidget->cellWidget(row,0))
+            if (ui->recordFileTableWidget->item(row, 0)->checkState() == Qt::Checked)
+//            if(QWidget *w = ui->recordFileTableWidget->cellWidget(row,0))
             {
-                QCheckBox *checkBox = (QCheckBox*)(w->children().at(0));
-                if(checkBox->checkState() == Qt::Checked)
+//                QCheckBox *checkBox = (QCheckBox*)(w->children().at(0));
+//                if(checkBox->checkState() == Qt::Checked)
                 {
                     if (parseFileName(m_acFilePath[row]) != NULL)
                     {
