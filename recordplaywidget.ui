@@ -27,8 +27,17 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>12</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
     </font>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_5">
@@ -728,8 +737,26 @@ border-width: 2px;border-style: solid;}
    </property>
    <property name="font">
     <font>
-     <pointsize>12</pointsize>
+     <pointsize>-1</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
     </font>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QComboBox 
+{
+    font:16px;
+    height: 20px;
+}
+
+QComboBox QAbstractItemView 
+{
+    font:32px light;
+}</string>
    </property>
   </widget>
   <widget class="QPushButton" name="plusStepPushButton">

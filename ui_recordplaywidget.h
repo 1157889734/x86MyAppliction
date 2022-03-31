@@ -66,8 +66,12 @@ public:
         cameraSelectionComboBox->setObjectName(QString::fromUtf8("cameraSelectionComboBox"));
         cameraSelectionComboBox->setGeometry(QRect(205, 150, 76, 27));
         QFont font;
-        font.setPointSize(12);
+        font.setBold(false);
+        font.setItalic(false);
+        font.setWeight(50);
         cameraSelectionComboBox->setFont(font);
+        cameraSelectionComboBox->setFocusPolicy(Qt::NoFocus);
+        cameraSelectionComboBox->setStyleSheet(QString::fromUtf8(""));
         label_5 = new QLabel(recordPlayWidget);
         label_5->setObjectName(QString::fromUtf8("label_5"));
         label_5->setGeometry(QRect(0, 110, 111, 33));
@@ -117,7 +121,9 @@ public:
         label_7 = new QLabel(recordPlayWidget);
         label_7->setObjectName(QString::fromUtf8("label_7"));
         label_7->setGeometry(QRect(140, 140, 151, 41));
-        label_7->setFont(font);
+        QFont font2;
+        font2.setPointSize(12);
+        label_7->setFont(font2);
         label_7->setStyleSheet(QString::fromUtf8(" #label_7 { \n"
 "	color: rgb(0, 0, 0);\n"
 "    background-color: rgb(255, 255, 255);\n"
@@ -128,7 +134,7 @@ public:
         alarmPushButton = new QPushButton(recordPlayWidget);
         alarmPushButton->setObjectName(QString::fromUtf8("alarmPushButton"));
         alarmPushButton->setGeometry(QRect(700, 575, 82, 36));
-        alarmPushButton->setFont(font);
+        alarmPushButton->setFont(font2);
         alarmPushButton->setStyleSheet(QString::fromUtf8("QPushButton{\n"
 "background-image: url(:/monres/alertoff.bmp);\n"
 "border-color: rgb(255, 255, 255);\n"
@@ -142,9 +148,9 @@ public:
         label_8 = new QLabel(recordPlayWidget);
         label_8->setObjectName(QString::fromUtf8("label_8"));
         label_8->setGeometry(QRect(0, 190, 281, 41));
-        QFont font2;
-        font2.setPointSize(15);
-        label_8->setFont(font2);
+        QFont font3;
+        font3.setPointSize(15);
+        label_8->setFont(font3);
         label_8->setStyleSheet(QString::fromUtf8(" #label_8 { \n"
 "    background-color: rgb(255, 255, 255);\n"
 "  } \n"
@@ -154,28 +160,28 @@ public:
         recordFileTableWidget = new QTableWidget(recordPlayWidget);
         if (recordFileTableWidget->columnCount() < 3)
             recordFileTableWidget->setColumnCount(3);
-        QFont font3;
-        font3.setPointSize(12);
-        font3.setBold(false);
-        font3.setWeight(50);
+        QFont font4;
+        font4.setPointSize(12);
+        font4.setBold(false);
+        font4.setWeight(50);
         QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
         __qtablewidgetitem->setTextAlignment(Qt::AlignCenter);
-        __qtablewidgetitem->setFont(font3);
+        __qtablewidgetitem->setFont(font4);
         __qtablewidgetitem->setBackground(QColor(255, 255, 255));
         recordFileTableWidget->setHorizontalHeaderItem(0, __qtablewidgetitem);
         QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
         __qtablewidgetitem1->setTextAlignment(Qt::AlignCenter);
-        __qtablewidgetitem1->setFont(font3);
+        __qtablewidgetitem1->setFont(font4);
         __qtablewidgetitem1->setBackground(QColor(255, 255, 255));
         recordFileTableWidget->setHorizontalHeaderItem(1, __qtablewidgetitem1);
         QTableWidgetItem *__qtablewidgetitem2 = new QTableWidgetItem();
         __qtablewidgetitem2->setTextAlignment(Qt::AlignCenter);
-        __qtablewidgetitem2->setFont(font3);
+        __qtablewidgetitem2->setFont(font4);
         __qtablewidgetitem2->setBackground(QColor(255, 255, 255));
         recordFileTableWidget->setHorizontalHeaderItem(2, __qtablewidgetitem2);
         recordFileTableWidget->setObjectName(QString::fromUtf8("recordFileTableWidget"));
         recordFileTableWidget->setGeometry(QRect(10, 250, 281, 291));
-        recordFileTableWidget->setFont(font);
+        recordFileTableWidget->setFont(font2);
         recordFileTableWidget->setStyleSheet(QString::fromUtf8("border-style: none;\n"
 "background-color: rgb(204, 232, 207);\n"
 "gridline-color: rgb(255, 255, 255);\n"
@@ -208,7 +214,7 @@ public:
         queryPushButton = new QPushButton(recordPlayWidget);
         queryPushButton->setObjectName(QString::fromUtf8("queryPushButton"));
         queryPushButton->setGeometry(QRect(90, 185, 112, 32));
-        queryPushButton->setFont(font);
+        queryPushButton->setFont(font2);
         queryPushButton->setStyleSheet(QString::fromUtf8("QPushButton{\n"
 "background-image: url(:/monres/search.bmp);\n"
 "border-color: rgb(255, 255, 255);\n"
@@ -232,7 +238,7 @@ public:
         label_11 = new QLabel(recordPlayWidget);
         label_11->setObjectName(QString::fromUtf8("label_11"));
         label_11->setGeometry(QRect(0, 640, 311, 31));
-        label_11->setFont(font2);
+        label_11->setFont(font3);
         label_11->setStyleSheet(QString::fromUtf8(" #label_11 { \n"
 "    background-color: rgb(255, 255, 255);\n"
 "  } \n"
@@ -242,7 +248,7 @@ public:
         downLoadPushButton = new QPushButton(recordPlayWidget);
         downLoadPushButton->setObjectName(QString::fromUtf8("downLoadPushButton"));
         downLoadPushButton->setGeometry(QRect(30, 575, 207, 44));
-        downLoadPushButton->setFont(font);
+        downLoadPushButton->setFont(font2);
         downLoadPushButton->setStyleSheet(QString::fromUtf8("QPushButton{\n"
 "background-image: url(:/monres/videodownload.bmp);\n"
 "border-color: rgb(255, 255, 255);\n"
@@ -284,7 +290,7 @@ public:
         label_6 = new QLabel(recordPlayWidget);
         label_6->setObjectName(QString::fromUtf8("label_6"));
         label_6->setGeometry(QRect(0, 140, 141, 41));
-        label_6->setFont(font);
+        label_6->setFont(font2);
         label_6->setStyleSheet(QString::fromUtf8(" #label_6 { \n"
 "	color: rgb(0, 0, 0);\n"
 "    background-color: rgb(255, 255, 255);\n"
@@ -295,7 +301,7 @@ public:
         label_4 = new QLabel(recordPlayWidget);
         label_4->setObjectName(QString::fromUtf8("label_4"));
         label_4->setGeometry(QRect(0, 80, 71, 30));
-        label_4->setFont(font);
+        label_4->setFont(font2);
         label_4->setStyleSheet(QString::fromUtf8(" #label_4 { \n"
 "	color: rgb(0, 0, 0);\n"
 "    background-color: rgb(255, 255, 255);\n"
@@ -351,7 +357,7 @@ public:
         label_3 = new QLabel(recordPlayWidget);
         label_3->setObjectName(QString::fromUtf8("label_3"));
         label_3->setGeometry(QRect(0, 40, 71, 30));
-        label_3->setFont(font);
+        label_3->setFont(font2);
         label_3->setStyleSheet(QString::fromUtf8(" #label_3 { \n"
 "	color: rgb(0, 0, 0);\n"
 "    background-color: rgb(255, 255, 255);\n"
@@ -363,6 +369,17 @@ public:
         carSeletionComboBox->setObjectName(QString::fromUtf8("carSeletionComboBox"));
         carSeletionComboBox->setGeometry(QRect(55, 150, 81, 27));
         carSeletionComboBox->setFont(font);
+        carSeletionComboBox->setFocusPolicy(Qt::NoFocus);
+        carSeletionComboBox->setStyleSheet(QString::fromUtf8("QComboBox \n"
+"{\n"
+"    font:16px;\n"
+"    height: 20px;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView \n"
+"{\n"
+"    font:32px light;\n"
+"}"));
         plusStepPushButton = new QPushButton(recordPlayWidget);
         plusStepPushButton->setObjectName(QString::fromUtf8("plusStepPushButton"));
         plusStepPushButton->setGeometry(QRect(950, 560, 68, 58));
@@ -379,7 +396,7 @@ public:
         canselPushButton = new QPushButton(recordPlayWidget);
         canselPushButton->setObjectName(QString::fromUtf8("canselPushButton"));
         canselPushButton->setGeometry(QRect(790, 575, 84, 38));
-        canselPushButton->setFont(font);
+        canselPushButton->setFont(font2);
         canselPushButton->setStyleSheet(QString::fromUtf8("QPushButton{\n"
 "background-image: url(:/monres/cancel.bmp);\n"
 "background-repeat: no-repeat;\n"
@@ -433,7 +450,7 @@ public:
         startTimeLabel = new QLabel(recordPlayWidget);
         startTimeLabel->setObjectName(QString::fromUtf8("startTimeLabel"));
         startTimeLabel->setGeometry(QRect(70, 45, 181, 27));
-        startTimeLabel->setFont(font);
+        startTimeLabel->setFont(font2);
         startTimeLabel->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 0);\n"
 "background-color: rgb(255, 255, 255);\n"
 "border-color: rgb(0, 0, 0);\n"
@@ -446,7 +463,7 @@ public:
         endTimeLabel = new QLabel(recordPlayWidget);
         endTimeLabel->setObjectName(QString::fromUtf8("endTimeLabel"));
         endTimeLabel->setGeometry(QRect(70, 85, 181, 27));
-        endTimeLabel->setFont(font);
+        endTimeLabel->setFont(font2);
         endTimeLabel->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 0);\n"
 "background-color: rgb(255, 255, 255);\n"
 "border-color: rgb(0, 0, 0);\n"
