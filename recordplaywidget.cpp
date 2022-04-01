@@ -608,11 +608,11 @@ void recordPlayWidget::recordTableWidgetFillFunc()
         ui->recordFileTableWidget->setItem(iParseIdex-1, 0, checkBox);
         ui->recordFileTableWidget->item(iParseIdex-1, 0)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
 
-//        QWidget *checkWidget= new QWidget(this); //创建一个widget
+//        QWidget *checkWidget= new QWidget; //创建一个widget
 
-//        QCheckBox *checkBox = new QCheckBox(checkWidget);
+//        QCheckBox *checkBox = new QCheckBox;
 //        checkBox->setChecked(Qt::Unchecked);
-//        QHBoxLayout *hLayout = new QHBoxLayout(); //创建布局
+//        QHBoxLayout *hLayout = new QHBoxLayout; //创建布局
 //        hLayout->addWidget(checkBox); //添加checkbox
 //        hLayout->setMargin(0); //设置边缘距离 否则会很难看
 //        hLayout->setAlignment(checkBox, Qt::AlignCenter); //居中
@@ -812,6 +812,9 @@ void recordPlayWidget::recordQueryEndSlot()
             delete m_recorQueryTimer;
             m_recorQueryTimer = NULL;
         }
+
+        iRecordNum = 0;
+
     }
     else
     {

@@ -263,10 +263,45 @@ void timeset::stButtonClick(int id)
 
         if(ui->label_3->text().toInt() == 2)
         {
-            if(ui->label_4->text().toInt() > 28)
+            int iYear = ui->label_2->text().toInt();
+            int loop = 0;
+            if(iYear % 100 == 0)
             {
-               ui->label_4->setText("28");
+                if(iYear % 400 == 0)
+                {
+                    loop = 1;
+                }
+                else
+                {
+                    loop = 0;
+                }
             }
+            else
+            {
+                if(iYear % 4 == 0)
+                {
+                    loop = 1;
+                }
+                else
+                {
+                    loop = 0;
+                }
+            }
+            if(loop)
+            {
+                if(ui->label_4->text().toInt() > 29)
+                {
+                   ui->label_4->setText("29");
+                }
+            }
+            else
+            {
+                if(ui->label_4->text().toInt() > 28)
+                {
+                   ui->label_4->setText("28");
+                }
+            }
+
         }
 
 }
