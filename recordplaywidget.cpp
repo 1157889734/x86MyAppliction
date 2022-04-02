@@ -743,12 +743,11 @@ void recordPlayWidget::recordQuerySlot()
         tRecordSeach.tEndTime.i8Sec = endsec;
 
 
-        iDiscTime = (endyear - startyear)*366*24*3600
-            +(endmon - startmon)*30*24*3600
-            +(endday - startday)*24*3600
-            +(endhour - starthour)*3600
-            +(endmin - startmin)*60
-            +(endsec - startsec);
+        QDateTime startDate(QDate(startyr, startmon, startday), QTime(starthour, startmin, startsec));
+        QDateTime endDate(QDate(endyear, endmon, endday), QTime(endhour, endmin, endsec));
+
+        iDiscTime = startDate.daysTo(endDate);
+
 
         if(iDiscTime < 0)
         {
@@ -759,7 +758,7 @@ void recordPlayWidget::recordQuerySlot()
             box.exec();
             return;
         }
-        if(iDiscTime > 345600)
+        if(iDiscTime > 3)
         {
             static QMessageBox box(QMessageBox::Warning,QString::fromUtf8("warning"),QString::fromUtf8("搜索时间不能大于三天!"));
             box.setWindowFlags(Qt::FramelessWindowHint);
@@ -828,7 +827,7 @@ void recordPlayWidget::recordQueryEndSlot()
     }
     else
     {
-        if (iRecordNum > 40)    //5秒没查询即恢复查询按键可按*/
+        if (iRecordNum > 60)    //5秒没查询即恢复查询按键可按*/
         {
             iRecordNum = 0;
             ui->queryPushButton->setEnabled(true);
