@@ -165,6 +165,26 @@ public:
     void triggerRecordPlayCtrlSignal();
     void setPlayButtonStyleSheet();
 
+    void GetPollStreamState();
+
+    struct T_Node
+    {
+        int iStreamState;
+        int iIndex;
+        T_Node()
+        {
+            iStreamState = 0xffff;
+            iIndex = 0;
+        }
+        void empty()
+        {
+            iStreamState = 0xffff;
+            iIndex = 0;
+        }
+
+    };
+    T_Node m_nodes[8];
+
 
 signals:
     void alarmPushButoonClickSignal();
@@ -227,6 +247,7 @@ public slots:
     void blackScreenCtrlSlot();
     void blackScreenExitCtrlSlot();
     void cameraSwitchEndSlot();
+
 
 private:
     Ui::pvmsMonitorWidget *ui;

@@ -152,7 +152,7 @@ devUpdateWidget::devUpdateWidget(QWidget *parent) :
 
     m_pFileDialog=new QFileDialog;
     m_pFileDialog->setWindowFlag(Qt::FramelessWindowHint);
-    m_pFileDialog->setDirectory("/home/data/u/");
+    m_pFileDialog->setDirectory("/mnt/ramfs/u/");
     m_pFileDialog->setFilter(QDir::Dirs);
     m_pFileDialog->setFixedSize(800,600);
     m_pFileDialog->hide();
@@ -790,7 +790,7 @@ void devUpdateWidget::configFileSelectionSlot()
 
             }
 
-            if (access("/home/data/u/", F_OK) < 0)
+            if (access("/mnt/ramfs/u/", F_OK) < 0)
             {
                 DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget::%s %d not get USB device!\n",__FUNCTION__,__LINE__);
                 static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
@@ -820,11 +820,11 @@ void devUpdateWidget::configFileSelectionSlot()
 //            QFileDialog *dialog = new QFileDialog;
 //            dialog->setAttribute(Qt::WA_DeleteOnClose);
 //            dialog->setWindowFlag(Qt::FramelessWindowHint);
-//            dialog->setDirectory("/home/data/u/");
+//            dialog->setDirectory("/mnt/ramfs/u/");
 //            dialog->setFilter(QDir::Dirs);
 //            dialog->setFixedSize(800,600);
 //            dialog->show();
-            m_pFileDialog->setDirectory("/home/data/u/");
+            m_pFileDialog->setDirectory("/mnt/ramfs/u/");
             m_pFileDialog->exec();
 
 
@@ -846,7 +846,7 @@ void devUpdateWidget::configFileSelectionSlot()
 
                }
            }
-//            filename = QFileDialog::getOpenFileName(this, "打开文件", "/home/data/u/", "ini文件(*.ini)");
+//            filename = QFileDialog::getOpenFileName(this, "打开文件", "/mnt/ramfs/u/", "ini文件(*.ini)");
             if (!filename.isNull())
             {
                 ui->configFileDisplayLineEdit->setText(filename);
@@ -893,7 +893,7 @@ void devUpdateWidget::devUpdateSlot()
             return;
 
         }
-        if (access("/home/data/u/", F_OK) < 0)
+        if (access("/mnt/ramfs/u/", F_OK) < 0)
         {
             DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget::%s %d not get USB device!\n",__FUNCTION__,__LINE__);
             ui->clientRebootPushButton->setEnabled(true);
@@ -938,7 +938,7 @@ void devUpdateWidget::devUpdateSlot()
 
         system("cp /home/user/bin/monitor_ytj /home/data/backup/");
         system("rm /home/user/bin/monitor_ytj");
-        system("cp /home/data/u/monitor_ytj /home/user/bin/monitor_ytj");
+        system("cp /mnt/ramfs/u/monitor_ytj /home/user/bin/monitor_ytj");
         system("sync");
 
         ui->updateStatueTextEdit->append(tr("复制文件完成"));
@@ -1121,7 +1121,7 @@ void devUpdateWidget::configFileImportSlot()
     }
     else
     {
-        if (access("/home/data/u/", F_OK) < 0)
+        if (access("/mnt/ramfs/u/", F_OK) < 0)
         {
             DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget::%s %d not get USB device!\n",__FUNCTION__,__LINE__);
             static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("未检测到U盘,请插入!")));
@@ -1179,17 +1179,17 @@ void devUpdateWidget::configFileImportSlot()
 
         if(access("/home/data/u/monitorCfg/C3SysConfig.ini",F_OK) == 0)
         {
-            system("cp /home/data/u/monitorCfg/C3SysConfig.ini /home/data/monitorCfg/");
+            system("cp /mnt/ramfs/u/monitorCfg/C3SysConfig.ini /home/data/monitorCfg/");
 
         }
         if(access("/home/data/u/monitorCfg/Station.ini",F_OK) == 0)
         {
-            system("cp /home/data/u/monitorCfg/Station.ini /home/data/monitorCfg/");
+            system("cp /mnt/ramfs/u/monitorCfg/Station.ini /home/data/monitorCfg/");
 
         }
         if(access("/home/data/u/monitorCfg/cfg",F_OK) == 0)
         {
-            system("cp /home/data/u/monitorCfg/cfg/* /home/data/monitorCfg/cfg/ -R");
+            system("cp /mnt/ramfs/u/monitorCfg/cfg/* /home/data/monitorCfg/cfg/ -R");
         }
 
 
