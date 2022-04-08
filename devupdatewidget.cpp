@@ -915,7 +915,7 @@ void devUpdateWidget::devUpdateSlot()
 
         ui->updateStatueTextEdit->append(tr("发现USB，已准备好"));
 
-        if (access("/home/data/u/monitor_ytj", F_OK) < 0)
+        if (access("/mnt/ramfs/u/monitor_ytj", F_OK) < 0)
         {
             DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget not find update file in USB device!\n");
             static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("U盘中未检测到更新文件!")));
@@ -1177,17 +1177,17 @@ void devUpdateWidget::configFileImportSlot()
             return;
         }
 
-        if(access("/home/data/u/monitorCfg/C3SysConfig.ini",F_OK) == 0)
+        if(access("/mnt/ramfs/u/monitorCfg/C3SysConfig.ini",F_OK) == 0)
         {
             system("cp /mnt/ramfs/u/monitorCfg/C3SysConfig.ini /home/data/monitorCfg/");
 
         }
-        if(access("/home/data/u/monitorCfg/Station.ini",F_OK) == 0)
+        if(access("/mnt/ramfs/u/monitorCfg/Station.ini",F_OK) == 0)
         {
             system("cp /mnt/ramfs/u/monitorCfg/Station.ini /home/data/monitorCfg/");
 
         }
-        if(access("/home/data/u/monitorCfg/cfg",F_OK) == 0)
+        if(access("/mnt/ramfs/u/monitorCfg/cfg",F_OK) == 0)
         {
             system("cp /mnt/ramfs/u/monitorCfg/cfg/* /home/data/monitorCfg/cfg/ -R");
         }
