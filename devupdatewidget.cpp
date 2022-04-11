@@ -18,10 +18,13 @@
 #include <QLabel>
 #include <QList>
 #include "debug.h"
+#include <signal.h>
+
 
 static int g_ibShowKeyboard = 0;
 static int g_ichagepage = 0;
 static int g_iVNum = 0;
+static int g_iupdateflag = 0;
 #define PVMSPAGETYPE  2    //此页面类型，2表示受电弓监控页面
 
 #define NVR_RESTART_PORT 11001
@@ -157,7 +160,8 @@ devUpdateWidget::devUpdateWidget(QWidget *parent) :
     m_pFileDialog->setFixedSize(800,600);
     m_pFileDialog->hide();
 
-
+    checkfilepro = new QProcess;
+    updatepro = new  QProcess;
 }
 
 devUpdateWidget::~devUpdateWidget()
@@ -179,6 +183,7 @@ devUpdateWidget::~devUpdateWidget()
 
     delete timeSetWidget;
     timeSetWidget = NULL;
+
 
 
     delete ui;
@@ -861,6 +866,7 @@ void devUpdateWidget::configFileSelectionSlot()
 }
 
 
+
 void devUpdateWidget::devUpdateSlot()
 {
     char acUserType[64] = {0};
@@ -915,7 +921,17 @@ void devUpdateWidget::devUpdateSlot()
 
         ui->updateStatueTextEdit->append(tr("发现USB，已准备好"));
 
-        if (access("/mnt/ramfs/u/monitor_ytj", F_OK) < 0)
+        if(g_iupdateflag == 1)
+        {
+            static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("已更新过!")));
+            msgBox.setWindowFlags(Qt::FramelessWindowHint);
+            msgBox.setStandardButtons(QMessageBox::Yes);
+            msgBox.button(QMessageBox::Yes)->setText("OK");
+            msgBox.exec();
+            return;
+        }
+
+        if (access("/mnt/ramfs/u/UpdateShImage.tgz", F_OK) < 0)
         {
             DebugPrint(DEBUG_UI_MESSAGE_PRINT, "devUpdateWidget not find update file in USB device!\n");
             static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("U盘中未检测到更新文件!")));
@@ -930,17 +946,32 @@ void devUpdateWidget::devUpdateSlot()
 
         ui->clientRebootPushButton->setEnabled(false);    //更新开始，设置重启按钮不可操作
 
-        ui->updateStatueTextEdit->append(tr("正在复制文件..."));
-        if (access("/home/data/backup",F_OK) < 0)
+        checkfilepro->start("tar xzf /mnt/ramfs/u/UpdateShImage.tgz -C /mnt/ramfs");
+        sleep(1);
+
+        if (access("/mnt/ramfs/UpdateShImage/monitor_ytj", F_OK) < 0)
         {
-            system("mkdir /home/data/backup");
+            static QMessageBox msgBox(QMessageBox::Warning,QString(tr("注意")),QString(tr("更新文件不匹配!")));
+            msgBox.setWindowFlags(Qt::FramelessWindowHint);
+            msgBox.setStandardButtons(QMessageBox::Yes);
+            msgBox.button(QMessageBox::Yes)->setText("OK");
+            msgBox.exec();
+            return;
+
         }
 
-        system("cp /home/user/bin/monitor_ytj /home/data/backup/");
-        system("rm /home/user/bin/monitor_ytj");
-        system("cp /mnt/ramfs/u/monitor_ytj /home/user/bin/monitor_ytj");
-        system("sync");
 
+        ui->updateStatueTextEdit->append(tr("正在复制文件..."));
+
+
+        QString s = QString("tar xzf /mnt/ramfs/u/UpdateShImage.tgz -C /mnt/ramfs;/mnt/ramfs/UpdateShImage/update.sh;sync");
+        updatepro->start("bash");
+        updatepro->write(QString(s+"\n").toUtf8());
+        sleep(1);
+
+
+
+        g_iupdateflag = 1;
         ui->updateStatueTextEdit->append(tr("复制文件完成"));
         ui->updateStatueTextEdit->append(tr("更新完成，请重启!"));
         ui->clientRebootPushButton->setEnabled(true);    //更新完成，恢复重启按钮可操作

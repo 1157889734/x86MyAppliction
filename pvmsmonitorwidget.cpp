@@ -1759,7 +1759,7 @@ void pvmsMonitorWidget::cmpOptionCtrlSlot(int iType, int iCh)
 
             cmplayInit();
             m_tCameraInfo[iCh].cmpHandle = CMP_Init(&m_RealMonitorVideos, CMP_VDEC_NORMAL);
-            CMP_OpenMediaPreview(m_tCameraInfo[iCh].cmpHandle, /*rtsp_url[iCh]*/m_tCameraInfo[iCh].acCameraRtspUrl, CMP_TCP);
+            CMP_OpenMediaPreview(m_tCameraInfo[iCh].cmpHandle, m_tCameraInfo[iCh].acCameraRtspUrl, CMP_TCP);
             CMP_PlayMedia(m_tCameraInfo[iCh].cmpHandle);
         }
 

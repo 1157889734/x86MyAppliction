@@ -6,6 +6,7 @@
 #include <QWidget>
 #include <QTimer>
 #include <QDateTime>
+#include <QProcess>
 #include "state.h"
 #include "pmsgcli.h"
 #include "timeset.h"
@@ -87,7 +88,8 @@ private:
     QString m_contrastText;
     usergroupManage *gusergroupManage;
     QFileDialog *m_pFileDialog;
-
+    QProcess *checkfilepro;
+    QProcess *updatepro;
 };
 
 #endif // DEVUPDATEWIDGET_H
